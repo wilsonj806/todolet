@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "tslint-clean-code"
+  ],
+  "rules": {
+    "newspaper-order": true,
+    "interface-over-type-literal": true,
+    "increment-decrement": true,
+    "newline-before-return": true,
+  },
+  "defaultSeverity": "warning",
+   "linterOptions": {
+     "exclude": [
+       "config/**/*.js",
+       "node_modules/*",
+       "node_modules/@types/*"
+     ]
+  },
+}

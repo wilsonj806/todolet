@@ -34,6 +34,8 @@ The last three routes deal with todos and are detailed below:
     - does the todo message/ body need updating
     - is the todo priority level changing
 
+Also reference the [IETF standard](https://tools.ietf.org/html/rfc6570) on proper URI templating.
+
 ## Extra Credit
 
 The below routes would be extra:

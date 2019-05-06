@@ -7,7 +7,7 @@
 ![Top language](https://img.shields.io/github/languages/top/wilsonj806/another-todo.svg)
 
 ## General Description
-Yet another Todo app, will be full stack and will be deployed
+Yet another Todo app, this app will be full stack and will be deployed.
 
 ## Cloning Instructions
 

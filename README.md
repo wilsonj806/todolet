@@ -7,7 +7,8 @@
 ![Top language](https://img.shields.io/github/languages/top/wilsonj806/another-todo.svg)
 
 ## General Description
-Yet another Todo app, this app will be full stack and will be deployed.
+
+Yet another Todo app, this app will be full stack and will be deployed. In addition, this app will include some extra features beyond the simple, "I added a task and clicked on it to complete it".
 
 ## Cloning Instructions
 
@@ -29,9 +30,3 @@ Change your working directory to the folder of the newly cloned repo and run ```
 **NOTE** As this project uses a large amount of TypeScript, a code editor/ IDE with TypeScript/ TSLint support is **STRONGLY** recommended.
 - Visual Studio/ Visual Studio Code is recommended, but Sublime, WebStorm, Eclipse and other editors support it as well
   - See the [official site](https://www.typescriptlang.org/index.html#download-links) for more
-
-### Running Storybook
-
-To run Storybook on the repo, after you clone the repo and install the dependencies, run ```npm run sb```.
-
-Components are listed in the right side bar and lower level components are nested in the corresponding list item.

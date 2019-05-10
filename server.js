@@ -16,11 +16,18 @@ mongoose.connect(uri, {
   dbName: "Todos"
 });
 let db = mongoose.connection;
+let Todos = require('./model/todo');
 
 // check connection
-db.once('open', () => {
-  // TODO figure out how to add error checking for this Node event
-  console.log('Connected to MongoDB');
+db.once('open', async () => {
+  try {
+    // TODO figure out how to add error checking for this Node event
+    const result = await Todos.findOne();
+    console.log('Connected to MongoDB');
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 const app = express();

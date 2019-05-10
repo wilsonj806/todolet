@@ -14,6 +14,12 @@ const PORT = process.env.PORT || 5000;
 mongoose.connect(uri, {
   useNewUrlParser: true,
   dbName: "Todos"
+}, (err, res) => {
+  if (err) {
+    console.error(`ERROR CONNECTING TO DB, ERROR AS FOLLOWS: ${err}`)
+  } else {
+    console.log('Connection successful');
+  }
 });
 let db = mongoose.connection;
 let Todos = require('./model/todo');
@@ -25,7 +31,7 @@ db.once('open', async () => {
     const result = await Todos.findOne();
     console.log('Connected to MongoDB');
     console.log(result);
-  } catch(error) {
+  } catch (error) {
     throw new Error(error);
   }
 });

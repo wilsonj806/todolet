@@ -26,7 +26,7 @@ db.once('open', async () => {
     console.log('Connected to MongoDB');
     console.log(result);
   } catch(error) {
-    console.log(error);
+    throw new Error(error);
   }
 });
 

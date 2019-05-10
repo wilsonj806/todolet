@@ -25,7 +25,7 @@ db.once('open', async () => {
     const result = await Todos.findOne();
     console.log('Connected to MongoDB');
     console.log(result);
-  } catch (error) {
+  } catch(error) {
     console.log(error);
   }
 });

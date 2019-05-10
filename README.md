@@ -25,6 +25,11 @@ Clone the repo with your favorite SCM or manually download it
 
 Change your working directory to the folder of the newly cloned repo and run ```npm install``` in your command line interface.
 
+## Deploy Server With Heroku
+
+You'll need your own `.env` file with the following things:
+-
+
 ### Using TypeScript
 
 **NOTE** As this project uses a large amount of TypeScript, a code editor/ IDE with TypeScript/ TSLint support is **STRONGLY** recommended.

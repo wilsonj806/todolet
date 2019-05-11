@@ -16,9 +16,7 @@ mongoose.connect(uri, {
   dbName: "Todos"
 }, (err, res) => {
   if (err) {
-    console.log(uri);
-    console.log(typeof uri);
-    console.error(`ERROR CONNECTING TO DB, ERROR AS FOLLOWS: ${err}`)
+    console.error(err);
   } else {
     console.log('Connection successful');
   }

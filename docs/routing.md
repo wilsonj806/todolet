@@ -29,10 +29,10 @@ The last three routes deal with todos and are detailed below:
 - get all todos that are tied to a user
 - post a new todo for that user
 - update a todo for a user
-  - said update may include some of the below:
-    - is the todo completed
-    - does the todo message/ body need updating
-    - is the todo priority level changing
+- said update may include some of the below:
+- is the todo completed
+- does the todo message/ body need updating
+- is the todo priority level changing
 
 Also reference the [IETF standard](https://tools.ietf.org/html/rfc6570) on proper URI templating.
 
@@ -48,3 +48,39 @@ The below routes would be extra:
 ```
 
 These are all pretty self-explantory and if we're posting to Google Calendars we can also use Google to authenticate user profiles as well. There's plenty of features or other quality of life type routes to add and this list is nowhere close to comprehensive.
+
+
+## URIs
+
+URIs for making backend requests will probably look like this:
+
+- `/`              : Home
+- `/user/:id`      : General user lookup
+- `/user/login`    : Login
+- `/user/register` : Register
+- `/user/delete`   : Delete user(**optional**)
+- `/todos`         : Todos
+  - `/todos/search/:userid/?filter={filterVal}`
+    - search for the todos of a particular user with any filters
+      - based off of a form as indicated with the `?` char
+  - `/todos/search/:userid/:tag`
+    - search for the todos of a particular user with tags
+  - `/todos/post`
+  - does what it sounds like it does, should have the following JSON format in the request:
+    ```js
+      // implementation not exact
+      const sampleUserId = 'https://wj-anothertodo.herokuapp.com/user/' + userIdString
+      const sampleJson = {
+        userid: sampleUserId,
+        todo_body: "aaaaaaaaaa",
+        priority: "high",
+        date_added: "",
+        tags: []
+      }
+    ```
+
+Reference some of the below for more:
+- [MDN reference on the URL object](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL)
+  - [MDN reference on `encodeURI()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI)
+- [Node.js URL module](https://nodejs.org/api/url.html)
+- [Quick JSFiddle to demonstrate the URL object](https://jsfiddle.net/wilsonj806/0umh3ey7/)

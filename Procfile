@@ -1,0 +1,1 @@
+web: npm run build && npm prune --production && npm run start

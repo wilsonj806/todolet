@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
-    "outDir": "build/dist",
-    "module": "esnext",
-    "noEmit": true,
+    "outDir": "dist",
+    "module": "commonjs",
+    "noEmit": false,
     "jsx": "preserve",
-    "target": "es5",
+    "target": "es6",
     "moduleResolution": "node",
     "typeRoots": [
       "./node_modules/@types",
-      "./src/@types"
     ],
     "lib": [
       "es6",
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "es7"
     ],
     "sourceMap": true,
     "allowJs": true,
@@ -27,18 +24,14 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": false
   },
   "exclude": [
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts",
-    "*.test.tsx"
+    "client/**/*"
   ],
   "include": [
-    "src"
+    "routes/**/*",
+    "models/*",
+    "server.ts"
   ]
 }

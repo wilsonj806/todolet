@@ -16,6 +16,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "dotenv": "^8.0.0",
     "body-parser": "1.19.0",
     "concurrently": "3.6.0",
     "connect-flash": "0.1.1",
@@ -44,7 +45,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "dotenv": "^8.0.0",
     "nodemon": "^1.17.5",
     "tslint": "^5.12.1",
     "tslint-clean-code": "^0.2.9"

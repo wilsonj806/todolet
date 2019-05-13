@@ -30,7 +30,7 @@ db.once('open', async () => {
   try {
     // TODO figure out how to add error checking for this Node event
     const result: mongoose.Document | null = await Todos.findOne();
-    console.log(result);
+    // console.log(result);
     console.log('Connection to MongoDB Atlas confirmed');
   } catch (error) {
     throw new Error(error);

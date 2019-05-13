@@ -47,7 +47,7 @@
     "dotenv": "^8.0.0",
     "nodemon": "^1.17.5",
     "tslint": "^5.12.1",
-    "tslint-clean-code": "^0.2.9",
+    "tslint-clean-code": "^0.2.9"
   },
   "engines": {
     "node": "10.10.0"

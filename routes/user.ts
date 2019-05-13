@@ -7,7 +7,7 @@
  *
  * `/user/:id`       : Single user lookup
  * `/user/login`     : Login and authentication
- * `/user/register` : Register user
+ * `/user/register`  : Register user
  */
 import express from 'express';
 
@@ -21,8 +21,13 @@ router.post('/register', (req: Express.Request, res: Express.Response) => {
 });
 
 
-// GET user credentials and validate against request
+// ANCHOR GET user credentials and validate against request
 router.get('/login', (req: Express.Request, res: Express.Response) => {
+
+});
+
+//ANCHOR GET single user
+router.get('/:id', () => {
 
 });
 

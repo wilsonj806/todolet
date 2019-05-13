@@ -5,7 +5,7 @@ import mongodb from 'mongodb';
 
 import 'dotenv/config';
 
-import Todos from './model/todo';
+import Todos from './models/todo';
 
 const uri: any = process.env.MONGODB_URI;
 const PORT: Number | String = process.env.PORT || 5000 || 8000;

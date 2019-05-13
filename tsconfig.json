@@ -31,7 +31,7 @@
   ],
   "include": [
     "routes/**/*",
-    "model/*",
+    "models/*",
     "server.ts"
   ]
 }

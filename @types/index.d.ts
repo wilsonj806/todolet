@@ -19,6 +19,10 @@ export = AnotherTodoTypes;
 export as namespace Local;
 
 declare namespace AnotherTodoTypes {
+  /**
+   * ANCHOR Deployment related/ process.env related
+   *
+   */
   type NODE_ENV = 'production' | 'development' | 'staging' | undefined
 
   interface ENV {
@@ -28,6 +32,36 @@ declare namespace AnotherTodoTypes {
     DBNAME_LOCAL      ?: string | undefined
     DBNAME            ?: string | undefined
     [key: string]     : any
+  }
+
+  /**
+   * ANCHOR HTTP request/ response structure
+   *
+   */
+  type postUserReq = {
+    "username": string,
+    "password": string
+    "password2": string
+  }
+
+  /**
+   * ANCHOR Database related
+   *
+   */
+  type priority = 'HIGH' | 'MEDIUM' | 'LOW'
+  type mongodbObj = {
+    _id: any
+  }
+  interface userObj extends mongodbObj {
+    username: string
+    password: string
+  }
+  interface todoObj extends mongodbObj {
+    username   : string
+    todo       : string
+    priority   : priority
+    date_added : Date
+    tags       : Array<string>
   }
 }
 

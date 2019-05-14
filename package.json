@@ -13,7 +13,8 @@
     "client": "npm start --prefix client",
     "deploy": "gh-pages -d client/build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "tsc"
+    "build": "tsc",
+    "watch-ts": "tsc --watch"
   },
   "dependencies": {
     "dotenv": "^8.0.0",

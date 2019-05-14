@@ -68,7 +68,7 @@ URIs for making backend requests will probably look like this:
   - `/todos/post`
   - does what it sounds like it does, should have the following JSON format in the request:
     ```js
-      // implementation not exact
+      // implementation not exact, but the client code will know the endpoint so it'd handle making it
       const sampleUserId = 'https://wj-anothertodo.herokuapp.com/user/' + userIdString
       const sampleJson = {
         userid: sampleUserId,

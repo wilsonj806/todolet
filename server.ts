@@ -1,3 +1,4 @@
+import { NODE_ENV, ENV } from './@types';
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
@@ -7,11 +8,12 @@ import 'dotenv/config';
 
 import Todos from './models/todo';
 
-const { NODE_ENV, DBNAME, DBNAME_LOCAL } = process.env;
+// ANCHOR Dotenv setup
+const { NODE_ENV, DBNAME, DBNAME_LOCAL }: ENV = process.env;
 
 const uri: any = (NODE_ENV === 'production') ? process.env.MONGODB_URI : process.env.MONGODB_URI_LOCAL;
 const dbName: any = (NODE_ENV === 'production') ? DBNAME : DBNAME_LOCAL;
-const PORT: Number | String = process.env.PORT || 5000 || 8000;
+const PORT = process.env.PORT || 5000 || 8000;
 
 // ANCHOR Connect to database
 mongoose.connect(uri, {
@@ -41,6 +43,10 @@ db.once('open', async () => {
 });
 
 const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello world');
+});
 
 app.listen(PORT, () => {console.log(`Server started on port ${PORT}`)});
 

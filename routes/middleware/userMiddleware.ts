@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { RequestHandler, ErrorRequestHandler, Request } from "express";
 import { postUserReq, responseObj, errorResponse } from '../../@types/index';
 import { validationResult } from 'express-validator/check';
 import passport from 'passport';
@@ -58,16 +58,32 @@ const postNewUser: RequestHandler = async (req, res, next) => {
   }
 }
 
+// TODO: Properly implement the below login and logout things
+const postLogin: RequestHandler = (req, res, next) => {
+  res.status(200).send('yeet');
+  next();
+}
+
+const postLoginFail: ErrorRequestHandler = (err, req, res, next) => {
+  res.status(401).send('Login failed');
+}
+
+
+const getLogout: RequestHandler = (req, res, next) => {
+  // TODO Setup express-session
+  req.logout();
+}
+
+// TODO Figure out what to do with this
 const getOneUser: RequestHandler = (req, res, next) => {
   next();
 }
 
-const getAndValidateLogin: RequestHandler = (req, res, next) => {
-  next();
-}
 
 export {
   postNewUser,
   getOneUser,
-  getAndValidateLogin
+  postLogin,
+  postLoginFail,
+  getLogout
 }

@@ -11,9 +11,9 @@
  */
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator/check';
-
+import passport from 'passport';
 import User from '../models/user';
-import { postNewUser } from './middleware/userMiddleware';
+import { postNewUser, postLogin, postLoginFail } from './middleware/userMiddleware';
 
 
 const router = express.Router();
@@ -38,19 +38,25 @@ router.post('/register', [
 
 
 /**
- * ANCHOR: GET user credentials and validate against request
+ * ANCHOR: POST login user with credentials
  * =============================================================
  * Requirements(NOTE should be replaced with actual test specs):
  *
  */
-router.get('/login', (req: Request, res:Response) => {
-
-});
+router.post('/login',
+  passport.authenticate('local',
+    { failWithError: true }
+  ),
+  postLogin,
+  postLoginFail
+);
 
 
 /**
- * ANCHOR: GET single user
+ * ANCHOR: GET single user data
  * =============================================================
+ * TODO Figure out what to do with this
+ *
  * Requirements(NOTE should be replaced with actual test specs):
  *
  */

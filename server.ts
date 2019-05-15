@@ -16,8 +16,12 @@ import routerUser from './routes/user';
 // ANCHOR Dotenv setup
 const { NODE_ENV, DBNAME, DBNAME_LOCAL, SESSION_SECRET }: ENV = process.env;
 
-const uri: any = (NODE_ENV === 'production') ? process.env.MONGODB_URI : process.env.MONGODB_URI_LOCAL;
-const dbName: any = (NODE_ENV === 'production') ? DBNAME : DBNAME_LOCAL;
+const uri: any = (NODE_ENV === 'production')
+  ? process.env.MONGODB_URI
+  : process.env.MONGODB_URI_LOCAL;
+const dbName: any = (NODE_ENV === 'production')
+  ? DBNAME
+  : DBNAME_LOCAL;
 const PORT = process.env.PORT || 5000 || 8000;
 
 // ANCHOR Connect to database
@@ -53,7 +57,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-// Use Express session middleware
+/**
+ * Use Express session middleware
+ *
+ * TODO: CONFIGURE THIS PROPERLY
+ *
+ */
 app.use(session({
   secret: SESSION_SECRET,
   resave: true,

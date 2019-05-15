@@ -54,15 +54,16 @@ These are all pretty self-explantory and if we're posting to Google Calendars we
 
 URIs for making backend requests will probably look like this:
 
-- `/`              : Home
-- `/user/:id`      : General user lookup(**optional, figure out what to do with it**)
-- `/user/login`    : Login
-- `/user/delete`   : Delete user(**optional**)
-- `/user/register` : Register
-- `/todos`         : Todos
-  - `/todos/:id`   : Look up todos of a certain UserID val
-  - `/todos/post`  : Post a new todo
-  - `/todos/search/:userid/:tag` : Search todos for a user and for a tag
+- `/`                                           : Home
+- `/user/:id`                                   : General user lookup(**optional, figure out what to do with it**)
+- `/user/login`                                 : Login
+- `/user/logout`                                : Logout
+- `/user/delete`                                : Delete user(**optional**)
+- `/user/register`                              : Register
+- `/todos`                                      : Todos
+  - `/todos/:id`                                : Look up todos of a certain UserID val
+  - `/todos/post`                               : Post a new todo
+  - `/todos/search/:userid/:tag`                : Search todos for a user and for a tag
   - `/todos/search/:userid/?filter={filterVal}` : Search todos but filter them by a certain value
 
 ### Notes for the above

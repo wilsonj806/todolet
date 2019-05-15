@@ -57,10 +57,12 @@ declare namespace AnotherTodoTypes {
   type priority = 'HIGH' | 'MEDIUM' | 'LOW'
   type mongodbObj = { _id: any }
   interface userObj extends mongodbObj {
-    username: string
-    password: string
+    _id      ?: any
+    username : string
+    password : string
   }
   interface todoObj extends mongodbObj {
+    _id        ?: any
     username   : string
     todo       : string
     priority   : priority

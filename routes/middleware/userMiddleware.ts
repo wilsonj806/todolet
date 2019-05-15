@@ -17,31 +17,18 @@ export const postNewUser = async (req: Request, res: Response, next: NextFunctio
   try {
     const result = await User.find({username: username});
     if (result.length === 0) {
-      let newPass = '';
-      bcrypt.genSalt(10, (err, salt) => {
-        if(err) {
-          console.log(err);
-          return err;
+      const salt = await bcrypt.genSalt(10);
+      const newPass = await bcrypt.hash(password, salt);
+      const user = await User.create({ username: username, password: newPass });
+      const { _id } = user;
+      const resJson: responseObj = {
+        msg: 'User added',
+        user: {
+          _id,
+          username
         }
-        bcrypt.hash(password, salt, (err, hash) => {
-          if(err) {
-            console.log(err);
-            return err;
-          } else {
-            newPass = hash;
-            User.create({ username: username, password: newPass }, (err: any) => {
-              if(err) {
-                console.log(err);
-                return err;
-              }
-            });
-            const resJson: responseObj = {
-              msg: 'User added'
-            }
-            res.status(200).json(resJson);
-          }
-        });
-      });
+      }
+      res.status(200).json(resJson);
     } else {
       const resJson: responseObj = {
         msg: `Error, user with username: ${username} exists already`
@@ -49,8 +36,12 @@ export const postNewUser = async (req: Request, res: Response, next: NextFunctio
       res.status(400).json(resJson);
     }
   } catch(err) {
-    console.log(err);
-    throw new Error('Error alert, check above for additional logging');
+    // TODO check what type of error is sent
+    const resJson: responseObj = {
+      msg: 'Internal server error, sorry :('
+    }
+    res.status(500).json(resJson);
+    console.log('Error alert, check below for additional logging \n', err);
   } finally {
     next();
   }

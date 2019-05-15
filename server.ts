@@ -8,6 +8,8 @@ import 'dotenv/config';
 
 import Todos from './models/todo';
 
+import routerUser from './routes/user';
+
 // ANCHOR Dotenv setup
 const { NODE_ENV, DBNAME, DBNAME_LOCAL }: ENV = process.env;
 
@@ -44,9 +46,10 @@ db.once('open', async () => {
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello world');
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use('/user', routerUser);
 
 app.listen(PORT, () => {console.log(`Server started on port ${PORT}`)});
 

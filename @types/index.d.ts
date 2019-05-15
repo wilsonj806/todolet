@@ -38,10 +38,16 @@ declare namespace AnotherTodoTypes {
    * ANCHOR HTTP request/ response structure
    *
    */
+  type STATUS_CODE = 200 | 201 | 400 | 403 | 404 | 500 | 503
   type postUserReq = {
-    "username": string,
-    "password": string
+    "username" : string,
+    "password" : string
     "password2": string
+  }
+  type responseObj = {
+    "status"      ?: STATUS_CODE
+    "msg"         : string
+    [key: string] : any
   }
 
   /**
@@ -49,9 +55,7 @@ declare namespace AnotherTodoTypes {
    *
    */
   type priority = 'HIGH' | 'MEDIUM' | 'LOW'
-  type mongodbObj = {
-    _id: any
-  }
+  type mongodbObj = { _id: any }
   interface userObj extends mongodbObj {
     username: string
     password: string

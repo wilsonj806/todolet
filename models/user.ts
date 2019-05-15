@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { IUserModel } from '../@types/index';
 
 // User Schema
 let userSchema = new mongoose.Schema({
@@ -12,6 +13,6 @@ let userSchema = new mongoose.Schema({
   }
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model<IUserModel>('User', userSchema);
 
 export default User;

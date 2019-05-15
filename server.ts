@@ -1,34 +1,37 @@
 import { NODE_ENV, ENV } from './@types';
 import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import mongodb from 'mongodb';
 
 import 'dotenv/config';
+import passportConfig from './config/passport';
 
 import Todos from './models/todo';
 
 import routerUser from './routes/user';
 
 // ANCHOR Dotenv setup
-const { NODE_ENV, DBNAME, DBNAME_LOCAL }: ENV = process.env;
+const { NODE_ENV, DBNAME, DBNAME_LOCAL, SESSION_SECRET }: ENV = process.env;
 
 const uri: any = (NODE_ENV === 'production') ? process.env.MONGODB_URI : process.env.MONGODB_URI_LOCAL;
 const dbName: any = (NODE_ENV === 'production') ? DBNAME : DBNAME_LOCAL;
 const PORT = process.env.PORT || 5000 || 8000;
 
 // ANCHOR Connect to database
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  dbName: dbName
-}, (err: mongodb.MongoError) => {
-  if (err) {
-    console.error(err);
-    throw new Error('Error alert, see above for additional details');
-  } else {
+(async () => {
+  try {
+    mongoose.connect(uri, {
+      useNewUrlParser: true,
+      dbName: dbName
+    });
     console.log('Connection successful');
+  } catch(error) {
+    console.log('Error alert, see below for additional logging \n', error);
   }
-});
+})();
 
 let db = mongoose.connection;
 
@@ -40,14 +43,28 @@ db.once('open', async () => {
     if (result == null) throw new Error('connection failed, check databases');
     console.log(`Connection to MongoDB database: ${dbName} confirmed`);
   } catch (error) {
-    throw new Error(error);
+    console.log('Error alert, check below for additional logging \n', error);
   }
 });
 
 const app = express();
 
+// Use Express Body-parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+// Use Express session middleware
+app.use(session({
+  secret: SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+}));
+
+// PassportJs middleware
+passportConfig(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/user', routerUser);
 

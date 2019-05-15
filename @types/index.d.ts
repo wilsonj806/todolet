@@ -45,11 +45,13 @@ declare namespace AnotherTodoTypes {
     "password2": string
   }
   type responseObj = {
-    "status"      ?: STATUS_CODE
-    "msg"         : string
+    "msg"         : Array<string> | string
     [key: string] : any
   }
 
+  interface errorResponse extends responseObj {
+    "errors" ?: Record
+  }
   /**
    * ANCHOR Database related
    *

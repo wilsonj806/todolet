@@ -20,3 +20,4 @@
     }
   }
   ```
+  - basically don't mix both callback functions AND async/ await expressions because something is going to probably break

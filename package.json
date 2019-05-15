@@ -8,6 +8,7 @@
     "url": "https://github.com/wilsonj806/another-todo.git"
   },
   "scripts": {
+    "heroku-prebuild": "echo This runs before Heroku installs your dependencies. && npm run build",
     "start": "node dist/server.js",
     "server": "nodemon dist/server.js",
     "client": "npm start --prefix client",

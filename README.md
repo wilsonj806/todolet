@@ -25,10 +25,15 @@ Clone the repo with your favorite SCM or manually download it
 
 Change your working directory to the folder of the newly cloned repo and run ```npm install``` in your command line interface.
 
-## Deploy Server With Heroku
+## Local Development
 
-You'll need your own `.env` file with the following things:
--
+Before you start development, you'll need your own **local** `.env` file with the following properties:
+  ```
+    MONGODB_URI       : the URI for your MongoDB cluster
+    MONGODB_URI_LOCAL : the URI for your local MongoDB cluster
+    DBNAME            : the name of your database within the cluster
+    DBNAME_LOCAL      : the name of your local database
+  ```
 
 ### Using TypeScript
 

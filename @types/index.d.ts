@@ -15,6 +15,9 @@
 /// <reference types="mongodb" />
 /// <reference types="express" />
 
+import { Document, MongooseDocument } from "mongoose";
+
+
 export = AnotherTodoTypes;
 export as namespace Local;
 
@@ -58,11 +61,12 @@ declare namespace AnotherTodoTypes {
    */
   type priority = 'HIGH' | 'MEDIUM' | 'LOW'
   type mongodbObj = { _id: any }
-  interface userObj extends mongodbObj {
-    _id      ?: any
+  interface userObj extends Document {
+    _id      : any
     username : string
     password : string
   }
+  interface userModel extends userObj, Document {}
   interface todoObj extends mongodbObj {
     _id        ?: any
     username   : string

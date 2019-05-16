@@ -1,33 +1,25 @@
-import { NODE_ENV, ENV } from './@types';
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 
 import 'dotenv/config';
+import { uri, dbName, PORT, sessConfig } from './config/config';
 import passportConfig from './config/passport';
 
 import Todos from './models/todo';
 
 import routerUser from './routes/user';
 
-// ANCHOR Dotenv setup
-const { NODE_ENV, DBNAME, DBNAME_LOCAL, SESSION_SECRET }: ENV = process.env;
-
-const uri: any = (NODE_ENV === 'production')
-  ? process.env.MONGODB_URI
-  : process.env.MONGODB_URI_LOCAL;
-const dbName: any = (NODE_ENV === 'production')
-  ? DBNAME
-  : DBNAME_LOCAL;
-const PORT = process.env.PORT || 5000 || 8000;
-
-// ANCHOR Connect to database
+/**
+ * ANCHOR Connect to database
+ * =============================================================
+ *
+ */
 (async () => {
   try {
-    mongoose.connect(uri, {
+    await mongoose.connect(uri, {
       useNewUrlParser: true,
       dbName: dbName
     });
@@ -39,7 +31,11 @@ const PORT = process.env.PORT || 5000 || 8000;
 
 let db = mongoose.connection;
 
-// ANCHOR Check database connection
+/**
+ * ANCHOR Check database connection
+ * =============================================================
+ *
+ */
 db.once('open', async () => {
   try {
     // TODO figure out how to add error checking for this Node event
@@ -58,18 +54,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 /**
- * Use Express session middleware
- *
- * TODO: CONFIGURE THIS PROPERLY
+ * ANCHOR Use and configure Express session middleware
+ * =============================================================
+ * TODO Figure out how to configure and export an express-session
+ *  the below isn't super nice to look through
  *
  */
-app.use(session({
-  secret: SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-}));
 
-// PassportJs middleware
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy
+  sessConfig.cookie!.secure = true // serve secure cookies
+}
+
+app.use(session(sessConfig));
+
+/**
+ * ANCHOR Use and initialize PassportJS
+ * =============================================================
+ *
+ */
 passportConfig(passport);
 
 app.use(passport.initialize());

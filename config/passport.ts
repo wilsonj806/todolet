@@ -3,7 +3,7 @@ import User from '../models/user';
 import bcrypt from 'bcryptjs';
 import { PassportStatic } from 'passport';
 
-import { IUserObj } from '../@types/index';
+import { IUserObj } from '../types/index';
 
 const LocalStrategy = psLocal.Strategy;
 

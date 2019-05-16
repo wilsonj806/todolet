@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IUserModel } from '../@types/index';
+import { IUserModel } from '../types/index';
 
 // User Schema
 let userSchema = new mongoose.Schema({

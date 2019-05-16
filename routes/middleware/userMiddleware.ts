@@ -1,5 +1,5 @@
 import { RequestHandler, ErrorRequestHandler, Request } from "express";
-import { postUserReq, responseObj, errorResponse } from '../../@types/index';
+import { postUserReq, responseObj, errorResponse } from '../../types/index';
 import { validationResult } from 'express-validator/check';
 import passport from 'passport';
 import bcrypt from 'bcryptjs';

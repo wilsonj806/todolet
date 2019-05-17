@@ -1,7 +1,6 @@
 import { RequestHandler, ErrorRequestHandler, Request } from "express";
 import { postUserReq, responseObj, errorResponse } from '../../types/index';
 import { validationResult } from 'express-validator/check';
-import passport from 'passport';
 import bcrypt from 'bcryptjs';
 
 import 'dotenv/config';
@@ -60,18 +59,29 @@ const postNewUser: RequestHandler = async (req, res, next) => {
 
 // TODO: Properly implement the below login and logout things
 const postLogin: RequestHandler = (req, res, next) => {
-  res.status(200).send('yeet');
+  const { username, _id} = req.user;
+  const resJson: responseObj = {
+    msg: 'Login Successful',
+    user: {
+      _id: _id,
+      username: username
+    }
+  }
+  res.status(200).json(resJson);
   next();
 }
 
 const postLoginFail: ErrorRequestHandler = (err, req, res, next) => {
-  res.status(401).send('Login failed');
+  res.status(401).json({ msg: 'Login failed' });
+  next();
 }
 
 
 const getLogout: RequestHandler = (req, res, next) => {
-  // TODO Setup express-session
+  console.log(req.session);
   req.logout();
+  res.status(200).json({ msg: 'Logged out successfully'});
+  next();
 }
 
 // TODO Figure out what to do with this

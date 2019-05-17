@@ -13,7 +13,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator/check';
 import passport from 'passport';
 import User from '../models/user';
-import { postNewUser, postLogin, postLoginFail } from './middleware/userMiddleware';
+import { postNewUser, postLogin, postLoginFail, getLogout } from './middleware/userMiddleware';
 
 
 const router = express.Router();
@@ -29,19 +29,24 @@ const router = express.Router();
  *  - send a response saying it went okay
  *  - OR send a response saying it failed
  */
-router.post('/register', [
-  body('username', 'Username is required').exists({checkFalsy: true}),
-  body('password', 'Password is required').exists({checkFalsy: true}),
-  body('password2', 'Passwords don\'t match').exists()
-    .custom((value, { req }) => value === req.body.password)
-], postNewUser);
+router.post('/register',
+  [
+    body('username', 'Username is required').exists({checkFalsy: true}),
+    body('password', 'Password is required').exists({checkFalsy: true}),
+    body('password2', 'Passwords don\'t match').exists()
+      .custom((value, { req }) => value === req.body.password)
+  ],
+  postNewUser
+);
 
 
 /**
  * ANCHOR: POST login user with credentials
  * =============================================================
  * Requirements(NOTE should be replaced with actual test specs):
- *
+ *  - authenticate user login request
+ *  - on failure to login, send a response saying that the login failed
+ *  - OR send a response to the client saying that the login succeeded
  */
 router.post('/login',
   passport.authenticate('local',
@@ -50,6 +55,14 @@ router.post('/login',
   postLogin,
   postLoginFail
 );
+
+/**
+ * ANCHOR: POST logout user
+ * =============================================================
+ * Requirements(NOTE should be replaced with actual test specs):
+ *
+ */
+router.get('/logout', getLogout);
 
 
 /**

@@ -15,11 +15,18 @@ const dbName: any = (NODE_ENV === 'production')
 const PORT = process.env.PORT || 5000 || 8000;
 
 const MongoDbStore = connect(session);
-const store = new MongoDbStore({
-  uri: uri,
-  databaseName: dbName,
-  collection: 'mySession'
-});
+const store = new MongoDbStore(
+  {
+    uri: uri,
+    databaseName: dbName,
+    collection: 'mySession'
+  },
+  (error) => {
+    if (error) console.log(error);
+  }
+);
+
+store.on('error', (error) => console.log(error));
 const day: number = 1000 * 60 * 60 * 24;
 
 const sessConfig: SessionOptions = {

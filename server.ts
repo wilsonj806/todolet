@@ -78,6 +78,10 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+/**
+ * ANCHOR Routes
+ *
+ */
 app.use('/user', routerUser);
 
 app.listen(PORT, () => {console.log(`Server started on port ${PORT}`)});

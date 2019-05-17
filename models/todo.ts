@@ -1,28 +1,31 @@
 import mongoose from 'mongoose';
 
-// Todo Schema
-let todoSchema = new mongoose.Schema({
+
+// ANCHOR Todo Schema
+/* eslint-disable @typescript-eslint/camelcase */
+const todoSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true
+    required: true,
   },
   todo: {
     type: String,
-    required: true
+    required: true,
   },
   priority: {
     type: String,
-    required: true
+    required: true,
   },
   date_added: {
     type: Date,
-    required: true
+    required: true,
   },
   tags: {
     type: [String],
-    default: undefined
+    default: undefined,
   },
 });
+/* eslint-enable @typescript-eslint/camelcase */
 
 const Todo = mongoose.model('Todo', todoSchema);
 

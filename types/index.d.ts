@@ -15,6 +15,9 @@
 /// <reference types="mongodb" />
 /// <reference types="express" />
 
+import { Document, MongooseDocument } from "mongoose";
+
+
 export = AnotherTodoTypes;
 export as namespace Local;
 
@@ -45,22 +48,25 @@ declare namespace AnotherTodoTypes {
     "password2": string
   }
   type responseObj = {
-    "status"      ?: STATUS_CODE
-    "msg"         : string
+    "msg"         : Array<string> | string
     [key: string] : any
   }
 
+  interface errorResponse extends responseObj {
+    "errors" ?: Record
+  }
   /**
    * ANCHOR Database related
    *
    */
   type priority = 'HIGH' | 'MEDIUM' | 'LOW'
   type mongodbObj = { _id: any }
-  interface userObj extends mongodbObj {
-    _id      ?: any
+  interface IUserObj extends Document {
+    _id      : any
     username : string
     password : string
   }
+  interface IUserModel extends IUserObj, Document {}
   interface todoObj extends mongodbObj {
     _id        ?: any
     username   : string

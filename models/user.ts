@@ -1,17 +1,20 @@
 import mongoose from 'mongoose';
+import { IUserModel } from '../types/index';
 
-// User Schema
-let userSchema = new mongoose.Schema({
+// ANCHOR User Schema
+/* eslint-disable @typescript-eslint/camelcase */
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
+/* eslint-enable @typescript-eslint/camelcase */
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model<IUserModel>('User', userSchema);
 
 export default User;

@@ -54,18 +54,25 @@ These are all pretty self-explantory and if we're posting to Google Calendars we
 
 URIs for making backend requests will probably look like this:
 
-- `/`              : Home
-- `/user/:id`      : General user lookup
-- `/user/login`    : Login
-- `/user/register` : Register
-- `/user/delete`   : Delete user(**optional**)
-- `/todos`         : Todos
-  - `/todos/search/:userid/?filter={filterVal}`
-    - search for the todos of a particular user with any filters
+- `/`                                           : Home
+- `/user/:id`                                   : General user lookup(**optional, figure out what to do with it**)
+- `/user/login`                                 : Login
+- `/user/logout`                                : Logout
+- `/user/delete`                                : Delete user(**optional**)
+- `/user/register`                              : Register
+- `/todos`                                      : Todos
+  - `/todos/:id`                                : Look up todos of a certain UserID val
+  - `/todos/post`                               : Post a new todo
+  - `/todos/search/:userid/:tag`                : Search todos for a user and for a tag
+  - `/todos/search/:userid/?filter={filterVal}` : Search todos but filter them by a certain value
+
+### Notes for the above
+- for the `/todos/search/:userid/?filter={filterVal}` route:
+  - search for the todos of a particular user with any filters
       - based off of a form as indicated with the `?` char
-  - `/todos/search/:userid/:tag`
+- for the `/todos/search/:userid/:tag` route:
     - search for the todos of a particular user with tags
-  - `/todos/post`
+- for the `/todos/post` route:
   - does what it sounds like it does, should have the following JSON format in the request:
     ```js
       // implementation not exact, but the client code will know the endpoint so it'd handle making it

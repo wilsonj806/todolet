@@ -1,0 +1,29 @@
+# Configure what Git(hub) branches get tested
+branches:
+  only:
+    - master
+    - server
+    - client
+
+# Configure Node.jS environment
+language: node_js
+node_js:
+  - "stable"
+install:
+  - npm install
+cache:
+  directories:
+    - "node_modules"
+services:
+  - mongodb
+before_script:
+  - mongo Todos-local --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+
+# Staging for jobs
+jobs:
+  include:
+    - stage: "Setup Environment"
+      script:
+        - npm install
+    - stage: "Lint codebase"
+      script: npm run lint

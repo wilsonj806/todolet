@@ -11,13 +11,15 @@ node_js:
   - "stable"
 install:
   - npm install
-cache:
-  directories:
-    - "node_modules"
+cache: npm ci
 services:
   - mongodb
 before_script:
   - mongo Todos-local --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+env:
+  global:
+    - DBNAME_LOCAL=Todo-local
+    - NODE_ENV=testing
 
 # Staging for jobs
 jobs:

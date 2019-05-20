@@ -2,5 +2,10 @@
 dist/
 node_modules/
 
-# declaration files
+# declaration files and config files
 *.d.ts
+*.config.js
+*.config.ts
+
+# tests
+*.spec*.ts

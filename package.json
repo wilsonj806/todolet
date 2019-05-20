@@ -17,7 +17,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "watch-ts": "tsc --watch",
     "lint": "eslint ./**/*.ts",
-    "test": "echo Testing codebase"
+    "test": "jest ./specs/*"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
@@ -42,7 +42,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/preset-env": "^7.4.4",
     "@babel/preset-typescript": "^7.3.3",
+    "@shelf/jest-mongodb": "^1.0.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/connect-mongodb-session": "^0.0.0",
     "@types/express": "^4.16.1",

@@ -22,7 +22,6 @@ before_script:
 # Staging for jobs
 jobs:
   include:
-    - stage: "Lint codebase"
+    - stage: "Lint and test codebase"
       script: npm run lint
-    - stage: "Test codebase"
       script: npm run test

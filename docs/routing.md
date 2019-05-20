@@ -55,14 +55,15 @@ These are all pretty self-explantory and if we're posting to Google Calendars we
 URIs for making backend requests will probably look like this:
 
 - `/`                                           : Home
-- `/user/:id`                                   : General user lookup(**optional, figure out what to do with it**)
-- `/user/login`                                 : Login
-- `/user/logout`                                : Logout
-- `/user/delete`                                : Delete user(**optional**)
-- `/user/register`                              : Register
+- `/user`                                       : User
+  - `/user/:id`                                 : General user lookup(**optional, figure out what to do with it**)
+  - `/user/login`                               : Login
+  - `/user/logout`                              : Logout
+  - `/user/delete`                              : Delete user(**optional**)
+  - `/user/register`                            : Register
 - `/todos`                                      : Todos
-  - `/todos/:id`                                : Look up todos of a certain UserID val
-  - `/todos/post`                               : Post a new todo
+  - `/todos/:userid`                            : GET todos of a certain UserID val
+  - `/todos/:userid`                            : POST todos of a certain UserID val
   - `/todos/search/:userid/:tag`                : Search todos for a user and for a tag
   - `/todos/search/:userid/?filter={filterVal}` : Search todos but filter them by a certain value
 
@@ -72,7 +73,7 @@ URIs for making backend requests will probably look like this:
       - based off of a form as indicated with the `?` char
 - for the `/todos/search/:userid/:tag` route:
     - search for the todos of a particular user with tags
-- for the `/todos/post` route:
+- for the `/todos/:userid` POST route:
   - does what it sounds like it does, should have the following JSON format in the request:
     ```js
       // implementation not exact, but the client code will know the endpoint so it'd handle making it

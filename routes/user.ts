@@ -7,6 +7,7 @@
  *
  * `/user/:id`       : Single user lookup
  * `/user/login`     : Login and authentication
+ * `/user/logout`    : Login and authentication
  * `/user/register`  : Register user
  */
 import express from 'express';

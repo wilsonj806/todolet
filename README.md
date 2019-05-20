@@ -5,6 +5,7 @@
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/wilsonj806/another-todo.svg)](https://github.com/wilsonj806/another-todo)
 ![Current package.json version](https://img.shields.io/github/package-json/v/wilsonj806/another-todo.svg?label=current%20version)
 ![Top language](https://img.shields.io/github/languages/top/wilsonj806/another-todo.svg)
+![Travis (.org)](https://img.shields.io/travis/wilsonj806/another-todo.svg)
 
 ## General Description
 

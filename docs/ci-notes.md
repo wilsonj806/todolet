@@ -25,7 +25,3 @@ Below is kind of a quick start:
       - nested_var3: "I'm part of a nested list as indicated by the hyphen"
   ```
 As a general note, hyphenated lines denote lists/ sequences, and nesting is usually done this way.
-
-### Environment setup
-
-You'll need to setup the environment that TravisCI will be run in.

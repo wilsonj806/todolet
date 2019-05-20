@@ -22,8 +22,7 @@ before_script:
 # Staging for jobs
 jobs:
   include:
-    - stage: "Setup Environment"
-      script:
-        - npm install
     - stage: "Lint codebase"
       script: npm run lint
+    - stage: "Test codebase"
+      script: npm run test

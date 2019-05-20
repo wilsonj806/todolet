@@ -16,7 +16,8 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "watch-ts": "tsc --watch",
-    "lint": "eslint ./**/*.ts"
+    "lint": "eslint ./**/*.ts",
+    "test": "echo Testing codebase"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",

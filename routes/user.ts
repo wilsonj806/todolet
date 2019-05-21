@@ -74,8 +74,8 @@ router.get('/logout', getLogout);
  * Requirements(NOTE should be replaced with actual test specs):
  *
  */
-router.get('/:id', () => {
+// router.get('/:id', () => {
 
-});
+// });
 
 export default router;

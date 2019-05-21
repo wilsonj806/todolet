@@ -11,7 +11,7 @@ node_js:
   - "stable"
 install:
   - npm install
-cache: npm ci
+cache: npm
 services:
   - mongodb
 before_script:
@@ -20,6 +20,7 @@ env:
   global:
     - DBNAME_LOCAL=Todo-local
     - NODE_ENV=testing
+    - MONGODB_URI_LOCAL=mongodb://http://127.0.0.1:27017
 
 # Staging for jobs
 jobs:

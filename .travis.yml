@@ -28,6 +28,4 @@ jobs:
     - stage: "Lint and test codebase"
       script: npm run lint
       script: npm run test
-    - stage: "Produce Coverage"
-      node_js: node
       script: npm run coverage

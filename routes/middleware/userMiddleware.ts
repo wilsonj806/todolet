@@ -10,10 +10,6 @@ import User from '../../models/user';
 const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
   const { username, password }: postUserReq = req.body;
   const validationErr = validationResult(req);
-  /**
-   * TODO verify that error handling actually works the way error handling should;
-   *
-   */
   try {
     if (!validationErr.isEmpty()) {
       const errors = validationErr.mapped();
@@ -57,7 +53,6 @@ const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
   }
 };
 
-// TODO: Properly implement the below login and logout things
 const postLogin: RequestHandler = (req, res, next): any => {
   const { username, _id } = req.user;
   const resJson: responseObj = {
@@ -78,7 +73,6 @@ const postLoginFail: ErrorRequestHandler = (err, req, res, next): any => {
 
 
 const getLogout: RequestHandler = (req, res, next): any => {
-  // console.log(req.session);
   req.logout();
   res.status(200).json({ msg: 'Logged out successfully' });
   next();

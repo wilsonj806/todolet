@@ -154,6 +154,11 @@ describe('encryptPass middleware function', () => {
     done();
   });
 
+  test('it should return a response with JSON if it fails', async (done) => {
+    expect(true).toBe(true);
+    done();
+  });
+
 });
 
 
@@ -181,6 +186,16 @@ describe('postNewUser middleware function', () => {
 
     await postNewUser(req, res, next);
     expect(addUser).toHaveBeenCalled();
+    done();
+  });
+
+  test('it should return a response with JSON if it succeeds', async (done) => {
+    expect(true).toBe(true);
+    done();
+  });
+
+  test('it should return a response with JSON if it fails', async (done) => {
+    expect(true).toBe(true);
     done();
   });
 

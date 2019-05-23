@@ -7,40 +7,44 @@ import 'dotenv/config';
 
 import User from '../../models/user';
 
-const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
-  const { username, password }: postUserReq = req.body;
+const checkFormErrors: RequestHandler = (req, res, next): any => {
   const validationErr = validationResult(req);
-  try {
-    if (!validationErr.isEmpty()) {
-      const errors = validationErr.mapped();
+  if (!validationErr.isEmpty()) {
+    const errors = validationErr.mapped();
 
+    const resJson: errorResponse = {
+      msg: 'Error invalid form fields',
+      errors,
+    };
+    res.status(400).json(resJson);
+  } else {
+    next();
+  }
+};
+
+const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
+  try {
+    const { username, password }: postUserReq = req.body;
+    const result = await User.find({ username });
+    if (result.length === 0) {
+      const genSalt = await bcrypt.genSalt(10);
+      const newPass = await bcrypt.hash(password, genSalt);
+      const newUser = await User.create({ username, password: newPass });
+
+      const { _id } = newUser;
+      const resJson: responseObj = {
+        msg: 'User added',
+        user: {
+          _id,
+          username,
+        },
+      };
+      res.status(200).json(resJson);
+    } else {
       const resJson: errorResponse = {
-        msg: 'Registration failed',
-        errors,
+        msg: `Error, user with username: ${username} exists already`,
       };
       res.status(400).json(resJson);
-    } else {
-      const result = await User.find({ username });
-      if (result.length === 0) {
-        const genSalt = await bcrypt.genSalt(10);
-        const newPass = await bcrypt.hash(password, genSalt);
-        const newUser = await User.create({ username, password: newPass });
-
-        const { _id } = newUser;
-        const resJson: responseObj = {
-          msg: 'User added',
-          user: {
-            _id,
-            username,
-          },
-        };
-        res.status(200).json(resJson);
-      } else {
-        const resJson: errorResponse = {
-          msg: `Error, user with username: ${username} exists already`,
-        };
-        res.status(400).json(resJson);
-      }
     }
   } catch (err) {
     const resJson: responseObj = {
@@ -85,6 +89,7 @@ const getOneUser: RequestHandler = (req, res, next): any => {
 
 
 export {
+  checkFormErrors,
   postNewUser,
   getOneUser,
   postLogin,

@@ -75,6 +75,20 @@ declare namespace AnotherTodoTypes {
     date_added : Date
     tags       : Array<string>
   }
+
+  /**
+   * ANCHOR Testing
+   *
+   */
+  interface MockReq {
+    username ?: string
+    password ?: string
+    password2 ?: string
+    [key: string] : any
+  }
+  interface MockRes {
+    [key: string] : any
+  }
 }
 
 declare module 'AnotherTodoTypes' {

@@ -14,7 +14,7 @@ import express from 'express';
 import { body } from 'express-validator/check';
 import passport from 'passport';
 import {
-  checkFormErrors, postNewUser, postLogin, postLoginFail, getLogout,
+  checkFormErrors, findUserWithUsername, postNewUser, postLogin, postLoginFail, getLogout,
 } from './middleware/userMiddleware';
 
 
@@ -40,6 +40,7 @@ router.post(
       .custom((value, { req }): boolean => value === req.body.password),
   ],
   checkFormErrors,
+  findUserWithUsername,
   postNewUser,
 );
 

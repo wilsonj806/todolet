@@ -22,30 +22,43 @@ const checkFormErrors: RequestHandler = (req, res, next): any => {
   }
 };
 
-const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
+const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any> => {
   try {
-    const { username, password }: postUserReq = req.body;
-    const result = await User.find({ username });
-    if (result.length === 0) {
-      const genSalt = await bcrypt.genSalt(10);
-      const newPass = await bcrypt.hash(password, genSalt);
-      const newUser = await User.create({ username, password: newPass });
-
-      const { _id } = newUser;
-      const resJson: responseObj = {
-        msg: 'User added',
-        user: {
-          _id,
-          username,
-        },
-      };
-      res.status(200).json(resJson);
-    } else {
+    const { username }: postUserReq = req.body;
+    const results = await User.find({ username });
+    if (results.length !== 0) {
       const resJson: errorResponse = {
         msg: `Error, user with username: ${username} exists already`,
       };
       res.status(400).json(resJson);
+    } else {
+      next();
     }
+  } catch (error) {
+    const resJson: responseObj = {
+      msg: 'Internal server error, sorry :(',
+    };
+    res.status(500).json(resJson);
+    console.error('Error alert, check below for additional logging \n', error);
+  }
+};
+
+const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
+  try {
+    const { username, password }: postUserReq = req.body;
+    const genSalt = await bcrypt.genSalt(10);
+    const newPass = await bcrypt.hash(password, genSalt);
+    const newUser = await User.create({ username, password: newPass });
+
+    const { _id } = newUser;
+    const resJson: responseObj = {
+      msg: 'User added',
+      user: {
+        _id,
+        username,
+      },
+    };
+    res.status(200).json(resJson);
   } catch (err) {
     const resJson: responseObj = {
       msg: 'Internal server error, sorry :(',
@@ -90,6 +103,7 @@ const getOneUser: RequestHandler = (req, res, next): any => {
 
 export {
   checkFormErrors,
+  findUserWithUsername,
   postNewUser,
   getOneUser,
   postLogin,

@@ -14,7 +14,13 @@ import express from 'express';
 import { body } from 'express-validator/check';
 import passport from 'passport';
 import {
-  checkFormErrors, findUserWithUsername, postNewUser, postLogin, postLoginFail, getLogout,
+  checkFormErrors,
+  findUserWithUsername,
+  postNewUser,
+  postLogin,
+  postLoginFail,
+  getLogout,
+  encryptPass,
 } from './middleware/userMiddleware';
 
 
@@ -41,6 +47,7 @@ router.post(
   ],
   checkFormErrors,
   findUserWithUsername,
+  encryptPass,
   postNewUser,
 );
 

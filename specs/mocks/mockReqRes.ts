@@ -11,9 +11,10 @@ const requestMock = (sessionData: any, body: any, _validationErrors: any = []): 
 });
 
 const responseMock = (): any => {
-  const res = {
+  let res = {
     status: null,
     json: null,
+    locals: {}
   };
   res.status = jest.fn().mockReturnValue(res);
   res.json = jest.fn().mockReturnValue(res);

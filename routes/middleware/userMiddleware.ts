@@ -43,12 +43,19 @@ const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any
   }
 };
 
+const encryptPass: RequestHandler = async (req, res, next): Promise<any> => {
+  const { password }: postUserReq = req.body;
+  const genSalt = await bcrypt.genSalt(10);
+  const newPass = await bcrypt.hash(password, genSalt);
+  res.locals.hashedPwd = newPass;
+  next();
+};
+
+
 const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
   try {
-    const { username, password }: postUserReq = req.body;
-    const genSalt = await bcrypt.genSalt(10);
-    const newPass = await bcrypt.hash(password, genSalt);
-    const newUser = await User.create({ username, password: newPass });
+    const { username }: postUserReq = req.body;
+    const newUser = await User.create({ username, password: res.locals.hashedPwd });
 
     const { _id } = newUser;
     const resJson: responseObj = {
@@ -104,6 +111,7 @@ const getOneUser: RequestHandler = (req, res, next): any => {
 export {
   checkFormErrors,
   findUserWithUsername,
+  encryptPass,
   postNewUser,
   getOneUser,
   postLogin,

@@ -29,19 +29,18 @@ import {
   encryptPass,
 } from '../routes/middleware/userMiddleware';
 
+
 /**
  * ANCHOR Unit tests
  * =============================================================
  *
  */
-
-let res;
-let next;
-
 describe('A middleware function to check the form for errors', () => {
+  let res;
+  const next = jest.fn();
+
   beforeAll(() => {
     res = responseMock();
-    next = jest.fn();
   });
 
   test('it should send a response with a list of form errors if it failed', () => {
@@ -77,12 +76,14 @@ describe('A middleware function to check the form for errors', () => {
 
 
 describe('A middleware function to query the database to see if there\'s a matching username', () => {
+  let res;
+  const next = jest.fn();
+
   beforeAll(() => {
     res = responseMock();
-    next = jest.fn();
   });
 
-  test('should call the next middleware function if there\'s no matching user',
+  test('it should call the next middleware function if there\'s no matching user',
     async (done) => {
       jest.setTimeout(30000);
       const req = requestMock({}, {
@@ -95,7 +96,7 @@ describe('A middleware function to query the database to see if there\'s a match
       done();
   });
 
-  test('should return a response with JSON if there is a matching user',
+  test('it should return a response with JSON if there is a matching user',
     async (done) => {
       const req = requestMock({}, {
         username: 'guest',
@@ -108,7 +109,7 @@ describe('A middleware function to query the database to see if there\'s a match
       done();
   });
 
-  test('should return a response with JSON if there is a database error',
+  test('it should return a response with JSON if there is a database error',
     async (done) => {
       const req = requestMock({}, {
         username: 'guest',
@@ -131,6 +132,9 @@ describe('A middleware function to query the database to see if there\'s a match
 
 
 describe('A middleware function that encrypts a requested password', () => {
+  let res;
+  const next = jest.fn();
+
   beforeEach(() => {
     /**
      * NOTE Setup notes:
@@ -141,7 +145,6 @@ describe('A middleware function that encrypts a requested password', () => {
      */
     jest.restoreAllMocks();
     res = responseMock();
-    next = jest.fn();
   });
 
   // NOTE this is more of an integration test
@@ -207,8 +210,32 @@ describe('A middleware function that encrypts a requested password', () => {
 
 
 describe('A middleware function that adds a user to the database', () => {
+  let res;
+  const next = jest.fn();
+
   beforeAll(() => {
     res = responseMock();
+  });
+
+  test('it should try fetching the encrypted password', async (done) => {
+    const mockUser = 'guest';
+    const mockPwd = 'aaaaaaaaaaaaaaa';
+    const mockPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('User add success');
+      }, 20);
+    })
+    res.locals.hashedPwd = mockPwd;
+    const req = requestMock({}, { username: mockUser });
+
+    const spy = jest.spyOn(User, 'create').mockImplementation(() => mockPromise as any);
+
+    await postNewUser(req, res, next);
+    expect(spy).toHaveBeenCalledWith({
+      username: mockUser,
+      password: res.locals.hashedPwd
+    });
+    done();
   });
 
   test('it should try adding a new user', async (done) => {
@@ -220,12 +247,11 @@ describe('A middleware function that adds a user to the database', () => {
           password: mockPwd
         }
         resolve(obj);
-      }, 300);
+      }, 20);
     })
     const mockPwd = 'wasd';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: mockPwd, potato: 'potato' });
 
-    const next = jest.fn(() => 'success');
     const addUser = jest.spyOn(User, 'create').mockImplementation(() => mockPromise as any);
 
     await postNewUser(req, res, next);
@@ -234,13 +260,58 @@ describe('A middleware function that adds a user to the database', () => {
   });
 
   test('it should return a response with JSON if it succeeds', async (done) => {
-    expect(false).toBe(true);
+    const mockUser = 'guest';
+    const mockPwd = 'aaaaaaaaaaaaaa';
+    const mockPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const obj = {
+          _id: '1234',
+          username: mockUser,
+          password: mockPwd
+        }
+        resolve(obj);
+      }, 20);
+    })
+    res.locals.hashedPwd = mockPwd;
+    const req = requestMock({}, { username: mockUser });
+
+    jest.spyOn(User, 'create').mockImplementation(() => mockPromise as any);
+
+    await postNewUser(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        msg: expect.any(String),
+        user: expect.objectContaining({
+          _id: expect.anything(),
+          username: expect.any(String)
+        })
+      })
+    );
     done();
   });
 
   test('it should return a response with JSON if it fails', async (done) => {
-    expect(false).toBe(true);
+    const mockUser = 'guest';
+    const mockPwd = 'aaaaaaaaaaaaaa';
+    const mockPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('mock error msg'));
+      }, 20);
+    })
+    res.locals.hashedPwd = mockPwd;
+    const req = requestMock({}, { username: mockUser });
+
+    jest.spyOn(User, 'create').mockImplementation(() => mockPromise as any);
+    jest.spyOn(console, 'error').mockImplementation(() => null);
+
+    await postNewUser(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        msg: expect.any(String),
+      })
+    );
     done();
   });
-
-})
+});

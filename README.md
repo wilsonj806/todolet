@@ -53,6 +53,12 @@ To run the server with file monitoring, use the below script:
   npm run server
 ```
 
+## Testing
+
+Tests for this project are located in `./specs/`.
+
+Test coverage report is linked in this [Coveralls repo](https://coveralls.io/github/wilsonj806/another-todo)
+
 ### Using TypeScript
 
 **NOTE** As this project uses a large amount of TypeScript, a code editor/ IDE with TypeScript support is **STRONGLY** recommended.

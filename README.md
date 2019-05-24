@@ -43,6 +43,16 @@ In addition, you'll need some way to test and make complex requests to the API e
 
 If you are using Postman, here's a link to the [Request Collection](https://www.getpostman.com/collections/aaeeff55faa8e026f8a5) that I use for the project.
 
+To run the server once, use the below script:
+```
+  npm run start
+```
+
+To run the server with file monitoring, use the below script:
+```
+  npm run server
+```
+
 ### Using TypeScript
 
 **NOTE** As this project uses a large amount of TypeScript, a code editor/ IDE with TypeScript support is **STRONGLY** recommended.

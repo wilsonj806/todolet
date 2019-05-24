@@ -8,6 +8,15 @@
  *   - encryptPass()
  *   - postNewUser()
  *
+ * NOTE Both unit tests and integration tests will need to be included
+ * =============================================================
+ *  - unit tests should make sure the function gives the same output everytime and makes whatever calls needed
+ *  - integration tests should verify that the database is being called and stuff like that
+ *
+ * TODO
+ * =============================================================
+ *  - test to make sure errors coming from the response object actually indicate an error
+ *
  */
 import bcrypt from 'bcryptjs';
 import { requestMock, responseMock } from './mocks/mockReqRes';
@@ -21,15 +30,6 @@ import {
 } from '../routes/middleware/userMiddleware';
 
 /**
- * NOTE Both unit tests and integration tests will need to be included
- * - unit tests should make sure the function gives the same output everytime and makes whatever calls needed
- * - integration tests should verify that the database is being called and stuff like that
- *
- */
-
-
-
-/**
  * ANCHOR Unit tests
  * =============================================================
  *
@@ -38,7 +38,7 @@ import {
 let res;
 let next;
 
-describe('checkFormError middleware function to check the form for errors', () => {
+describe('A middleware function to check the form for errors', () => {
   beforeAll(() => {
     res = responseMock();
     next = jest.fn();
@@ -76,7 +76,7 @@ describe('checkFormError middleware function to check the form for errors', () =
 });
 
 
-describe('findUserWithUsername middleware function', () => {
+describe('A middleware function to query the database to see if there\'s a matching username', () => {
   beforeAll(() => {
     res = responseMock();
     next = jest.fn();
@@ -130,7 +130,7 @@ describe('findUserWithUsername middleware function', () => {
 });
 
 
-describe('encryptPass middleware function', () => {
+describe('A middleware function that encrypts a requested password', () => {
   beforeEach(() => {
     /**
      * NOTE Setup notes:
@@ -144,17 +144,7 @@ describe('encryptPass middleware function', () => {
     next = jest.fn();
   });
 
-  afterEach(() => {
-    /**
-     * NOTE Teardown notes:
-     * - reset spies to their original state
-     *   - means all mock implementations and returns are cleared
-     * - reset the mock response
-     */
-    jest.resetAllMocks();
-    res = null;
-  })
-
+  // NOTE this is more of an integration test
   test('it should call bcrypt', async (done) => {
     const mockPwd = 'wasd';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
@@ -169,25 +159,54 @@ describe('encryptPass middleware function', () => {
     done();
   });
 
-  test('it should pass the encrypted password to the next middleware function', async (done) => {
+  test('it should pass the password to the next middleware function', async (done) => {
     const mockPwd = 'waaaasd';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
+    jest.spyOn(bcrypt, 'hash').mockImplementation(() => {
+      return mockPwd;
+    });
     await encryptPass(req, res, next);
 
     expect(res.locals).toHaveProperty('hashedPwd');
+    expect(res.locals.hashedPwd).not.toBe(null);
+    expect(next).toHaveBeenCalled();
+    done();
+  });
+
+  // NOTE this test is expected to run slower than most tests(duration > 50ms)
+  test('it should encrypt the password', async (done) => {
+    const mockPwd = 'welcome';
+    const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
+    await encryptPass(req, res, next);
+
+    expect(res.locals.hashedPwd).not.toEqual(mockPwd);
     expect(next).toHaveBeenCalled();
     done();
   });
 
   test('it should return a response with JSON if it fails', async (done) => {
-    expect(false).toBe(true);
+    const mockPwd = 'wasd';
+    const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
+    jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => {
+      throw new Error('mock error')
+    });
+
+    jest.spyOn(console, 'error').mockImplementation(() => null);
+
+    await encryptPass(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          msg: expect.any(String),
+        })
+    );
     done();
   });
 
 });
 
 
-describe('postNewUser middleware function', () => {
+describe('A middleware function that adds a user to the database', () => {
   beforeAll(() => {
     res = responseMock();
   });

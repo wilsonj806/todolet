@@ -113,6 +113,7 @@ describe('findUserWithUsername middleware function', () => {
         username: 'guest',
       });
       const next = jest.fn(()=> 'success');
+      jest.spyOn(console, 'error').mockImplementation(() => null);
       jest.spyOn(User, 'find').mockImplementation(() => {
         throw new Error('Database Error')
       });

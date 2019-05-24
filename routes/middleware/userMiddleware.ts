@@ -44,11 +44,19 @@ const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any
 };
 
 const encryptPass: RequestHandler = async (req, res, next): Promise<any> => {
-  const { password }: postUserReq = req.body;
-  const genSalt = await bcrypt.genSalt(10);
-  const newPass = await bcrypt.hash(password, genSalt);
-  res.locals.hashedPwd = newPass;
-  next();
+  try {
+    const { password }: postUserReq = req.body;
+    const genSalt = await bcrypt.genSalt(10);
+    const newPass = await bcrypt.hash(password, genSalt);
+    res.locals.hashedPwd = newPass;
+    next();
+  } catch (error) {
+    const resJson: responseObj = {
+      msg: 'Internal server error, sorry :(',
+    };
+    res.status(500).json(resJson);
+    console.error('Error alert, check below for additional logging \n', error);
+  }
 };
 
 

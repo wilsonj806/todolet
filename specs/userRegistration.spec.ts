@@ -12,6 +12,7 @@
 import bcrypt from 'bcryptjs';
 import { requestMock, responseMock } from './mocks/mockReqRes';
 import User from '../models/user';
+
 import {
   postNewUser,
   checkFormErrors,
@@ -35,13 +36,15 @@ import {
  */
 
 let res;
+let next;
 
 describe('checkFormError middleware function to check the form for errors', () => {
   beforeAll(() => {
     res = responseMock();
+    next = jest.fn();
   });
 
-  test('it should send a response with JSON if it failed', () => {
+  test('it should send a response with a list of form errors if it failed', () => {
     const req = requestMock({}, {
       username: 'guest',
       password: undefined,
@@ -50,12 +53,12 @@ describe('checkFormError middleware function to check the form for errors', () =
     });
     req._validationErrors = [{location: 'username'}];
 
-    const next = jest.fn(()=> 'success');
     jest.spyOn(User, 'find');
 
     checkFormErrors(req, res, next);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalled();
+    expect(res.mockJson).toHaveProperty('errors');
   });
 
   test('it should go to the next middleware function if there are no issues', () => {
@@ -66,7 +69,6 @@ describe('checkFormError middleware function to check the form for errors', () =
       potato: 'potato'
     });
     req._validationErrors = []
-    const next = jest.fn(()=> 'success');
 
     checkFormErrors(req, res, next);
     expect(next).toHaveBeenCalled();
@@ -77,6 +79,7 @@ describe('checkFormError middleware function to check the form for errors', () =
 describe('findUserWithUsername middleware function', () => {
   beforeAll(() => {
     res = responseMock();
+    next = jest.fn();
   });
 
   test('should call the next middleware function if there\'s no matching user',
@@ -85,7 +88,6 @@ describe('findUserWithUsername middleware function', () => {
       const req = requestMock({}, {
         username: 'guest',
       });
-      const next = jest.fn(()=> 'success');
       jest.spyOn(User, 'find').mockImplementation(() => ([] as any));
 
       await findUserWithUsername(req, res, next);
@@ -98,7 +100,6 @@ describe('findUserWithUsername middleware function', () => {
       const req = requestMock({}, {
         username: 'guest',
       });
-      const next = jest.fn(()=> 'success');
       jest.spyOn(User, 'find').mockImplementation(() => ([{username: 'guest'}] as any));
 
       await findUserWithUsername(req, res, next);
@@ -112,7 +113,6 @@ describe('findUserWithUsername middleware function', () => {
       const req = requestMock({}, {
         username: 'guest',
       });
-      const next = jest.fn(()=> 'success');
       jest.spyOn(console, 'error').mockImplementation(() => null);
       jest.spyOn(User, 'find').mockImplementation(() => {
         throw new Error('Database Error')
@@ -120,23 +120,48 @@ describe('findUserWithUsername middleware function', () => {
 
       await findUserWithUsername(req, res, next);
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          msg: expect.any(String),
+        })
+      );
       done();
   });
 });
 
 
 describe('encryptPass middleware function', () => {
-  beforeAll(() => {
+  beforeEach(() => {
+    /**
+     * NOTE Setup notes:
+     * - restore spies to their original state
+     *   - also means spies will call through to the original method
+     * - reset the mock response
+     * - reset the next() middleware function
+     */
+    jest.restoreAllMocks();
     res = responseMock();
+    next = jest.fn();
   });
+
+  afterEach(() => {
+    /**
+     * NOTE Teardown notes:
+     * - reset spies to their original state
+     *   - means all mock implementations and returns are cleared
+     * - reset the mock response
+     */
+    jest.resetAllMocks();
+    res = null;
+  })
 
   test('it should call bcrypt', async (done) => {
     const mockPwd = 'wasd';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
-    const next = () => 'success';
     const salt = jest.spyOn(bcrypt, 'genSalt');
-    const hash = jest.spyOn(bcrypt, 'hash').mockImplementation(() => mockPwd);
+    const hash = jest.spyOn(bcrypt, 'hash').mockImplementation(() => {
+      return mockPwd;
+    });
 
     await encryptPass(req, res, next);
     expect(salt).toHaveBeenCalled();
@@ -144,19 +169,18 @@ describe('encryptPass middleware function', () => {
     done();
   });
 
-  test('it should pass the encrypted password', async (done) => {
-    const mockPwd = 'wasd';
+  test('it should pass the encrypted password to the next middleware function', async (done) => {
+    const mockPwd = 'waaaasd';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
-    const next = jest.fn(() => 'success');
-
     await encryptPass(req, res, next);
+
     expect(res.locals).toHaveProperty('hashedPwd');
     expect(next).toHaveBeenCalled();
     done();
   });
 
   test('it should return a response with JSON if it fails', async (done) => {
-    expect(true).toBe(true);
+    expect(false).toBe(true);
     done();
   });
 
@@ -191,12 +215,12 @@ describe('postNewUser middleware function', () => {
   });
 
   test('it should return a response with JSON if it succeeds', async (done) => {
-    expect(true).toBe(true);
+    expect(false).toBe(true);
     done();
   });
 
   test('it should return a response with JSON if it fails', async (done) => {
-    expect(true).toBe(true);
+    expect(false).toBe(true);
     done();
   });
 

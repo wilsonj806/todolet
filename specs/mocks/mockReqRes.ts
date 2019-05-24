@@ -10,14 +10,22 @@ const requestMock = (sessionData: any, body: any, _validationErrors: any = []): 
   body,
 });
 
+/**
+ * NOTE ALL STUBBED Express Response methods need to return res
+ *  otherwise it breaks when you try to chain it
+ */
 const responseMock = (): any => {
-  let res = {
+  const res = {
     status: null,
     json: null,
-    locals: {}
+    locals: {},
+    mockJson: null
   };
   res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockImplementation((obj) => {
+    res.mockJson = obj;
+    return res;
+  });
   return res;
 };
 

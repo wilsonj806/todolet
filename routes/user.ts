@@ -17,11 +17,13 @@ import {
   checkFormErrors,
   findUserWithUsername,
   postNewUser,
+  encryptPass,
+} from './middleware/userRegistrationMiddleware';
+import {
   postLogin,
   postLoginFail,
   getLogout,
-  encryptPass,
-} from './middleware/userMiddleware';
+} from './middleware/userAuthMiddleware';
 
 
 const router = express.Router();

@@ -15,7 +15,7 @@
  *
  * TODO
  * =============================================================
- *  - test to make sure errors coming from the response object actually indicate an error
+ *  - test to make sure that the postNewUser() middleware function sends back a response with user data
  *
  */
 import bcrypt from 'bcryptjs';
@@ -27,7 +27,7 @@ import {
   checkFormErrors,
   findUserWithUsername,
   encryptPass,
-} from '../routes/middleware/userMiddleware';
+} from '../routes/middleware/userRegistrationMiddleware';
 
 
 /**
@@ -38,6 +38,7 @@ import {
 describe('A middleware function to check the form for errors', () => {
   let res;
   const next = jest.fn();
+  const regex = /^(Error\:)/;
 
   beforeAll(() => {
     res = responseMock();
@@ -55,6 +56,7 @@ describe('A middleware function to check the form for errors', () => {
     jest.spyOn(User, 'find');
 
     checkFormErrors(req, res, next);
+
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalled();
     expect(res.mockJson).toHaveProperty('errors');
@@ -70,7 +72,25 @@ describe('A middleware function to check the form for errors', () => {
     req._validationErrors = []
 
     checkFormErrors(req, res, next);
+
     expect(next).toHaveBeenCalled();
+  });
+
+  test('it should send a response starting with "Error":', () => {
+    const req = requestMock({}, {
+      username: 'guest',
+      password: undefined,
+      password2: undefined,
+      potato: 'potato'
+    });
+    req._validationErrors = [{location: 'username'}];
+
+    jest.spyOn(User, 'find');
+
+    checkFormErrors(req, res, next);
+
+    const regexTest = regex.test(res.mockJson.msg);
+    expect(regexTest).toBe(true);
   });
 });
 
@@ -78,6 +98,7 @@ describe('A middleware function to check the form for errors', () => {
 describe('A middleware function to query the database to see if there\'s a matching username', () => {
   let res;
   const next = jest.fn();
+  const regex = /^(Error\:)/;
 
   beforeAll(() => {
     res = responseMock();
@@ -85,13 +106,14 @@ describe('A middleware function to query the database to see if there\'s a match
 
   test('it should call the next middleware function if there\'s no matching user',
     async (done) => {
-      jest.setTimeout(30000);
       const req = requestMock({}, {
         username: 'guest',
       });
+
       jest.spyOn(User, 'find').mockImplementation(() => ([] as any));
 
       await findUserWithUsername(req, res, next);
+
       expect(next).toHaveBeenCalled();
       done();
   });
@@ -101,9 +123,11 @@ describe('A middleware function to query the database to see if there\'s a match
       const req = requestMock({}, {
         username: 'guest',
       });
+
       jest.spyOn(User, 'find').mockImplementation(() => ([{username: 'guest'}] as any));
 
       await findUserWithUsername(req, res, next);
+
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalled();
       done();
@@ -114,12 +138,14 @@ describe('A middleware function to query the database to see if there\'s a match
       const req = requestMock({}, {
         username: 'guest',
       });
+
       jest.spyOn(console, 'error').mockImplementation(() => null);
       jest.spyOn(User, 'find').mockImplementation(() => {
         throw new Error('Database Error')
       });
 
       await findUserWithUsername(req, res, next);
+
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -128,12 +154,33 @@ describe('A middleware function to query the database to see if there\'s a match
       );
       done();
   });
+
+  test('it should send a response starting with "Error":', async (done) => {
+    const req = requestMock({}, {
+      username: 'guest',
+      password: undefined,
+      password2: undefined,
+      potato: 'potato'
+    });
+
+    jest.spyOn(console, 'error').mockImplementation(() => null);
+    jest.spyOn(User, 'find').mockImplementation(() => {
+      throw new Error('Database Error')
+    });
+
+    await findUserWithUsername(req, res, next);
+
+    const regexTest = regex.test(res.mockJson.msg);
+    expect(regexTest).toBe(true);
+    done();
+  });
 });
 
 
 describe('A middleware function that encrypts a requested password', () => {
   let res;
   const next = jest.fn();
+  const regex = /^(Error\:)/;
 
   beforeEach(() => {
     /**
@@ -151,12 +198,14 @@ describe('A middleware function that encrypts a requested password', () => {
   test('it should call bcrypt', async (done) => {
     const mockPwd = 'wasd';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
+
     const salt = jest.spyOn(bcrypt, 'genSalt');
     const hash = jest.spyOn(bcrypt, 'hash').mockImplementation(() => {
       return mockPwd;
     });
 
     await encryptPass(req, res, next);
+
     expect(salt).toHaveBeenCalled();
     expect(hash).toHaveBeenCalled();
     done();
@@ -165,9 +214,11 @@ describe('A middleware function that encrypts a requested password', () => {
   test('it should pass the password to the next middleware function', async (done) => {
     const mockPwd = 'waaaasd';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
+
     jest.spyOn(bcrypt, 'hash').mockImplementation(() => {
       return mockPwd;
     });
+
     await encryptPass(req, res, next);
 
     expect(res.locals).toHaveProperty('hashedPwd');
@@ -180,6 +231,7 @@ describe('A middleware function that encrypts a requested password', () => {
   test('it should encrypt the password', async (done) => {
     const mockPwd = 'welcome';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
+
     await encryptPass(req, res, next);
 
     expect(res.locals.hashedPwd).not.toEqual(mockPwd);
@@ -190,13 +242,14 @@ describe('A middleware function that encrypts a requested password', () => {
   test('it should return a response with JSON if it fails', async (done) => {
     const mockPwd = 'wasd';
     const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
+
     jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => {
       throw new Error('mock error')
     });
-
     jest.spyOn(console, 'error').mockImplementation(() => null);
 
     await encryptPass(req, res, next);
+
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -206,12 +259,29 @@ describe('A middleware function that encrypts a requested password', () => {
     done();
   });
 
+  test('it should send a response starting with "Error":', async (done) => {
+    jest.setTimeout(5000);
+    const mockPwd = 'waaaasd';
+    const req = requestMock({}, { username: 'guest', password: mockPwd, password2: undefined, potato: 'potato' });
+    jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => {
+      throw new Error('mock error')
+    });
+    jest.spyOn(console, 'error').mockImplementation(() => null);
+
+    await encryptPass(req, res, next);
+
+    const regexTest = regex.test(res.mockJson.msg);
+    expect(regexTest).toBe(true);
+    done();
+  });
+
 });
 
 
 describe('A middleware function that adds a user to the database', () => {
   let res;
   const next = jest.fn();
+  const regex = /^(Error\:)/;
 
   beforeAll(() => {
     res = responseMock();
@@ -221,9 +291,7 @@ describe('A middleware function that adds a user to the database', () => {
     const mockUser = 'guest';
     const mockPwd = 'aaaaaaaaaaaaaaa';
     const mockPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('User add success');
-      }, 20);
+      setTimeout(() => resolve('User add success'), 20);
     })
     res.locals.hashedPwd = mockPwd;
     const req = requestMock({}, { username: mockUser });
@@ -245,7 +313,7 @@ describe('A middleware function that adds a user to the database', () => {
           _id: '1234',
           username: 'guest',
           password: mockPwd
-        }
+        };
         resolve(obj);
       }, 20);
     })
@@ -255,6 +323,7 @@ describe('A middleware function that adds a user to the database', () => {
     const addUser = jest.spyOn(User, 'create').mockImplementation(() => mockPromise as any);
 
     await postNewUser(req, res, next);
+
     expect(addUser).toHaveBeenCalled();
     done();
   });
@@ -278,6 +347,7 @@ describe('A middleware function that adds a user to the database', () => {
     jest.spyOn(User, 'create').mockImplementation(() => mockPromise as any);
 
     await postNewUser(req, res, next);
+
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -298,7 +368,7 @@ describe('A middleware function that adds a user to the database', () => {
       setTimeout(() => {
         reject(new Error('mock error msg'));
       }, 20);
-    })
+    });
     res.locals.hashedPwd = mockPwd;
     const req = requestMock({}, { username: mockUser });
 
@@ -306,12 +376,34 @@ describe('A middleware function that adds a user to the database', () => {
     jest.spyOn(console, 'error').mockImplementation(() => null);
 
     await postNewUser(req, res, next);
+
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         msg: expect.any(String),
       })
     );
+    done();
+  });
+
+  test('it should send a response starting with "Error":', async (done) => {
+    const mockUser = 'guest';
+    const mockPwd = 'aaaaaaaaaaaaaa';
+    const mockPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('mock error msg'));
+      }, 20);
+    });
+    res.locals.hashedPwd = mockPwd;
+    const req = requestMock({}, { username: mockUser });
+
+    jest.spyOn(User, 'create').mockImplementation(() => mockPromise as any);
+    jest.spyOn(console, 'error').mockImplementation(() => null);
+
+    await postNewUser(req, res, next);
+
+    const regexTest = regex.test(res.mockJson.msg);
+    expect(regexTest).toBe(true);
     done();
   });
 });

@@ -1,4 +1,4 @@
-import { RequestHandler, ErrorRequestHandler } from 'express';
+import { RequestHandler } from 'express';
 import { validationResult } from 'express-validator/check';
 import bcrypt from 'bcryptjs';
 import { postUserReq, responseObj, errorResponse } from '../../types/index';
@@ -13,7 +13,7 @@ const checkFormErrors: RequestHandler = (req, res, next): any => {
     const errors = validationErr.mapped();
 
     const resJson: errorResponse = {
-      msg: 'Error invalid form fields',
+      msg: 'Error: Invalid form fields',
       errors,
     };
     res.status(400).json(resJson);
@@ -28,7 +28,7 @@ const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any
     const results = await User.find({ username });
     if (results.length !== 0) {
       const resJson: errorResponse = {
-        msg: `Error, user with username: ${username} exists already`,
+        msg: `Error: user with username: ${username} exists already`,
       };
       res.status(400).json(resJson);
     } else {
@@ -36,7 +36,7 @@ const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any
     }
   } catch (error) {
     const resJson: responseObj = {
-      msg: 'Internal server error, sorry :(',
+      msg: 'Error: Internal server error, sorry :(',
     };
     res.status(500).json(resJson);
     console.error('Error alert, check below for additional logging \n', error);
@@ -52,7 +52,7 @@ const encryptPass: RequestHandler = async (req, res, next): Promise<any> => {
     next();
   } catch (error) {
     const resJson: responseObj = {
-      msg: 'Internal server error, sorry :(',
+      msg: 'Error: Internal server error, sorry :(',
     };
     res.status(500).json(resJson);
     console.error('Error alert, check below for additional logging \n', error);
@@ -76,7 +76,7 @@ const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
     res.status(200).json(resJson);
   } catch (err) {
     const resJson: responseObj = {
-      msg: 'Internal server error, sorry :(',
+      msg: 'Error: Internal server error, sorry :(',
     };
     res.status(500).json(resJson);
     console.error('Error alert, check below for additional logging \n', err);
@@ -85,44 +85,9 @@ const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
   }
 };
 
-const postLogin: RequestHandler = (req, res, next): any => {
-  const { username, _id } = req.user;
-  const resJson: responseObj = {
-    msg: 'Login Successful',
-    user: {
-      _id,
-      username,
-    },
-  };
-  res.status(200).json(resJson);
-  next();
-};
-
-const postLoginFail: ErrorRequestHandler = (err, req, res, next): any => {
-  res.status(401).json({ msg: 'Login failed' });
-  next();
-};
-
-
-const getLogout: RequestHandler = (req, res, next): any => {
-  req.logout();
-  res.status(200).json({ msg: 'Logged out successfully' });
-  next();
-};
-
-// TODO Figure out what to do with this
-const getOneUser: RequestHandler = (req, res, next): any => {
-  next();
-};
-
-
 export {
   checkFormErrors,
   findUserWithUsername,
   encryptPass,
   postNewUser,
-  getOneUser,
-  postLogin,
-  postLoginFail,
-  getLogout,
 };

@@ -1,7 +1,8 @@
 /**
- * ANCHOR Unit Tests for middleware
+ * ANCHOR Unit Tests for User Registration middleware
  * =============================================================
  * - It's all blackbox testing, mostly tries to stub dependent modules
+ * - All test suites check to make sure error responses are consistent!
  * - Test suites for:
  *   - checkFormError()
  *   - findUserWithUsername()
@@ -43,6 +44,7 @@ describe('A middleware function to check the form for errors', () => {
   beforeAll(() => {
     res = responseMock();
   });
+
 
   test('it should send a response with a list of form errors if it failed', () => {
     const req = requestMock({}, {
@@ -104,6 +106,7 @@ describe('A middleware function to query the database to see if there\'s a match
     res = responseMock();
   });
 
+
   test('it should call the next middleware function if there\'s no matching user',
     async (done) => {
       const req = requestMock({}, {
@@ -118,8 +121,10 @@ describe('A middleware function to query the database to see if there\'s a match
       done();
   });
 
-  test('it should return a response with JSON if there is a matching user',
+  // FIXME make this test more comprehensive/ make it fail if the error message doesn't say there was a matching user
+  test('it should return an error response with JSON if there is a matching user',
     async (done) => {
+      const regex = /username:(?=.*\bexists\b)(?=.*\balready\b)/i
       const req = requestMock({}, {
         username: 'guest',
       });
@@ -128,8 +133,14 @@ describe('A middleware function to query the database to see if there\'s a match
 
       await findUserWithUsername(req, res, next);
 
+
+      // const existTest = existsRegex.test(res.mockJson.msg);
+      // const userTest = userRegex.test(res.mockJson.msg);
+      // const regexTest = existTest && userTest;
+      const regexTest = regex.test(res.mockJson.msg);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalled();
+      expect(regexTest).toBe(true);
       done();
   });
 
@@ -193,6 +204,7 @@ describe('A middleware function that encrypts a requested password', () => {
     jest.restoreAllMocks();
     res = responseMock();
   });
+
 
   // NOTE this is more of an integration test
   test('it should call bcrypt', async (done) => {

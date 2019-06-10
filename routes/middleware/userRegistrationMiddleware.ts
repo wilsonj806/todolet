@@ -28,7 +28,7 @@ const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any
     const results = await User.find({ username });
     if (results.length !== 0) {
       const resJson: errorResponse = {
-        msg: `Error: user with username: ${username} exists already`,
+        msg: `Error: User with username: ${username} exists already`,
       };
       res.status(400).json(resJson);
     } else {

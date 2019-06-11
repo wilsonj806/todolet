@@ -398,7 +398,7 @@ describe('A middleware function that adds a user to the database', () => {
     done();
   });
 
-  test('it should send a response starting with "Error":', async (done) => {
+  test('it should send a response starting with "Error:" if it fails', async (done) => {
     const mockUser = 'guest';
     const mockPwd = 'aaaaaaaaaaaaaa';
     const mockPromise = new Promise((resolve, reject) => {

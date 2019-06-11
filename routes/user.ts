@@ -14,8 +14,16 @@ import express from 'express';
 import { body } from 'express-validator/check';
 import passport from 'passport';
 import {
-  postNewUser, postLogin, postLoginFail, getLogout,
-} from './middleware/userMiddleware';
+  checkFormErrors,
+  findUserWithUsername,
+  postNewUser,
+  encryptPass,
+} from './middleware/userRegistrationMiddleware';
+import {
+  postLogin,
+  postLoginFail,
+  getLogout,
+} from './middleware/userAuthMiddleware';
 
 
 const router = express.Router();
@@ -39,6 +47,9 @@ router.post(
     body('password2', 'Passwords don\'t match').exists()
       .custom((value, { req }): boolean => value === req.body.password),
   ],
+  checkFormErrors,
+  findUserWithUsername,
+  encryptPass,
   postNewUser,
 );
 

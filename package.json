@@ -8,16 +8,15 @@
     "url": "https://github.com/wilsonj806/another-todo.git"
   },
   "scripts": {
-    "heroku-prebuild": "echo This runs before Heroku installs your dependencies. && npm i --only=dev && npm run build && echo TypeScript build successful && npm prune",
+    "heroku-prebuild": "npm i --only=dev && npm run build && echo TypeScript build successful && npm prune",
     "build": "tsc",
     "start": "node dist/server.js",
-    "deploy": "gh-pages -d client/build",
     "server": "nodemon dist/server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "watch-ts": "tsc --watch",
     "lint": "eslint ./**/*.ts",
-    "test": "jest ./specs/*"
+    "test": "jest ./specs/*",
+    "coverage": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
@@ -58,14 +57,17 @@
     "@types/react": "^16.7.20",
     "@types/react-dom": "^16.0.11",
     "@types/react-router-dom": "^4.3.1",
+    "@types/supertest": "^2.0.7",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
+    "coveralls": "^3.0.3",
     "eslint": "^5.3.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-watch": "^5.1.2",
     "jest": "^24.8.0",
     "nodemon": "^1.17.5",
+    "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "typescript": "3.2.4"
   },

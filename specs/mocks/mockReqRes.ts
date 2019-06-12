@@ -5,9 +5,10 @@
  */
 import { MockReq, MockRes } from "../../types";
 
-const requestMock = (sessionData: any, body: any, _validationErrors: any = []): any => ({
+const requestMock = (sessionData: any = {}, body: any = {}, _validationErrors: any = []): any => ({
   session: sessionData,
   body,
+  logout: jest.fn().mockImplementation(() => true)
 });
 
 /**

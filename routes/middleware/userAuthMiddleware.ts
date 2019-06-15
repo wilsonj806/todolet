@@ -1,7 +1,6 @@
 import { RequestHandler, ErrorRequestHandler } from 'express';
 import { responseObj } from '../../types/index';
 
-
 const postLogin: RequestHandler = (req, res, next): any => {
   const { username, _id } = req.user;
   const resJson: responseObj = {

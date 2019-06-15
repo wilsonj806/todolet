@@ -7,6 +7,7 @@ import 'dotenv/config';
 
 import User from '../../models/user';
 
+// ----- TODO move this out to a commonMiddleware.ts file eventually?
 const checkFormErrors: RequestHandler = (req, res, next): any => {
   const validationErr = validationResult(req);
   if (!validationErr.isEmpty()) {

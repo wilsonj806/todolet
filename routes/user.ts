@@ -57,12 +57,15 @@ router.post(
  * ANCHOR: POST login user with credentials
  * =============================================================
  * Requirements(NOTE should be replaced with actual test specs):
- *  - authenticate user login request
- *  - on failure to login, send a response saying that the login failed
- *  - OR send a response to the client saying that the login succeeded
+ *  TODO make sure that the checkFormErrors middleware integrates well
  */
 router.post(
   '/login',
+  [
+    body('username', 'Username is required').exists({ checkFalsy: true }),
+    body('password', 'Password is required').exists({ checkFalsy: true }),
+  ],
+  checkFormErrors,
   passport.authenticate('local', { failWithError: true }),
   postLogin,
   postLoginFail,

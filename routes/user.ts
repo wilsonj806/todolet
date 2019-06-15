@@ -14,7 +14,6 @@ import express from 'express';
 import { body } from 'express-validator/check';
 import passport from 'passport';
 import {
-  checkFormErrors,
   findUserWithUsername,
   postNewUser,
   encryptPass,
@@ -24,6 +23,8 @@ import {
   postLoginFail,
   getLogout,
 } from './middleware/userAuthMiddleware';
+import checkFormErrors from './middleware/commonMiddleware';
+// import { checkFormErrors } from './middleware/commonMiddleware';
 
 
 const router = express.Router();

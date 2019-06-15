@@ -1,27 +1,10 @@
 import { RequestHandler } from 'express';
-import { validationResult } from 'express-validator/check';
 import bcrypt from 'bcryptjs';
 import { postUserReq, responseObj, errorResponse } from '../../types/index';
 
 import 'dotenv/config';
 
 import User from '../../models/user';
-
-// ----- TODO move this out to a commonMiddleware.ts file eventually?
-const checkFormErrors: RequestHandler = (req, res, next): any => {
-  const validationErr = validationResult(req);
-  if (!validationErr.isEmpty()) {
-    const errors = validationErr.mapped();
-
-    const resJson: errorResponse = {
-      msg: 'Error: Invalid form fields',
-      errors,
-    };
-    res.status(400).json(resJson);
-  } else {
-    next();
-  }
-};
 
 const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any> => {
   try {
@@ -87,7 +70,6 @@ const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
 };
 
 export {
-  checkFormErrors,
   findUserWithUsername,
   encryptPass,
   postNewUser,

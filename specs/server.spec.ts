@@ -1,5 +1,5 @@
 /**
- * ANCHOR General test suite for the server
+ * ANCHOR General integration tests for the server
  * =======================================================================
  *
  */

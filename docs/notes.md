@@ -56,3 +56,44 @@ In terms of the `CookieOption`, it should include some of the below:
   ```
 - "maxAge" sets an expiration time for sessions
 - "secure" when set to `true` basically restricts websites that can access cookies to HTTPS-enabled sites
+
+## IIFE breakdown
+
+Note the below might not be technically correct, but it's the way I mentally work it out.
+
+IIFEs are immediately invoked function expressions and look like the below(without using arrrow functions):
+  ```js
+    (function(args) {
+      doStuff(args)
+    })(args)
+  ```
+The same IIFE but as an arrow function for clarity purposes:
+  ```js
+    ((args) => {
+      doStuff(args)
+    })(args)
+  ```
+There are two parts to this, there's the function declaration in the grouping operator, and there's the extra parentheses after that with function arguments passed in.
+
+Several things happen:
+1. first the function is temporarily stored in the JS engine's memory(i.e not Global memory)
+2. then it's immediately invoked with the args passed in
+  - note that this looks about the same as doing the below:
+    ```js
+      const storedInMemFn = (args) => {
+        doStuff(args)
+      };
+      storedInMemFn(args)
+    ```
+  - where `storedInMemFn` is a variable stored in global memory whose value is a function
+  - same principle as the below:
+    ```js
+      import express from 'express';
+      const app = express();
+    ```
+  - where express is invoked as a function after import
+3. finally, the function is cleared from memory as the engine was told not to save it
+
+See below for some extra reading on how the JS engine executes code:
+- [medium article 1](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
+- [blog article](https://www.valentinog.com/blog/context/)

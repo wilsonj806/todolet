@@ -27,4 +27,4 @@ jobs:
   include:
     - stage: "Lint and test codebase"
       script: npm run lint
-      script: npm run test
+      script: npm run coverage

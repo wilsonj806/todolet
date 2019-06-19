@@ -5,7 +5,9 @@
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/wilsonj806/another-todo.svg)](https://github.com/wilsonj806/another-todo)
 ![Current package.json version](https://img.shields.io/github/package-json/v/wilsonj806/another-todo.svg?label=current%20version)
 ![Top language](https://img.shields.io/github/languages/top/wilsonj806/another-todo.svg)
-![Travis (.org)](https://img.shields.io/travis/wilsonj806/another-todo.svg)
+[![Travis CI for the project](https://img.shields.io/travis/wilsonj806/another-todo.svg)](https://travis-ci.org/wilsonj806/another-todo)
+[![Coverage Status Master](https://coveralls.io/repos/github/wilsonj806/another-todo/badge.svg?branch=master)](https://coveralls.io/github/wilsonj806/another-todo?branch=master)
+
 
 ## General Description
 
@@ -21,7 +23,7 @@ You'll need to have some version of Node.js(and subsequently npm, which is inclu
 
 Clone the repo with your favorite SCM or manually download it
   ```
-  git clone https://github.com/wilsonj806/speedy-dashboard.git
+    git clone https://github.com/wilsonj806/another-todo.git
   ```
 
 Change your working directory to the folder of the newly cloned repo and run ```npm install``` in your command line interface.
@@ -34,10 +36,31 @@ Before you start development, you'll need your own **local** `.env` file with th
     MONGODB_URI_LOCAL : the URI for your local MongoDB cluster
     DBNAME            : the name of your database within the cluster
     DBNAME_LOCAL      : the name of your local database
+    SECRET            : a string to establish the `express-session` with
   ```
+
+In addition, you'll need some way to test and make complex requests to the API endpoints for the app. [Postman](https://www.getpostman.com/) is mostly what I use for the project, but other tools probably work just as well.
+
+If you are using Postman, here's a link to the [Request Collection](https://www.getpostman.com/collections/aaeeff55faa8e026f8a5) that I use for the project.
+
+To run the server once, use the below script:
+```
+  npm run start
+```
+
+To run the server with file monitoring, use the below script:
+```
+  npm run server
+```
+
+## Testing
+
+Tests for this project are located in `./specs/`.
+
+Test coverage report is linked in this [Coveralls repo](https://coveralls.io/github/wilsonj806/another-todo)
 
 ### Using TypeScript
 
-**NOTE** As this project uses a large amount of TypeScript, a code editor/ IDE with TypeScript/ TSLint support is **STRONGLY** recommended.
+**NOTE** As this project uses a large amount of TypeScript, a code editor/ IDE with TypeScript support is **STRONGLY** recommended.
 - Visual Studio/ Visual Studio Code is recommended, but Sublime, WebStorm, Eclipse and other editors support it as well
   - See the [official site](https://www.typescriptlang.org/index.html#download-links) for more

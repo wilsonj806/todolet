@@ -14,8 +14,17 @@ import express from 'express';
 import { body } from 'express-validator/check';
 import passport from 'passport';
 import {
-  postNewUser, postLogin, postLoginFail, getLogout,
-} from './middleware/userMiddleware';
+  findUserWithUsername,
+  postNewUser,
+  encryptPass,
+} from './middleware/userRegistrationMiddleware';
+import {
+  postLogin,
+  postLoginFail,
+  getLogout,
+} from './middleware/userAuthMiddleware';
+import checkFormErrors from './middleware/commonMiddleware';
+// import { checkFormErrors } from './middleware/commonMiddleware';
 
 
 const router = express.Router();
@@ -39,6 +48,9 @@ router.post(
     body('password2', 'Passwords don\'t match').exists()
       .custom((value, { req }): boolean => value === req.body.password),
   ],
+  checkFormErrors,
+  findUserWithUsername,
+  encryptPass,
   postNewUser,
 );
 
@@ -46,12 +58,15 @@ router.post(
  * ANCHOR: POST login user with credentials
  * =============================================================
  * Requirements(NOTE should be replaced with actual test specs):
- *  - authenticate user login request
- *  - on failure to login, send a response saying that the login failed
- *  - OR send a response to the client saying that the login succeeded
+ *  TODO make sure that the checkFormErrors middleware integrates well
  */
 router.post(
   '/login',
+  [
+    body('username', 'Username is required').exists({ checkFalsy: true }),
+    body('password', 'Password is required').exists({ checkFalsy: true }),
+  ],
+  checkFormErrors,
   passport.authenticate('local', { failWithError: true }),
   postLogin,
   postLoginFail,
@@ -74,8 +89,8 @@ router.get('/logout', getLogout);
  * Requirements(NOTE should be replaced with actual test specs):
  *
  */
-router.get('/:id', () => {
+// router.get('/:id', () => {
 
-});
+// });
 
 export default router;

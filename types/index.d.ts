@@ -18,10 +18,10 @@
 import { Document, MongooseDocument } from "mongoose";
 
 
-export = AnotherTodoTypes;
-export as namespace Local;
+export = AnotherTodoServer;
+export as namespace Server;
 
-declare namespace AnotherTodoTypes {
+declare namespace AnotherTodoServer {
   /**
    * ANCHOR Deployment related/ process.env related
    *
@@ -91,6 +91,6 @@ declare namespace AnotherTodoTypes {
   }
 }
 
-declare module 'AnotherTodoTypes' {
-  export = AnotherTodoTypes;
+declare module 'AnotherTodoServer' {
+  export = AnotherTodoServer;
 }

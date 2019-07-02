@@ -11,14 +11,15 @@
     "react-dom": "16.8.6",
     "react-redux": "7.0.2",
     "react-scripts": "3.0.1",
-    "redux": "4.0.1"
+    "redux": "4.0.1",
+    "typeface-roboto": "0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sb": "start-storybook -p 9001 -c .storybook"
+    "sb": "start-storybook -p 9001 -c .storybook -s ./public"
   },
   "eslintConfig": {
     "extends": "react-app"

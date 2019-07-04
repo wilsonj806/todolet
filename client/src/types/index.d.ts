@@ -16,7 +16,7 @@ export = AnotherTodoClient;
 export as namespace Client;
 
 declare namespace AnotherTodoClient {
-
+  export { NavProps } from './layout';
 }
 
 declare module 'AnotherTodoClient' {

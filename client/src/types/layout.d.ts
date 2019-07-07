@@ -9,9 +9,18 @@
  * Definitions by: Wilson Jiang
  *
  */
+/// <reference types="react" />
 
-export type NavProps = {
+import ReactElement from 'react';
+
+
+ export type NavProps = {
   id            ?: String
   className     ?: String
   [key: String] : any
+}
+
+
+export type BodyProps = {
+  children: ReactElement
 }

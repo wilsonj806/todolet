@@ -2,9 +2,10 @@ import React from 'react'
 import { storiesOf } from '@storybook/react';
 import { ThemeProvider } from '@material-ui/styles';
 
-import Nav from '../hybrid/Nav';
+import Nav from '../containers/Nav';
 import Body from '../components/Body';
 import Main from '../containers/Main';
+import { Typography } from '@material-ui/core';
 
 const Wrapper = props => <ThemeProvider>{props.children}</ThemeProvider>
 
@@ -24,24 +25,19 @@ storiesOf('Layout/Main', module)
   .add('it can render children components', () => {
     return (
       <Main>
-        <h1>Hello World!</h1>
+        <Typography variant='h1'>Hello World!</Typography>
+        <Typography component='p'>Hello World, I am a test of various things right now.</Typography>
       </Main>
     )
   })
 
 
 storiesOf('Layout/Navbar', module)
-  .add('it has a login/ current user thing', () => {
+  .add('it renders a persistent nav bar', () => {
     return (
       <Wrapper>
         <Nav/>
       </Wrapper>
-    )
-  })
-  .add('it has projects and tags', () => {
-    return (
-      <div>
-      </div>
     )
   })
 

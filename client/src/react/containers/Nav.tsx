@@ -3,7 +3,6 @@ import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-// import Hidden from '@material-ui/core/Hidden';
 
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 
@@ -36,9 +35,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Nav : FunctionComponent<any> = (props: NavProps) => {
+const Nav : FunctionComponent<NavProps> = props => {
   const { container } = props;
-  // FIXME remove classes.root and similar things that appear on ExampleDrawer but shouldn't appear here
 
   const classes = useStyles();
   const theme = useTheme();
@@ -47,7 +45,7 @@ const Nav : FunctionComponent<any> = (props: NavProps) => {
     <>
       <AppBar
         position="fixed"
-        className={classes.appBar}
+        className={ classes.appBar }
       >
         <Toolbar>
           <Typography variant="h6">
@@ -55,23 +53,21 @@ const Nav : FunctionComponent<any> = (props: NavProps) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <nav className={classes.drawer}>
-      {/* <Hidden smUp implementation="css"> */}
+      <nav className={ classes.drawer }>
         <Drawer
           open={ true }
           variant="permanent"
-          container={container}
-          classes={{ paper: classes.drawerPaper}}
+          container={ container }
+          classes={{ paper: classes.drawerPaper }}
           anchor={ theme.direction === 'rtl' ? 'right' : 'left' }
         >
           <div>
-            <div className={classes.toolbar} />
+            <div className={ classes.toolbar } />
             <Typography paragraph={ true }>
               KONO DIO DAAA
             </Typography>
           </div>
         </Drawer>
-        {/* </Hidden> */}
       </nav>
     </>
   )

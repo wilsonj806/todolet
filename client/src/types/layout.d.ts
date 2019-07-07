@@ -11,16 +11,18 @@
  */
 /// <reference types="react" />
 
-import ReactElement from 'react';
-
-
- export type NavProps = {
-  id            ?: String
-  className     ?: String
-  [key: String] : any
-}
-
+import { ReactNode, ReactElement } from 'react';
 
 export type BodyProps = {
   children: ReactElement
+}
+
+export type MainProps = {
+  children: ReactNode
+}
+
+export type NavProps = {
+  id            ?: String
+  className     ?: String
+  [key: String] : any
 }

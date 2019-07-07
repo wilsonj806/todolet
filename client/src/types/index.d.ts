@@ -19,6 +19,7 @@ declare namespace AnotherTodoClient {
   export {
     NavProps,
     BodyProps,
+    MainProps,
   } from './layout';
 }
 

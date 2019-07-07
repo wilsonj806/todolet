@@ -8,7 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 
 import { NavProps } from '../../types/index';
-const drawerWidth = 240;
+const DRAWER_WIDTH = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawer: {
       [theme.breakpoints.up('sm')]: {
-        width: drawerWidth,
+        width: DRAWER_WIDTH,
         flexShrink: 0,
       },
     },
@@ -31,11 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
-      width: drawerWidth,
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
+      width: DRAWER_WIDTH,
     },
   }),
 );
@@ -46,10 +42,9 @@ const Nav : FunctionComponent<any> = (props: NavProps) => {
 
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   return (
-    <div className={classes.root}>
+    <>
       <AppBar
         position="fixed"
         className={classes.appBar}
@@ -78,8 +73,9 @@ const Nav : FunctionComponent<any> = (props: NavProps) => {
         </Drawer>
         {/* </Hidden> */}
       </nav>
-    </div>
+    </>
   )
 }
 
 export default Nav;
+export { DRAWER_WIDTH };

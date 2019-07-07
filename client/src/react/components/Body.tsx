@@ -9,6 +9,7 @@ import { BodyProps } from '../../types/index';
 // The extra typing is overkill but it's mostly for completness/ exhaustiveness
 const useStyles: StylesHook<Styles<any, any, any>> = makeStyles ((theme: Theme) => createStyles({
     root: {
+      display: 'flex',
       minWidth: '100vw',
       minHeight: '100vh',
       margin: 0,

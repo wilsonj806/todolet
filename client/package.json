@@ -19,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sb": "start-storybook -p 9001 -c .storybook"
+    "sb": "start-storybook -p 9001 -c .storybook",
+    "sb-examples": "start-storybook -p 9010 -c .storybook-examples"
   },
   "eslintConfig": {
     "extends": "react-app"

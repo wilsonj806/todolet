@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: DRAWER_WIDTH,
         flexShrink: 0,
       },
+      paddingTop: '4rem'
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1

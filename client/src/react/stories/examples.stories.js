@@ -5,5 +5,5 @@ import { storiesOf } from '@storybook/react';
 import ExampleDrawer from './examples/ExampleDrawer';
 
 
-storiesOf('MUI Examples/Example Drawer', module)
+storiesOf('Examples|Example Drawer', module)
   .add('it renders', () => <ExampleDrawer/>)

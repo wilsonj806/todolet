@@ -1,15 +1,14 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react';
-import { ThemeProvider } from '@material-ui/styles';
+
+import { Typography } from '@material-ui/core';
 
 import Nav from '../containers/Nav';
 import Body from '../components/Body';
 import Main from '../containers/Main';
-import { Typography } from '@material-ui/core';
 
-const Wrapper = props => <ThemeProvider>{props.children}</ThemeProvider>
 
-storiesOf('Layout/Body', module)
+storiesOf('Layout|Body', module)
   .add('it can render a nav and main component side by side', () => {
     return (
       <Body>
@@ -21,7 +20,7 @@ storiesOf('Layout/Body', module)
       </Body>
     )
   })
-storiesOf('Layout/Main', module)
+storiesOf('Layout|Main', module)
   .add('it can render children components', () => {
     return (
       <Main>
@@ -31,13 +30,4 @@ storiesOf('Layout/Main', module)
     )
   })
 
-
-storiesOf('Layout/Navbar', module)
-  .add('it renders a persistent nav bar', () => {
-    return (
-      <Wrapper>
-        <Nav/>
-      </Wrapper>
-    )
-  })
 

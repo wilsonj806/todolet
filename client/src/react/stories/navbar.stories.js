@@ -15,12 +15,20 @@ storiesOf('Navbar|Navbar', module)
     )
   })
 storiesOf('Navbar|UserCard', module)
-  .add('it renders a box/ card that shows user info', () => {
-    return (
-      <Wrapper>
-      </Wrapper>
-    )
-  })
+  .add(
+    'it renders a box/ card that shows user info',
+    () => {
+      return (
+        <Wrapper>
+        </Wrapper>
+      )
+    },
+    {
+      notes: `
+        The User Card presents the current user, and tasks completed/ other stuff like that
+      `
+    }
+  )
   .add('it prompts the user to log in if they aren\'t logged in', () => {
     return (
       <Wrapper>

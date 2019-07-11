@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Nav : FunctionComponent<NavProps> = props => {
-  const { container } = props;
 
   const classes = useStyles();
   const theme = useTheme();
@@ -61,12 +60,10 @@ const Nav : FunctionComponent<NavProps> = props => {
         <Drawer
           open={ true }
           variant="permanent"
-          container={ container }
           classes={{ paper: classes.drawerPaper }}
           anchor={ theme.direction === 'rtl' ? 'right' : 'left' }
           >
           <UserCard/>
-          <Divider/>
           <div>
             <div className={ classes.toolbar } />
             <Typography paragraph={ true }>

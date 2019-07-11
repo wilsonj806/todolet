@@ -3,10 +3,13 @@ import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Divider from '@material-ui/core/Divider';
 
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 
-import { NavProps } from '../../types/index';
+import UserCard from './UserCard';
+import { NavProps } from '../../../types/index';
+
 const DRAWER_WIDTH = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,7 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
         width: DRAWER_WIDTH,
         flexShrink: 0,
       },
-      paddingTop: '4rem'
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
+      paddingTop: '4rem',
       width: DRAWER_WIDTH,
     },
   }),
@@ -61,7 +64,9 @@ const Nav : FunctionComponent<NavProps> = props => {
           container={ container }
           classes={{ paper: classes.drawerPaper }}
           anchor={ theme.direction === 'rtl' ? 'right' : 'left' }
-        >
+          >
+          <UserCard/>
+          <Divider/>
           <div>
             <div className={ classes.toolbar } />
             <Typography paragraph={ true }>

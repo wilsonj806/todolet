@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 
 import Wrapper from './helper-components/Wrapper';
 
-import Nav from '../containers/Nav';
-
+import Nav from '../containers/Nav/Nav';
+import UserCard from '../containers/Nav/UserCard';
 
 storiesOf('Navbar|Navbar', module)
   .add('it renders a persistent nav bar', () => {
@@ -19,8 +19,7 @@ storiesOf('Navbar|UserCard', module)
     'it renders a box/ card that shows user info',
     () => {
       return (
-        <Wrapper>
-        </Wrapper>
+          <UserCard/>
       )
     },
     {

@@ -9,6 +9,7 @@ import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/sty
 
 import UserCard from './UserCard';
 import { NavProps } from '../../../types/index';
+import FiltersCard from './FiltersCard';
 
 const DRAWER_WIDTH = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -64,6 +65,7 @@ const Nav : FunctionComponent<NavProps> = props => {
           anchor={ theme.direction === 'rtl' ? 'right' : 'left' }
           >
           <UserCard/>
+          <FiltersCard/>
           <div>
             <div className={ classes.toolbar } />
             <Typography paragraph={ true }>

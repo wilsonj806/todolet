@@ -5,6 +5,7 @@ import Wrapper from './helper-components/Wrapper';
 
 import Nav from '../containers/Nav/Nav';
 import UserCard from '../containers/Nav/UserCard';
+import FiltersCard from '../containers/Nav/FiltersCard';
 
 storiesOf('Navbar|Navbar', module)
   .add('it renders a persistent nav bar', () => {
@@ -39,6 +40,9 @@ storiesOf('Navbar|FiltersCard', module)
   .add('it renders a card/ box that lets you toggle between filters', () => {
     return (
       <Wrapper>
+        <FiltersCard>
+
+        </FiltersCard>
       </Wrapper>
     )
   })

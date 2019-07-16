@@ -5,40 +5,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Divider from '@material-ui/core/Divider';
 
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
-
+import { useTheme } from '@material-ui/core/styles';
+import { navStyles as useStyles } from './styles';
 import UserCard from './UserCard';
 import { NavProps } from '../../../types/index';
 import FiltersCard from './FiltersCard';
 
-const DRAWER_WIDTH = 240;
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-    },
-    drawer: {
-      [theme.breakpoints.up('sm')]: {
-        width: DRAWER_WIDTH,
-        flexShrink: 0,
-      },
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up('sm')]: {
-        display: 'none',
-      },
-    },
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-      paddingTop: '4rem',
-      width: DRAWER_WIDTH,
-    },
-  }),
-);
+
 
 const Nav : FunctionComponent<NavProps> = props => {
 
@@ -79,4 +52,3 @@ const Nav : FunctionComponent<NavProps> = props => {
 }
 
 export default Nav;
-export { DRAWER_WIDTH };

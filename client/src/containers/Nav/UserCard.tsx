@@ -1,7 +1,5 @@
 import React, { useEffect, useContext, useState, FunctionComponent } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { userCardStyles as useStyles } from './styles';
 

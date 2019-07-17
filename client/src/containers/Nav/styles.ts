@@ -2,6 +2,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const DRAWER_WIDTH = 240;
 
+// NOTE Nav styling
 const navStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -30,6 +31,7 @@ const navStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+// NOTE UserCard styling
 const userCardStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -64,6 +66,7 @@ const userCardStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+// NOTE FilterCard styling
 const filterCardStyles = makeStyles((theme: Theme) =>
   createStyles({
     tabFlex: {
@@ -71,6 +74,9 @@ const filterCardStyles = makeStyles((theme: Theme) =>
     },
     tabChildRoot: {
       minWidth: '50%'
+    },
+    list: {
+      width: '100%'
     }
   })
 );

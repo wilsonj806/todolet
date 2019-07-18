@@ -1,4 +1,5 @@
-import React, { useContext, useState, FunctionComponent } from 'react';
+import React, { useContext, useEffect, useState, FunctionComponent } from 'react';
+import { FiltersArray, FiltersEntry } from '../../types/index';
 
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
@@ -10,22 +11,23 @@ import Box from '@material-ui/core/Box';
 
 
 import { filterCardStyles as useStyles } from './styles';
-import { useEffect } from 'react';
 
 const FiltersCard: FunctionComponent<any> = (props) => {
   const classes = useStyles();
 
+  // ----- UI state
   /*
    * NOTE
    * If value === 0 then the active tab is Projects
    * If value === 1 then the active tab is Tags
   */
   const [value, setValue] = useState(0);
-  // TODO Add an interface/ type alias for this
-  const [projects, setProjects] = useState<Array<any>>([]);
-  const [tags, setTags] = useState<Array<any>>([]);
 
-  // ----- Side Effect: populate list
+  // ----- API related state
+  const [projects, setProjects] = useState<FiltersArray>([]);
+  const [tags, setTags] = useState<FiltersArray>([]);
+
+  // ----- Side Effect: populate lists
   useEffect(() => {
     const arr = [
       { color: 'pink', name: 'Another Todo'},
@@ -44,15 +46,31 @@ const FiltersCard: FunctionComponent<any> = (props) => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => setValue(newValue);
 
   const toMap = value === 0 ? projects.map(
-    (project, i) => (
-      <ListItem key={ i }>
+    (project: FiltersEntry, i: Number) => (
+      <ListItem button key={ i.toString() } classes={{ root: classes.listItem }}>
+        <Box
+            css={{
+              bgcolor: project.color,
+              width: '1rem',
+              height: '1rem',
+              borderRadius: '0.5rem'
+            }}
+          />
         <ListItemText inset>{ project.name }</ListItemText>
       </ListItem>
     )
   ) : value === 1 ?
     tags.map(
-      (tag, i) => (
-        <ListItem key={ i }>
+      (tag: FiltersEntry, i: Number) => (
+        <ListItem button key={ i.toString() } classes={{ root: classes.listItem }}>
+          <Box
+            css={{
+              bgcolor: tag.color,
+              width: '1rem',
+              height: '1rem',
+              borderRadius: '0.5rem'
+            }}
+          />
           <ListItemText inset>{ tag.name }</ListItemText>
         </ListItem>
       )
@@ -60,8 +78,8 @@ const FiltersCard: FunctionComponent<any> = (props) => {
   ;
 
   return (
-    <div>
-      <Tabs value={value} onChange={ handleChange }  className={ classes.tabFlex } centered={ true }>
+    <div className={classes.filterCardRoot}>
+      <Tabs value={value} onChange={ handleChange }  centered={ true }>
         <Tab label="Projects" classes={{ root: classes.tabChildRoot }}/>
         <Tab label="Tags" classes={{ root: classes.tabChildRoot }}/>
       </Tabs>

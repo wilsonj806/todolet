@@ -21,6 +21,10 @@ declare namespace AnotherTodoClient {
     BodyProps,
     MainProps,
   } from './layout';
+  export {
+    FiltersEntry,
+    FiltersArray
+  } from './state';
 }
 
 declare module 'AnotherTodoClient' {

@@ -1,6 +1,6 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-const DRAWER_WIDTH = 240;
+const DRAWER_WIDTH = '18rem';
 
 // NOTE Nav styling
 const navStyles = makeStyles((theme: Theme) =>
@@ -69,15 +69,18 @@ const userCardStyles = makeStyles((theme: Theme) =>
 // NOTE FilterCard styling
 const filterCardStyles = makeStyles((theme: Theme) =>
   createStyles({
-    tabFlex: {
-      width: DRAWER_WIDTH
+    filterCardRoot: {
+      width: DRAWER_WIDTH,
     },
     tabChildRoot: {
       minWidth: '50%'
     },
     list: {
       width: '100%'
-    }
+    },
+    listItem: {
+      width: '100%'
+    },
   })
 );
 

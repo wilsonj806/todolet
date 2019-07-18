@@ -8,11 +8,11 @@ import Divider from '@material-ui/core/Divider';
 import { useTheme } from '@material-ui/core/styles';
 import { navStyles as useStyles } from './styles';
 import UserCard from './UserCard';
-import { NavProps } from '../../../types/index';
+import { NavProps } from '../../types/index';
 import FiltersCard from './FiltersCard';
 
 
-
+// TODO add a thing to the Toolbar stating current user and stuff
 const Nav : FunctionComponent<NavProps> = props => {
 
   const classes = useStyles();

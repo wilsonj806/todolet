@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, FunctionComponent } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { userCardStyles as useStyles } from './styles';
+import { userCardStyles as useStyles } from './nav.styles';
 
 // TODO need to add a thing for when the user isn't actually logged in
 

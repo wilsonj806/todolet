@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Divider from '@material-ui/core/Divider';
 
 import { useTheme } from '@material-ui/core/styles';
-import { navStyles as useStyles } from './styles';
+import { navStyles as useStyles } from './nav.styles';
 import UserCard from './UserCard';
 import { NavProps } from '../../types/index';
 import FiltersCard from './FiltersCard';

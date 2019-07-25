@@ -3,7 +3,7 @@ import { Styles } from '@material-ui/styles/withStyles';
 import { StylesHook } from '@material-ui/styles/makeStyles';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import { MainProps } from '../../types/index';
+import { MainProps } from '../types/index';
 
 
 const useStyles: StylesHook<Styles<any, any, any>> = makeStyles ((theme: Theme) =>

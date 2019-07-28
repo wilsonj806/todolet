@@ -1,15 +1,15 @@
 import React, { useState, useContext, FunctionComponent } from 'react';
 import Drawer from '@material-ui/core/Drawer';
-import Typography from '@material-ui/core/Typography';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 import { useTheme } from '@material-ui/core/styles';
 import { navStyles as useStyles } from './nav.styles';
+
+import AppBar from './TodoAppBar';
 import UserCard from './UserCard';
-import { NavProps } from '../../types/index';
 import FiltersCard from './FiltersCard';
+import { NavProps } from '../../types/index';
 
 
 // TODO add a thing to the Toolbar stating current user and stuff
@@ -20,16 +20,7 @@ const Nav : FunctionComponent<NavProps> = props => {
 
   return (
     <>
-      <AppBar
-        position="fixed"
-        className={ classes.appBar }
-      >
-        <Toolbar>
-          <Typography variant="h6">
-            Todo again
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <AppBar/>
       <nav className={ classes.drawer }>
         <Drawer
           open={ true }

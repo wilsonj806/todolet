@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import Wrapper from './helper-components/Wrapper';
 
 import Nav from '../containers/Nav/Nav';
+import AppBar from '../containers/Nav/TodoAppBar';
 import UserCard from '../containers/Nav/UserCard';
 import FiltersCard from '../containers/Nav/FiltersCard';
 
@@ -44,5 +45,12 @@ storiesOf('Navbar|FiltersCard', module)
 
         </FiltersCard>
       </Wrapper>
+    )
+  })
+
+  storiesOf('Navbar|AppBar', module)
+  .add('it renders an appbar that has links/ menus for the current user profile', () => {
+    return (
+      <AppBar/>
     )
   })

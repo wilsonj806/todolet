@@ -14,21 +14,35 @@ const navStyles = makeStyles((theme: Theme) =>
         flexShrink: 0,
       },
     },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up('sm')]: {
-        display: 'none',
-      },
-    },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       paddingTop: '4rem',
       width: DRAWER_WIDTH,
     },
   }),
+);
+
+// NOTE AppBar styling
+const appBarStyles = makeStyles((theme : Theme) =>
+  createStyles({
+    title: {
+      flexGrow: 1
+    },
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1
+    },
+    menuButton: {
+      width: 'auto',
+      display: 'flex',
+      alignItems: 'center',
+      marginRight: theme.spacing(2),
+
+    },
+    toolbar: theme.mixins.toolbar,
+    accountIcon: {
+      color: 'lightgrey'
+    }
+  })
 );
 
 // NOTE UserCard styling
@@ -84,4 +98,4 @@ const filterCardStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export { navStyles, userCardStyles, filterCardStyles };
+export { navStyles, appBarStyles, userCardStyles, filterCardStyles };

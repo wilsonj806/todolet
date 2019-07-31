@@ -3,10 +3,10 @@ import React, { FunctionComponent } from 'react';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/InfoRounded';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+
+import UserProfileMenu from './UserProfileMenu';
 
 import { useTheme } from '@material-ui/core/styles';
 
@@ -29,11 +29,7 @@ const TodoAppBar: FunctionComponent<any> = (props) => {
           <IconButton>
             <InfoIcon/>
           </IconButton>
-          <IconButton>
-            <AccountCircle fontSize='large' color='primary' classes={{
-              colorPrimary: classes.accountIcon
-            }}/>
-          </IconButton>
+          <UserProfileMenu/>
         </div>
       </Toolbar>
     </AppBar>

@@ -39,11 +39,18 @@ const appBarStyles = makeStyles((theme : Theme) =>
 
     },
     toolbar: theme.mixins.toolbar,
+  })
+);
+
+// NOTE UserProfileMenu styling
+
+const userProfileMenuStyles = makeStyles((theme: Theme) =>
+  createStyles({
     accountIcon: {
       color: 'lightgrey'
     }
   })
-);
+)
 
 // NOTE UserCard styling
 const userCardStyles = makeStyles((theme: Theme) =>
@@ -98,4 +105,4 @@ const filterCardStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export { navStyles, appBarStyles, userCardStyles, filterCardStyles };
+export { navStyles, appBarStyles, userCardStyles, filterCardStyles, userProfileMenuStyles };

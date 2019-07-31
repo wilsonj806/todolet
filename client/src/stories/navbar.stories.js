@@ -7,6 +7,8 @@ import Nav from '../containers/Nav/Nav';
 import AppBar from '../containers/Nav/TodoAppBar';
 import UserCard from '../containers/Nav/UserCard';
 import FiltersCard from '../containers/Nav/FiltersCard';
+import TodoAppBar from '../containers/Nav/TodoAppBar';
+import UserProfileMenu from '../containers/Nav/UserProfileMenu'
 
 storiesOf('Navbar|Navbar', module)
   .add('it renders a persistent nav bar', () => {
@@ -48,9 +50,16 @@ storiesOf('Navbar|FiltersCard', module)
     )
   })
 
-  storiesOf('Navbar|AppBar', module)
+storiesOf('Navbar|TodoAppBar', module)
   .add('it renders an appbar that has links/ menus for the current user profile', () => {
     return (
-      <AppBar/>
+      <TodoAppBar/>
+    )
+  })
+
+storiesOf('Navbar|UserProfileMenu', module)
+  .add('it renders a menu that\'s display by clicking an icon button', () => {
+    return (
+      <UserProfileMenu/>
     )
   })

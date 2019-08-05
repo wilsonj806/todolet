@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IUserModel } from '../types/index';
+import { IUserModel } from '../types/server';
 
 // ANCHOR User Schema
 /* eslint-disable @typescript-eslint/camelcase */

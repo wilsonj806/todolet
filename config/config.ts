@@ -1,6 +1,6 @@
 import session, { SessionOptions } from 'express-session';
 import connect from 'connect-mongodb-session';
-import { ENV } from '../types';
+import { ENV } from '../types/server';
 
 const {
   NODE_ENV: NodeENV, DBNAME, DBNAME_LOCAL, SESSION_SECRET,

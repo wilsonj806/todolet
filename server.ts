@@ -21,10 +21,10 @@ db.once('open', async (): Promise<any> => {
   try {
     // TODO figure out how to add error checking for this Node event
     const result: mongoose.Document | null = await Todos.findOne();
-    if (result == null) throw new Error('connection failed, check databases');
     console.log(`Connection to MongoDB database: ${dbName} confirmed`);
   } catch (error) {
     console.log('Error alert, check below for additional logging \n', error);
+    throw new Error(error.message);
   }
 });
 

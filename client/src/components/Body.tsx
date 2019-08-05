@@ -4,7 +4,7 @@ import { Styles } from '@material-ui/styles/withStyles';
 import { StylesHook } from '@material-ui/styles/makeStyles';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import { BodyProps } from '../types/index';
+import { BodyProps } from '../types/client';
 
 // The extra typing is overkill but it's mostly for completness/ exhaustiveness
 const useStyles: StylesHook<Styles<any, any, any>> = makeStyles ((theme: Theme) => createStyles({

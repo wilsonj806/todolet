@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { validationResult } from 'express-validator/check';
-import { errorResponse } from '../../types/index';
+import { errorResponse } from '../../types/server';
 
 const checkFormErrors: RequestHandler = (req, res, next): any => {
   const validationErr = validationResult(req);

@@ -42,12 +42,12 @@ declare namespace AnotherTodoTypes {
    *
    */
   type STATUS_CODE = 200 | 201 | 400 | 403 | 404 | 500 | 503
-  type postUserReq = {
+  interface postUserReq {
     "username" : string,
     "password" : string
     "password2": string
   }
-  type responseObj = {
+  interface responseObj {
     "msg"         : Array<string> | string
     [key: string] : any
   }
@@ -60,7 +60,7 @@ declare namespace AnotherTodoTypes {
    *
    */
   type priority = 'HIGH' | 'MEDIUM' | 'LOW'
-  type mongodbObj = { _id: any }
+  interface mongodbObj { _id: any }
   interface IUserObj extends Document {
     _id      : any
     username : string

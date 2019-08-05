@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import bcrypt from 'bcryptjs';
-import { postUserReq, responseObj, errorResponse } from '../../types/index';
+import { postUserReq, responseObj, errorResponse } from '../../types/server';
 
 import 'dotenv/config';
 

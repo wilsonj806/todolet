@@ -1,0 +1,28 @@
+# Configure what Git(hub) branches get tested
+branches:
+  only:
+    - master
+
+# Configure Node.jS environment
+language: node_js
+node_js:
+  - "stable"
+install:
+  - npm install
+cache: npm
+services:
+  - mongodb
+before_script:
+  - mongo Todos-local --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+env:
+  global:
+    - DBNAME_LOCAL=Todo-local
+    - NODE_ENV=testing
+    - MONGODB_URI_LOCAL=mongodb://http://127.0.0.1:27017
+
+# Staging for jobs
+jobs:
+  include:
+    - stage: "Lint and test codebase"
+      script: npm run lint
+      script: npm run coverage

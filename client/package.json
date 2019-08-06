@@ -3,20 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "3.9.3",
+    "@material-ui/core": "^4.1.1",
+    "@material-ui/icons": "^4.2.0",
     "ghpages": "0.0.10",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-redux": "7.0.2",
-    "react-scripts": "3.0.0",
-    "redux": "4.0.1"
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "redux": "4.0.1",
+    "typeface-roboto": "0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sb": "start-storybook -p 9001 -c .storybook"
+    "sb": "start-storybook -p 9001 -c .storybook",
+    "sb-examples": "start-storybook -p 9010 -c .storybook-examples"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -28,7 +32,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@storybook/react": "^4.1.13",
-    "@storybook/addon-storyshots": "^5.0.10"
+    "@storybook/addon-notes": "^5.1.9",
+    "@storybook/addon-storyshots": "^5.1.9",
+    "@storybook/react": "^5.1.9",
+    "@types/storybook__react": "^4.0.2",
+    "@types/styled-components": "^4.1.16"
   }
 }

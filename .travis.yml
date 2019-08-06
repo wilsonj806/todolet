@@ -2,8 +2,6 @@
 branches:
   only:
     - master
-    - server
-    - client
 
 # Configure Node.jS environment
 language: node_js

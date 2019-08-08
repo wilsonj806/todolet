@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 
 import Nav from '../containers/Nav/Nav';
 import Body from '../components/Body';
-import Main from '../containers/Main';
+import Main from '../components/Main';
 
 
 storiesOf('Layout|Body', module)

@@ -28,7 +28,11 @@ UI "testing" wise, probably going to run [Storybook](https://storybook.js.org/) 
 
 React.js/ Redux. React because I've been using it for a while so I'll have a bunch of general components already made and ready to roll. Redux is being used because it allows for centralized state management(if done correctly) and a lot of companies use it in conjunction with React anyways.
 
+**NOTE:** With the introduction of React Hooks, Redux is slightly less useful for this particular project. HOWEVER, if app state gets complex enough that custom hooks and etc can't handle it, Redux will still be relevant
+
 Also using Material UI as at this point, I know enough React that there's no point reinventing the wheel with every project.
+
+**CAVEAT:** While Material UI looks very nice, it has a very steep learning curve which will put off many people who have never used it before and the workflow is pretty sluggish when you're just starting to learn it.
 
 This also means learning JSS(JavaScript in CSS) since it comes with Material UI. First impressions-wise, it doesn't seem difficult to learn as it's straight CSS and several JSS API methods.
 

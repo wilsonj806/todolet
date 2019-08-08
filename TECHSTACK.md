@@ -21,8 +21,13 @@ In terms of applications for the backend, I could do some of the following:
 Testing is probably mostly going to be on the frontend side as that's the only one I am familiar with(for now). In addition, we're using Create-React-App to bootstrap the project which means Jest comes installed already.
 
 Jest is syntactically similar to Jasmine and builds off of Jasmine, so learning it shouldn't be too troublesome.
+- [Jest](https://jestjs.io/docs/en/getting-started)
 
-UI "testing" wise, probably going to run [Storybook](https://storybook.js.org/) to help develop components in isolation. Also has an addon that makes snapshot testing with Jest zippier.
+In terms of the frontend code, it'll probably be a combination of Jest and React Testing Library to do DOM testing.
+- [Jest DOM testing](https://jestjs.io/docs/en/tutorial-react#dom-testing)
+- [React Testing Library](https://github.com/testing-library/react-testing-library)
+
+UI "testing" wise, probably going to run [Storybook](https://storybook.js.org/) to help develop components in isolation.
 
 ### Frontend
 

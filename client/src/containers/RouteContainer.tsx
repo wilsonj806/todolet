@@ -5,7 +5,7 @@ import Body from '../components/Body';
 import Main from '../components/Main';
 import Nav from '../containers/Nav/Nav';
 
-import Login from '../pages/Login';
+import Login from '../pages/Login/Login';
 
 const RouteContainer: FunctionComponent<any> = (props) => {
   const { state } = useContext(AppContext);

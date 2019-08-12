@@ -13,15 +13,16 @@
 
 import { ReactNode, ReactElement } from 'react';
 
-export type BodyProps = {
+export interface BodyProps {
   children: ReactElement
 }
 
-export type MainProps = {
-  children: ReactNode
+export interface MainProps {
+  children  : ReactNode
+  noPadding ?: Boolean
 }
 
-export type NavProps = {
+export interface NavProps {
   id            ?: String
   className     ?: String
   [key: String] : any

@@ -10,12 +10,12 @@ import Login from '../pages/Login';
 const RouteContainer: FunctionComponent<any> = (props) => {
   const { state } = useContext(AppContext);
   const { user } = state;
-
+  const noPadding = !user ? true : null;
   const navToRender = user ? <Nav/> : null;
   return (
       <Body>
         { navToRender }
-        <Main>
+        <Main noPadding={ noPadding }>
           <Login/>
         </Main>
       </Body>

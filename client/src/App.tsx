@@ -1,17 +1,21 @@
-import React, { memo } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import Body from './components/Body';
 import Main from './components/Main';
 import Nav from './containers/Nav/Nav';
 
+import RouteContainer from './containers/RouteContainer';
 
-const App = memo(props => {
+
+import AppProvider from './contexts/AppContext';
+import Login from './pages/Login';
+
+const App: FunctionComponent<any> = (props) => {
   return (
-    <Body>
-      <Nav/>
-      <Main/>
-    </Body>
+    <AppProvider>
+      <RouteContainer/>
+    </AppProvider>
   );
-})
+}
 
 export default App;

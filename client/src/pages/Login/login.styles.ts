@@ -6,15 +6,24 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'inherit',
       minHeight: '100vh',
       display: 'flex',
-      justifyContent: 'space-around',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       flexFlow: 'column nowrap',
-      paddingTop: '-4rem',
+    },
+    formWrapper: {
+      width: '100%',
+      marginTop: '3rem',
+      padding: '0 1.5rem',
     },
     heading: {
       fontSize: '2.75rem',
       textAlign: 'center',
-      marginBottom: '2rem',
+      marginBottom: '1rem',
+    },
+    paragraph: {
+      width: '100%',
+      fontSize: '1.125rem',
+      textAlign: 'center',
     },
     logo: {
       maxWidth: '220px',
@@ -34,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: '1.5rem',
     },
     submitButton: {
-      width: '75%'
+      width: '100%'
     },
   })
 )

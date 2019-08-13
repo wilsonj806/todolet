@@ -1,5 +1,5 @@
-![Another Todo Logo](./client/src/assets/Logo-Heading(720x266).png)
-# Another Todo App
+![TodoLet Logo](./client/src/assets/Logo-Heading(720x266).png)
+# TodoLet
 
 ## Status
 

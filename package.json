@@ -1,11 +1,11 @@
 {
-  "name": "another-todo",
+  "name": "todolet",
   "version": "0.2.0",
   "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wilsonj806/another-todo.git"
+    "url": "https://github.com/wilsonj806/todolet.git"
   },
   "scripts": {
     "heroku-prebuild": "npm i --only=dev && npm run build && echo TypeScript build successful && npm prune",

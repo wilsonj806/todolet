@@ -17,6 +17,9 @@ export as namespace Client;
 
 declare namespace AnotherTodoClient {
   export {
+    TextInputWrapperProps
+  } from './form';
+  export {
     NavProps,
     BodyProps,
     MainProps,

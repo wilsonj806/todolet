@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formWrapper: {
       width: '100%',
-      marginTop: '3rem',
+      marginTop: '2rem',
       padding: '0 1.5rem',
     },
     heading: {
@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: '1.5rem',
     },
     submitButton: {
-      width: '100%'
+      width: '100%',
+      marginBottom: '1rem',
     },
   })
 )

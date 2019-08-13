@@ -17,11 +17,12 @@ import PropTypes from '@material-ui/core/TextField'
 
 
 export interface TextInputWrapperProps {
-  id          : string
-  type        : string
-  value       : string
-  label       : string
-  classes     : Object
-  margin      ?: PropTypes.Margin
-  reactHookFn : Dispatch<SetStateAction<any>>
+  id            : string
+  type          ?: string
+  value         : string
+  label         : string
+  classes       : Object
+  margin        ?: PropTypes.Margin
+  reactHookFn   : Dispatch<SetStateAction<any>>
+  [key: string] : any
 }

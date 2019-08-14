@@ -5,10 +5,10 @@
  *
  * ======================================================
  *
- * `/user/:id`       : Single user lookup
- * `/user/login`     : Login and authentication
- * `/user/logout`    : Login and authentication
- * `/user/register`  : Register user
+ * `/api/user/:id`       : Single user lookup
+ * `/api/user/login`     : Login and authentication
+ * `/api/user/logout`    : Login and authentication
+ * `/api/user/register`  : Register user
  */
 import express from 'express';
 import { body } from 'express-validator/check';

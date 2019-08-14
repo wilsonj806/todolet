@@ -70,7 +70,7 @@ app.use(passport.session());
  * =============================================================
  *
  */
-app.use('/user', routerUser);
+app.use('/api/user', routerUser);
 /* eslint-enable no-console */
 
 export { app, mongoose };

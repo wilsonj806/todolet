@@ -11,7 +11,7 @@
     "heroku-prebuild": "npm i --only=dev && npm run build && echo TypeScript build successful && npm prune",
     "build": "tsc",
     "start": "node dist/server.js",
-    "server": "nodemon dist/server.js",
+    "server": "nodemon --exec babel-node --extensions '.ts' server.ts ",
     "client": "npm start --prefix client",
     "watch-ts": "tsc --watch",
     "lint": "eslint ./**/*.ts",
@@ -41,6 +41,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-typescript": "^7.3.3",
     "@shelf/jest-mongodb": "^1.0.1",

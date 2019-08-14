@@ -1,6 +1,7 @@
 import session, { SessionOptions } from 'express-session';
 import connect from 'connect-mongodb-session';
 import { ENV } from '../types/server';
+import { CorsOptions } from 'cors';
 
 const {
   NODE_ENV: NodeENV, DBNAME, DBNAME_LOCAL, SESSION_SECRET,
@@ -42,10 +43,23 @@ const sessConfig: SessionOptions = {
   },
 };
 
+const whitelist = [`http://localhost:${ process.env.PORT }`, 'https://wj-todolet.herokuapp.com'];
+const corsOptions: CorsOptions = {
+  origin: (origin: any, callback: any) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+};
+
 export {
   uri,
   dbName,
   PORT,
   session,
   sessConfig,
+  corsOptions,
+  NodeENV
 };

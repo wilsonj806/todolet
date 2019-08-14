@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
 import bodyParser from 'body-parser';
@@ -6,7 +7,7 @@ import mongoose from 'mongoose';
 
 import 'dotenv/config';
 import {
-  uri, dbName, sessConfig,
+  uri, dbName, sessConfig, corsOptions, NodeENV
 } from './config/config';
 
 import passportConfig from './config/passport';
@@ -37,6 +38,7 @@ const app = express();
 // Use Express Body-parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+NodeENV === 'production' ? app.use(cors(corsOptions)) : null;
 
 /**
  * ANCHOR Use and configure Express session middleware

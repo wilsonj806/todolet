@@ -58,7 +58,7 @@ describe('A middleware function for sending a response when login succeeds', () 
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         msg: expect.any(String),
-        user: expect.objectContaining({
+        data: expect.objectContaining({
           _id: expect.anything(),
           username: expect.any(String)
         })

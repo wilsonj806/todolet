@@ -3,7 +3,7 @@
  * =============================================================
  *
  */
-import { MockReq, MockRes } from "../../types";
+import { MockReq, MockRes } from "../../types/server";
 
 const requestMock = (sessionData: any = {}, body: any = {}, _validationErrors: any = []): any => ({
   session: sessionData,

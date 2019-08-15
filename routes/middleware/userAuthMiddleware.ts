@@ -1,7 +1,7 @@
 import { RequestHandler, ErrorRequestHandler } from 'express';
 import CommonService from './services/CommonService';
 
-const { responsifyData, responsifyNoData } = CommonService;
+const { responsifyData, responsifyNoData, responsifyError } = CommonService;
 
 const postLogin: RequestHandler = (req, res, next): any => {
   const { username, _id } = req.user;
@@ -11,7 +11,7 @@ const postLogin: RequestHandler = (req, res, next): any => {
 };
 
 const postLoginFail: ErrorRequestHandler = (err, req, res, next): any => {
-  res.status(401).json(responsifyNoData('Login failed'));
+  res.status(401).json(responsifyError('Login failed', err));
   next();
 };
 

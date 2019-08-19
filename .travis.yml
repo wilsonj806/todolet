@@ -9,7 +9,7 @@ node_js:
   - "stable"
 install:
   - npm install
-  - cd "client" && npm install
+  - cd "client" && npm install && cd "../"
 cache: npm
 services:
   - mongodb

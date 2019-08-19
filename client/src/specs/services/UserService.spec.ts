@@ -45,7 +45,7 @@ describe('A service function for logging a client in', () => {
 
   })
 
-  test('it should return an error object if it failed', async (done) => {
+  test('it should return an error object if it failed with a 4** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -59,7 +59,43 @@ describe('A service function for logging a client in', () => {
       400,
       mockResponse
     );
-    expect(await UserService.postLogin(reqObj)).toThrow();
+
+    let expectation = null;
+    try {
+      await UserService.postLogin(reqObj);
+    } catch (err) {
+      expectation = err;
+    }
+    finally {
+      expect(expectation).toBeInstanceOf(Error);
+      done();
+    }
+  })
+  test('it should return an error object if it failed with a 5** error', async (done) => {
+    const reqObj = {
+      username: 'guest',
+      password: 'your mom'
+    };
+
+    const mockResponse = {
+      msg: 'testing failure',
+      errors: 'mock failure'
+    }
+    mock.onPost('/user/login').reply(
+      500,
+      mockResponse
+    );
+
+    let expectation = null;
+    try {
+      await UserService.postLogin(reqObj);
+    } catch (err) {
+      expectation = err;
+    }
+    finally {
+      expect(expectation).toBeInstanceOf(Error);
+      done();
+    }
   })
 })
 

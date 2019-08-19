@@ -7,8 +7,10 @@ const UserService: any = {};
 UserService.postLogin = async (reqObj: any): Promise<any> => {
   try {
     const response : any = await axios.post('/user/login', reqObj);
-    console.log(response.status);
-    if (response.status !== 200) throw new Error(response.msg);
+    const test = /^(4|5)/;
+    const status = response.status.toString(10);
+
+    if (test.test(status) === true) throw new Error(response.msg);
     return response.data;
   } catch (error) {
     throw new Error(error);

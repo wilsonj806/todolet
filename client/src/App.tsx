@@ -1,17 +1,21 @@
-import React, { memo } from 'react';
+import React, { FunctionComponent } from 'react';
 
-import Body from './components/Body';
-import Main from './containers/Main';
-import Nav from './containers/Nav/Nav';
+import { HashRouter as Router } from 'react-router-dom';
+
+import RouteContainer from './containers/RouteContainer';
 
 
-const App = memo(props => {
+import AppProvider from './contexts/AppContext';
+import Login from './layouts/Login/Login';
+
+const App: FunctionComponent<any> = (props) => {
   return (
-    <Body>
-      <Nav/>
-      <Main></Main>
-    </Body>
+    <Router>
+      <AppProvider>
+        <RouteContainer/>
+      </AppProvider>
+    </Router>
   );
-})
+}
 
 export default App;

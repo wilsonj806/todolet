@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, FunctionComponent } from 'react';
-import { FiltersArray, FiltersEntry } from '../../types/index';
+import { FiltersArray, FiltersEntry } from '../../types/client';
 
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';

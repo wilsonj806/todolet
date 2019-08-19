@@ -43,9 +43,14 @@ declare namespace AnotherTodoServer {
    */
   type STATUS_CODE = 200 | 201 | 400 | 403 | 404 | 500 | 503
   interface postUserReq {
-    "username" : string,
+    "username" : string
     "password" : string
     "password2": string
+  }
+
+  interface postLoginReq {
+    "username" : string
+    "password" : string
   }
   interface responseObj {
     "msg"         : Array<string> | string

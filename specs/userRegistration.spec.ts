@@ -304,7 +304,7 @@ describe('A middleware function that adds a user to the database', () => {
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         msg: expect.any(String),
-        user: expect.objectContaining({
+        data: expect.objectContaining({
           _id: expect.anything(),
           username: expect.any(String)
         })

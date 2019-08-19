@@ -21,14 +21,23 @@ In terms of applications for the backend, I could do some of the following:
 Testing is probably mostly going to be on the frontend side as that's the only one I am familiar with(for now). In addition, we're using Create-React-App to bootstrap the project which means Jest comes installed already.
 
 Jest is syntactically similar to Jasmine and builds off of Jasmine, so learning it shouldn't be too troublesome.
+- [Jest](https://jestjs.io/docs/en/getting-started)
 
-UI "testing" wise, probably going to run [Storybook](https://storybook.js.org/) to help develop components in isolation. Also has an addon that makes snapshot testing with Jest zippier.
+In terms of the frontend code, it'll probably be a combination of Jest and React Testing Library to do DOM testing.
+- [Jest DOM testing](https://jestjs.io/docs/en/tutorial-react#dom-testing)
+- [React Testing Library](https://github.com/testing-library/react-testing-library)
+
+UI "testing" wise, probably going to run [Storybook](https://storybook.js.org/) to help develop components in isolation.
 
 ### Frontend
 
 React.js/ Redux. React because I've been using it for a while so I'll have a bunch of general components already made and ready to roll. Redux is being used because it allows for centralized state management(if done correctly) and a lot of companies use it in conjunction with React anyways.
 
+**NOTE:** With the introduction of React Hooks, Redux is slightly less useful for this particular project. HOWEVER, if app state gets complex enough that custom hooks and etc can't handle it, Redux will still be relevant
+
 Also using Material UI as at this point, I know enough React that there's no point reinventing the wheel with every project.
+
+**CAVEAT:** While Material UI looks very nice, it has a very steep learning curve which will put off many people who have never used it before and the workflow is pretty sluggish when you're just starting to learn it.
 
 This also means learning JSS(JavaScript in CSS) since it comes with Material UI. First impressions-wise, it doesn't seem difficult to learn as it's straight CSS and several JSS API methods.
 

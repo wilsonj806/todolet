@@ -12,13 +12,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formWrapper: {
       width: '100%',
-      marginTop: '2rem',
+      marginTop: '1.5rem',
       padding: '0 1.5rem',
     },
     heading: {
-      fontSize: '2.75rem',
+      fontSize: '2.25rem',
+      fontWeight: 'bold',
       textAlign: 'center',
-      marginBottom: '1rem',
+      marginBottom: '0.75rem',
     },
     paragraph: {
       width: '100%',

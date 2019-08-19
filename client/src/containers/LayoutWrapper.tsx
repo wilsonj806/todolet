@@ -9,7 +9,7 @@ import Nav from './Nav/Nav';
 const LayoutWrapper: FunctionComponent<any> = (props) => {
   const { state } = useContext(AppContext);
   const { user } = state;
-  const noPadding = !user ? true : null;
+  const noPadding = !user ? true : undefined;
   const NavToRender = user ? <Nav/> : null;
   return (
       <Body>

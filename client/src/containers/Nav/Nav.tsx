@@ -9,7 +9,7 @@ import { navStyles as useStyles } from './nav.styles';
 import AppBar from './TodoAppBar';
 import UserCard from './UserCard';
 import FiltersCard from './FiltersCard';
-import { NavProps } from '../../types/client';
+import { NavProps } from '../../types';
 
 
 // TODO add a thing to the Toolbar stating current user and stuff

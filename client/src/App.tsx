@@ -8,7 +8,7 @@ import RouteContainer from './containers/RouteContainer';
 
 
 import AppProvider from './contexts/AppContext';
-import Login from './pages/Login/Login';
+import Login from './layouts/Login/Login';
 
 const App: FunctionComponent<any> = (props) => {
   return (

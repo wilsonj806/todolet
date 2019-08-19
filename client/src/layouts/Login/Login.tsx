@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, SyntheticEvent, useState, useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // ----- MUI components
@@ -13,11 +13,31 @@ import TextField from '../../containers/TextInputWrapper';
 import Logo from '../../assets/Logo(512x512).png';
 import useStyles from './login.styles';
 
+import UserService from '../../services/UserService';
+
 const Login: FunctionComponent<any> = (props) => {
   const classes = useStyles();
 
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
+  // FIXME replace the below with a proper toast
+  const [ error, setError] = useState('');
+
+  const handleFormSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const obj = { username, password };
+    try {
+      const res = await UserService.postLogin(obj);
+      console.log(res);
+      if (res.status) {
+        setError(res.msg)
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+      setError(err);
+    }
+  }
   return (
     <Container maxWidth="xs" classes={{ root: classes.rootStyle }}>
       <img src={ Logo } alt="Logo" className={ classes.logo }/>
@@ -47,9 +67,11 @@ const Login: FunctionComponent<any> = (props) => {
           />
           <Button
             size="large"
+            type="submit"
             color="primary"
             variant="contained"
             classes={{ root: classes.submitButton }}
+            onClick={ handleFormSubmit }
           >
             Login
           </Button>

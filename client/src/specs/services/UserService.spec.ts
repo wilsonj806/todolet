@@ -60,18 +60,18 @@ describe('A service function for logging a client in', () => {
       mockResponse
     );
 
-    let expectation = null;
-    try {
-      await UserService.postLogin(reqObj);
-    } catch (err) {
-      expectation = err;
-    }
-    finally {
-      expect(expectation).toBeInstanceOf(Error);
-      done();
-    }
+    const response = await UserService.postLogin(reqObj);
+    expect(response).toStrictEqual(
+      expect.objectContaining({
+        msg: expect.any(String),
+        status: expect.any(Number),
+        errors: expect.anything()
+      })
+    )
+    done();
+
   })
-  test('it should return an error object if it failed with a 5** error', async (done) => {
+  test('it should return an error object if it failed with a 4** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -82,20 +82,19 @@ describe('A service function for logging a client in', () => {
       errors: 'mock failure'
     }
     mock.onPost('/user/login').reply(
-      500,
+      400,
       mockResponse
     );
 
-    let expectation = null;
-    try {
-      await UserService.postLogin(reqObj);
-    } catch (err) {
-      expectation = err;
-    }
-    finally {
-      expect(expectation).toBeInstanceOf(Error);
-      done();
-    }
+    const response = await UserService.postLogin(reqObj);
+    expect(response).toStrictEqual(
+      expect.objectContaining({
+        msg: expect.any(String),
+        status: expect.any(Number),
+        errors: expect.anything()
+      })
+    )
+    done();
   })
 })
 

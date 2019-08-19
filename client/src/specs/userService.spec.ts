@@ -9,7 +9,7 @@ describe('A service function for logging a client in', () => {
 
   afterEach(() => {
     // remove all onPost/ onGet/ etc handlers
-    mock.restore();
+    mock.reset();
   })
 
   test('it should return an obect with the user id if it succeeded', async (done) => {
@@ -17,19 +17,22 @@ describe('A service function for logging a client in', () => {
       username: 'guest',
       password: 'wasd'
     };
+
+    const mockResponse = {
+      msg: 'testing',
+      data: {
+        _id: 'ID here',
+        username: 'guest'
+      }
+    };
+
     mock.onPost('/user/login').reply(
       200,
-      {
-        msg: 'testing',
-        data: {
-          _id: 'ID here',
-          username: 'guest'
-        }
-    });
+      mockResponse
+    );
 
     const response = await UserService.postLogin(reqObj);
-
-    expect(response).toBe(
+    expect(response).toStrictEqual(
       expect.objectContaining({
         msg: expect.any(String),
         data: expect.objectContaining({
@@ -47,22 +50,16 @@ describe('A service function for logging a client in', () => {
       username: 'guest',
       password: 'your mom'
     };
+
+    const mockResponse = {
+      msg: 'testing failure',
+      errors: 'mock failure'
+    }
     mock.onPost('/user/login').reply(
       400,
-      {
-        msg: 'testing failure',
-        errors: 'mock failure'
-    });
-
-    const response = await UserService.postLogin(reqObj);
-
-    expect(response).toBe(
-      expect.objectContaining({
-        msg: expect.any(String),
-        errors: expect.anything()
-      })
-    )
-    done();
+      mockResponse
+    );
+    expect(await UserService.postLogin(reqObj)).toThrow();
   })
 })
 

@@ -43,7 +43,7 @@ const sessConfig: SessionOptions = {
   },
 };
 
-const whitelist = [`http://localhost:${ process.env.PORT }`, 'https://wj-todolet.herokuapp.com'];
+const whitelist = ['http://localhost:3000', 'https://wj-todolet.herokuapp.com'];
 const corsOptions: CorsOptions = {
   origin: (origin: any, callback: any) => {
     if (whitelist.indexOf(origin) !== -1) {
@@ -51,7 +51,8 @@ const corsOptions: CorsOptions = {
     } else {
       callback(new Error('Not allowed by CORS'))
     }
-  }
+  },
+  allowedHeaders: ['Content-Type']
 };
 
 export {

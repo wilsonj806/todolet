@@ -38,7 +38,8 @@ const app = express();
 // Use Express Body-parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-NodeENV === 'production' ? app.use(cors(corsOptions)) : null;
+// NOTE if the corsOptions needs to be more complex, use Object.assign and more corsOptions objects
+app.use(cors(NodeENV === 'production' ? corsOptions : undefined));
 
 /**
  * ANCHOR Use and configure Express session middleware

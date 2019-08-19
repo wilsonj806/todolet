@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import Body from './components/Body';
-import Main from './components/Main';
-import Nav from './containers/Nav/Nav';
+import { HashRouter as Router } from 'react-router-dom';
 
 import RouteContainer from './containers/RouteContainer';
 
@@ -12,9 +10,11 @@ import Login from './layouts/Login/Login';
 
 const App: FunctionComponent<any> = (props) => {
   return (
-    <AppProvider>
-      <RouteContainer/>
-    </AppProvider>
+    <Router>
+      <AppProvider>
+        <RouteContainer/>
+      </AppProvider>
+    </Router>
   );
 }
 

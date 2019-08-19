@@ -57,6 +57,9 @@ const Login: FunctionComponent<any> = (props) => {
         <Typography paragraph classes={{ paragraph: classes.paragraph }}>
           New here? <Link component={ RouterLink } to='/register'>Create an account!</Link>
         </Typography>
+        <Typography paragraph classes={{ paragraph: classes.paragraph }}>
+          <Link component={ RouterLink } to='/auth-reset'>Forgot your password?</Link>
+        </Typography>
       </div>
     </Container>
   )

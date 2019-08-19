@@ -1,6 +1,6 @@
 import session, { SessionOptions } from 'express-session';
 import connect from 'connect-mongodb-session';
-import { ENV } from '../types/server';
+import { ENV } from '../types';
 import { CorsOptions } from 'cors';
 
 const {

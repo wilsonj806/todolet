@@ -1,5 +1,5 @@
 import axios from '../axios';
-import { responseObj, postLoginReq } from '../../../types/server';
+import { responseObj, postLoginReq } from '../../../types';
 
 const UserService: any = {};
 

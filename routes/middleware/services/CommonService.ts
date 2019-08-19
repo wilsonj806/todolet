@@ -1,4 +1,4 @@
-import { responseObj, errorResponse } from "../../../types/server";
+import { responseObj, errorResponse } from "../../../types";
 
 // Unit tests in "extra/commonService.spec.ts" for now
 

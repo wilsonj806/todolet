@@ -2,6 +2,7 @@
 .vscode/
 extra/
 coverage/
+todolet_coverage_*/
 
 # Logs
 logs

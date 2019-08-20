@@ -15,8 +15,10 @@
     "client": "npm start --prefix client",
     "watch-ts": "tsc --watch",
     "lint": "eslint ./**/*.ts",
-    "test": "jest",
-    "coverage": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "test": "jest --config=jest.config.js",
+    "test-client": "jest --config=react.jest.config.js",
+    "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info'| coveralls && rm -rf ./todolet_coverage_* ",
+    "coverage-demo": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' 'coverage/lcov.info' && rm -rf ./coverage && rm -rf ./todolet_coverage_*"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
@@ -44,6 +46,7 @@
   "devDependencies": {
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@shelf/jest-mongodb": "^1.0.1",
     "@types/bcryptjs": "^2.4.2",
@@ -68,7 +71,8 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-watch": "^5.1.2",
-    "jest": "^24.7.1",
+    "jest": "^24.9.0",
+    "lcov-result-merger": "^3.1.0",
     "nodemon": "^1.17.5",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",

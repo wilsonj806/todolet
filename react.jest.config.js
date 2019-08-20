@@ -27,13 +27,13 @@ module.exports = {
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
-    "**/*.ts",
+    "**/*.tsx",
     "!**/*.styles.ts",
     "!**/*.d.ts",
   ],
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "todolet_coverage_ts",
+  coverageDirectory: "todolet_coverage_react",
 
   // An array of regexp pattern strings used to skip coverage collection
   coveragePathIgnorePatterns: [
@@ -142,7 +142,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -152,8 +152,8 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    "**/__tests__/**/*.ts",
-    "**/?(*.)+(spec|test).ts"
+    "**/__tests__/**/*.tsx",
+    "**/?(*.)+(spec|test).tsx"
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped

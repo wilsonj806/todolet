@@ -22,7 +22,7 @@ const Body: FunctionComponent<BodyProps> = (props) => {
   const { children } = props;
   const classes = useStyles();
   return (
-    <div className={ classes.root }>
+    <div className={ classes.root } id='app-root'>
       <CssBaseline>
         { children }
       </CssBaseline>

@@ -14,7 +14,6 @@ UserService.postLogin = async (reqObj: postLoginReq): Promise<any> => {
     if (test.test(status) === true) throw new Error(response.msg);
     return response.data;
   } catch (error) {
-    console.dir(error);
     const { response } = error;
     const { data, status } = response;
     return Object.assign({}, { ...data, status });

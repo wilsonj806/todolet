@@ -83,7 +83,7 @@ const FiltersCard: FunctionComponent<any> = (props) => {
         <Tab label="Projects" classes={{ root: classes.tabChildRoot }}/>
         <Tab label="Tags" classes={{ root: classes.tabChildRoot }}/>
       </Tabs>
-      <div>
+      <div id={ value === 0 ? 'tab--projects' : value === 1 ? 'tab--tags' : '' }>
         <List component='ul'>
           { toMap }
         </List>

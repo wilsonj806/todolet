@@ -15,8 +15,8 @@
     "client": "npm start --prefix client",
     "watch-ts": "tsc --watch",
     "lint": "eslint ./**/*.ts",
-    "test": "jest --config=jest.config.js",
-    "test-client": "jest --config=react.jest.config.js",
+    "test": "jest --config=jest.config.js --watch",
+    "test-client": "jest --config=react.jest.config.js --watch",
     "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info'| coveralls && rm -rf ./todolet_coverage_* ",
     "coverage-demo": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' 'coverage/lcov.info' && rm -rf ./coverage && rm -rf ./todolet_coverage_*"
   },

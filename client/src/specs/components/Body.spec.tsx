@@ -1,10 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import Body from '../../components/Body';
 
 describe('A Body component', () => {
+  afterEach(() => cleanup())
+
   test('it should have an id value of "app-root"', () => {
     const { container } = render(
       <Body>

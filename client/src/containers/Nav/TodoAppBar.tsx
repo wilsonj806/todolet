@@ -23,7 +23,7 @@ const TodoAppBar: FunctionComponent<any> = (props) => {
     >
       <Toolbar>
         <Typography variant="h6" className={ classes.title }>
-          Another Todo
+          TodoLet
         </Typography>
         <div className={ classes.menuButton }>
           <IconButton>

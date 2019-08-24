@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
+import { Link } from 'react-router-dom';
 
 import { useTheme } from '@material-ui/core/styles';
 import { userProfileMenuStyles as useStyles } from './nav.styles';
@@ -17,8 +18,6 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
   const classes = useStyles();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget);
-    console.dir(anchorEl);
     setAnchorEl(event.currentTarget);
   }
 
@@ -42,10 +41,15 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/profile">Profile</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/account">My Account</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/logout">Logout</Link>
+        </MenuItem>
       </Menu>
     </>
   );

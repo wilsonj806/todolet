@@ -1,5 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react';
+import StoryRouter from 'storybook-react-router';
+
 
 import Wrapper from './helper-components/Wrapper';
 
@@ -11,14 +13,16 @@ import TodoAppBar from '../containers/Nav/TodoAppBar';
 import UserProfileMenu from '../containers/Nav/UserProfileMenu'
 
 storiesOf('Navbar|Navbar', module)
+  .addDecorator(StoryRouter())
   .add('it renders a persistent nav bar', () => {
     return (
-      <Wrapper>
-        <Nav/>
-      </Wrapper>
+        <Wrapper>
+          <Nav/>
+        </Wrapper>
     )
   })
 storiesOf('Navbar|UserCard', module)
+  .addDecorator(StoryRouter())
   .add(
     'it renders a box/ card that shows user info',
     () => {
@@ -40,26 +44,29 @@ storiesOf('Navbar|UserCard', module)
   })
 
 storiesOf('Navbar|FiltersCard', module)
+  .addDecorator(StoryRouter())
   .add('it renders a card/ box that lets you toggle between filters', () => {
     return (
-      <Wrapper>
-        <FiltersCard>
+        <Wrapper>
+          <FiltersCard>
 
-        </FiltersCard>
-      </Wrapper>
+          </FiltersCard>
+        </Wrapper>
     )
   })
 
 storiesOf('Navbar|TodoAppBar', module)
+  .addDecorator(StoryRouter())
   .add('it renders an appbar that has links/ menus for the current user profile', () => {
     return (
-      <TodoAppBar/>
+        <TodoAppBar/>
     )
   })
 
 storiesOf('Navbar|UserProfileMenu', module)
+  .addDecorator(StoryRouter())
   .add('it renders a menu that\'s display by clicking an icon button', () => {
     return (
-      <UserProfileMenu/>
+        <UserProfileMenu/>
     )
   })

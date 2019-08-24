@@ -33,12 +33,14 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@storybook/addon-actions": "^5.1.11",
     "@storybook/addon-notes": "^5.1.9",
     "@storybook/react": "^5.1.9",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.9",
     "@types/storybook__react": "^4.0.2",
     "@types/styled-components": "^4.1.16",
-    "axios-mock-adapter": "^1.17.0"
+    "axios-mock-adapter": "^1.17.0",
+    "storybook-react-router": "^1.0.5"
   }
 }

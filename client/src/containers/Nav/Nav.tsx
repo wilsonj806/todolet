@@ -30,12 +30,6 @@ const Nav : FunctionComponent<NavProps> = props => {
           >
           <UserCard/>
           <FiltersCard/>
-          <div>
-            <div className={ classes.toolbar } />
-            <Typography paragraph={ true }>
-              KONO DIO DAAA
-            </Typography>
-          </div>
         </Drawer>
       </nav>
     </>

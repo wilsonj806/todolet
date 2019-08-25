@@ -13,7 +13,7 @@ const TextInputWrapper: FunctionComponent<TextInputWrapperProps> = (props) => {
       value={ value }
       label={ label }
       margin={ margin }
-      classes={ classes }
+      classes={ classes || undefined }
       type={ type ? type : "text" }
       onChange={ (event) => reactHookFn(event.target.value) }
       { ...otherProps }

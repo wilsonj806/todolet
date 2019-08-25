@@ -45,7 +45,7 @@ declare namespace AnotherTodoClient {
     type          ?: string
     value         : string
     label         : string
-    classes       : Object
+    classes       ?: Object
     margin        ?: PropTypes.Margin
     reactHookFn   : Dispatch<SetStateAction<any>>
     [key: string] : any

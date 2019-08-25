@@ -66,7 +66,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
   })
 
   test('it logs the user out when you click the logout link in the menu', () => {
-    const targetPath = '/account';
+    const targetPath = '/logout';
     const { container, getByText } = renderWithRouter(
         <UserProfileMenu/>
     , targetPath)
@@ -75,9 +75,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
 
     fireEvent.click(button!);
 
-    const menu = document.querySelector('[role=menu]');
-    const first = menu!.children[1];
-    const link = first.querySelector('[href]');
+    const link = getByText('Logout');
     fireEvent.click(link!);
 
     expect(false).toBeTruthy();

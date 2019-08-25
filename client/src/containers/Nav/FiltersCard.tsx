@@ -12,6 +12,13 @@ import Box from '@material-ui/core/Box';
 
 import { filterCardStyles as useStyles } from './nav.styles';
 
+/**
+ *
+ * @param props
+ *
+ * TODO Tests todo
+ *  - Tests handling clicking a filter
+ */
 const FiltersCard: FunctionComponent<any> = (props) => {
   const classes = useStyles();
 

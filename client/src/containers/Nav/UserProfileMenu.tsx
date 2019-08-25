@@ -12,6 +12,15 @@ import { useTheme } from '@material-ui/core/styles';
 import { userProfileMenuStyles as useStyles } from './nav.styles';
 
 
+/**
+ *
+ * @param props
+ *
+ * TODO Tests todo
+ *  - test clicking the Logout link
+ *
+ */
+
 const UserProfileMenu: FunctionComponent<any> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 

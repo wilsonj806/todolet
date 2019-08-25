@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { TextInputWrapperProps } from '../types/form';
+import { TextInputWrapperProps } from '../types';
 
 const TextInputWrapper: FunctionComponent<TextInputWrapperProps> = (props) => {
   const { type, classes, id, label, margin, value, reactHookFn } = props;

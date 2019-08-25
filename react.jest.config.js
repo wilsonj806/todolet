@@ -29,6 +29,7 @@ module.exports = {
   collectCoverageFrom: [
     "**/*.tsx",
     "!**/*.styles.ts",
+    "!**/*.helper.tsx",
     "!**/*.d.ts",
   ],
 

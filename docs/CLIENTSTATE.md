@@ -43,19 +43,30 @@ Both are worth looking at but for this project, Reduxis probably going to be the
 So this is probably what the store will look like in the form of a TypeScript interface. Pretty straight forwards but data is sorted like it's database data.
 
 ```ts
-interface StoreShape {
-  userID: String | undefined,
-  username: String | undefined,
-  sessionID: String | undefined,
-  sortTodoBy: String | undefined,
-  projectFilters: Array<String>,
-  tagFilters: Array<String>,
-  todos: Array<todoIds>,
-  todosById: {
-    todoId: TodoShape
-  },
-  completedTodos: Array<todoIds>
+interface UserStoreShape {
+  userID: String | undefined
+  username: String | undefined
+  sessionID: String | undefined
+  sortTodoBy: String | undefined
+  projectFilters: Array<String>
+  tagFilters: Array<String>
 }
+
+interface TodoStoreShape {
+  id: Number
+  userID: String
+  priority: "HIGH" | "MEDIUM" | "LOW"
+  todoText: String
+  projectFilter: String | undefined
+  tagFilter: String | undefined
+}
+
+interface StoreShape {
+  currentUser: UserStoreShape
+  todosList: TodoStoreShape
+}
+
+
 ```
 
 ## Actions

@@ -80,21 +80,21 @@ declare namespace AnotherTodoClient {
   type TodoActionTypes = SyncTodoActions | AsyncTodoRead | AsyncTodoPost | AsyncTodoPatch | AsyncTodoDelete
 
   interface UserStoreShape {
-    userID: String | undefined
-    username: String | undefined
-    sessionID: String | undefined
-    sortTodoBy: String | undefined
-    projectFilters: Array<String>
-    tagFilters: Array<String>
+    userId : String | undefined
+    username : String | undefined
+    sessionId : String | undefined
+    sortTodoBy : String | undefined
+    projectFilters : Array<String>
+    tagFilters : Array<String>
   }
 
   interface TodoStoreShape {
-    id: Number
-    userID: String
-    priority: "HIGH" | "MEDIUM" | "LOW"
-    todoText: String
-    projectFilter: String | undefined
-    tagFilter: String | undefined
+    id : Number
+    userId : String
+    priority : "HIGH" | "MEDIUM" | "LOW"
+    todoText : String
+    projectFilter : String | undefined
+    tagFilter : String | undefined
   }
 
   interface StoreShape {

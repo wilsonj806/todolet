@@ -18,8 +18,8 @@ export as namespace Client;
 declare namespace AnotherTodoClient {
   // ----- NOTE Local State
   type FiltersEntry = {
-    color : String,
-    name  : String
+    color : string,
+    name  : string
   }
 
   type FiltersArray = Array<FiltersEntry>
@@ -80,21 +80,21 @@ declare namespace AnotherTodoClient {
   type TodoActionTypes = SyncTodoActions | AsyncTodoRead | AsyncTodoPost | AsyncTodoPatch | AsyncTodoDelete
 
   interface UserStoreShape {
-    userId : String | undefined
-    username : String | undefined
-    sessionId : String | undefined
-    sortTodoBy : String | undefined
-    projectFilters : Array<String>
-    tagFilters : Array<String>
+    userId : string | undefined
+    username : string | undefined
+    sessionId : string | undefined
+    sortTodoBy : string | undefined
+    projectFilters : Array<string>
+    tagFilters : Array<string>
   }
 
   interface TodoStoreShape {
     id : Number
-    userId : String
+    userId : string
     priority : "HIGH" | "MEDIUM" | "LOW"
-    todoText : String
-    projectFilter : String | undefined
-    tagFilter : String | undefined
+    todoText : string
+    projectFilter : string | undefined
+    tagFilter : string | undefined
   }
 
   interface StoreShape {

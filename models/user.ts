@@ -12,6 +12,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  sessionId: {
+    type: String,
+    required: false,
+  },
+  sortTodoBy: {
+    type: String,
+    required: false,
+  },
+  projectFilters: {
+    type: [String],
+    required: false,
+  },
+  tagFilters: {
+    type: [String],
+    required: false,
+  }
 });
 /* eslint-enable @typescript-eslint/camelcase */
 

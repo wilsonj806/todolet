@@ -1,8 +1,8 @@
-import { responseObj, errorResponse } from "../../../types";
+import { responseObj, errorResponse, userDataResponse, todoDataResponse } from "../../../types";
 
 // Unit tests in "extra/commonService.spec.ts" for now
 
-const responsifyData = (msg: string, data: any): responseObj => (
+const responsifyData = (msg: string, data: userDataResponse | todoDataResponse): responseObj => (
   {
     msg,
     data

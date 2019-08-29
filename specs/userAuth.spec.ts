@@ -30,8 +30,9 @@ describe('A middleware function for sending a response when login succeeds', () 
   let res;
   const next = jest.fn();
   const regex = /^(Error\:)/;
+  // FIXME setting req.user.attributes isn't great, it's implementation details
   const user = {
-    _id: 42,
+    _id: [1, 2, 3 ,4],
     username: 'guest'
   };
 
@@ -41,25 +42,25 @@ describe('A middleware function for sending a response when login succeeds', () 
 
   test('it should return a json response with a message and HTTP status code', () => {
     const req = requestMock();
-    req.user = user;
+    req.user = {};
+    req.user._doc = {...user};
 
     postLogin(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalled();
   });
 
   test('it should return a json response with the user info', () => {
     const req = requestMock();
-    req.user = user;
-
+    req.user = {};
+    req.user._doc = { ...user };
     postLogin(req, res, next);
 
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         msg: expect.any(String),
         data: expect.objectContaining({
-          _id: expect.anything(),
+          userId: expect.any(String),
           username: expect.any(String)
         })
       })
@@ -68,7 +69,8 @@ describe('A middleware function for sending a response when login succeeds', () 
 
   test('it should call the next middleware function in the stack', () => {
     const req = requestMock();
-    req.user = user;
+    req.user = {}
+    req.user._doc = user;
 
     postLogin(req, res, next);
 

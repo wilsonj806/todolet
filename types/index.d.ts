@@ -80,6 +80,10 @@ declare namespace AnotherTodoServer {
     _id      : any
     username : string
     password : string
+    sessionId : string
+    sortTodoBy ?: string
+    projectFilters ?: Array<string>
+    tagFilters ?: Array<string>
   }
   interface IUserModel extends IUserObj, Document {}
   interface todoObj extends mongodbObj {

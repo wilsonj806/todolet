@@ -97,3 +97,64 @@ Several things happen:
 See below for some extra reading on how the JS engine executes code:
 - [medium article 1](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
 - [blog article](https://www.valentinog.com/blog/context/)
+
+
+## Extends vs Implements
+
+TL; DR `extends` gives the inheritor everything, properties, methods, implementations. `implements` only enforces a contract between the two, or in other words, the inheritor must follow the behavior of the implemented interface.
+
+See below for extends:
+```ts
+class Human {
+  public cogitoErgoSum() : void {
+    console.log('I think therefore I am')
+  }
+
+  public eatStuff() : void {
+    console.log('eating stuff')
+  }
+}
+
+class Pilot extends Human {
+  public flyPlane() : void {
+    console.log('flying a plane')
+  }
+}
+const person = new Pilot();
+person.cogitoErgoSum();
+person.flyPlane();
+```
+
+See below for implements:
+```ts
+abstract class Animal {
+  abstract makeSound(): void;
+  public move() : void {
+    console.log("roaming the earth...");
+  }
+}
+
+interface Pet {
+  play(): void ;
+  lickOwner(): never;
+}
+
+class Dog extends Animal implements Pet {
+  makeSound(): void {
+    console.log('woof')
+  }
+  public play() : void {
+    console.log('playing')
+  }
+  // should throw because the Pet interface contractually binds lickOwner to return never not a string
+  public lickOwner() : string {
+    return 'licking owner'
+  }
+}
+
+const shiba = new Dog();
+shiba.move();
+shiba.makeSound();
+shiba.play();
+shiba.lickOwner();
+```

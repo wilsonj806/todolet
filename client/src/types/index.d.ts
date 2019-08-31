@@ -11,6 +11,9 @@
  */
 
 /// <reference types="react" />
+import { userDataResponse, responseObj, postUserReq, postLoginReq, errorResponse } from "../../../types";
+import { AnyAction } from 'redux'
+
 
 export = AnotherTodoClient;
 export as namespace Client;
@@ -51,10 +54,10 @@ declare namespace AnotherTodoClient {
     [key: string] : any
   }
 
-  // ----- NOTE Redux Actions
+  // ----- NOTE Redux Action Types
   type SyncUserActions = "POST_FILTER" | "DELETE_FILTER" | "LOGIN_GUEST"
 
-  type SyncTodoActions = "GET_TODOS" | "UPDATE_TODO" | "DELETE_TODO" | "FILTER_TODOS" | "SORT_TODOS"
+  type AsyncUserRegister = "POST_REGISTER_INIT" | "POST_REGISTER_FAIL" |"POST_REGISTER_SUCCESS"
 
   type AsyncUserLogin = "POST_LOGIN_INIT" | "POST_LOGIN_FAIL" |"POST_LOGIN_SUCCESS"
 
@@ -63,8 +66,12 @@ declare namespace AnotherTodoClient {
 
   type AsyncUserUpdate = "PATCH_INFO_INIT" | "PATCH_INFO_FAIL" | "PATCH_INFO_SUCCESS"
 
-  type AsyncUserFilter = "POST_FILTER_INIT" | "POST_FILTER_FAIL" | "POST_FILTER_SUCCESS" |
-     "DELETE_FILTER_INIT" | "DELETE_FILTER_FAIL" | "DELETE_FILTER_SUCCESS"
+  type AsyncUserFilter = "POST_FILTER_INIT" | "POST_FILTER_FAIL" | "POST_FILTER_SUCCESS"
+
+  type AsyncUserDeleteFilter = "DELETE_FILTER_INIT" | "DELETE_FILTER_FAIL" | "DELETE_FILTER_SUCCESS"
+
+
+  type SyncTodoActions = "GET_TODOS" | "UPDATE_TODO" | "DELETE_TODO" | "FILTER_TODOS" | "SORT_TODOS"
 
   type AsyncTodoRead = "GET_TODOS_INIT" | "GET_TODOS_FAIL" | "GET_TODOS_SUCCESS" | "SEARCH_TODOS_INIT" | "SEARCH_TODOS_FAIL" | "SEARCH_TODOS_SUCCESS"
 
@@ -75,26 +82,61 @@ declare namespace AnotherTodoClient {
   type AsyncTodoDelete = "DELTE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
 
 
-  type UserActionTypes = AsyncUserLogin | AsyncUserLogout | AsyncUserUpdate | AsyncUserFilter | SyncUserActions
+  type UserActionTypes = AsyncUserRegister | AsyncUserLogin | AsyncUserLogout | AsyncUserUpdate |
+    AsyncUserFilter | AsyncUserDeleteFilter | SyncUserActions
 
   type TodoActionTypes = SyncTodoActions | AsyncTodoRead | AsyncTodoPost | AsyncTodoPatch | AsyncTodoDelete
 
-  interface UserStoreShape {
-    userId : string | undefined
-    username : string | undefined
-    sessionId : string | undefined
-    sortTodoBy : string | undefined
-    projectFilters : Array<string>
-    tagFilters : Array<string>
+
+  // ----- NOTE Redux Actions
+  interface ReduxAction extends AnyAction{
+    type          : UserActionTypes | TodoActionTypes
+    [key: string] : any
+  }
+
+  interface SyncUserAction implements ReduxAction {
+    type    : SyncUserActions
+    payload ?: any
+  }
+
+  interface AsyncRegisterAction implements ReduxAction {
+    type    : AsyncUserRegister
+    payload ?: postUserReq | userDataResponse | errorResponse
+  }
+
+  interface AsyncLoginAction implements ReduxAction {
+    type    : AsyncUserLogin
+    payload ?: userDataResponse | postLoginReq
+  }
+
+  interface AsyncPatchAction implements ReduxAction {
+    type    : AsyncUserUpdate
+    payload ?: UserStoreShape | UserDataOptional
+  }
+
+  interface AsyncLogOutAction implements ReduxAction {
+    type    : AsyncUserLogout
+    payload ?: responseObj
+  }
+
+  interface UserDataOptional {
+    sessionId      ?: string | undefined
+    sortTodoBy     ?: string | undefined
+    projectFilters ?: Array<string>
+    tagFilters     ?: Array<string>
+  }
+  interface UserStoreShape implements UserDataOptional {
+    userId         : string | undefined
+    username       : string | undefined
   }
 
   interface TodoStoreShape {
-    id : Number
-    userId : string
-    priority : "HIGH" | "MEDIUM" | "LOW"
-    todoText : string
-    projectFilter : string | undefined
-    tagFilter : string | undefined
+    id            : Number
+    userId        : string
+    priority      : "HIGH" | "MEDIUM" | "LOW"
+    todoText      : string
+    projectFilter ?: string | undefined
+    tagFilter     ?: string | undefined
   }
 
   interface StoreShape {

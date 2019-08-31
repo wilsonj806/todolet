@@ -1,7 +1,6 @@
 # Configure what Git(hub) branches get tested
+# Build on all branches
 branches:
-  only:
-    - master
 
 # Configure Node.jS environment
 language: node_js

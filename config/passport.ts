@@ -38,7 +38,7 @@ const passportConfig = (passport: PassportStatic): any => {
       try {
         const genSalt = await bcrypt.genSalt(10);
         const newPass = await bcrypt.hash(password, genSalt);
-        const newUser = await User.create({ username, newPass });
+        const newUser = await User.create({ username, password: newPass });
 
         // ----- once done is called with the new user, Passport calls req.user = newUser
         return done(null, newUser);

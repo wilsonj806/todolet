@@ -59,15 +59,15 @@ declare namespace AnotherTodoServer {
     [key: string] : any
   }
 
-  interface userDataResponse extends responseObj {
+  interface userDataResponse implements responseObj {
     "data" : UserStoreShape
   }
 
-  interface todoDataResponse extends responseObj {
+  interface todoDataResponse implements responseObj {
     "data" : Array<TodoStoreShape>
   }
 
-  interface errorResponse extends responseObj {
+  interface errorResponse implements responseObj {
     "errors" ?: Record | Array<Record>
   }
   /**

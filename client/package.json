@@ -34,6 +34,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@jedmao/redux-mock-store": "^2.0.3",
     "@storybook/addon-actions": "^5.1.11",
     "@storybook/addon-notes": "^5.1.9",
     "@storybook/react": "^5.1.9",

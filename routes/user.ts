@@ -68,7 +68,7 @@ router.post(
  * ANCHOR: POST logout user
  * =============================================================
  */
-router.get('/logout', getLogout);
+router.post('/logout', getLogout);
 
 
 /**

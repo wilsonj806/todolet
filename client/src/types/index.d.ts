@@ -19,6 +19,14 @@ export = AnotherTodoClient;
 export as namespace Client;
 
 declare namespace AnotherTodoClient {
+  // ----- NOTE Service types and interfaces
+  type ServiceStatus = 'FAILURE' | 'SUCCESS'
+  interface AsyncServiceReturn extends {} {
+    status : ServiceStatus
+    msg ?: string
+    payload ?: any
+  }
+
   // ----- NOTE Local State
   type FiltersEntry = {
     color : string,
@@ -106,7 +114,7 @@ declare namespace AnotherTodoClient {
 
   interface AsyncLoginAction implements ReduxAction {
     type    : AsyncUserLogin
-    payload ?: userDataResponse | postLoginReq
+    payload ?: userDataResponse | postLoginReq | errorResponse
   }
 
   interface AsyncPatchAction implements ReduxAction {

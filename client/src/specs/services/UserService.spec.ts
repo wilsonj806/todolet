@@ -8,10 +8,7 @@ const mock = new MockAdapter(axios);
 describe('A service function for registering a new user', () => {
   const endpoint = '/user/register';
 
-  afterEach(() => {
-    // remove all onPost/ onGet/ etc handlers
-    mock.reset();
-  })
+  afterEach(() => mock.reset())
 
   test('it should throw if required fields are missing', () => {
     const reqObj = {
@@ -23,20 +20,13 @@ describe('A service function for registering a new user', () => {
     const response = async () => await UserService.postLogin(reqObj)
     expect(response()).rejects.toThrow()
   })
-test('it should return an obect with the user id if it succeeded', async (done) => {
+test('it should return an obect with the user info if it succeeded', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'wasd',
       password2: 'wasd'
     };
 
-    const mockResponse = {
-      msg: 'testing',
-      data: {
-        userId: 'ID here',
-        username: 'guest'
-      }
-    };
     mock.onPost(endpoint).reply(
       200,
       { payload: reqObj }
@@ -120,7 +110,7 @@ describe('A service function for logging a client in', () => {
     expect(response()).rejects.toThrow()
     done()
   })
-  test('it should return an obect with the user id if it succeeded', async (done) => {
+  test('it should return an obect with the user info if it succeeded', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'wasd'
@@ -139,7 +129,7 @@ describe('A service function for logging a client in', () => {
     const response = await UserService.postLogin(reqObj);
 
     expect(response).toStrictEqual({
-      ...mockResponse,
+      payload: reqObj,
       status: 'SUCCESS'
     })
     done();

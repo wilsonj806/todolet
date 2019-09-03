@@ -23,6 +23,7 @@ env:
 # Staging for jobs
 jobs:
   include:
-    - stage: "Lint and test codebase"
-      script: npm run lint
+    - stage: "Unit test codebase"
+      # type check code, ensures the code doesn't break before Heroku builds it
+      script: npm run build -- --noEmit
       script: npm run coverage

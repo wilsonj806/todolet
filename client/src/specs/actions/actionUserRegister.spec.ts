@@ -34,7 +34,7 @@ describe('An action creator that handles async user registration', () => {
     // NOTE not trying to mock what mongoose returns, that's pretty intense
     mock.onPost('/user/register').reply(
       200,
-      { msg: 'hi', payload: user }
+      { msg: 'hi', data: user }
     );
     await store.dispatch<any>(postNewUser(user))
 
@@ -51,7 +51,7 @@ describe('An action creator that handles async user registration', () => {
 
     mock.onPost('/user/register').reply(
       200,
-      { msg: 'hi', payload: user }
+      { msg: 'hi', data: user }
     );
 
     await store.dispatch<any>(postNewUser(user))

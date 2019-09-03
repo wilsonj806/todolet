@@ -1,7 +1,7 @@
 import thunk from 'redux-thunk';
 import configureMockStore from '@jedmao/redux-mock-store';import MockAdapter from 'axios-mock-adapter';
 
-import * as UserRegistrationThunk from '../../actions/userRegistration.action';
+
 import {
   postNewUser,
   POST_REGISTER_INIT,
@@ -19,24 +19,26 @@ const user = {
   password2: 'wasd'
 }
 
+const mock = new MockAdapter(axios);
+
 describe('An action creator that handles async user registration', () => {
-  const mock = new MockAdapter(axios);
   afterEach(() => mock.reset())
 
   test('it dispatches an action signifying that a Registration dispatch has been initiated', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_REGISTER_INIT },
-      { type: POST_REGISTER_SUCCESS, payload: user }
+      // FIXME ideally don't have to put this in manually
+      { type: POST_REGISTER_SUCCESS, payload: user,  }
     ]
     // NOTE not trying to mock what mongoose returns, that's pretty intense
     mock.onPost('/user/register').reply(
       200,
-      { msg: 'hi', data: user }
+      { msg: 'hi', payload: user }
     );
     await store.dispatch<any>(postNewUser(user))
-    console.log(store.getActions());
-    expect(store.getActions()).toBe(expectedActions);
+
+    expect(store.getActions()).toStrictEqual(expectedActions);
     done()
   })
 
@@ -49,13 +51,12 @@ describe('An action creator that handles async user registration', () => {
 
     mock.onPost('/user/register').reply(
       200,
-      { msg: 'hi', data: user }
+      { msg: 'hi', payload: user }
     );
 
     await store.dispatch<any>(postNewUser(user))
-    console.log(store.getActions())
 
-    expect(store.getActions()).toBe(expectedActions);
+    expect(store.getActions()).toStrictEqual(expectedActions);
     done()
   })
 
@@ -63,10 +64,16 @@ describe('An action creator that handles async user registration', () => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_REGISTER_INIT },
-      { type: POST_REGISTER_FAIL, payload: user }
+      { type: POST_REGISTER_FAIL, payload: 'hi' }
     ]
+
+    mock.onPost('/user/register').reply(
+      400,
+      { msg: 'hi', error: user }
+    );
+
     await store.dispatch<any>(postNewUser(user))
-    expect(store.getActions()).toBe(expectedActions);
+    expect(store.getActions()).toStrictEqual(expectedActions);
     done()
   })
 })

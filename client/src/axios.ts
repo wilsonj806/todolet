@@ -6,7 +6,9 @@ const urlPath = process.env.NODE_ENV === 'production' ? `https://wj-todolet.hero
 
 const instance = axios.create({
   baseURL: urlPath,
-  withCredentials: process.env.NODE_ENV === 'production' ? true : false,
+  withCredentials: process.env.NODE_ENV === 'production' ? true : undefined,
+  // Necessary so the thing doesn't throw on >400 error
+  validateStatus: () => true
 });
 
 export default instance;

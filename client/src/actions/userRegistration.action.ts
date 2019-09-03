@@ -1,12 +1,10 @@
 import { Dispatch } from 'redux';
-import axios from '../axios';
 
+import UserService from '../services/UserService';
+
+// ----- NOTE TypeScript types(client and server)
 import {
-  ReduxAction,
   AsyncRegisterAction,
-  AsyncLoginAction,
-  AsyncLogOutAction,
-  AsyncPatchAction,
   UserStoreShape
 } from '../types';
 import { postUserReq, userDataResponse, errorResponse } from '../../../types';
@@ -38,10 +36,13 @@ export const postNewUser = (request : postUserReq) => {
   return async (dispatch : Dispatch) => {
     dispatch(requestRegister());
     try {
-      const result = await axios.post('/user/register')
-      return dispatch(receiveRegisterSuccess(result))
+      const result = await UserService.postNewUser(request);
+      const { status, msg } = result;
+
+      if (status === 'FAILURE') throw new Error(msg);
+      return dispatch(receiveRegisterSuccess(result.payload))
     } catch (error) {
-      return dispatch(receiveRegisterFailure(error));
+      return dispatch(receiveRegisterFailure(error.message));
     }
   }
 }

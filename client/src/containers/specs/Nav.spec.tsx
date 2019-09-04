@@ -6,7 +6,7 @@ import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
 import { AppContext } from '../../contexts/AppContext';
-import Nav from '../../containers/Nav/Nav';
+import Nav from '../Nav/Nav';
 
 describe('A component that renders a navbar', () => {
   afterEach(() => cleanup())

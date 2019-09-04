@@ -3,7 +3,7 @@ import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import { AppContext } from '../../contexts/AppContext';
-import UserCard from '../../containers/Nav/UserCard';
+import UserCard from '../Nav/UserCard';
 
 // TODO Add AppContext in with placeholder values
 describe('A UserCard component', () => {

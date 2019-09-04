@@ -3,7 +3,7 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import { AppContext } from '../../contexts/AppContext';
-import FiltersCard from '../../containers/Nav/FiltersCard';
+import FiltersCard from '../Nav/FiltersCard';
 
 describe('A FiltersCard component', () => {
   afterEach(() => cleanup())

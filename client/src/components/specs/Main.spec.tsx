@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-import Main from '../../components/Main';
+import Main from '../Main';
 
 describe('A Main component', () => {
   test('it should render with a main tag at the root', () => {

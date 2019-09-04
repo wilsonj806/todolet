@@ -7,7 +7,7 @@ import {
   POST_REGISTER_INIT,
   POST_REGISTER_FAIL,
   POST_REGISTER_SUCCESS,
-} from '../../actions/userRegistration.action';
+} from '../userRegistration.action';
 import axios from '../../axios';
 
 const middlewares = [thunk];

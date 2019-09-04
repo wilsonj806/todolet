@@ -6,7 +6,7 @@ import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
 import { AppContext } from '../../contexts/AppContext';
-import TodoAppBar from '../../containers/Nav/TodoAppBar';
+import TodoAppBar from '../Nav/TodoAppBar';
 
 describe('A component that renders an AppBar', () => {
   afterEach(() => cleanup())

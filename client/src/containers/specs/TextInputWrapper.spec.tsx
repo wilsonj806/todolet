@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import TextInputWrapper from '../../containers/TextInputWrapper';
+import TextInputWrapper from '../TextInputWrapper';
 
 describe('A component that renders an input', () => {
   afterEach(() => cleanup())

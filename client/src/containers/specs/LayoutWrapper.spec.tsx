@@ -3,7 +3,7 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
-import LayoutWrapper from '../../containers/LayoutWrapper';
+import LayoutWrapper from '../LayoutWrapper';
 import { AppContext } from '../../contexts/AppContext';
 
 describe('A component for building the app layout', () => {

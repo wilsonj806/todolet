@@ -3,10 +3,10 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
-import renderWithRouter from '../helpers/router.helper';
+import renderWithRouter from './helpers/router.helper';
 
 import { AppContext } from '../../contexts/AppContext';
-import UserProfileMenu from '../../containers/Nav/UserProfileMenu';
+import UserProfileMenu from '../Nav/UserProfileMenu';
 
 import UserService from '../../services/UserService'
 

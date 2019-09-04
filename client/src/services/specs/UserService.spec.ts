@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import axios from '../../axios';
 
-import UserService from '../../services/UserService';
+import UserService from '../UserService';
 
 
 const mock = new MockAdapter(axios);

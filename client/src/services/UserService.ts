@@ -3,6 +3,7 @@ import { postLoginReq, postUserReq } from '../../../types';
 import { AsyncServiceReturn } from '../types';
 import { AxiosResponse } from 'axios';
 
+
 const UserService: any = {};
 
 UserService.postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceReturn> => {
@@ -13,6 +14,7 @@ UserService.postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceRetu
 
 
     const response : AxiosResponse<any> = await axios.post('/user/register', reqObj);
+
     const { data } = response;
     const { data: payload, msg } = data;
 
@@ -46,6 +48,22 @@ UserService.postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn
     return { payload, status: 'SUCCESS' };
   } catch (error) {
     return { msg: error.message, status: 'FAILURE' };
+  }
+}
+
+UserService.postLogout =  async (): Promise<AsyncServiceReturn> => {
+  try {
+    const response = await axios.post('/user/logout');
+    const { data } = response;
+    const { msg } = data;
+
+    const test = /^(4|5)/;
+    const status = response.status.toString(10);
+    if (test.test(status) === true) throw new Error(msg);
+
+    return { msg, status: 'SUCCESS'}
+  } catch (error) {
+    return {msg: error.message, status: 'FAILURE'}
   }
 }
 

@@ -1,5 +1,6 @@
 import thunk from 'redux-thunk';
-import configureMockStore from '@jedmao/redux-mock-store';import MockAdapter from 'axios-mock-adapter';
+import configureMockStore from '@jedmao/redux-mock-store';
+import MockAdapter from 'axios-mock-adapter';
 
 
 import {

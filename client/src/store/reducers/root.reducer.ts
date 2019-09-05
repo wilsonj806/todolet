@@ -4,14 +4,22 @@ import { POST_LOGOUT_FAIL, POST_LOGOUT_SUCCESS, POST_LOGOUT_INIT } from '../../a
 import { POST_REGISTER_FAIL, POST_REGISTER_INIT, POST_REGISTER_SUCCESS } from '../../actions/userRegistration.action';
 import { StoreShape, UserStoreShape, ReduxAction, ClientServerConnectShape } from '../../types';
 
+// FIXME something's really weird with some of the key names and how it aligns with other stuff
 const INIT_USER_STATE : UserStoreShape = {
   userId: undefined,
-  username: undefined
+  username: undefined,
+  projectFilters: [],
+  tagFilters: [],
 }
 
 // NOTE this is new and won't be found in docs/CLIENTSTATE.md
 const INIT_CLIENTSERVER_STATE : ClientServerConnectShape = {
   isFetching: false
+}
+
+const INIT_APP_STATE : StoreShape = {
+  authorizedUser: INIT_USER_STATE,
+  clientServerConnect: INIT_CLIENTSERVER_STATE
 }
 
 const authorizedUser = (state : UserStoreShape = INIT_USER_STATE, action : ReduxAction): UserStoreShape => {
@@ -60,3 +68,4 @@ const rootReducer : Reducer<StoreShape> = combineReducers({
 })
 
 export default rootReducer
+export { INIT_APP_STATE, INIT_CLIENTSERVER_STATE, INIT_USER_STATE }

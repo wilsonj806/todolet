@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState, FunctionComponent } from 'react';
-import { FiltersArray, FiltersEntry } from '../../types';
+import React, { useEffect, useState, FunctionComponent } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { FiltersArray, FiltersEntry, StoreShape } from '../../types';
 
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
@@ -20,6 +21,9 @@ import { filterCardStyles as useStyles } from './nav.styles';
  *  - Tests handling clicking a filter
  */
 const FiltersCard: FunctionComponent<any> = (props) => {
+  const projectFilters = useSelector((state: StoreShape) => state.authorizedUser.projectFilters) || [];
+  const tagFilters = useSelector((state: StoreShape) => state.authorizedUser.tagFilters) || [];
+
   const classes = useStyles();
 
   // ----- UI state
@@ -30,29 +34,9 @@ const FiltersCard: FunctionComponent<any> = (props) => {
   */
   const [value, setValue] = useState(0);
 
-  // ----- API related state
-  const [projects, setProjects] = useState<FiltersArray>([]);
-  const [tags, setTags] = useState<FiltersArray>([]);
-
-  // ----- Side Effect: populate lists
-  useEffect(() => {
-    const arr = [
-      { color: 'pink', name: 'Another Todo'},
-      { color: 'orange', name: 'Picture Analyzer'},
-      { color: 'red', name: 'Personal Finances'},
-    ];
-    setProjects(arr);
-    const tags = [
-      { color: 'pink', name: 'Self-learning'},
-      { color: 'orange', name: 'Chores'},
-      { color: 'red', name: 'Career'},
-    ];
-    setTags(tags);
-  }, []);
-
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => setValue(newValue);
 
-  const toMap = value === 0 ? projects.map(
+  const toMap = value === 0 ? projectFilters.map(
     (project: FiltersEntry, i: Number) => (
       <ListItem button key={ i.toString() } classes={{ root: classes.listItem }}>
         <Box
@@ -67,7 +51,7 @@ const FiltersCard: FunctionComponent<any> = (props) => {
       </ListItem>
     )
   ) : value === 1 ?
-    tags.map(
+    tagFilters.map(
       (tag: FiltersEntry, i: Number) => (
         <ListItem button key={ i.toString() } classes={{ root: classes.listItem }}>
           <Box

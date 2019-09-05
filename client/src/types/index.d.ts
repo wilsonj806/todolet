@@ -131,15 +131,15 @@ declare namespace AnotherTodoClient {
   interface UserDataOptional {
     sessionId      ?: string | undefined
     sortTodoBy     ?: string | undefined
-    projectFilters ?: Array<string>
-    tagFilters     ?: Array<string>
+    projectFilters ?: Array<any>
+    tagFilters     ?: Array<any>
   }
 
   interface ClientServerConnectShape {
     isFetching : boolean
     staleDataFrom ?: string | undefined
   }
-  interface UserStoreShape implements UserDataOptional {
+  interface UserStoreShape extends UserDataOptional {
     userId         : string | undefined
     username       : string | undefined
   }

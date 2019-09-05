@@ -3,19 +3,30 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
+import configureStore from '../../store/configStore'
 
-
-import { AppContext } from '../../contexts/AppContext';
 import Nav from '../Nav/Nav';
+import { FunctionComponent } from 'react';
+import { Provider } from 'react-redux';
 
 describe('A component that renders a navbar', () => {
+  // NOTE Global state init for passing around
+  const globalStore = configureStore();
+  // NOTE Global wrapper for the Router and Redux Provider
+  const Wrapper: FunctionComponent = (props) => (
+    <Router>
+      <Provider store={ globalStore }>
+        { props.children }
+      </Provider>
+      </Router>
+  )
   afterEach(() => cleanup())
 
   test('it should render with one NAV tag', () => {
     const { container } = render(
-      <Router>
+      <Wrapper>
         <Nav/>
-      </Router>
+      </Wrapper>
     )
 
     const assertOneNav = container.querySelectorAll('nav');
@@ -25,9 +36,9 @@ describe('A component that renders a navbar', () => {
   test('it should render with a heading that has the app name in it', () => {
     const APP_NAME = 'TodoLet';
     const { getByText, container } = render(
-      <Router>
+      <Wrapper>
         <Nav/>
-      </Router>
+      </Wrapper>
     )
     const assertHeading = container.querySelector('h1');
     expect(assertHeading).toBeTruthy();
@@ -36,9 +47,9 @@ describe('A component that renders a navbar', () => {
 
   test('it should render at least one menu', () => {
     const { container } = render(
-      <Router>
+      <Wrapper>
         <Nav/>
-      </Router>
+      </Wrapper>
     )
 
     const assertMenus = container.querySelectorAll('[role=menu]');

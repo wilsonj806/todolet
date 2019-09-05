@@ -4,9 +4,11 @@ This doc overviews how client-side state management will be setup/ done. Chances
 
 ## Global State
 ### What's stored
-Global state is only going to include two general things:
+Global state is only going to include a couple of general things:
 - User state
 - Todos state
+- Server fetch state
+- Error state
 
 User state only really needs to store:
 - current session user
@@ -62,7 +64,7 @@ interface TodoStoreShape {
 }
 
 interface StoreShape {
-  currentUser: UserStoreShape
+  authorizedUser: UserStoreShape
   todosList: TodoStoreShape
 }
 

@@ -48,6 +48,7 @@ const Login: FunctionComponent<any> = (props) => {
           <TextField
             fullWidth
             id="username"
+            name="username"
             margin="normal"
             label="Username"
             value={ username }
@@ -58,6 +59,7 @@ const Login: FunctionComponent<any> = (props) => {
           <TextField
             fullWidth
             id="password"
+            name="password"
             margin="normal"
             type="password"
             label="Password"

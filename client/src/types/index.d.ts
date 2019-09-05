@@ -53,6 +53,7 @@ declare namespace AnotherTodoClient {
 
   interface TextInputWrapperProps {
     id            : string
+    name            : string
     type          ?: string
     value         : string
     label         : string
@@ -133,6 +134,11 @@ declare namespace AnotherTodoClient {
     projectFilters ?: Array<string>
     tagFilters     ?: Array<string>
   }
+
+  interface ClientServerConnectShape {
+    isFetching : boolean
+    staleDataFrom ?: string | undefined
+  }
   interface UserStoreShape implements UserDataOptional {
     userId         : string | undefined
     username       : string | undefined
@@ -148,8 +154,9 @@ declare namespace AnotherTodoClient {
   }
 
   interface StoreShape {
-    currentUser: UserStoreShape
-    todosList: TodoStoreShape
+    clientServerConnect : ClientServerConnectShape
+    authorizedUser : UserStoreShape
+    todosList ?: TodoStoreShape
   }
 }
 

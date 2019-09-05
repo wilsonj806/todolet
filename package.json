@@ -17,8 +17,7 @@
     "lint": "eslint ./**/*.ts",
     "test": "jest --config=jest.config.js --watch",
     "test-client": "jest --config=react.jest.config.js --watch",
-    "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && npm run merge-coverage | coveralls && rm -rf ./todolet_coverage_* ",
-    "merge-coverage": "mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info'"
+    "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./todolet_coverage_* "
   },
   "dependencies": {
     "bcryptjs": "2.4.3",

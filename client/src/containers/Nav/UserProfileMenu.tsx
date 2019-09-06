@@ -27,7 +27,7 @@ import { postLogout } from '../../actions/userLogout.action';
 
 const UserProfileMenu: FunctionComponent<any> = (props) => {
   const dispatch = useDispatch()
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<undefined | HTMLElement>(undefined);
 
   const classes = useStyles();
 
@@ -36,7 +36,7 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
   }
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   }
 
   return (

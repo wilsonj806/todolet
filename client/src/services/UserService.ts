@@ -1,12 +1,16 @@
 import axios from '../axios';
-import { postLoginReq, postUserReq } from '../../../types';
-import { AsyncServiceReturn } from '../types';
 import { AxiosResponse } from 'axios';
 
+import AxiosService from './AxiosService';
 
-const UserService: any = {};
+import { AsyncServiceReturn } from '../types';
+import { postLoginReq, postUserReq } from '../../../types';
 
-UserService.postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceReturn> => {
+
+
+const { parseError, parseResponse } = AxiosService
+
+const postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceReturn> => {
   try {
     // TODO make it check which keys are missing
     const inputCheck = Object.entries(reqObj).some(val => val[1] === "");
@@ -15,43 +19,26 @@ UserService.postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceRetu
 
     const response : AxiosResponse<any> = await axios.post('/user/register', reqObj);
 
-    const { data } = response;
-    const { data: payload, msg } = data;
-
-    const test = /^(4|5)/;
-    const status = response.status.toString(10);
-    if (test.test(status) === true) {
-      // TODO check if there's an array of errors
-      throw new Error(msg)
-    }
-
-    return { payload, status: 'SUCCESS' };
+    return parseResponse(response)
   } catch (error) {
-    return { msg: error.message, status: 'FAILURE' };
+    return parseError(error);
   }
 }
 
 
 // TODO add something to unpack Axios responses
-UserService.postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn> => {
+const postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn> => {
   const inputCheck = Object.values(reqObj).some(val => val === "");
   if (inputCheck === true) throw new Error('Error: execpting values for inputs')
   try {
     const response : AxiosResponse<any> = await axios.post('/user/login', reqObj);
-    const { data } = response;
-    const { data: payload, msg } = data;
-
-    const test = /^(4|5)/;
-    const status = response.status.toString(10);
-    if (test.test(status) === true) throw new Error(msg);
-
-    return { payload, status: 'SUCCESS' };
+    return parseResponse(response)
   } catch (error) {
-    return { msg: error.message, status: 'FAILURE' };
+    return parseError(error);
   }
 }
 
-UserService.postLogout =  async (): Promise<AsyncServiceReturn> => {
+const postLogout =  async (): Promise<AsyncServiceReturn> => {
   try {
     const response = await axios.post('/user/logout');
     const { data } = response;
@@ -63,8 +50,15 @@ UserService.postLogout =  async (): Promise<AsyncServiceReturn> => {
 
     return { msg, status: 'SUCCESS'}
   } catch (error) {
-    return {msg: error.message, status: 'FAILURE'}
+    return parseError(error);
   }
 }
+
+const UserService = {
+  postLogin,
+  postLogout,
+  postNewUser
+};
+
 
 export default UserService;

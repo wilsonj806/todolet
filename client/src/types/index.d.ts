@@ -27,6 +27,15 @@ declare namespace AnotherTodoClient {
     payload ?: any
   }
 
+  interface ServiceSuccessObject extends AsyncServiceReturn {
+    status : 'SUCCESS'
+    payload ?: any
+  }
+
+  interface ServiceFailObject extends AsyncServiceReturn {
+    status : 'FAILURE'
+    msg    : string
+  }
   // ----- NOTE Local State
   type FiltersEntry = {
     color : string,

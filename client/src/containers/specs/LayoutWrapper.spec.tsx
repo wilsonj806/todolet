@@ -1,16 +1,17 @@
 import React from 'react';
-import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
-import configureMockStore from '@jedmao/redux-mock-store';import MockAdapter from 'axios-mock-adapter';
-
-import { render, cleanup, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { DeepPartial } from 'redux';
+import { Provider } from 'react-redux'
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
+
+// ----- Test Libraries and mocks
+import configureMockStore from '@jedmao/redux-mock-store';
+import { render, cleanup, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+
 import LayoutWrapper from '../LayoutWrapper';
-import { AppContext } from '../../contexts/AppContext';
 import { StoreShape } from '../../types';
-import { DeepPartial } from 'redux';
 
 
 const middlewares = [thunk];

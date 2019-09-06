@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
+import { Provider } from 'react-redux';
+import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import configureStore from '../../store/configStore'
 
 import Nav from '../Nav/Nav';
-import { FunctionComponent } from 'react';
-import { Provider } from 'react-redux';
+
 
 describe('A component that renders a navbar', () => {
   // NOTE Global state init for passing around

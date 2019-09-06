@@ -1,12 +1,18 @@
-import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import React, { FC } from 'react';
+import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
+import { render, cleanup, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+
+import configureStore from '../../store/configStore';
 
 
-import { AppContext } from '../../contexts/AppContext';
 import TodoAppBar from '../Nav/TodoAppBar';
+
+const store = configureStore();
+
+const Wrapper: FC<any> = ({ children }) => <Provider store={ store }>{ children }</Provider>
 
 describe('A component that renders an AppBar', () => {
   afterEach(() => cleanup())
@@ -15,7 +21,9 @@ describe('A component that renders an AppBar', () => {
     const APP_NAME = 'TodoLet';
     const { getByText, container } = render(
       <Router>
-        <TodoAppBar/>
+        <Wrapper>
+          <TodoAppBar/>
+        </Wrapper>
       </Router>
     )
     const assertHeading = container.querySelector('h1');
@@ -26,7 +34,9 @@ describe('A component that renders an AppBar', () => {
   test('it should render at least one menu', () => {
     const { container } = render(
       <Router>
-        <TodoAppBar/>
+        <Wrapper>
+          <TodoAppBar/>
+        </Wrapper>
       </Router>
     )
 

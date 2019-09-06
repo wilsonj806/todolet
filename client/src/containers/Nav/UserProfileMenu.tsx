@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -10,6 +11,9 @@ import { Link } from 'react-router-dom';
 
 import { useTheme } from '@material-ui/core/styles';
 import { userProfileMenuStyles as useStyles } from './nav.styles';
+import { postLogout } from '../../actions/userLogout.action';
+
+
 
 
 /**
@@ -22,6 +26,7 @@ import { userProfileMenuStyles as useStyles } from './nav.styles';
  */
 
 const UserProfileMenu: FunctionComponent<any> = (props) => {
+  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const classes = useStyles();
@@ -57,7 +62,7 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
           <Link to="/account">My Account</Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link to="/logout">Logout</Link>
+          <Link to="/logout" onClick={ () => dispatch(postLogout())}>Logout</Link>
         </MenuItem>
       </Menu>
     </>

@@ -129,6 +129,7 @@ declare namespace AnotherTodoClient {
   }
 
   interface UserDataOptional {
+    avatar         ?: string | undefined
     sessionId      ?: string | undefined
     sortTodoBy     ?: string | undefined
     projectFilters ?: Array<any>

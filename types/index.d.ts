@@ -16,6 +16,8 @@
 /// <reference types="express" />
 
 import { Document, MongooseDocument } from "mongoose";
+import { TodoStoreShape, UserStoreShape } from '../client/src/types'
+
 
 
 export = AnotherTodoServer;
@@ -57,8 +59,16 @@ declare namespace AnotherTodoServer {
     [key: string] : any
   }
 
+  interface userDataResponse extends responseObj {
+    "data" : UserStoreShape
+  }
+
+  interface todoDataResponse extends responseObj {
+    "data" : Array<TodoStoreShape>
+  }
+
   interface errorResponse extends responseObj {
-    "errors" ?: Record
+    "errors" ?: Record | Array<Record>
   }
   /**
    * ANCHOR Database related
@@ -70,6 +80,10 @@ declare namespace AnotherTodoServer {
     _id      : any
     username : string
     password : string
+    sessionId : string
+    sortTodoBy ?: string
+    projectFilters ?: Array<string>
+    tagFilters ?: Array<string>
   }
   interface IUserModel extends IUserObj, Document {}
   interface todoObj extends mongodbObj {

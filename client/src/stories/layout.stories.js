@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react';
 
 import { Typography } from '@material-ui/core';
+import StoryRouter from 'storybook-react-router';
 
 import Nav from '../containers/Nav/Nav';
 import Body from '../components/Body';
@@ -9,6 +10,7 @@ import Main from '../components/Main';
 
 
 storiesOf('Layout|Body', module)
+  .addDecorator(StoryRouter())
   .add('it can render a nav and main component side by side', () => {
     return (
       <Body>

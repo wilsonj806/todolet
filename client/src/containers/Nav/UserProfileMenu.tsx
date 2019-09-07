@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -6,24 +7,36 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
+import { Link } from 'react-router-dom';
 
 import { useTheme } from '@material-ui/core/styles';
 import { userProfileMenuStyles as useStyles } from './nav.styles';
+import { postLogout } from '../../actions/userLogout.action';
 
+
+
+
+/**
+ *
+ * @param props
+ *
+ * TODO Tests todo
+ *  - test clicking the Logout link
+ *
+ */
 
 const UserProfileMenu: FunctionComponent<any> = (props) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const dispatch = useDispatch()
+  const [anchorEl, setAnchorEl] = React.useState<undefined | HTMLElement>(undefined);
 
   const classes = useStyles();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget);
-    console.dir(anchorEl);
     setAnchorEl(event.currentTarget);
   }
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(undefined);
   }
 
   return (
@@ -42,10 +55,15 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/profile">Profile</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/account">My Account</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/logout" onClick={ () => dispatch(postLogout())}>Logout</Link>
+        </MenuItem>
       </Menu>
     </>
   );

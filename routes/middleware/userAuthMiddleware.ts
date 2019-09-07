@@ -3,10 +3,15 @@ import CommonService from './services/CommonService';
 
 const { responsifyData, responsifyNoData, responsifyError } = CommonService;
 
+// NOTE this is the last method in the Login service chain
 const postLogin: RequestHandler = (req, res, next): any => {
-  const { username, _id } = req.user;
+  const user = {...req.user._doc };
+  user.userId = user._id.toString().slice();
+  delete user._id;
+  delete user.__v;
+  delete user.password;
 
-  res.status(200).json(responsifyData('LoginSuccessful', { _id, username }));
+  res.status(200).json(responsifyData('LoginSuccessful', { ...user }));
   next();
 };
 

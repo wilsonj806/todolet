@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IUserModel } from '../types/server';
+import { IUserModel } from '../types';
 
 // ANCHOR User Schema
 /* eslint-disable @typescript-eslint/camelcase */
@@ -12,6 +12,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  sessionId: {
+    type: String,
+    required: false,
+  },
+  sortTodoBy: {
+    type: String,
+    required: false,
+  },
+  projectFilters: {
+    type: [String],
+    required: false,
+  },
+  tagFilters: {
+    type: [String],
+    required: false,
+  }
 });
 /* eslint-enable @typescript-eslint/camelcase */
 

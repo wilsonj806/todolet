@@ -1,12 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react';
-import { StaticRouter as Router } from 'react-router-dom';
+import StoryRouter from 'storybook-react-router';
 
 import Login from '../layouts/Login/Login';
 
 storiesOf('User Auth Pages | Login', module)
+  .addDecorator(StoryRouter())
   .add('it renders', () => (
-    <Router>
       <Login/>
-    </Router>
   ))

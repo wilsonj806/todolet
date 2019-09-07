@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { validationResult } from 'express-validator/check';
-import { errorResponse } from '../../types/server';
+import { errorResponse } from '../../types';
 import CommonService from './services/CommonService';
 
 const { responsifyError } = CommonService;

@@ -9,7 +9,7 @@ import { navStyles as useStyles } from './nav.styles';
 import AppBar from './TodoAppBar';
 import UserCard from './UserCard';
 import FiltersCard from './FiltersCard';
-import { NavProps } from '../../types/client';
+import { NavProps } from '../../types';
 
 
 // TODO add a thing to the Toolbar stating current user and stuff
@@ -30,12 +30,6 @@ const Nav : FunctionComponent<NavProps> = props => {
           >
           <UserCard/>
           <FiltersCard/>
-          <div>
-            <div className={ classes.toolbar } />
-            <Typography paragraph={ true }>
-              KONO DIO DAAA
-            </Typography>
-          </div>
         </Drawer>
       </nav>
     </>

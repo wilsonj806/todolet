@@ -1,19 +1,20 @@
 import React, { FunctionComponent, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { TextInputWrapperProps } from '../types/form';
-
+import { TextInputWrapperProps } from '../types';
+// FIXME replace id with "name" attribute
 const TextInputWrapper: FunctionComponent<TextInputWrapperProps> = (props) => {
-  const { type, classes, id, label, margin, value, reactHookFn } = props;
+  const { type, classes, id, name, label, margin, value, reactHookFn } = props;
   const otherProps = { ...props };
   delete otherProps.reactHookFn;
 
   return (
     <TextField
       id={ id }
+      name={ name }
       value={ value }
       label={ label }
       margin={ margin }
-      classes={ classes }
+      classes={ classes || undefined }
       type={ type ? type : "text" }
       onChange={ (event) => reactHookFn(event.target.value) }
       { ...otherProps }

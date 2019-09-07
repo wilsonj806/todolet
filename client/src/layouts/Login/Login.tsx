@@ -1,4 +1,5 @@
-import React, { FunctionComponent, SyntheticEvent, useState, useContext } from 'react';
+import React, { FunctionComponent, SyntheticEvent, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom';
 
 // ----- MUI components
@@ -30,7 +31,7 @@ const Login: FunctionComponent<any> = (props) => {
       const res = await UserService.postLogin(obj);
       console.log(res);
       if (res.status) {
-        setError(res.msg)
+        setError(res.msg || '')
         return;
       }
     } catch (err) {
@@ -48,6 +49,7 @@ const Login: FunctionComponent<any> = (props) => {
           <TextField
             fullWidth
             id="username"
+            name="username"
             margin="normal"
             label="Username"
             value={ username }
@@ -58,6 +60,7 @@ const Login: FunctionComponent<any> = (props) => {
           <TextField
             fullWidth
             id="password"
+            name="password"
             margin="normal"
             type="password"
             label="Password"

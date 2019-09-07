@@ -1,6 +1,6 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, ErrorRequestHandler } from 'express';
 import bcrypt from 'bcryptjs';
-import { postUserReq, errorResponse } from '../../types/server';
+import { postUserReq, errorResponse } from '../../types';
 
 import 'dotenv/config';
 
@@ -8,7 +8,7 @@ import User from '../../models/user';
 
 import CommonService from './services/CommonService';
 
-const { responsifyData, responsifyNoData } = CommonService;
+const { responsifyData, responsifyNoData, responsifyError } = CommonService;
 
 const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any> => {
   try {
@@ -25,38 +25,14 @@ const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any
   }
 };
 
-const encryptPass: RequestHandler = async (req, res, next): Promise<any> => {
-  try {
-    const { password }: postUserReq = req.body;
-    const genSalt = await bcrypt.genSalt(10);
-    const newPass = await bcrypt.hash(password, genSalt);
-    res.locals.hashedPwd = newPass;
-    next();
-  } catch (error) {
-    res.status(500).json(responsifyNoData('Error: Internal server error, sorry :('));
-    console.error('Error alert, check below for additional logging \n', error);
-  }
+const postRegisterFailure: ErrorRequestHandler = (err, req, res, next): void => {
+  res.status(401).json(responsifyError('Login failed', err));
+  next();
 };
 
 
-const postNewUser: RequestHandler = async (req, res, next): Promise<any> => {
-  try {
-    const { username }: postUserReq = req.body;
-    const newUser = await User.create({ username, password: res.locals.hashedPwd });
-
-    const { _id } = newUser;
-
-    res.status(200).json(responsifyData('User added', { _id, username }));
-  } catch (err) {
-    res.status(500).json(responsifyNoData('Error: Internal server error, sorry :('));
-    console.error('Error alert, check below for additional logging \n', err);
-  } finally {
-    next();
-  }
-};
 
 export {
   findUserWithUsername,
-  encryptPass,
-  postNewUser,
+  postRegisterFailure,
 };

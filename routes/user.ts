@@ -15,8 +15,7 @@ import { body } from 'express-validator/check';
 import passport from 'passport';
 import {
   findUserWithUsername,
-  postNewUser,
-  encryptPass,
+  postRegisterFailure
 } from './middleware/userRegistrationMiddleware';
 import {
   postLogin,
@@ -32,13 +31,7 @@ const router = express.Router();
 /**
  * ANCHOR: POST register new user
  * =============================================================
- * Requirements(NOTE should be replaced with actual test specs):
- *  - validate request form
- *  - check if the username exists
- *  - encrypt the password
- *  - add the user into the database
- *  - send a response saying it went okay
- *  - OR send a response saying it failed
+ * TODO Add passport.authenticate() in
  */
 router.post(
   '/register',
@@ -50,15 +43,14 @@ router.post(
   ],
   checkFormErrors,
   findUserWithUsername,
-  encryptPass,
-  postNewUser,
+  passport.authenticate('register', { failWithError: true }),
+  postLogin,
+  postRegisterFailure
 );
 
 /**
  * ANCHOR: POST login user with credentials
  * =============================================================
- * Requirements(NOTE should be replaced with actual test specs):
- *  TODO make sure that the checkFormErrors middleware integrates well
  */
 router.post(
   '/login',
@@ -67,7 +59,7 @@ router.post(
     body('password', 'Password is required').exists({ checkFalsy: true }),
   ],
   checkFormErrors,
-  passport.authenticate('local', { failWithError: true }),
+  passport.authenticate('login', { failWithError: true }),
   postLogin,
   postLoginFail,
 );
@@ -75,10 +67,8 @@ router.post(
 /**
  * ANCHOR: POST logout user
  * =============================================================
- * Requirements(NOTE should be replaced with actual test specs):
- *
  */
-router.get('/logout', getLogout);
+router.post('/logout', getLogout);
 
 
 /**

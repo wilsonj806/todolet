@@ -13,10 +13,13 @@ import TextField from '../../containers/TextInputWrapper';
 
 import Logo from '../../assets/Logo(512x512).png';
 import useStyles from './login.styles';
+import { postLogin } from '../../actions/userLogin.action';
 
-import UserService from '../../services/UserService';
 
 const Login: FunctionComponent<any> = (props) => {
+  const state = useSelector(state=>state);
+  console.log(state);
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const [ username, setUsername ] = useState('');
@@ -27,13 +30,8 @@ const Login: FunctionComponent<any> = (props) => {
   const handleFormSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const obj = { username, password };
+    await dispatch(postLogin(obj))
     try {
-      const res = await UserService.postLogin(obj);
-      console.log(res);
-      if (res.status) {
-        setError(res.msg || '')
-        return;
-      }
     } catch (err) {
       console.log(err);
       setError(err);

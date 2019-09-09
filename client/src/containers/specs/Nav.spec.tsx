@@ -5,7 +5,7 @@ import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-import configureStore from '../../store/configStore'
+import configureStore from '../../store/configureStore'
 
 import Nav from '../Nav/Nav';
 

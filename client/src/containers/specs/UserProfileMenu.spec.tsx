@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import renderWithRouter from './helpers/router.helper';
 
-import configureStore from '../../store/configStore';
+import configureStore from '../../store/configureStore';
 
 import UserProfileMenu from '../Nav/UserProfileMenu';
 

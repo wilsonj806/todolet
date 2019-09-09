@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 
 import { ThemeProvider } from '@material-ui/styles';
 
-import configureStore from '../../store/configStore';
+import configureStore from '../../store/configureStore';
 const store = configureStore()
 
 const Wrapper = props => (

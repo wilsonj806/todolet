@@ -2,7 +2,7 @@ import React, { useEffect, useState, FunctionComponent } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { userCardStyles as useStyles } from './nav.styles';
+import useStyles from './UserCard.styles';
 import { StoreShape } from '../../types';
 
 // TODO need to add a thing for when the user isn't actually logged in

@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Box from '@material-ui/core/Box';
 
 
-import { filterCardStyles as useStyles } from './nav.styles';
+import useStyles from './FiltersCard.styles';
 
 /**
  *

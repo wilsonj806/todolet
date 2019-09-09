@@ -2,15 +2,15 @@ import React, { FC } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
-import { render, cleanup, fireEvent } from '@testing-library/react';
+// ----- Test Helpers
 import '@testing-library/jest-dom/extend-expect';
+import renderWithRouter from '../helpers/router.helper';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 
-import renderWithRouter from './helpers/router.helper';
-
-import configureStore from '../../store/configureStore';
 
 import UserProfileMenu from '../Nav/UserProfileMenu';
 
+import configureStore from '../../store/configureStore';
 import UserService from '../../services/UserService'
 
 const { postLogout } = UserService;

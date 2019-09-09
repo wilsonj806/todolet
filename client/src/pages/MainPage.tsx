@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import LayoutWrapper from '../containers/LayoutWrapper';
+import LayoutWrapper from '../layouts/LayoutWrapper';
 import MainLayout from '../layouts/MainLayout/MainLayout'
 
 const MainPage : FC<any> = () => (

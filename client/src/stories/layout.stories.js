@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { Typography } from '@material-ui/core';
 import StoryRouter from 'storybook-react-router';
 
-import Nav from '../containers/Nav/Nav';
+import Nav from '../layouts/Nav/Nav';
 import Body from '../components/Body';
 import Main from '../components/Main';
 

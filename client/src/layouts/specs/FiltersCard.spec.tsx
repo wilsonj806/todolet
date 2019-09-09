@@ -1,4 +1,5 @@
 import React from 'react';
+import { DeepPartial } from 'redux';
 import { Provider } from 'react-redux';
 import configureMockStore from '@jedmao/redux-mock-store';
 
@@ -8,7 +9,6 @@ import '@testing-library/jest-dom/extend-expect';
 import configureStore from '../../store/configureStore';
 
 import FiltersCard from '../Nav/FiltersCard';
-import { DeepPartial } from 'redux';
 import { StoreShape } from '../../types';
 
 describe('A FiltersCard component', () => {

@@ -46,6 +46,7 @@ declare namespace AnotherTodoServer {
   type STATUS_CODE = 200 | 201 | 400 | 403 | 404 | 500 | 503
   interface postUserReq {
     "username" : string
+    "email"    : string
     "password" : string
     "password2": string
   }
@@ -79,6 +80,7 @@ declare namespace AnotherTodoServer {
   interface IUserObj extends Document {
     _id      : any
     username : string
+    email    : string
     password : string
     sessionId : string
     sortTodoBy ?: string

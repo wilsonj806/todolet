@@ -5,7 +5,7 @@ import StoryRouter from 'storybook-react-router';
 
 import configureStore from '../store/configureStore'
 
-import Login from '../layouts/Login/Login';
+import Login from '../layouts/Login/LoginLayout';
 
 const store = configureStore({ authorizedUser: { userId: '111', username: 'guest'}});
 

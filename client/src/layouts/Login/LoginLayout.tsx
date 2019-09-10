@@ -18,7 +18,7 @@ import { postLogin } from '../../actions/userLogin.action';
 
 const Login: FunctionComponent<any> = (props) => {
   const state = useSelector(state=>state);
-  console.log(state);
+  // console.log(state);
   const dispatch = useDispatch();
   const classes = useStyles();
 

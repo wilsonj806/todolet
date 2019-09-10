@@ -17,7 +17,7 @@ const RouterTest: FunctionComponent<any> = ({ children, path }) => {
   )
 }
 
-const renderWithRouter = (ui: ReactElement, path: String) => {
+const renderWithRouter = (ui: ReactElement, path: String = '/') => {
   return {
     ... render(
       <RouterTest path={ path }>

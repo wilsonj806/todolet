@@ -1,7 +1,4 @@
-# Configure what Git(hub) branches get tested
-# Build on all branches
-branches:
-
+# NOTE CI Runs on Ubuntu
 # Configure Node.jS environment
 language: node_js
 node_js:

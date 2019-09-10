@@ -1,21 +1,36 @@
-import React, { FunctionComponent } from 'react';
 import { Provider } from 'react-redux';
-import configureStore from './store/configureStore'
-
+import React, { FunctionComponent } from 'react';
+import { ThemeProvider } from '@material-ui/styles';
 import { HashRouter as Router } from 'react-router-dom';
 
+import configureStore from './store/configureStore'
+
+
 import RouteContainer from './containers/RouteContainer';
+import { createMuiTheme } from '@material-ui/core';
 
+const theme = createMuiTheme({
+  // zIndex: {
+  //   appBar: 1200,
+  //   drawer: 1100
+  // }
+});
 
-
-const store = configureStore()
+const store = configureStore({
+  // authorizedUser: {
+  //   userId: '111',
+  //   username: 'guest'
+  // }
+})
 
 const App: FunctionComponent<any> = () => {
   return (
     <Router>
-      <Provider store={ store }>
-        <RouteContainer/>
-      </Provider>
+      <ThemeProvider theme={ theme }>
+        <Provider store={ store }>
+          <RouteContainer/>
+        </Provider>
+      </ThemeProvider>
     </Router>
   );
 }

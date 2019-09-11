@@ -30,10 +30,10 @@ const Login: FunctionComponent<any> = (props) => {
   const handleFormSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const obj = { username, password };
-    await dispatch(postLogin(obj))
     try {
+      await dispatch(postLogin(obj))
     } catch (err) {
-      console.log(err);
+      console.log('hi');
       setError(err);
     }
   }

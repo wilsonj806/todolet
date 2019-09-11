@@ -44,7 +44,6 @@ describe('A middleware function to check the form for errors', () => {
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalled();
-    expect(res.mockJson).toHaveProperty('errors');
   });
 
   test('it should go to the next middleware function if there are no issues', () => {

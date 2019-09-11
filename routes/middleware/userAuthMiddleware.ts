@@ -16,7 +16,7 @@ const postLogin: RequestHandler = (req, res, next): any => {
 };
 
 const postLoginFail: ErrorRequestHandler = (err, req, res, next): any => {
-  res.status(401).json(responsifyError('Login failed', err));
+  res.status(401).json(responsifyError('Login failed'));
   next();
 };
 

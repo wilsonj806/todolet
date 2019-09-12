@@ -35,7 +35,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
         <Wrapper>
           <UserProfileMenu/>
         </Wrapper>
-    , targetPath)
+    , { targetPath })
 
     const button = container.querySelector('button');
 
@@ -53,7 +53,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
       <Wrapper>
         <UserProfileMenu/>
       </Wrapper>
-    , targetPath)
+    , { targetPath })
 
     const button = container.querySelector('button');
 
@@ -71,7 +71,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
       <Wrapper>
        <UserProfileMenu/>
       </Wrapper>
-    , targetPath)
+    ,  { targetPath })
 
     const button = container.querySelector('button');
 
@@ -90,7 +90,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
       <Wrapper>
         <UserProfileMenu/>
       </Wrapper>
-    , targetPath)
+    ,  { targetPath })
 
     const button = container.querySelector('button');
 

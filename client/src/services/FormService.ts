@@ -4,7 +4,6 @@ const validateForm = <T extends {[key:string] : any}>(obj: T) : Error | null => 
   const entries = Object.entries(obj);
   const filteredRes : Array<any> = entries.filter((entry : Array<string>) => obj[entry[0]] === '')
 
-
   const arrLength = filteredRes.length;
 
 
@@ -28,7 +27,6 @@ const validateForm = <T extends {[key:string] : any}>(obj: T) : Error | null => 
 // NOTE tests for this is arguably overkill since it just tests that passwords match
 const validatePasswordFields = (obj: postUserReq) : Error | null => {
   const { password, password2 } = obj;
-  console.log('throwing error\n on passwords not matching');
   if (password !== password2) throw new Error('Passwords don\'t match')
   return null;
 }

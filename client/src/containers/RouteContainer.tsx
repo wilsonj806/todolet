@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 
 // ----- Pages
 import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
 import MainPage from '../pages/MainPage';
 import { StoreShape } from '../types';
 
@@ -16,6 +17,7 @@ const RouteContainer: FunctionComponent<any> = (props) => {
     <>
       <Route path='/' exact component={ isNotAuthorized ? LoginPage : MainPage }/>
       <Route path='/login' exact component={ LoginPage }/>
+      <Route path='/register' exact component={ RegisterPage }/>
     </>
   )
 }

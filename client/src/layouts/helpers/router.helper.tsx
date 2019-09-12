@@ -36,6 +36,7 @@ const renderWithRouter = (ui: ReactElement, config: renderRouterFixtureConfig = 
   history.push(startingPath ? startingPath : '/');
 
   return {
+    history,
     ... render(
       <RouterTest startingPath={ startingPath ? startingPath : '/' } targetPath={ targetPath } history={ history }>
         { ui }

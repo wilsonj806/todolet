@@ -55,6 +55,7 @@ const Wrapper: FC<any> = ({ children, store }) => <Provider store={ store }>{ ch
 
 describe('A layout that renders the registration page', () => {
   afterEach(() => {
+    jest.restoreAllMocks()
     cleanup()
     // NOTE Reset current path to home
     render(
@@ -136,6 +137,42 @@ describe('A layout that renders the registration page', () => {
     const { isFetching } = reduxStore.getState().clientServerConnect
     expect(spy).toHaveBeenCalledWith(successNewUserForm)
     expect(isFetching).toBe(true)
+  })
+
+  test.skip('it redirects on successful registration', () => {
+    const reduxStore = configureStore(init)
+    jest.spyOn(UserService, 'postNewUser')
+      .mockImplementation((req) => Promise.resolve({
+        status: 'SUCCESS',
+        payload: {
+        userId: finalWUser.authorizedUser!.userId,
+        username: finalWUser.authorizedUser!.username
+      }}))
+
+
+    const startingPath = '/register'
+    const targetPath = '/'
+    const { container, getByText, history } = renderWithRouter(
+      <Wrapper store={ reduxStore }>
+        <Register/>
+      </Wrapper>
+    , { startingPath, targetPath })
+
+    // ----- DOM selection
+    const submitBtn = container.querySelector('[type=submit]');
+    const usernameInput = container.querySelector('input[name=username]') as HTMLInputElement;
+    const emailInput = container.querySelector('input[name=email]') as HTMLInputElement;
+    const pwdInput = container.querySelector('input[name=password]') as HTMLInputElement;
+    const pwdInput2 = container.querySelector('input[name=password2]') as HTMLInputElement;
+
+    // ----- Inputting values into input elements
+    fireEvent.change(usernameInput!, { target : { value : successNewUserForm.username }});
+    fireEvent.change(emailInput!, { target : { value : successNewUserForm.email }});
+    fireEvent.change(pwdInput!, { target : { value : successNewUserForm.password }});
+    fireEvent.change(pwdInput2!, { target : { value : successNewUserForm.password2 }});
+    fireEvent.click(submitBtn!)
+
+    expect(getByText(targetPath)).toBeTruthy()
   })
 })
 

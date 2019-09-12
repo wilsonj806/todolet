@@ -1,6 +1,6 @@
 import React, { FC, SyntheticEvent, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 
 // ----- MUI components
 import Container from '@material-ui/core/Container';
@@ -14,13 +14,15 @@ import TextField from '../../containers/TextInputWrapper';
 import Logo from '../../assets/Logo(512x512).png';
 import useStyles from './register.styles';
 import { postNewUser } from '../../actions/userRegistration.action';
+import { StoreShape } from '../../types';
 
 const Register: FC<any> = (props) => {
-  const state = useSelector(state=>state);
-  // console.log(state);
+  const userState = useSelector<StoreShape, any>(state=>state.authorizedUser);
+
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  const [shouldRedirect, setShouldRedirect] = useState(false)
   const [ username, setUsername ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -28,11 +30,17 @@ const Register: FC<any> = (props) => {
   // FIXME replace the below with a proper toast
   const [ error, setError] = useState('');
 
+
+  useEffect(() => {
+    const { userId, username } = userState
+
+    if (userId || username) setShouldRedirect(true)
+  }, [userState])
+
   const handleFormSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const obj = { username, password, password2, email };
-    console.log(password);
-    console.log(password2);
+
     try {
       await dispatch(postNewUser(obj))
     } catch (err) {
@@ -40,12 +48,15 @@ const Register: FC<any> = (props) => {
       setError(err);
     }
   }
+
+  const RenderRedirect = shouldRedirect ? <Redirect to='/'/> : null;
   return (
     <Container maxWidth="xs" classes={{ root: classes.rootStyle }}>
+      { RenderRedirect }
       <img src={ Logo } alt="Logo" className={ classes.logo }/>
       <div className={ classes.formWrapper }>
         <Typography variant="h1" classes={{ h1: classes.heading }}>TodoLet</Typography>
-        <Typography paragraph classes={{ paragraph: classes.paragraph }}>Login to the app here!</Typography>
+        <Typography paragraph classes={{ paragraph: classes.paragraph }}>Register for the app here!</Typography>
         <form className={ classes.form }>
           <TextField
             fullWidth
@@ -99,7 +110,7 @@ const Register: FC<any> = (props) => {
             classes={{ root: classes.submitButton }}
             onClick={ handleFormSubmit }
           >
-            Login
+            Register
           </Button>
         </form>
         <Typography paragraph classes={{ paragraph: classes.paragraph }}>

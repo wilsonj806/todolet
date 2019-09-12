@@ -233,6 +233,40 @@ describe('A layout that renders the login page', () => {
     expect(spy).toHaveBeenCalledWith(successfulLogin)
     expect(isFetching).toBe(true)
   })
+
+  test.skip('it redirects on successful login', () => {
+    const reduxStore = configureStore(init)
+    jest.spyOn(UserService, 'postLogin')
+    .mockImplementation((req) => Promise.resolve({
+      status: 'SUCCESS',
+      payload: {
+      userId: finalWUser.authorizedUser!.userId,
+      username: finalWUser.authorizedUser!.username
+    }}))
+
+    const startingPath = '/login'
+    const targetPath = '/'
+    const { container, getByText, history } = renderWithRouter(
+      <Wrapper store={ reduxStore }>
+        <Login/>
+      </Wrapper>
+    , { startingPath, targetPath })
+
+    // ----- DOM selection
+    const submitBtn = container.querySelector('[type=submit]');
+    const usernameInput = container.querySelector('input[name=username]') as HTMLInputElement;
+    const pwdInput = container.querySelector('input[name=password]') as HTMLInputElement;
+
+    // ----- Inputting values into input elements
+    fireEvent.change(usernameInput!, { target : { value : successfulLogin.username }});
+
+    fireEvent.change(pwdInput!, { target : { value : successfulLogin.password }});
+
+    fireEvent.click(submitBtn!)
+
+    console.dir(history)
+    expect(getByText(targetPath)).toBeTruthy()
+  })
 })
 
 export {}

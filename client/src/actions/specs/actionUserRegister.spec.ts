@@ -16,7 +16,8 @@ const mockStore = configureMockStore(middlewares);
 const user = {
   username: 'guest',
   password: 'wasd',
-  password2: 'wasd'
+  password2: 'wasd',
+  email: 'guest@guest.com'
 }
 
 const mock = new MockAdapter(axios);

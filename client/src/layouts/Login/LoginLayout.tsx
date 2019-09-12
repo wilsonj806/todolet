@@ -1,6 +1,6 @@
-import React, { FunctionComponent, SyntheticEvent, useState } from 'react';
+import React, { FunctionComponent, SyntheticEvent, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 
 // ----- MUI components
 import Container from '@material-ui/core/Container';
@@ -14,18 +14,27 @@ import TextField from '../../containers/TextInputWrapper';
 import Logo from '../../assets/Logo(512x512).png';
 import useStyles from './login.styles';
 import { postLogin } from '../../actions/userLogin.action';
+import { StoreShape } from '../../types';
 
 
 const Login: FunctionComponent<any> = (props) => {
-  const state = useSelector(state=>state);
-  // console.log(state);
+  const userState = useSelector<StoreShape, any>(state=>state.authorizedUser);
+
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
   // FIXME replace the below with a proper toast
   const [ error, setError] = useState('');
+
+  useEffect(() => {
+    const { userId, username } = userState
+
+    if (userId || username) setShouldRedirect(true)
+  }, [userState])
 
   const handleFormSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -37,8 +46,11 @@ const Login: FunctionComponent<any> = (props) => {
       setError(err);
     }
   }
+  const RenderRedirect = shouldRedirect ? <Redirect to='/'/> : null;
+
   return (
     <Container maxWidth="xs" classes={{ root: classes.rootStyle }}>
+      { RenderRedirect }
       <img src={ Logo } alt="Logo" className={ classes.logo }/>
       <div className={ classes.formWrapper }>
         <Typography variant="h1" classes={{ h1: classes.heading }}>TodoLet</Typography>

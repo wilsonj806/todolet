@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import configureStore from '../../../store/configureStore'

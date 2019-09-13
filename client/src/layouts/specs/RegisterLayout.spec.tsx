@@ -1,17 +1,14 @@
-import thunk from 'redux-thunk';
 import React, { FC } from 'react'
 import { DeepPartial } from 'redux'
 import { Provider } from 'react-redux';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
-import MockAdapter from 'axios-mock-adapter';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../helpers/router.helper';
-import configureMockStore from '@jedmao/redux-mock-store';
 import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 
-import axios from '../../axios'
+
 import configureStore from '../../store/configureStore'
 import Register from '../Register/RegisterLayout'
 
@@ -19,9 +16,6 @@ import { StoreShape } from '../../types';
 import UserService from '../../services/UserService';
 
 
-const middlewares = [thunk];
-const mock = new MockAdapter(axios);
-const mockStore = configureMockStore(middlewares);
 
 // ----- Data fixture setup
 const init : DeepPartial<StoreShape> = {
@@ -50,6 +44,7 @@ const successNewUserForm = {
   email: 'guest@guest.com'
 }
 
+const store = configureStore(init)
 const Wrapper: FC<any> = ({ children, store }) => <Provider store={ store }>{ children }</Provider>
 
 
@@ -66,7 +61,6 @@ describe('A layout that renders the registration page', () => {
   });
 
   test('it renders with a form element', () => {
-    const store = mockStore(init)
     const { container } = renderWithRouter(
       <Wrapper store={ store }>
         <Register/>
@@ -78,7 +72,6 @@ describe('A layout that renders the registration page', () => {
   })
 
   test('it renders with a submit button element inside of a form', () => {
-    const store = mockStore(init)
     const { container } = renderWithRouter(
       <Wrapper store={ store }>
         <Register/>
@@ -93,7 +86,6 @@ describe('A layout that renders the registration page', () => {
 
 
   test('it submits the form on click of the submit button', () => {
-    const store = mockStore(init)
     const { container } = renderWithRouter(
       <Wrapper store={ store }>
         <Register/>
@@ -108,14 +100,14 @@ describe('A layout that renders the registration page', () => {
   })
 
   test('it updates state on submitting a valid login form', () => {
-    const reduxStore = configureStore(init)
+    const stateUpdateTestStore = configureStore(init)
     const spy = jest.spyOn(UserService, 'postNewUser')
 
 
     const startingPath = '/register'
     const targetPath = '/'
     const { container } = renderWithRouter(
-      <Wrapper store={ reduxStore }>
+      <Wrapper store={ stateUpdateTestStore }>
         <Register/>
       </Wrapper>
     , { startingPath, targetPath })
@@ -134,13 +126,14 @@ describe('A layout that renders the registration page', () => {
     fireEvent.change(pwdInput2!, { target : { value : successNewUserForm.password2 }});
     fireEvent.click(submitBtn!)
 
-    const { isFetching } = reduxStore.getState().clientServerConnect
+    const { isFetching } = stateUpdateTestStore.getState().clientServerConnect
+
     expect(spy).toHaveBeenCalledWith(successNewUserForm)
     expect(isFetching).toBe(true)
   })
 
   test('it redirects on successful registration', async (done) => {
-    const reduxStore = configureStore(init)
+    const registerSuccessStore = configureStore(init)
     jest.spyOn(UserService, 'postNewUser')
       .mockImplementation((req) => Promise.resolve({
         status: 'SUCCESS',
@@ -152,8 +145,8 @@ describe('A layout that renders the registration page', () => {
 
     const startingPath = '/register'
     const targetPath = '/'
-    const { container, getByText, history } = renderWithRouter(
-      <Wrapper store={ reduxStore }>
+    const { container, getByText } = renderWithRouter(
+      <Wrapper store={ registerSuccessStore }>
         <Register/>
       </Wrapper>
     , { startingPath, targetPath })

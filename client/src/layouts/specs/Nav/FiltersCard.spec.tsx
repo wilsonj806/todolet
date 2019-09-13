@@ -45,7 +45,6 @@ describe('A FiltersCard component', () => {
     const arr = buttons.filter((button : HTMLElement) => button!.firstChild!.textContent === 'Projects');
     const [ projectBtn ] = arr;
 
-    const arr2 = buttons.filter((button : HTMLElement) => button!.firstChild!.textContent === 'Tags');
     const [ tagBtn ] = arr;
     fireEvent.click(tagBtn);
     fireEvent.click(projectBtn);
@@ -56,7 +55,7 @@ describe('A FiltersCard component', () => {
   });
 
   test('it should only toggle one button\'s aria attribute on click', () => {
-    const { getAllByRole, container } = render(
+    const { container } = render(
       <Provider store={ globalStore }>
         <FiltersCard/>
       </Provider>
@@ -80,7 +79,7 @@ describe('A FiltersCard component', () => {
 
     const mockStore = configureMockStore()
     const store = mockStore({...state })
-    const { getByText, container } = render(
+    const { getByText } = render(
       <Provider store={ store }>
         <FiltersCard/>
       </Provider>
@@ -107,7 +106,7 @@ describe('A FiltersCard component', () => {
     const mockStore = configureMockStore()
     const store = mockStore({...state } as DeepPartial<StoreShape>)
 
-    const { getByText, container } = render(
+    const { getByText } = render(
       <Provider store= { store }>
         <FiltersCard/>
       </Provider>
@@ -135,7 +134,7 @@ describe('A FiltersCard component', () => {
     const mockStore = configureMockStore()
     const store = mockStore({...state } as DeepPartial<StoreShape>)
 
-    const { getByText, container } = render(
+    const { getByText } = render(
       <Provider store= { store }>
         <FiltersCard/>
       </Provider>

@@ -36,7 +36,6 @@ const initWithUser : DeepPartial<StoreShape> = {
 }
 
 
-// TODO Add AppContext in with placeholder values
 describe('A UserCard component', () => {
   afterEach(() => cleanup())
 

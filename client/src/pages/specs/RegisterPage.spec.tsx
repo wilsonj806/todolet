@@ -1,4 +1,3 @@
-import thunk from 'redux-thunk';
 import React, { FC } from 'react'
 import { DeepPartial } from 'redux'
 import { Provider } from 'react-redux';
@@ -15,7 +14,6 @@ import configureStore from '../../store/configureStore'
 import RegisterPage from '../RegisterPage'
 
 import { StoreShape } from '../../types';
-import UserService from '../../services/UserService';
 
 
 const mock = new MockAdapter(axios);

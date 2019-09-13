@@ -12,8 +12,7 @@ import UserProfileMenu from '../../Nav/UserProfileMenu';
 
 import configureStore from '../../../store/configureStore';
 import UserService from '../../../services/UserService'
-
-const { postLogout } = UserService;
+;
 
 const store = configureStore();
 

@@ -9,7 +9,7 @@ import MockAdapter from 'axios-mock-adapter';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../helpers/router.helper';
 import configureMockStore from '@jedmao/redux-mock-store';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 
 import axios from '../../axios'
 import configureStore from '../../store/configureStore'
@@ -17,7 +17,7 @@ import Login from '../Login/LoginLayout'
 
 import { StoreShape } from '../../types';
 import UserService from '../../services/UserService';
-import * as UserLoginAction from '../../actions/userLogin.action';
+
 
 const middlewares = [thunk];
 const mock = new MockAdapter(axios);
@@ -234,7 +234,7 @@ describe('A layout that renders the login page', () => {
     expect(isFetching).toBe(true)
   })
 
-  test.skip('it redirects on successful login', () => {
+  test('it redirects on successful login', async (done) => {
     const reduxStore = configureStore(init)
     jest.spyOn(UserService, 'postLogin')
     .mockImplementation((req) => Promise.resolve({
@@ -264,8 +264,10 @@ describe('A layout that renders the login page', () => {
 
     fireEvent.click(submitBtn!)
 
-    console.dir(history)
-    expect(getByText(targetPath)).toBeTruthy()
+    const assertion = await waitForElement(() => getByText(targetPath))
+
+    expect(assertion).toBeTruthy()
+    done()
   })
 })
 

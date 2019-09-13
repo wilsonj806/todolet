@@ -9,7 +9,7 @@ import MockAdapter from 'axios-mock-adapter';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../helpers/router.helper';
 import configureMockStore from '@jedmao/redux-mock-store';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 
 import axios from '../../axios'
 import configureStore from '../../store/configureStore'
@@ -139,7 +139,7 @@ describe('A layout that renders the registration page', () => {
     expect(isFetching).toBe(true)
   })
 
-  test.skip('it redirects on successful registration', () => {
+  test('it redirects on successful registration', async (done) => {
     const reduxStore = configureStore(init)
     jest.spyOn(UserService, 'postNewUser')
       .mockImplementation((req) => Promise.resolve({
@@ -172,7 +172,10 @@ describe('A layout that renders the registration page', () => {
     fireEvent.change(pwdInput2!, { target : { value : successNewUserForm.password2 }});
     fireEvent.click(submitBtn!)
 
-    expect(getByText(targetPath)).toBeTruthy()
+    const assertion = await waitForElement(() => getByText(targetPath))
+
+    expect(assertion).toBeTruthy()
+    done()
   })
 })
 

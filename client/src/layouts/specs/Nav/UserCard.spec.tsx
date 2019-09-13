@@ -8,9 +8,9 @@ import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import configureMockStore from '@jedmao/redux-mock-store';
 
-import UserCard from '../Nav/UserCard';
+import UserCard from '../../Nav/UserCard';
 
-import { StoreShape } from '../../types';
+import { StoreShape } from '../../../types';
 
 
 const middlewares = [thunk];

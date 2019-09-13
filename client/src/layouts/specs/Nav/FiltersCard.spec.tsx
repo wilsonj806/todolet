@@ -6,10 +6,10 @@ import configureMockStore from '@jedmao/redux-mock-store';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-import configureStore from '../../store/configureStore';
+import configureStore from '../../../store/configureStore';
 
-import FiltersCard from '../Nav/FiltersCard';
-import { StoreShape } from '../../types';
+import FiltersCard from '../../Nav/FiltersCard';
+import { StoreShape } from '../../../types';
 
 describe('A FiltersCard component', () => {
   // NOTE Global state init for passing around

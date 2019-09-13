@@ -4,14 +4,14 @@ import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
 import '@testing-library/jest-dom/extend-expect';
-import renderWithRouter from '../helpers/router.helper';
+import renderWithRouter from '../../helpers/router.helper';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 
 
-import UserProfileMenu from '../Nav/UserProfileMenu';
+import UserProfileMenu from '../../Nav/UserProfileMenu';
 
-import configureStore from '../../store/configureStore';
-import UserService from '../../services/UserService'
+import configureStore from '../../../store/configureStore';
+import UserService from '../../../services/UserService'
 
 const { postLogout } = UserService;
 

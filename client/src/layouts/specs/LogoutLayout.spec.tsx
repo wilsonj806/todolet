@@ -56,25 +56,26 @@ describe('A layout that renders when a user logs out', () => {
     )
   });
 
-  test('it renders with a heading indicating that they\'ve logged out', () => {
-    const { getByText } = render(
+  test('it renders with text indicating that they\'ve logged out', () => {
+    const { getByText } = renderWithRouter(
       <Wrapper store={ unauthenticatedStore }>
         <LogoutLayout/>
       </Wrapper>
     )
 
-    const assertHeading = getByText('Logged out', { exact: false })
+    const assertHeading = getByText('logged out', { exact: false })
 
     expect(assertHeading).toBeTruthy()
-    // TODO also check if the parent is a heading element
   })
 
   test('it renders with a link to direct the user to the login page', () => {
-    const { container } = render(
+    const startingPath = '/logout'
+    const targetPath = '/'
+    const { container } = renderWithRouter(
       <Wrapper store={ unauthenticatedStore }>
         <LogoutLayout/>
       </Wrapper>
-    )
+    , { startingPath, targetPath })
 
     const assertLink = container.querySelector('a')
     // console.log(assertLink.innerText)
@@ -96,6 +97,7 @@ describe('A layout that renders when a user logs out', () => {
 
     const assertRedirect = await waitForElement(() => getByText(targetPath))
 
-    expect(assertRedirect).toBeTruthy
+    expect(assertRedirect).toBeTruthy()
+    done()
   })
 })

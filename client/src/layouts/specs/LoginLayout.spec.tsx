@@ -4,20 +4,17 @@ import { Provider } from 'react-redux';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
-import MockAdapter from 'axios-mock-adapter';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../helpers/router.helper';
 import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 
-import axios from '../../axios'
+
 import configureStore from '../../store/configureStore'
 import Login from '../Login/LoginLayout'
 
 import { StoreShape } from '../../types';
 import UserService from '../../services/UserService';
 
-
-const mock = new MockAdapter(axios);
 
 const init : DeepPartial<StoreShape> = {
   authorizedUser : {
@@ -51,7 +48,6 @@ const Wrapper: FC<any> = ({ children, store }) => <Provider store={ store }>{ ch
 
 describe('A layout that renders the login page', () => {
   afterEach(() => {
-    mock.reset()
     jest.restoreAllMocks()
 
     cleanup()

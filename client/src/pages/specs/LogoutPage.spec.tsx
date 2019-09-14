@@ -6,10 +6,11 @@ import { HashRouter, Route, Redirect } from 'react-router-dom';
 // ----- Test Helpers
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../../layouts/helpers/router.helper';
-import { render, cleanup, waitForElement } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
+
 
 import configureStore from '../../store/configureStore'
-import LoginPage from '../LoginPage'
+import LogoutPage from '../LogoutPage'
 
 import { StoreShape } from '../../types';
 
@@ -55,27 +56,12 @@ describe('A page that lets the user log in', () => {
     const { container } = render(
       <Wrapper store={ unauthenticatedStore }>
         <HashRouter>
-          <LoginPage/>
+          <LogoutPage/>
         </HashRouter>
       </Wrapper>
     )
 
     const assertNoNav = container.querySelector('nav')
     expect(assertNoNav).toBeFalsy()
-  })
-
-  test('it redirects if there\'s a user logged in', async (done) => {
-    const startingPath = '/login'
-    const targetPath ='/'
-    const {  getByText } = renderWithRouter(
-      <Wrapper store={ authenticatedStore }>
-        <LoginPage/>
-      </Wrapper>
-    , { startingPath, targetPath })
-
-    const assertion = await waitForElement(() => getByText(targetPath))
-
-    expect(assertion).toBeTruthy()
-    done()
   })
 })

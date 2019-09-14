@@ -1,7 +1,6 @@
 import React from 'react';
 import thunk from 'redux-thunk';
 import { DeepPartial } from 'redux';
-import { Provider } from 'react-redux'
 
 // ----- Test libraries and mocks
 import { render, cleanup } from '@testing-library/react';
@@ -11,6 +10,8 @@ import configureMockStore from '@jedmao/redux-mock-store';
 import UserCard from '../../Nav/UserCard';
 
 import { StoreShape } from '../../../types';
+import ReduxWrap from '../../helpers/ReduxWrap';
+
 
 
 const middlewares = [thunk];
@@ -43,9 +44,9 @@ describe('A UserCard component', () => {
     const store = mockStore(initWithUser);
 
     const { getByText } = render(
-      <Provider store={ store }>
+      <ReduxWrap store={ store }>
         <UserCard/>
-      </Provider>
+      </ReduxWrap>
     );
     expect(getByText('Hello ' + initWithUser.authorizedUser!.username)).toBeTruthy();
   })
@@ -53,9 +54,9 @@ describe('A UserCard component', () => {
   test('it renders a placeholder avatar if there is no avatar', () => {
     const store = mockStore(initWithUser)
     const { container } = render(
-      <Provider store={ store }>
+      <ReduxWrap store={ store }>
         <UserCard/>
-      </Provider>
+      </ReduxWrap>
     );
     const img = container.querySelector('img');
     expect(img).toBeNull();
@@ -67,9 +68,9 @@ describe('A UserCard component', () => {
 
     const store = mockStore(copyInit)
     const { container } = render(
-      <Provider store={ store }>
+      <ReduxWrap store={ store }>
         <UserCard/>
-      </Provider>
+      </ReduxWrap>
     );
     const img = container.querySelector('img');
     expect(img).not.toBeNull();
@@ -80,9 +81,9 @@ describe('A UserCard component', () => {
     const count = 3;
     const str = `# of Todos: ${count}`;
     const { getByText } = render(
-      <Provider store={ store }>
+      <ReduxWrap store={ store }>
         <UserCard/>
-      </Provider>
+      </ReduxWrap>
     );
     expect(getByText(str)).toBeTruthy();
   })

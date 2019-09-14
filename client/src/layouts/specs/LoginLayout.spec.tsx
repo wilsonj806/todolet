@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { DeepPartial } from 'redux'
-import { Provider } from 'react-redux';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
@@ -14,6 +13,7 @@ import Login from '../Login/LoginLayout'
 
 import { StoreShape } from '../../types';
 import UserService from '../../services/UserService';
+import ReduxWrap from '../helpers/ReduxWrap';
 
 
 const init : DeepPartial<StoreShape> = {
@@ -43,7 +43,6 @@ const successfulLogin = {
 
 
 const store = configureStore(init)
-const Wrapper: FC<any> = ({ children, store }) => <Provider store={ store }>{ children }</Provider>
 
 
 describe('A layout that renders the login page', () => {
@@ -61,9 +60,9 @@ describe('A layout that renders the login page', () => {
 
   test('it renders with a form element', () => {
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const form = container.querySelector('form');
@@ -72,9 +71,9 @@ describe('A layout that renders the login page', () => {
 
   test('it renders with a submit button element inside of a form', () => {
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const submitBtn = container.querySelector('[type=submit]');
@@ -85,9 +84,9 @@ describe('A layout that renders the login page', () => {
 
   test('it renders with an input element for the username', () => {
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const input = container.querySelector('input[name=username]');
@@ -97,9 +96,9 @@ describe('A layout that renders the login page', () => {
 
   test('it renders with an input element with the password type', () => {
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const input = container.querySelector('input[type=password]');
@@ -110,9 +109,9 @@ describe('A layout that renders the login page', () => {
   test('it handles change events to the password input element', () => {
     const testStr = 'test pwd'
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     )
     const input = container.querySelector('input[type=password]') as HTMLInputElement | null;
     fireEvent.change(input!, { target: { value: testStr }})
@@ -123,9 +122,9 @@ describe('A layout that renders the login page', () => {
   test('it handles change events to the username input element', () => {
     const testStr = 'guest'
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     )
     const input = container.querySelector('input[name=username]') as HTMLInputElement | null;
     fireEvent.change(input!, { target: { value: testStr }})
@@ -136,9 +135,9 @@ describe('A layout that renders the login page', () => {
   test('it submits the form on click of the submit button', () => {
     const formSbumitStore = configureStore(init)
     const { container } = renderWithRouter(
-      <Wrapper store={ formSbumitStore }>
+      <ReduxWrap store={ formSbumitStore }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const submitBtn = container.querySelector('[type=submit]');
@@ -151,9 +150,9 @@ describe('A layout that renders the login page', () => {
   test('it redirects to the registration page on click', () => {
     const targetPath = '/register'
     const { getByText } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     , { targetPath })
 
     const link = getByText('Create an account!');
@@ -172,9 +171,9 @@ describe('A layout that renders the login page', () => {
 
     const startingPath = '/login'
     const { container } = renderWithRouter(
-      <Wrapper store={ resetFormTestStore }>
+      <ReduxWrap store={ resetFormTestStore }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     , { startingPath, targetPath: startingPath })
 
     const submitBtn = container.querySelector('[type=submit]');
@@ -198,9 +197,9 @@ describe('A layout that renders the login page', () => {
     const startingPath = '/login'
     const targetPath = '/'
     const { container } = renderWithRouter(
-      <Wrapper store={ submitValidFormStore }>
+      <ReduxWrap store={ submitValidFormStore }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     , { startingPath, targetPath })
 
     // ----- DOM selection
@@ -233,9 +232,9 @@ describe('A layout that renders the login page', () => {
     const startingPath = '/login'
     const targetPath = '/'
     const { container, getByText } = renderWithRouter(
-      <Wrapper store={ redirectTestStore }>
+      <ReduxWrap store={ redirectTestStore }>
         <Login/>
-      </Wrapper>
+      </ReduxWrap>
     , { startingPath, targetPath })
 
     // ----- DOM selection

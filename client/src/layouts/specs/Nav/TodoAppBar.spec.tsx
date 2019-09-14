@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { Provider } from 'react-redux';
 import { HashRouter as Router } from 'react-router-dom';
 
 import { render, cleanup } from '@testing-library/react';
@@ -7,12 +6,12 @@ import '@testing-library/jest-dom/extend-expect';
 
 import configureStore from '../../../store/configureStore';
 
-
 import TodoAppBar from '../../Nav/TodoAppBar';
+import ReduxWrap from '../../helpers/ReduxWrap';
+
 
 const store = configureStore();
 
-const Wrapper: FC<any> = ({ children }) => <Provider store={ store }>{ children }</Provider>
 
 describe('A component that renders an AppBar', () => {
   afterEach(() => cleanup())
@@ -21,9 +20,9 @@ describe('A component that renders an AppBar', () => {
     const APP_NAME = 'TodoLet';
     const { getByText, container } = render(
       <Router>
-        <Wrapper>
+        <ReduxWrap store={ store }>
           <TodoAppBar/>
-        </Wrapper>
+        </ReduxWrap>
       </Router>
     )
     const assertHeading = container.querySelector('h1');
@@ -34,9 +33,9 @@ describe('A component that renders an AppBar', () => {
   test('it should render at least one menu', () => {
     const { container } = render(
       <Router>
-        <Wrapper>
+        <ReduxWrap  store={ store }>
           <TodoAppBar/>
-        </Wrapper>
+        </ReduxWrap>
       </Router>
     )
 

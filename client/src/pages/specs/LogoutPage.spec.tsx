@@ -1,6 +1,5 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { DeepPartial } from 'redux'
-import { Provider } from 'react-redux';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
@@ -13,6 +12,7 @@ import configureStore from '../../store/configureStore'
 import LogoutPage from '../LogoutPage'
 
 import { StoreShape } from '../../types';
+import ReduxWrap from '../../layouts/helpers/ReduxWrap';
 
 
 const unauthenticatedState : DeepPartial<StoreShape> = {
@@ -38,8 +38,6 @@ const authenticatedState : DeepPartial<StoreShape> = {
 const unauthenticatedStore = configureStore(unauthenticatedState)
 const authenticatedStore = configureStore(authenticatedState)
 
-const Wrapper: FC<any> = ({ children, store }) => <Provider store={ store }>{ children }</Provider>
-
 describe('A page that lets the user log in', () => {
   afterEach(() => {
     jest.restoreAllMocks()
@@ -54,11 +52,11 @@ describe('A page that lets the user log in', () => {
   })
   test('it renders without a NAV component', () => {
     const { container } = render(
-      <Wrapper store={ unauthenticatedStore }>
+      <ReduxWrap store={ unauthenticatedStore }>
         <HashRouter>
           <LogoutPage/>
         </HashRouter>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const assertNoNav = container.querySelector('nav')

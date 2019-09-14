@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { DeepPartial } from 'redux'
-import { Provider } from 'react-redux';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
@@ -15,6 +14,8 @@ import LogoutLayout from '../Logout/LogoutLayout'
 
 import { StoreShape } from '../../types';
 import UserService from '../../services/UserService';
+import ReduxWrap from '../helpers/ReduxWrap';
+
 
 
 const unauthenticatedState : DeepPartial<StoreShape> = {
@@ -40,8 +41,6 @@ const authenticatedState : DeepPartial<StoreShape> = {
 const unauthenticatedStore = configureStore(unauthenticatedState)
 const authenticatedStore = configureStore(authenticatedState)
 
-const Wrapper: FC<any> = ({ children, store }) => <Provider store={ store }>{ children }</Provider>
-
 
 describe('A layout that renders when a user logs out', () => {
   afterEach(() => {
@@ -58,9 +57,9 @@ describe('A layout that renders when a user logs out', () => {
 
   test('it renders with text indicating that they\'ve logged out', () => {
     const { getByText } = renderWithRouter(
-      <Wrapper store={ unauthenticatedStore }>
+      <ReduxWrap store={ unauthenticatedStore }>
         <LogoutLayout/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const assertHeading = getByText('logged out', { exact: false })
@@ -72,9 +71,9 @@ describe('A layout that renders when a user logs out', () => {
     const startingPath = '/logout'
     const targetPath = '/'
     const { container } = renderWithRouter(
-      <Wrapper store={ unauthenticatedStore }>
+      <ReduxWrap store={ unauthenticatedStore }>
         <LogoutLayout/>
-      </Wrapper>
+      </ReduxWrap>
     , { startingPath, targetPath })
 
     const assertLink = container.querySelector('a')
@@ -87,9 +86,9 @@ describe('A layout that renders when a user logs out', () => {
     const startingPath = '/logout';
     const targetPath = '/'
     const { getByText, container } = renderWithRouter(
-      <Wrapper store={ unauthenticatedStore }>
+      <ReduxWrap store={ unauthenticatedStore }>
         <LogoutLayout/>
-      </Wrapper>
+      </ReduxWrap>
     , { startingPath, targetPath })
 
     const assertLink = container.querySelector('a')

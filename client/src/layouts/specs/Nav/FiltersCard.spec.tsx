@@ -1,6 +1,5 @@
 import React from 'react';
 import { DeepPartial } from 'redux';
-import { Provider } from 'react-redux';
 import configureMockStore from '@jedmao/redux-mock-store';
 
 import { render, cleanup, fireEvent } from '@testing-library/react';
@@ -10,6 +9,9 @@ import configureStore from '../../../store/configureStore';
 
 import FiltersCard from '../../Nav/FiltersCard';
 import { StoreShape } from '../../../types';
+import ReduxWrap from '../../helpers/ReduxWrap';
+
+
 
 describe('A FiltersCard component', () => {
   // NOTE Global state init for passing around
@@ -18,9 +20,9 @@ describe('A FiltersCard component', () => {
 
   test('it should render tags when the tag tab is clicked', () => {
     const { getAllByRole, container } = render(
-      <Provider store={ globalStore }>
+      <ReduxWrap store={ globalStore }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
     const buttons : Array<HTMLElement> = getAllByRole('tab');
 
@@ -35,9 +37,9 @@ describe('A FiltersCard component', () => {
 
   test('it should render projects when the tabs are toggled back and forth', () => {
     const { getAllByRole, container } = render(
-      <Provider store={ globalStore }>
+      <ReduxWrap store={ globalStore }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const buttons : Array<HTMLElement> = getAllByRole('tab');
@@ -56,9 +58,9 @@ describe('A FiltersCard component', () => {
 
   test('it should only toggle one button\'s aria attribute on click', () => {
     const { container } = render(
-      <Provider store={ globalStore }>
+      <ReduxWrap store={ globalStore }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const assertion = container.querySelectorAll('[aria-selected=true]');
@@ -80,9 +82,9 @@ describe('A FiltersCard component', () => {
     const mockStore = configureMockStore()
     const store = mockStore({...state })
     const { getByText } = render(
-      <Provider store={ store }>
+      <ReduxWrap store={ store }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const arr = exampleState.map((obj: any) => obj.name);
@@ -107,9 +109,9 @@ describe('A FiltersCard component', () => {
     const store = mockStore({...state } as DeepPartial<StoreShape>)
 
     const { getByText } = render(
-      <Provider store= { store }>
+      <ReduxWrap store= { store }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const arr = exampleState.map((obj: any) => obj.name);
@@ -135,9 +137,9 @@ describe('A FiltersCard component', () => {
     const store = mockStore({...state } as DeepPartial<StoreShape>)
 
     const { getByText } = render(
-      <Provider store= { store }>
+      <ReduxWrap store= { store }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const arr = exampleState.map((obj: any) => obj.name);

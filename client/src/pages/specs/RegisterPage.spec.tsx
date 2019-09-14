@@ -1,6 +1,5 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { DeepPartial } from 'redux'
-import { Provider } from 'react-redux';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
@@ -14,6 +13,8 @@ import configureStore from '../../store/configureStore'
 import RegisterPage from '../RegisterPage'
 
 import { StoreShape } from '../../types';
+import ReduxWrap from '../../layouts/helpers/ReduxWrap';
+
 
 
 const mock = new MockAdapter(axios);
@@ -41,8 +42,6 @@ const finalWUser : DeepPartial<StoreShape> = {
 const unauthenticatedStore = configureStore(init)
 const authenticatedStore = configureStore(finalWUser)
 
-const Wrapper: FC<any> = ({ children, store }) => <Provider store={ store }>{ children }</Provider>
-
 describe('A page that lets the user log in', () => {
   afterEach(() => {
     mock.reset()
@@ -59,11 +58,11 @@ describe('A page that lets the user log in', () => {
 
   test('it renders without a NAV component', () => {
     const { container } = render(
-      <Wrapper store={ unauthenticatedStore }>
+      <ReduxWrap store={ unauthenticatedStore }>
         <HashRouter>
           <RegisterPage/>
         </HashRouter>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const assertNoNav = container.querySelector('nav')
@@ -74,9 +73,9 @@ describe('A page that lets the user log in', () => {
     const startingPath = '/register'
     const targetPath ='/'
     const {  getByText } = renderWithRouter(
-      <Wrapper store={ authenticatedStore }>
+      <ReduxWrap store={ authenticatedStore }>
         <RegisterPage/>
-      </Wrapper>
+      </ReduxWrap>
     , { startingPath, targetPath })
 
     const assertion = await waitForElement(() => getByText(targetPath))

@@ -1,6 +1,5 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { DeepPartial } from 'redux'
-import { Provider } from 'react-redux';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
@@ -14,6 +13,7 @@ import Register from '../Register/RegisterLayout'
 
 import { StoreShape } from '../../types';
 import UserService from '../../services/UserService';
+import ReduxWrap from '../../layouts/helpers/ReduxWrap';
 
 
 
@@ -45,7 +45,6 @@ const successNewUserForm = {
 }
 
 const store = configureStore(init)
-const Wrapper: FC<any> = ({ children, store }) => <Provider store={ store }>{ children }</Provider>
 
 
 describe('A layout that renders the registration page', () => {
@@ -62,9 +61,9 @@ describe('A layout that renders the registration page', () => {
 
   test('it renders with a form element', () => {
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Register/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const form = container.querySelector('form');
@@ -73,9 +72,9 @@ describe('A layout that renders the registration page', () => {
 
   test('it renders with a submit button element inside of a form', () => {
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Register/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const submitBtn = container.querySelector('[type=submit]');
@@ -87,9 +86,9 @@ describe('A layout that renders the registration page', () => {
 
   test('it submits the form on click of the submit button', () => {
     const { container } = renderWithRouter(
-      <Wrapper store={ store }>
+      <ReduxWrap store={ store }>
         <Register/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const submitBtn = container.querySelector('[type=submit]');
@@ -107,9 +106,9 @@ describe('A layout that renders the registration page', () => {
     const startingPath = '/register'
     const targetPath = '/'
     const { container } = renderWithRouter(
-      <Wrapper store={ stateUpdateTestStore }>
+      <ReduxWrap store={ stateUpdateTestStore }>
         <Register/>
-      </Wrapper>
+      </ReduxWrap>
     , { startingPath, targetPath })
 
     // ----- DOM selection
@@ -146,9 +145,9 @@ describe('A layout that renders the registration page', () => {
     const startingPath = '/register'
     const targetPath = '/'
     const { container, getByText } = renderWithRouter(
-      <Wrapper store={ registerSuccessStore }>
+      <ReduxWrap store={ registerSuccessStore }>
         <Register/>
-      </Wrapper>
+      </ReduxWrap>
     , { startingPath, targetPath })
 
     // ----- DOM selection

@@ -1,6 +1,5 @@
 import React from 'react';
 import { DeepPartial } from 'redux';
-import { Provider } from 'react-redux'
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
@@ -11,6 +10,7 @@ import '@testing-library/jest-dom/extend-expect';
 import LayoutWrapper from '../LayoutWrapper';
 import { StoreShape } from '../../types';
 import configureStore from '../../store/configureStore';
+import ReduxWrap from '../helpers/ReduxWrap';
 
 
 
@@ -43,9 +43,9 @@ describe('A component for building the app layout', () => {
   test('it should render with one NAV tag', () => {
     const { container } = render(
       <Router>
-        <Provider store={ authenticatedStore }>
+        <ReduxWrap store={ authenticatedStore }>
           <LayoutWrapper/>
-        </Provider>
+        </ReduxWrap>
       </Router>
     )
 
@@ -56,9 +56,9 @@ describe('A component for building the app layout', () => {
   test('it should render with no NAV tag if no user is provided', () => {
     const { container } = render(
       <Router>
-        <Provider store={ unauthenticatedStore }>
+        <ReduxWrap store={ unauthenticatedStore }>
           <LayoutWrapper/>
-        </Provider>
+        </ReduxWrap>
       </Router>
     )
 
@@ -69,9 +69,9 @@ describe('A component for building the app layout', () => {
   test('it should render with one MAIN tag', () => {
     const { container } = render(
       <Router>
-        <Provider store={ unauthenticatedStore }>
+        <ReduxWrap store={ unauthenticatedStore }>
           <LayoutWrapper/>
-        </Provider>
+        </ReduxWrap>
       </Router>
     )
 

@@ -1,7 +1,5 @@
 import React from 'react'
 import { DeepPartial } from 'redux'
-import * as ReactRedux from 'react-redux'
-import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 
 import '@testing-library/jest-dom/extend-expect';

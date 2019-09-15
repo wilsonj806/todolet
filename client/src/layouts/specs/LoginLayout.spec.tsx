@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { DeepPartial } from 'redux'
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
@@ -7,13 +7,13 @@ import renderWithRouter from '../../helpers/router.helper';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 
 
-import UserProfileMenu from '../../Nav/UserProfileMenu';
 
-import configureStore from '../../../store/configureStore';
-import UserService from '../../../services/UserService'
-;
 import ReduxWrap from '../../helpers/ReduxWrap';
-ReduxWrap
+import configureStore from '../../../store/configureStore';
+
+import UserService from '../../../services/UserService'
+
+import UserProfileMenu from '../../Nav/UserProfileMenu';
 
 const store = configureStore();
 

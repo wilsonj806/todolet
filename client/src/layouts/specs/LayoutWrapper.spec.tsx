@@ -1,20 +1,31 @@
 import React from 'react';
 import { DeepPartial } from 'redux';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
 // ----- Test Libraries and mocks
 import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import renderWithRouter from '../helpers/router.helper';
+
+import ReduxWrap from '../helpers/ReduxWrap';
+import configureStore from '../../store/configureStore';
 
 import LayoutWrapper from '../LayoutWrapper';
+
 import { StoreShape } from '../../types';
-import configureStore from '../../store/configureStore';
-import ReduxWrap from '../helpers/ReduxWrap';
 
 
+const authenticatedState : DeepPartial<StoreShape> = {
+  authorizedUser : {
+    userId : '1111',
+    username : 'guest'
+  },
+  clientServerConnect : {
+    isFetching : false
+  }
+}
 
-const initWOutUser : DeepPartial<StoreShape> = {
+const unauthenticatedState : DeepPartial<StoreShape> = {
   authorizedUser : {
     userId : undefined,
     username : undefined
@@ -24,29 +35,17 @@ const initWOutUser : DeepPartial<StoreShape> = {
   }
 }
 
-const initWithUser : DeepPartial<StoreShape> = {
-  authorizedUser : {
-    userId : '123',
-    username : 'guest'
-  },
-  clientServerConnect : {
-    isFetching : false
-  }
-}
-
-const unauthenticatedStore = configureStore(initWOutUser)
-const authenticatedStore = configureStore(initWithUser)
+const authenticatedStore = configureStore(authenticatedState)
+const unauthenticatedStore = configureStore(unauthenticatedState)
 
 describe('A component for building the app layout', () => {
   afterEach(() => cleanup())
 
   test('it should render with one NAV tag', () => {
-    const { container } = render(
-      <Router>
+    const { container } = renderWithRouter(
         <ReduxWrap store={ authenticatedStore }>
           <LayoutWrapper/>
         </ReduxWrap>
-      </Router>
     )
 
     const assertOneNav = container.querySelectorAll('nav');
@@ -54,12 +53,10 @@ describe('A component for building the app layout', () => {
   })
 
   test('it should render with no NAV tag if no user is provided', () => {
-    const { container } = render(
-      <Router>
+    const { container } = renderWithRouter(
         <ReduxWrap store={ unauthenticatedStore }>
           <LayoutWrapper/>
         </ReduxWrap>
-      </Router>
     )
 
     const assertNoNav = container.querySelectorAll('nav');
@@ -67,12 +64,10 @@ describe('A component for building the app layout', () => {
   })
 
   test('it should render with one MAIN tag', () => {
-    const { container } = render(
-      <Router>
+    const { container } = renderWithRouter(
         <ReduxWrap store={ unauthenticatedStore }>
           <LayoutWrapper/>
         </ReduxWrap>
-      </Router>
     )
 
     const assertOneMain = container.querySelectorAll('main');

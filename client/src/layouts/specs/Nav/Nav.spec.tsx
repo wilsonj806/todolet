@@ -1,5 +1,4 @@
-import React, { FunctionComponent } from 'react';
-import { HashRouter as Router } from 'react-router-dom';
+import React from 'react';
 
 import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';

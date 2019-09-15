@@ -1,21 +1,18 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { DeepPartial } from 'redux'
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
-import MockAdapter from 'axios-mock-adapter';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../helpers/router.helper';
 import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 
-import axios from '../../axios'
 import configureStore from '../../store/configureStore'
-import LogoutLayout from '../Logout/LogoutLayout'
 
-import { StoreShape } from '../../types';
-import UserService from '../../services/UserService';
+import LogoutLayout from '../Logout/LogoutLayout'
 import ReduxWrap from '../helpers/ReduxWrap';
 
+import { StoreShape } from '../../types';
 
 
 const unauthenticatedState : DeepPartial<StoreShape> = {

@@ -1,33 +1,27 @@
-import React, { FunctionComponent } from 'react';
-import { Provider } from 'react-redux';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+import React from 'react';
 
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import renderWithRouter from '../../helpers/router.helper';
 
-import configureStore from '../../store/configStore'
+import configureStore from '../../../store/configureStore'
 
-import Nav from '../Nav/Nav';
+import Nav from '../../Nav/Nav';
+import ReduxWrap from '../../helpers/ReduxWrap';
+
 
 
 describe('A component that renders a navbar', () => {
   // NOTE Global state init for passing around
   const globalStore = configureStore();
-  // NOTE Global wrapper for the Router and Redux Provider
-  const Wrapper: FunctionComponent = (props) => (
-    <Router>
-      <Provider store={ globalStore }>
-        { props.children }
-      </Provider>
-      </Router>
-  )
+
   afterEach(() => cleanup())
 
   test('it should render with one NAV tag', () => {
-    const { container } = render(
-      <Wrapper>
+    const { container } = renderWithRouter(
+      <ReduxWrap store={ globalStore }>
         <Nav/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const assertOneNav = container.querySelectorAll('nav');
@@ -36,10 +30,10 @@ describe('A component that renders a navbar', () => {
 
   test('it should render with a heading that has the app name in it', () => {
     const APP_NAME = 'TodoLet';
-    const { getByText, container } = render(
-      <Wrapper>
+    const { getByText, container } = renderWithRouter(
+      <ReduxWrap  store={ globalStore }>
         <Nav/>
-      </Wrapper>
+      </ReduxWrap>
     )
     const assertHeading = container.querySelector('h1');
     expect(assertHeading).toBeTruthy();
@@ -47,10 +41,10 @@ describe('A component that renders a navbar', () => {
   })
 
   test('it should render at least one menu', () => {
-    const { container } = render(
-      <Wrapper>
+    const { container } = renderWithRouter(
+      <ReduxWrap  store={ globalStore }>
         <Nav/>
-      </Wrapper>
+      </ReduxWrap>
     )
 
     const assertMenus = container.querySelectorAll('[role=menu]');

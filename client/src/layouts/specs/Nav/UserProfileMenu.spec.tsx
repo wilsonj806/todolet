@@ -1,23 +1,22 @@
-import React, { FC } from 'react';
-import { Provider } from 'react-redux';
+import React from 'react';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 
-import { render, cleanup, fireEvent } from '@testing-library/react';
+// ----- Test Helpers
 import '@testing-library/jest-dom/extend-expect';
+import renderWithRouter from '../../helpers/router.helper';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 
-import renderWithRouter from './helpers/router.helper';
 
-import configureStore from '../../store/configStore';
 
-import UserProfileMenu from '../Nav/UserProfileMenu';
+import ReduxWrap from '../../helpers/ReduxWrap';
+import configureStore from '../../../store/configureStore';
 
-import UserService from '../../services/UserService'
+import UserService from '../../../services/UserService'
 
-const { postLogout } = UserService;
+import UserProfileMenu from '../../Nav/UserProfileMenu';
 
 const store = configureStore();
 
-const Wrapper: FC<any> = ({ children }) => <Provider store={ store }>{ children }</Provider>
 
 describe('A component that renders a profile icon that expands to a menu', () => {
   afterEach(() => {
@@ -32,10 +31,10 @@ describe('A component that renders a profile icon that expands to a menu', () =>
   test('it goes to a profile page when the appropriate menu link is clicked', () => {
     const targetPath = '/profile';
     const { container, getByText } = renderWithRouter(
-        <Wrapper>
+        <ReduxWrap store={ store }>
           <UserProfileMenu/>
-        </Wrapper>
-    , targetPath)
+        </ReduxWrap>
+    , { targetPath })
 
     const button = container.querySelector('button');
 
@@ -50,10 +49,10 @@ describe('A component that renders a profile icon that expands to a menu', () =>
   test('it goes to an account page when the appropriate menu link is clicked', () => {
     const targetPath = '/account';
     const { container, getByText } = renderWithRouter(
-      <Wrapper>
+      <ReduxWrap  store={ store }>
         <UserProfileMenu/>
-      </Wrapper>
-    , targetPath)
+      </ReduxWrap>
+    , { targetPath })
 
     const button = container.querySelector('button');
 
@@ -68,10 +67,10 @@ describe('A component that renders a profile icon that expands to a menu', () =>
   test('it goes to a Logout page when the appropriate menu link is clicked', () => {
     const targetPath = '/logout';
     const { container, getByText } = renderWithRouter(
-      <Wrapper>
+      <ReduxWrap  store={ store }>
        <UserProfileMenu/>
-      </Wrapper>
-    , targetPath)
+      </ReduxWrap>
+    ,  { targetPath })
 
     const button = container.querySelector('button');
 
@@ -87,10 +86,10 @@ describe('A component that renders a profile icon that expands to a menu', () =>
     const spy = jest.spyOn(UserService, "postLogout");
     const targetPath = '/logout';
     const { container, getByText } = renderWithRouter(
-      <Wrapper>
+      <ReduxWrap  store={ store }>
         <UserProfileMenu/>
-      </Wrapper>
-    , targetPath)
+      </ReduxWrap>
+    ,  { targetPath })
 
     const button = container.querySelector('button');
 

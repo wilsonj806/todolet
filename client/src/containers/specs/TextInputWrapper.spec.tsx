@@ -13,6 +13,7 @@ describe('A component that renders an input', () => {
       return (
         <TextInputWrapper
           id="test"
+          name="test"
           value={ value }
           label={ labelText }
           reactHookFn={ setValue }
@@ -31,6 +32,7 @@ describe('A component that renders an input', () => {
       return (
         <TextInputWrapper
           id="test"
+          name="test"
           value={ value }
           label={ labelText }
           type="password"
@@ -55,6 +57,7 @@ describe('A component that renders an input', () => {
       return (
         <TextInputWrapper
           id="test"
+          name="test"
           value={ value }
           label={ labelText }
           type="text"

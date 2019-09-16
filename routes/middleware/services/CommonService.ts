@@ -12,9 +12,8 @@ const responsifyNoData = (msg: string): responseObj => ({
   msg
 })
 
-const responsifyError = (msg: string, errors: any): errorResponse => ({
-  msg,
-  errors
+const responsifyError = (msg: string): errorResponse => ({
+  msg
 })
 
 const CommonService = Object.assign({

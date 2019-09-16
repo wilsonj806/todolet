@@ -1,30 +1,27 @@
-import React, { FC } from 'react';
-import { Provider } from 'react-redux';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+import React from 'react';
 
-import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { cleanup } from '@testing-library/react';
+import renderWithRouter from '../../helpers/router.helper';
 
-import configureStore from '../../store/configStore';
+import configureStore from '../../../store/configureStore';
 
+import TodoAppBar from '../../Nav/TodoAppBar';
+import ReduxWrap from '../../helpers/ReduxWrap';
 
-import TodoAppBar from '../Nav/TodoAppBar';
 
 const store = configureStore();
 
-const Wrapper: FC<any> = ({ children }) => <Provider store={ store }>{ children }</Provider>
 
 describe('A component that renders an AppBar', () => {
   afterEach(() => cleanup())
 
   test('it should render with a heading that has the app name in it', () => {
     const APP_NAME = 'TodoLet';
-    const { getByText, container } = render(
-      <Router>
-        <Wrapper>
+    const { getByText, container } = renderWithRouter(
+        <ReduxWrap store={ store }>
           <TodoAppBar/>
-        </Wrapper>
-      </Router>
+        </ReduxWrap>
     )
     const assertHeading = container.querySelector('h1');
     expect(assertHeading).toBeTruthy();
@@ -32,12 +29,10 @@ describe('A component that renders an AppBar', () => {
   })
 
   test('it should render at least one menu', () => {
-    const { container } = render(
-      <Router>
-        <Wrapper>
+    const { container } = renderWithRouter(
+        <ReduxWrap  store={ store }>
           <TodoAppBar/>
-        </Wrapper>
-      </Router>
+        </ReduxWrap>
     )
 
     const assertMenus = container.querySelectorAll('[role=menu]');

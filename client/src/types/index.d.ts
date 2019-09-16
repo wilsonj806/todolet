@@ -168,6 +168,17 @@ declare namespace AnotherTodoClient {
     authorizedUser : UserStoreShape
     todosList ?: TodoStoreShape
   }
+
+  // ----- NOTE Test Helpers
+  interface RouterTestProps {
+    startingPath ?: string
+    targetPath   : string
+    history      : History<any>
+  }
+  interface renderRouterFixtureConfig {
+    startingPath ?: string
+    targetPath : string
+  }
 }
 
 declare module 'AnotherTodoClient' {

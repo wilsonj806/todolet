@@ -5,12 +5,12 @@ import StoryRouter from 'storybook-react-router';
 
 import Wrapper from './helper-components/Wrapper';
 
-import Nav from '../containers/Nav/Nav';
-import AppBar from '../containers/Nav/TodoAppBar';
-import UserCard from '../containers/Nav/UserCard';
-import FiltersCard from '../containers/Nav/FiltersCard';
-import TodoAppBar from '../containers/Nav/TodoAppBar';
-import UserProfileMenu from '../containers/Nav/UserProfileMenu'
+import Nav from '../layouts/Nav/Nav';
+import AppBar from '../layouts/Nav/TodoAppBar';
+import UserCard from '../layouts/Nav/UserCard';
+import FiltersCard from '../layouts/Nav/FiltersCard';
+import TodoAppBar from '../layouts/Nav/TodoAppBar';
+import UserProfileMenu from '../layouts/Nav/UserProfileMenu'
 
 storiesOf('Navbar|Navbar', module)
   .addDecorator(StoryRouter())

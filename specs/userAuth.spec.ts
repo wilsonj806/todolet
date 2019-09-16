@@ -92,7 +92,7 @@ describe('A middleware function for sending a response when login fails', () => 
     res = responseMock();
   });
 
-  test('it should return a json response with a message, an error object, and HTTP status code', () => {
+  test('it should return a json response with a message, and HTTP status code', () => {
     const req = requestMock();
 
     postLoginFail(err, req, res, next);
@@ -101,7 +101,6 @@ describe('A middleware function for sending a response when login fails', () => 
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         msg: expect.any(String),
-        errors: expect.anything()
       })
     );
   });

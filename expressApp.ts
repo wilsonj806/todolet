@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
@@ -68,12 +69,19 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+// Load static files
+app.use(express.static(path.join(__dirname,'client/build')));
 /**
  * ANCHOR Routes
  * =============================================================
  *
  */
 app.use('/api/user', routerUser);
+
+app.get('*', (req, res) =>
+  res.render('index')
+)
 /* eslint-enable no-console */
 
 export { app, mongoose };

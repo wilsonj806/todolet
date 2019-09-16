@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 
-import LayoutWrapper from '../containers/LayoutWrapper';
-import LoginLayout from '../layouts/Login/Login';
+import LayoutWrapper from '../layouts/LayoutWrapper';
+import LoginLayout from '../layouts/Login/LoginLayout';
 
-const LoginPage: FunctionComponent<any> = (props) => {
+const LoginPage: FunctionComponent<any> = () => {
   return (
     <LayoutWrapper>
       <LoginLayout/>

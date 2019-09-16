@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
 
 import { useTheme } from '@material-ui/core/styles';
-import { userProfileMenuStyles as useStyles } from './nav.styles';
+import useStyles from './UserProfileMenu.styles';
 import { postLogout } from '../../actions/userLogout.action';
 
 
@@ -27,26 +27,30 @@ import { postLogout } from '../../actions/userLogout.action';
 
 const UserProfileMenu: FunctionComponent<any> = (props) => {
   const dispatch = useDispatch()
-  const [anchorEl, setAnchorEl] = React.useState<undefined | HTMLElement>(undefined);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   }
 
   const handleClose = () => {
-    setAnchorEl(undefined);
+    setAnchorEl(null);
   }
 
   return (
     <>
       <IconButton
          aria-controls="avatar-menu" aria-haspopup="true" onClick={handleClick}
-      >
-        <AccountCircle fontSize='large' color='primary' classes={{
-          colorPrimary: classes.accountIcon
-        }}/>
+         color='primary'
+        >
+        <AccountCircle fontSize='large' color='primary'
+          classes={{
+            colorPrimary: classes.colorPrimary
+          }}
+          />
       </IconButton>
       <Menu
         id="avatar-menu"

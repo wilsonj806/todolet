@@ -10,21 +10,28 @@ describe('A service function for registering a new user', () => {
 
   afterEach(() => mock.reset())
 
-  test('it should throw if required fields are missing', () => {
+  test('it should throw if required fields are missing', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'wasd',
       password2: ''
     };
 
-    const response = async () => await UserService.postLogin(reqObj)
-    expect(response()).rejects.toThrow()
+    const response = await UserService.postLogin(reqObj)
+    expect(response).toStrictEqual(
+      expect.objectContaining({
+        msg: expect.any(String),
+        status: expect.stringContaining('FAILURE')
+      })
+    )
+    done()
   })
 test('it should return an obect with the user info if it succeeded', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'wasd',
-      password2: 'wasd'
+      password2: 'wasd',
+      email: 'guest@guest.com'
     };
 
     mock.onPost(endpoint).reply(
@@ -105,8 +112,13 @@ describe('A service function for logging a client in', () => {
       password: ''
     };
     // NOTE need to ensure that the assertion block expects a Promise rejection
-    const response = async () => await UserService.postLogin(reqObj)
-    expect(response()).rejects.toThrow()
+    const response = await UserService.postLogin(reqObj)
+    expect(response).toStrictEqual(
+      expect.objectContaining({
+        msg: expect.any(String),
+        status: expect.stringContaining('FAILURE')
+      })
+    )
     done()
   })
   test('it should return an obect with the user info if it succeeded', async (done) => {

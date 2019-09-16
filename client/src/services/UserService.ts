@@ -2,20 +2,21 @@ import axios from '../axios';
 import { AxiosResponse } from 'axios';
 
 import AxiosService from './AxiosService';
+import FormService from './FormService';
 
 import { AsyncServiceReturn } from '../types';
 import { postLoginReq, postUserReq } from '../../../types';
 
 
-
+const { validateForm, validatePasswordFields } = FormService;
 const { parseError, parseResponse } = AxiosService
 
 const postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceReturn> => {
   try {
-    // TODO make it check which keys are missing
-    const inputCheck = Object.entries(reqObj).some(val => val[1] === "");
-    if (inputCheck === true) throw new Error('Error: execpting values for inputs')
-
+    // NOTE this method checks which keys are missing and throws an error that lists said missing keys
+    validateForm(reqObj);
+    // Checks that both password fields match
+    validatePasswordFields(reqObj);
 
     const response : AxiosResponse<any> = await axios.post('/user/register', reqObj);
 
@@ -28,9 +29,9 @@ const postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceReturn> =>
 
 // TODO add something to unpack Axios responses
 const postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn> => {
-  const inputCheck = Object.values(reqObj).some(val => val === "");
-  if (inputCheck === true) throw new Error('Error: execpting values for inputs')
   try {
+    // NOTE this method checks which keys are missing and throws an error that lists said missing keys
+    validateForm(reqObj);
     const response : AxiosResponse<any> = await axios.post('/user/login', reqObj);
     return parseResponse(response)
   } catch (error) {

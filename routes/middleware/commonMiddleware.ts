@@ -8,9 +8,8 @@ const { responsifyError } = CommonService;
 const checkFormErrors: RequestHandler = (req, res, next): any => {
   const validationErr = validationResult(req);
   if (!validationErr.isEmpty()) {
-    const errors = validationErr.mapped();
 
-    res.status(400).json(responsifyError('Error: Invalid form fields', errors));
+    res.status(400).json(responsifyError('Error: Invalid form fields'));
   } else {
     next();
   }

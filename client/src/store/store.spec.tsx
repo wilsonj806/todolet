@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { render, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
-import configureStore from './configStore';
+import configureStore from './configureStore';
 import { INIT_APP_STATE, INIT_CLIENTSERVER_STATE, INIT_USER_STATE } from './reducers/root.reducer';
 import { StoreShape } from '../types';
 

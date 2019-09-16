@@ -1,15 +1,17 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { DeepPartial } from 'redux';
 import configureMockStore from '@jedmao/redux-mock-store';
 
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-import configureStore from '../../store/configStore';
+import configureStore from '../../../store/configureStore';
 
-import FiltersCard from '../Nav/FiltersCard';
-import { DeepPartial } from 'redux';
-import { StoreShape } from '../../types';
+import FiltersCard from '../../Nav/FiltersCard';
+import ReduxWrap from '../../helpers/ReduxWrap';
+
+import { StoreShape } from '../../../types';
+
 
 describe('A FiltersCard component', () => {
   // NOTE Global state init for passing around
@@ -18,9 +20,9 @@ describe('A FiltersCard component', () => {
 
   test('it should render tags when the tag tab is clicked', () => {
     const { getAllByRole, container } = render(
-      <Provider store={ globalStore }>
+      <ReduxWrap store={ globalStore }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
     const buttons : Array<HTMLElement> = getAllByRole('tab');
 
@@ -35,9 +37,9 @@ describe('A FiltersCard component', () => {
 
   test('it should render projects when the tabs are toggled back and forth', () => {
     const { getAllByRole, container } = render(
-      <Provider store={ globalStore }>
+      <ReduxWrap store={ globalStore }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const buttons : Array<HTMLElement> = getAllByRole('tab');
@@ -45,7 +47,6 @@ describe('A FiltersCard component', () => {
     const arr = buttons.filter((button : HTMLElement) => button!.firstChild!.textContent === 'Projects');
     const [ projectBtn ] = arr;
 
-    const arr2 = buttons.filter((button : HTMLElement) => button!.firstChild!.textContent === 'Tags');
     const [ tagBtn ] = arr;
     fireEvent.click(tagBtn);
     fireEvent.click(projectBtn);
@@ -56,10 +57,10 @@ describe('A FiltersCard component', () => {
   });
 
   test('it should only toggle one button\'s aria attribute on click', () => {
-    const { getAllByRole, container } = render(
-      <Provider store={ globalStore }>
+    const { container } = render(
+      <ReduxWrap store={ globalStore }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const assertion = container.querySelectorAll('[aria-selected=true]');
@@ -80,10 +81,10 @@ describe('A FiltersCard component', () => {
 
     const mockStore = configureMockStore()
     const store = mockStore({...state })
-    const { getByText, container } = render(
-      <Provider store={ store }>
+    const { getByText } = render(
+      <ReduxWrap store={ store }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const arr = exampleState.map((obj: any) => obj.name);
@@ -107,10 +108,10 @@ describe('A FiltersCard component', () => {
     const mockStore = configureMockStore()
     const store = mockStore({...state } as DeepPartial<StoreShape>)
 
-    const { getByText, container } = render(
-      <Provider store= { store }>
+    const { getByText } = render(
+      <ReduxWrap store= { store }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const arr = exampleState.map((obj: any) => obj.name);
@@ -135,10 +136,10 @@ describe('A FiltersCard component', () => {
     const mockStore = configureMockStore()
     const store = mockStore({...state } as DeepPartial<StoreShape>)
 
-    const { getByText, container } = render(
-      <Provider store= { store }>
+    const { getByText } = render(
+      <ReduxWrap store= { store }>
         <FiltersCard/>
-      </Provider>
+      </ReduxWrap>
     )
 
     const arr = exampleState.map((obj: any) => obj.name);

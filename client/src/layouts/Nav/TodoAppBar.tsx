@@ -10,16 +10,15 @@ import UserProfileMenu from './UserProfileMenu';
 
 import { useTheme } from '@material-ui/core/styles';
 
-import { appBarStyles as useStyles } from './nav.styles';
+import useStyles from './TodoAppBar.styles';
 
 // TODO add Menu items
 const TodoAppBar: FunctionComponent<any> = (props) => {
-  const classes = useStyles();
   const theme = useTheme();
+  const classes = useStyles(theme);
   return (
     <AppBar
       position="fixed"
-      className={ classes.appBar }
     >
       <Toolbar>
         <Typography variant="h6" component="h1"  className={ classes.title }>

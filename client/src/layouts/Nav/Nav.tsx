@@ -4,9 +4,9 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
 import { useTheme } from '@material-ui/core/styles';
-import { navStyles as useStyles } from './nav.styles';
+import useStyles from './Nav.styles';
 
-import AppBar from './TodoAppBar';
+import TodoAppBar from './TodoAppBar';
 import UserCard from './UserCard';
 import FiltersCard from './FiltersCard';
 import { NavProps } from '../../types';
@@ -20,7 +20,7 @@ const Nav : FunctionComponent<NavProps> = props => {
 
   return (
     <>
-      <AppBar/>
+      <TodoAppBar/>
       <nav className={ classes.drawer }>
         <Drawer
           open={ true }

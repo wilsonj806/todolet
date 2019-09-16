@@ -36,13 +36,15 @@ const passportConfig = (passport: PassportStatic): any => {
   passport.use('register',new LocalStrategy({ passReqToCallback: true},
     async (req, username: string, password: string, done: any): Promise<any> => {
       try {
+        console.log('making new password')
         const genSalt = await bcrypt.genSalt(10);
         const newPass = await bcrypt.hash(password, genSalt);
-        const newUser = await User.create({ username, password: newPass });
+        const newUser = await User.create({ username, password: newPass, email: req.body.email });
 
         // ----- once done is called with the new user, Passport calls req.user = newUser
         return done(null, newUser);
       } catch (error) {
+        console.log(error);
         return done(error, false);
       }
     }

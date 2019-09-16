@@ -8,9 +8,9 @@
     "url": "https://github.com/wilsonj806/todolet.git"
   },
   "scripts": {
-    "heroku-prebuild": "npm i --only=dev && npm run build && echo TypeScript build successful && npm prune",
+    "heroku-prebuild": "npm i --only=dev && npm i && npm run build && cd client && npm i && cd ../ && echo TypeScript build successful && npm prune",
     "build": "tsc",
-    "start": "cd client && npm run build && cd ../ &&node dist/server.js",
+    "start": "node dist/server.js",
     "server": "nodemon --exec babel-node --extensions '.ts' server.ts ",
     "client": "npm start --prefix client",
     "watch-ts": "tsc --watch",

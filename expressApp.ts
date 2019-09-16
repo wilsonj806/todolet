@@ -79,8 +79,9 @@ app.use(express.static(path.join(__dirname,'client/build')));
  */
 app.use('/api/user', routerUser);
 
-app.get('*', (req, res) =>
-  res.render('index')
+app.get('/*', (req, res) =>
+  // res.render('index')
+  res.sendFile('index')
 )
 /* eslint-enable no-console */
 

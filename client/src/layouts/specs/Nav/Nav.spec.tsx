@@ -2,12 +2,12 @@ import React from 'react';
 
 import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import renderWithRouter from '../../helpers/router.helper';
+import renderWithRouter from '../../test-helpers/router.helper.spec';
 
 import configureStore from '../../../store/configureStore'
 
 import Nav from '../../Nav/Nav';
-import ReduxWrap from '../../helpers/ReduxWrap';
+import ReduxWrap from '../../test-helpers/ReduxWrap.helper.spec';
 
 
 

@@ -29,7 +29,7 @@ module.exports = {
   collectCoverageFrom: [
     "**/*.tsx",
     "!**/*.styles.ts",
-    "!**/*.helper.tsx",
+    "!**/*.helper.spec.tsx",
     "!**/*.d.ts",
   ],
 
@@ -75,9 +75,9 @@ module.exports = {
   // globals: {},
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  moduleDirectories: [
+    "node_modules"
+  ],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -92,9 +92,12 @@ module.exports = {
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-
   },
 
+  modulePaths: [
+    "<rootDir>",
+    "<rootDir>/client"
+  ],
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
 
@@ -157,12 +160,14 @@ module.exports = {
   // The glob patterns Jest uses to detect test files
   testMatch: [
     "**/__tests__/**/*.tsx",
-    "**/?(*.)+(spec|test).tsx"
+    "**/?(*.)+(spec|test).tsx",
+    "!**/?(*.)+(helper)+(.)+(spec|test).tsx"
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   testPathIgnorePatterns: [
     "\\\\node_modules\\\\",
+    "\\\\test-helpers\\\\"
   ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files

@@ -5,7 +5,7 @@ import { DeepPartial } from 'redux';
 import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-import ReduxWrap from '../../helpers/ReduxWrap';
+import ReduxWrap from '../../test-helpers/ReduxWrap.helper.spec';
 import configureStore from '../../../store/configureStore';
 
 import UserCard from '../../Nav/UserCard';

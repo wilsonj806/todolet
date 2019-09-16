@@ -5,9 +5,9 @@ import { DeepPartial } from 'redux';
 // ----- Test Libraries and mocks
 import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import renderWithRouter from '../helpers/router.helper';
+import renderWithRouter from '../test-helpers/router.helper.spec';
 
-import ReduxWrap from '../helpers/ReduxWrap';
+import ReduxWrap from '../test-helpers/ReduxWrap.helper.spec';
 import configureStore from '../../store/configureStore';
 
 import LayoutWrapper from '../LayoutWrapper';

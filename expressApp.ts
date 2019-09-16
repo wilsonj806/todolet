@@ -21,6 +21,7 @@ import routerUser from './routes/user';
  * ANCHOR Connect to database
  * =============================================================
  *
+ * NOTE The app runs off of `app/dist` because that's where TypeScript builds the app to
  */
 (async (): Promise<any> => {
   try {
@@ -70,8 +71,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// Load static files
-app.use(express.static(path.join(__dirname,'client/build')));
+app.use(express.static(path.join(__dirname,'../client/build')));
 /**
  * ANCHOR Routes
  * =============================================================
@@ -79,9 +79,11 @@ app.use(express.static(path.join(__dirname,'client/build')));
  */
 app.use('/api/user', routerUser);
 
-app.get('*', (req, res) =>
-  res.render('index')
-)
+
+
+app.get('/*', (req, res) =>
+  res.sendFile(path.join(__dirname,'../client/build','index.html')
+))
 /* eslint-enable no-console */
 
 export { app, mongoose };

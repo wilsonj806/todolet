@@ -17,6 +17,7 @@ Yet another Todo app, this app will be full stack and will be deployed. In addit
 - [Client-side State Planning](./docs/CLIENTSTATE.md)
 - [App Deployment](./docs/DEPLOYMENT.md)
 - [Testing](./docs/TESTING.md)
+- [DevOps](./docs/DEVOPS.md)
 
 ## Cloning Instructions
 You'll need to have some version of Node.js(and subsequently npm, which is included) installed. Currently running everything on Node v10.10.0/ NPM v6.4.1 but it should work fine on older versions of Node/ NPM.

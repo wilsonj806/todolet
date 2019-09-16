@@ -8,9 +8,10 @@
     "url": "https://github.com/wilsonj806/todolet.git"
   },
   "scripts": {
-    "heroku-prebuild": "npm i --only=dev && npm run build && echo TypeScript build successful && npm prune",
+    "heroku-prebuild": "npm i --only=dev && npm i && npm run build && cd client && npm i && cd ../ && echo TypeScript build successful && cd client && npm run build && cd ../ && echo React build success",
+    "heroku-postbuild":"npm prune && cd client && npm prune && cd ../ && echo Build successful, packages pruned",
     "build": "tsc",
-    "start": "cd client && npm run build && cd ../ &&node dist/server.js",
+    "start": "node dist/server.js",
     "server": "nodemon --exec babel-node --extensions '.ts' server.ts ",
     "client": "npm start --prefix client",
     "watch-ts": "tsc --watch",
@@ -65,6 +66,9 @@
     "@types/supertest": "^2.0.7",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
+    "@types/react-redux": "^7.1.2",
+    "@types/storybook__react": "^4.0.2",
+    "@types/styled-components": "^4.1.16",
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",

@@ -21,6 +21,7 @@ import routerUser from './routes/user';
  * ANCHOR Connect to database
  * =============================================================
  *
+ * NOTE The app runs off of `app/dist` because that's where TypeScript builds the app to
  */
 (async (): Promise<any> => {
   try {
@@ -78,7 +79,7 @@ app.use(passport.session());
 app.use('/api/user', routerUser);
 
 app.get('/*', (req, res) =>
-  res.sendFile(path.join(__dirname,'client/build','index')
+  res.sendFile(path.join(__dirname,'../client/build','index')
 ))
 /* eslint-enable no-console */
 

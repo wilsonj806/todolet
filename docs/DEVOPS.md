@@ -18,3 +18,12 @@ The core idea still stays the same though, software needs to be easy for everyon
 In the context of this app, most of the DevOps relevant ideas from automated tests. Here is implemented through TravisCI and a whole bunch of tests, but that's fairly simple to scale with integration tests.
 
 In addition adding Docker might be overkill, but will be helpful to learn at some point anyways and would make deploying the app more consistent.
+
+So we need to do a couple of things
+1. ensure new changes integrate well
+  - this is partially being done already
+2. ensure that the app builds consistently with whatever dependencies
+
+The first point is partially being done, but will need integration tests that ensure the full-stack app works at some basic level.
+
+The second point is newer to me, but hypothetically we'd use Docker to build images of the dependent software(MySQL, Mongo, etc) and then compose that with a DockerFile, but I'm not entirely sure how that integrates with Heroku's Mongo and PostgreSQL service.

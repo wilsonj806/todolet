@@ -46,6 +46,7 @@ const sessConfig: SessionOptions = {
 const whitelist = ['http://localhost:3000', 'https://wj-todolet.herokuapp.com'];
 const corsOptions: CorsOptions = {
   origin: (origin: any, callback: any) => {
+    console.log('this is origin', origin)
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {

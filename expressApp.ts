@@ -82,7 +82,9 @@ app.use('/api/user', routerUser);
 app.get('/*', (req, res) =>
   // res.render('index')
   res.sendFile('index')
-)
+, (err, req, res) => {
+  console.log(err)
+})
 /* eslint-enable no-console */
 
 export { app, mongoose };

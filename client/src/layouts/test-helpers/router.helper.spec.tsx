@@ -45,4 +45,5 @@ const renderWithRouter = (ui: ReactElement, config: renderRouterFixtureConfig = 
   }
 }
 
+test('', () => expect(true).toBe(true))
 export default renderWithRouter;

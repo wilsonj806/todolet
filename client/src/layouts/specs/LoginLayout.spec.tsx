@@ -4,7 +4,7 @@ import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
 import '@testing-library/jest-dom/extend-expect';
-import renderWithRouter from '../helpers/router.helper';
+import renderWithRouter from '../test-helpers/router.helper.spec';
 import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 
 
@@ -13,7 +13,7 @@ import Login from '../Login/LoginLayout'
 
 import { StoreShape } from '../../types';
 import UserService from '../../services/UserService';
-import ReduxWrap from '../helpers/ReduxWrap';
+import ReduxWrap from '../test-helpers/ReduxWrap.helper.spec';
 
 
 const init : DeepPartial<StoreShape> = {

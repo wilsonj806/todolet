@@ -4,7 +4,7 @@ import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
 import '@testing-library/jest-dom/extend-expect';
-import renderWithRouter from '../../layouts/helpers/router.helper';
+import renderWithRouter from '../../layouts/test-helpers/router.helper.spec';
 import { render, cleanup } from '@testing-library/react';
 
 
@@ -12,7 +12,7 @@ import configureStore from '../../store/configureStore'
 import LogoutPage from '../LogoutPage'
 
 import { StoreShape } from '../../types';
-import ReduxWrap from '../../layouts/helpers/ReduxWrap';
+import ReduxWrap from '../../layouts/test-helpers/ReduxWrap.helper.spec';
 
 
 const unauthenticatedState : DeepPartial<StoreShape> = {

@@ -4,11 +4,11 @@ import { DeepPartial } from 'redux'
 
 import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup } from '@testing-library/react';
-import renderWithRouter from "../../layouts/helpers/router.helper";
+import renderWithRouter from "../../layouts/test-helpers/router.helper.spec";
 
 
 import configureStore from '../../store/configureStore'
-import ReduxWrap from '../../layouts/helpers/ReduxWrap';
+import ReduxWrap from '../../layouts/test-helpers/ReduxWrap.helper.spec';
 import RouteContainer from '../RouteContainer';
 import { StoreShape } from '../../types';
 

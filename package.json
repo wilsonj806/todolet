@@ -8,7 +8,8 @@
     "url": "https://github.com/wilsonj806/todolet.git"
   },
   "scripts": {
-    "heroku-prebuild": "npm i --only=dev && npm i && npm run build && cd client && npm i && cd ../ && echo TypeScript build successful && cd client && npm run build && npm prune && cd ../ && echo React build success && npm prune && echo Build successful, packages pruned",
+    "heroku-prebuild": "npm i --only=dev && npm i && npm run build && cd client && npm i && cd ../ && echo TypeScript build successful && cd client && npm run build && cd ../ && echo React build success",
+    "heroku-postbuild":"npm prune && cd client && npm prune && cd ../ && echo Build successful, packages pruned",
     "build": "tsc",
     "start": "node dist/server.js",
     "server": "nodemon --exec babel-node --extensions '.ts' server.ts ",

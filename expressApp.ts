@@ -70,8 +70,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// Load static files
-app.use(express.static(path.join(__dirname,'client/build')));
 /**
  * ANCHOR Routes
  * =============================================================
@@ -80,8 +78,8 @@ app.use(express.static(path.join(__dirname,'client/build')));
 app.use('/api/user', routerUser);
 
 app.get('/*', (req, res) =>
-  res.sendFile('index')
-)
+  res.sendFile(path.join(__dirname,'client/build','index')
+))
 /* eslint-enable no-console */
 
 export { app, mongoose };

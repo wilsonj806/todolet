@@ -71,12 +71,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+app.use(express.static(path.join(__dirname,'../client/build')));
 /**
  * ANCHOR Routes
  * =============================================================
  *
  */
 app.use('/api/user', routerUser);
+
+
 
 app.get('/*', (req, res) =>
   res.sendFile(path.join(__dirname,'../client/build','index.html')

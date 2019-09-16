@@ -79,7 +79,7 @@ app.use(passport.session());
 app.use('/api/user', routerUser);
 
 app.get('/*', (req, res) =>
-  res.sendFile(path.join(__dirname,'../client/build','index')
+  res.sendFile(path.join(__dirname,'../client/build','index.html')
 ))
 /* eslint-enable no-console */
 

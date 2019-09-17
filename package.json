@@ -8,14 +8,13 @@
     "url": "https://github.com/wilsonj806/todolet.git"
   },
   "scripts": {
-    "heroku-prebuild": "npm i --only=dev && npm i && npm run build && cd client && npm i && cd ../ && echo TypeScript build successful && cd client && npm run build && cd ../ && echo React build success",
-    "heroku-postbuild":"npm prune && cd client && npm prune && cd ../ && echo Build successful, packages pruned",
-    "build": "tsc",
+    "heroku-prebuild": "npm i --only=dev && npm i && cd client && npm i && cd ../ && echo Dependencies installed",
+    "build": "tsc && echo Server code build successful && cd client && npm run build && cd ../ && echo React build success",
+    "heroku-postbuild":"npm run build && npm prune && cd client && npm prune && cd ../ && echo Packages pruned",
     "start": "node dist/server.js",
     "server": "nodemon --exec babel-node --extensions '.ts' server.ts ",
     "client": "npm start --prefix client",
     "watch-ts": "tsc --watch",
-    "lint": "eslint ./**/*.ts",
     "test": "jest --config=jest.config.js --watch",
     "test-client": "jest --config=react.jest.config.js --watch",
     "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./todolet_coverage_* "

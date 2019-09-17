@@ -70,8 +70,9 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+const staticLocation = NodeENV === 'production' ? '../client/build' : './client/build'
 
-app.use(express.static(path.join(__dirname,'../client/build')));
+app.use(express.static(path.join(__dirname, staticLocation)));
 /**
  * ANCHOR Routes
  * =============================================================
@@ -80,9 +81,8 @@ app.use(express.static(path.join(__dirname,'../client/build')));
 app.use('/api/user', routerUser);
 
 
-
 app.get('/*', (req, res) =>
-  res.sendFile(path.join(__dirname,'../client/build','index.html')
+  res.sendFile(path.join(__dirname, staticLocation,'index.html')
 ))
 /* eslint-enable no-console */
 

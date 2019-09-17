@@ -20,7 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build-dev": "react-scripts build GENERATE_SOURCEMAP=true REACT_APP_ENV=dev",
+    "build": "REACT_APP_ENV=production GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sb": "start-storybook -p 9001 -c .storybook"

@@ -6,16 +6,7 @@ import User from '../../models/user';
 const { responsifyData, responsifyNoData, responsifyError } = CommonService;
 
 const deleteUser: RequestHandler = async (req, res, next) => {
-  /*
-  Delete user flow:
-  ===================
-  - check that there's a valid session
-  - check that the user exists
-  - check that the user logged in is the same as the session user
-  - log the user out
-  - find and delete the user by the id from the session
-
-  */
+  // FIXME in the future, make the middleware send an email to confirm
  try {
    if (!req.session) {
      return res.status(403).json(responsifyError('Invalid client session, delete operation not executed'))
@@ -36,7 +27,6 @@ const deleteUser: RequestHandler = async (req, res, next) => {
  } catch (error) {
    res.status(500).json(responsifyError('Internal server error'))
  } finally {
-   console.log('should get here')
    next()
   }
 }

@@ -234,4 +234,62 @@ describe('A service function for logging a user out', () => {
   })
 })
 
+describe('A service function for deleting a user', () => {
+  const endpoint = '/user/delete';
+
+  afterEach(() => mock.reset())
+
+  test('it should return an obect with a status key if it succeeded', async (done) => {
+    mock.onDelete(endpoint).reply(
+      200,
+      { msg: 'hi' }
+    );
+
+    const response = await UserService.deleteUser();
+
+    expect(response).toStrictEqual({ status: 'SUCCESS' })
+    done();
+  })
+
+  test('it should return an error object if it failed with a 5** error', async (done) => {
+    const mockResponse = {
+      msg: 'testing failure',
+    }
+    mock.onDelete(endpoint).reply(
+      500,
+      mockResponse
+    );
+
+    const response = await UserService.postLogout();
+    expect(response).toStrictEqual(
+      expect.objectContaining({
+        msg: expect.any(String),
+        status: expect.any(String),
+      })
+    )
+    done();
+  })
+
+  test('it should return an error object if it failed with a 4** error', async (done) => {
+    const mockResponse = {
+      msg: 'testing failure',
+    }
+    mock.onDelete(endpoint).reply(
+      400,
+      mockResponse
+    );
+
+    const response = await UserService.postLogout();
+    expect(response).toStrictEqual(
+      expect.objectContaining({
+        msg: expect.any(String),
+        status: expect.any(String),
+      })
+    )
+    done();
+  })
+})
+
+
+
 export {}

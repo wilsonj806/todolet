@@ -55,10 +55,20 @@ const postLogout =  async (): Promise<AsyncServiceReturn> => {
   }
 }
 
+
+const deleteUser = async (): Promise<AsyncServiceReturn> => {
+  try {
+    const response = await axios.delete('/user/delete')
+    return parseResponse(response)
+  } catch (error) {
+    return parseError(error)
+  }
+}
 const UserService = {
   postLogin,
   postLogout,
-  postNewUser
+  postNewUser,
+  deleteUser,
 };
 
 

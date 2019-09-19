@@ -84,6 +84,8 @@ declare namespace AnotherTodoClient {
 
   type AsyncUserUpdate = "PATCH_INFO_INIT" | "PATCH_INFO_FAIL" | "PATCH_INFO_SUCCESS"
 
+  type AsyncUserDelete = "DELETE_USER_INIT" | "DELETE_USER_FAIL" | "DELETE_USER_SUCCESS"
+
   type AsyncUserFilter = "POST_FILTER_INIT" | "POST_FILTER_FAIL" | "POST_FILTER_SUCCESS"
 
   type AsyncUserDeleteFilter = "DELETE_FILTER_INIT" | "DELETE_FILTER_FAIL" | "DELETE_FILTER_SUCCESS"
@@ -100,7 +102,7 @@ declare namespace AnotherTodoClient {
   type AsyncTodoDelete = "DELTE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
 
 
-  type UserActionTypes = AsyncUserRegister | AsyncUserLogin | AsyncUserLogout | AsyncUserUpdate |
+  type UserActionTypes = AsyncUserRegister | AsyncUserLogin | AsyncUserLogout | AsyncUserUpdate | AsyncUserDelete |
     AsyncUserFilter | AsyncUserDeleteFilter | SyncUserActions
 
   type TodoActionTypes = SyncTodoActions | AsyncTodoRead | AsyncTodoPost | AsyncTodoPatch | AsyncTodoDelete

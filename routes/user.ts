@@ -23,6 +23,7 @@ import {
   getLogout,
 } from './middleware/userAuthMiddleware';
 import checkFormErrors from './middleware/commonMiddleware';
+import { deleteUser } from './middleware/userDeleteMiddelware';
 // import { checkFormErrors } from './middleware/commonMiddleware';
 
 
@@ -69,6 +70,12 @@ router.post(
  * =============================================================
  */
 router.post('/logout', getLogout);
+
+/**
+ * ANCHOR: DELETE user
+ * =============================================================
+ */
+router.delete('/delete', deleteUser);
 
 
 /**

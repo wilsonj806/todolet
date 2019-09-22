@@ -153,6 +153,7 @@ declare namespace AnotherTodoClient {
   }
   interface UserStoreShape extends UserDataOptional {
     userId         : string | undefined
+    email          : string | undefined
     username       : string | undefined
   }
 

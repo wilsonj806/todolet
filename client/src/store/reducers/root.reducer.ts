@@ -3,10 +3,12 @@ import { POST_LOGIN_INIT, POST_LOGIN_FAIL, POST_LOGIN_SUCCESS } from '../../acti
 import { POST_LOGOUT_FAIL, POST_LOGOUT_SUCCESS, POST_LOGOUT_INIT } from '../../actions/userLogout.action';
 import { POST_REGISTER_FAIL, POST_REGISTER_INIT, POST_REGISTER_SUCCESS } from '../../actions/userRegistration.action';
 import { StoreShape, UserStoreShape, ReduxAction, ClientServerConnectShape } from '../../types';
+import { DELETE_USER_SUCCESS, DELETE_USER_INIT, DELETE_USER_FAIL } from '../../actions/userDelete.action';
 
 // FIXME something's really weird with some of the key names and how it aligns with other stuff
 const INIT_USER_STATE : UserStoreShape = {
   userId: undefined,
+  email: undefined,
   username: undefined,
   projectFilters: [],
   tagFilters: [],
@@ -29,6 +31,8 @@ const authorizedUser = (state : UserStoreShape = INIT_USER_STATE, action : Redux
       return { ...state, ...action.payload }
     case POST_LOGOUT_SUCCESS:
       return { ...INIT_USER_STATE }
+    case DELETE_USER_SUCCESS:
+      return {... INIT_USER_STATE }
     default:
       return state
   }
@@ -50,11 +54,14 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
     case POST_LOGIN_INIT:
     case POST_LOGOUT_INIT:
     case POST_REGISTER_INIT:
+    case DELETE_USER_INIT:
       return { ...state, isFetching: true }
     case POST_LOGIN_SUCCESS:
     case POST_LOGIN_FAIL:
     case POST_REGISTER_SUCCESS:
     case POST_REGISTER_FAIL:
+    case DELETE_USER_SUCCESS:
+    case DELETE_USER_FAIL:
       return { ...state, isFetching: false }
     default:
       return state

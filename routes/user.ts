@@ -77,6 +77,11 @@ router.post('/logout', getLogout);
  */
 router.delete('/delete', deleteUser);
 
+router.get('/:id', (req,res,next) => {
+  console.log(req.session)
+  res.status(200).send()
+})
+
 
 /**
  * ANCHOR: GET single user data

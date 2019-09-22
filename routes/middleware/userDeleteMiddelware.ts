@@ -23,7 +23,12 @@ const deleteUser: RequestHandler = async (req, res, next) => {
 
    if (!result) throw new Error('No valid user found')
 
-   res.status(200).json(responsifyNoData('User with username ' + result.username + ' successfully deleted'))
+   req.session.destroy((err) => {
+     if (err) {
+       throw new Error(err.message)
+     }
+     res.status(200).json(responsifyNoData('User with username ' + result.username + ' successfully deleted'))
+   })
  } catch (error) {
    res.status(500).json(responsifyError('Internal server error'))
  } finally {

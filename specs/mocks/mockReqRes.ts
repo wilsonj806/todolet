@@ -6,7 +6,9 @@
 import { MockReq, MockRes } from "../../types";
 
 const requestMock = (sessionData: any = {}, body: any = {}, _validationErrors: any = []): any => ({
-  session: sessionData,
+  session: {
+    destroy: jest.fn(callback => callback()),
+    ...sessionData},
   body,
   logout: jest.fn().mockImplementation(() => true)
 });

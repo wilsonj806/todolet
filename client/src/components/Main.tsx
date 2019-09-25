@@ -18,7 +18,7 @@ const useStyles: StylesHook<Styles<any, any, any>> = makeStyles ((theme: Theme) 
 
 const Main : FunctionComponent<MainProps> = (props) => {
   const { children, noPadding } = props;
-  const padding = noPadding ? 0 : '4rem';
+  const padding = noPadding ? 0 : '6rem';
   const classes = useStyles();
   return (
     <main className={ classes.root } style={{ paddingTop: padding }}>

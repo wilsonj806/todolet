@@ -28,8 +28,8 @@ describe('A component that renders a profile icon that expands to a menu', () =>
       </HashRouter>
     )
   });
-  test('it goes to a profile page when the appropriate menu link is clicked', () => {
-    const targetPath = '/profile';
+  test('it goes to a help page when the appropriate menu link is clicked', () => {
+    const targetPath = '/help';
     const { container, getByText } = renderWithRouter(
         <ReduxWrap store={ store }>
           <UserProfileMenu/>
@@ -40,7 +40,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
 
     fireEvent.click(button!);
 
-    const link = getByText('Profile');
+    const link = getByText('Help');
     fireEvent.click(link!);
 
     expect(getByText(targetPath)).toBeTruthy();

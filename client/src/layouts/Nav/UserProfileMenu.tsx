@@ -40,6 +40,7 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
     setAnchorEl(null);
   }
 
+  // FIXME fix menu links requiring you to click the link not the menu
   return (
     <>
       <IconButton
@@ -60,7 +61,7 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <Link to="/profile">Profile</Link>
+          <Link to="/help">Help</Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to="/account">My Account</Link>

@@ -11,13 +11,14 @@ import Link from '@material-ui/core/Link';
 // ----- App specific components
 import TextField from '../../containers/TextInputWrapper';
 
-import Logo from '../../assets/Logo(512x512).png';
-// import useStyles from './userUpdate.styles';
+import useStyles from './userUpdate.styles';
 import { deleteUser } from '../../actions/userDelete.action';
 // import { updateUser } from '../../actions/userUpdate.action';
 import { StoreShape } from '../../types';
 
+// TODO update so there's different form id/ name attributes for each thing
 const UserSettingsLayout: FC<any> = (props) => {
+  const classes = useStyles()
   // ----- React Redux state
   const user = useSelector<StoreShape, any>(state => state.authorizedUser)
   const dispatch = useDispatch()
@@ -26,6 +27,16 @@ const UserSettingsLayout: FC<any> = (props) => {
   const [error, setError] = useState('')
   const [confirmUsername, setConfirmUsername] = useState('')
   const [renderDeleteConfirm, setRenderDeleteConfirm] = useState(false)
+
+  const handleSaveUpdates = async (event: SyntheticEvent<HTMLButtonElement>) => {
+    try {
+      event.preventDefault()
+      console.log('This needs an implementation')
+    } catch (err) {
+      console.log(err)
+      setError(err.message)
+    }
+  }
 
   const handleDeleteConfirmSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     try {
@@ -38,17 +49,6 @@ const UserSettingsLayout: FC<any> = (props) => {
     }
   }
 
-  const RenderInitUserDeleteBtn = !renderDeleteConfirm ? (
-    <Button
-    id="btn--user-delete"
-    name="user-delete"
-    color="secondary"
-    onClick={ () => setRenderDeleteConfirm(true) }
-    >
-      Delete Account
-    </Button>
-  ) : null;
-
   const RenderConfirmDeleteUser = renderDeleteConfirm ? (
     <form>
       <TextField
@@ -57,7 +57,7 @@ const UserSettingsLayout: FC<any> = (props) => {
         label="Confirm Username"
         value={ confirmUsername }
         reactHookFn={ setConfirmUsername }
-        classes={{ root: '' }}
+        classes={{ root: classes.textInput }}
       />
       <Button
         id="btn--confirm-delete-submit"
@@ -65,23 +65,56 @@ const UserSettingsLayout: FC<any> = (props) => {
         type="submit"
         color="primary"
         onClick={ handleDeleteConfirmSubmit }
+        classes={{ root: classes.dangerButton }}
       >
         Confirm Account Deletion
       </Button>
     </form>
-  ) : null
-
+  ) : (
+    <Button
+    id="btn--user-delete"
+    name="user-delete"
+    color="primary"
+    classes={{ root: classes.dangerButton }}
+    onClick={ () => setRenderDeleteConfirm(true) }
+    >
+      Delete Account
+    </Button>
+  )
+  // TODO make the update user thing a custom hook
   return (
     <Container>
-      <Typography component="h1" variant="h2">
+      <Typography component="h1" variant="h3">
         User Settings
       </Typography>
-      <Typography component="h1" variant="h2">
-        Danger: Delete User Account
-      </Typography>
-      <Typography>Warning this action is irreversible!</Typography>
-      { RenderInitUserDeleteBtn }
-      { RenderConfirmDeleteUser }
+      <div className={ classes.formCtr }>
+        <form>
+          <TextField
+            id="username"
+            name="username"
+            label="Username"
+            value={ confirmUsername }
+            reactHookFn={ setConfirmUsername }
+            classes={{ root: classes.textInput }}
+          />
+          <Button
+          id="btn--save-updates"
+          name="save-updates"
+          type="submit"
+          color="primary"
+          onClick={ handleSaveUpdates }
+        >
+          Update User
+        </Button>
+        </form>
+      </div>
+      <div className={ classes.formCtr }>
+        <Typography component="h1" variant="h3">
+          Danger: Delete User Account
+        </Typography>
+        <Typography>Warning this action is irreversible!</Typography>
+        { RenderConfirmDeleteUser }
+      </div>
     </Container>
   )
 }

@@ -27,12 +27,12 @@ describe('A service function for updating a user', () => {
 
 test('it should return an obect with the updated user info if it succeeded', async (done) => {
 
-    mock.onPost(endpoint).reply(
+    mock.onPut(endpoint).reply(
       200,
       { data: updatedUser }
     );
 
-    const response = await UserService.putUser(updateData);
+    const response = await UserService.putUser(updateData, user.userId);
 
     expect(response).toStrictEqual({ payload:updatedUser, status: 'SUCCESS' })
     done();
@@ -48,12 +48,12 @@ test('it should return an obect with the updated user info if it succeeded', asy
     const mockResponse = {
       msg: 'testing failure',
     }
-    mock.onPost(endpoint).reply(
+    mock.onPut(endpoint).reply(
       400,
       mockResponse
     );
 
-    const response = await UserService.putUser(updateData);
+    const response = await UserService.putUser(updateData, user.userId);
     expect(response).toStrictEqual(
       expect.objectContaining({
         msg: expect.any(String),
@@ -67,12 +67,12 @@ test('it should return an obect with the updated user info if it succeeded', asy
     const mockResponse = {
       msg: 'testing failure',
     }
-    mock.onPost(endpoint).reply(
+    mock.onPut(endpoint).reply(
       500,
       mockResponse
     );
 
-    const response = await UserService.putUser(updateData);
+    const response = await UserService.putUser(updateData, user.userId);
     expect(response).toStrictEqual(
       expect.objectContaining({
         msg: expect.any(String),

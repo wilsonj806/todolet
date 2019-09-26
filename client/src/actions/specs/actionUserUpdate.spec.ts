@@ -28,7 +28,6 @@ const updateData = {
 const user = {
   userId: '1111',
   username: 'guest',
-  password: 'wasd',
 }
 
 const userFail = {
@@ -53,14 +52,14 @@ describe('An action creator that handles async user login', () => {
     const expectedActions = [
       { type: PUT_USER_INIT },
       // FIXME ideally don't have to put this in manually
-      { type: PUT_USER_SUCCESS, payload: user,  }
+      { type: PUT_USER_SUCCESS, payload: updatedUser,  }
     ]
     // NOTE not trying to mock what mongoose returns, that's pretty intense
-    mock.onPost(endpoint).reply(
+    mock.onPut(endpoint).reply(
       200,
       { msg: 'hi', data: updatedUser }
     );
-    await store.dispatch<any>(putUser(updateData))
+    await store.dispatch<any>(putUser(updateData, user.userId.toString()))
 
     expect(store.getActions()).toStrictEqual(expectedActions);
     done()
@@ -73,12 +72,12 @@ describe('An action creator that handles async user login', () => {
       { type: PUT_USER_SUCCESS, payload: updatedUser }
     ]
 
-    mock.onPost(endpoint).reply(
+    mock.onPut(endpoint).reply(
       200,
       { msg: 'hi', data: updatedUser }
     );
 
-    await store.dispatch<any>(putUser(updateData))
+    await store.dispatch<any>(putUser(updateData, user.userId.toString()))
 
     expect(store.getActions()).toStrictEqual(expectedActions);
     done()
@@ -91,12 +90,12 @@ describe('An action creator that handles async user login', () => {
       { type: PUT_USER_FAIL, payload: 'hi' }
     ]
 
-    mock.onPost(endpoint).reply(
+    mock.onPut(endpoint).reply(
       400,
       { msg: 'hi', error: user }
     );
 
-    await store.dispatch<any>(putUser(updateData))
+    await store.dispatch<any>(putUser(updateData, user.userId.toString()))
     expect(store.getActions()).toStrictEqual(expectedActions);
     done()
   })

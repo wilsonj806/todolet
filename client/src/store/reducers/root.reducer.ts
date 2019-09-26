@@ -2,8 +2,9 @@ import { combineReducers, Reducer } from 'redux'
 import { POST_LOGIN_INIT, POST_LOGIN_FAIL, POST_LOGIN_SUCCESS } from '../../actions/userLogin.action';
 import { POST_LOGOUT_FAIL, POST_LOGOUT_SUCCESS, POST_LOGOUT_INIT } from '../../actions/userLogout.action';
 import { POST_REGISTER_FAIL, POST_REGISTER_INIT, POST_REGISTER_SUCCESS } from '../../actions/userRegistration.action';
-import { StoreShape, UserStoreShape, ReduxAction, ClientServerConnectShape } from '../../types';
+import { PUT_USER_INIT, PUT_USER_FAIL, PUT_USER_SUCCESS } from '../../actions/userUpdate.action';
 import { DELETE_USER_SUCCESS, DELETE_USER_INIT, DELETE_USER_FAIL } from '../../actions/userDelete.action';
+import { StoreShape, UserStoreShape, ReduxAction, ClientServerConnectShape } from '../../types';
 
 // FIXME something's really weird with some of the key names and how it aligns with other stuff
 const INIT_USER_STATE : UserStoreShape = {
@@ -28,6 +29,7 @@ const authorizedUser = (state : UserStoreShape = INIT_USER_STATE, action : Redux
   switch (action.type) {
     case POST_LOGIN_SUCCESS:
     case POST_REGISTER_SUCCESS:
+    case PUT_USER_SUCCESS:
       return { ...state, ...action.payload }
     case POST_LOGOUT_SUCCESS:
       return { ...INIT_USER_STATE }
@@ -43,6 +45,7 @@ const globalErrors = (state: any, action : ReduxAction) => {
     case POST_LOGIN_FAIL:
     case POST_LOGOUT_FAIL:
     case POST_REGISTER_FAIL:
+    case PUT_USER_FAIL:
       return { ...state, ...action.payload }
     default:
       return state
@@ -53,6 +56,7 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
   switch (action.type) {
     case POST_LOGIN_INIT:
     case POST_LOGOUT_INIT:
+    case PUT_USER_INIT:
     case POST_REGISTER_INIT:
     case DELETE_USER_INIT:
       return { ...state, isFetching: true }
@@ -60,6 +64,8 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
     case POST_LOGIN_FAIL:
     case POST_REGISTER_SUCCESS:
     case POST_REGISTER_FAIL:
+    case PUT_USER_SUCCESS:
+    case PUT_USER_FAIL:
     case DELETE_USER_SUCCESS:
     case DELETE_USER_FAIL:
       return { ...state, isFetching: false }

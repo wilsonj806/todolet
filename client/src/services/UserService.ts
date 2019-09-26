@@ -56,6 +56,18 @@ const postLogout =  async (): Promise<AsyncServiceReturn> => {
 }
 
 
+const putUser = async (reqObj: any, userId: string) => {
+  try {
+    validateForm(reqObj);
+    const response : AxiosResponse<any> = await axios.put('/user/' + userId, reqObj)
+
+    return parseResponse(response)
+  } catch (error) {
+    return parseError(error)
+  }
+}
+
+
 const deleteUser = async (): Promise<AsyncServiceReturn> => {
   try {
     const response = await axios.delete('/user/delete')
@@ -64,11 +76,14 @@ const deleteUser = async (): Promise<AsyncServiceReturn> => {
     return parseError(error)
   }
 }
+
+
 const UserService = {
   postLogin,
   postLogout,
   postNewUser,
   deleteUser,
+  putUser,
 };
 
 

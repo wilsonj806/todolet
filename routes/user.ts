@@ -24,6 +24,7 @@ import {
 } from './middleware/userAuthMiddleware';
 import checkFormErrors from './middleware/commonMiddleware';
 import { deleteUser } from './middleware/userDeleteMiddelware';
+import putUser from './middleware/userUpdateMiddleware';
 // import { checkFormErrors } from './middleware/commonMiddleware';
 
 
@@ -77,22 +78,25 @@ router.post('/logout', getLogout);
  */
 router.delete('/delete', deleteUser);
 
+/**
+ * ANCHOR: GET single user data
+ * =============================================================
+ *
+ */
+
 router.get('/:id', (req,res,next) => {
   console.log(req.session)
   res.status(200).send()
 })
 
-
 /**
- * ANCHOR: GET single user data
+ * ANCHOR: PUT User update
  * =============================================================
- * TODO Figure out what to do with this
- *
- * Requirements(NOTE should be replaced with actual test specs):
  *
  */
-// router.get('/:id', () => {
+router.put('/:id', putUser)
 
-// });
+
+
 
 export default router;

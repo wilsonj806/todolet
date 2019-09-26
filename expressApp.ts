@@ -25,6 +25,7 @@ import routerUser from './routes/user';
  */
 (async (): Promise<any> => {
   try {
+    mongoose.set('useFindAndModify', false);
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       dbName,

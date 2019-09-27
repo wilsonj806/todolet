@@ -49,10 +49,8 @@ const Register: FC<any> = (props) => {
     }
   }
 
-  const RenderRedirect = shouldRedirect ? <Redirect to='/'/> : null;
   return (
     <Container maxWidth="xs" classes={{ root: classes.rootStyle }}>
-      { RenderRedirect }
       <img src={ Logo } alt="Logo" className={ classes.logo }/>
       <div className={ classes.formWrapper }>
         <Typography variant="h1" classes={{ h1: classes.heading }}>TodoLet</Typography>

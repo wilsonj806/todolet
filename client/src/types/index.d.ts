@@ -82,7 +82,9 @@ declare namespace AnotherTodoClient {
   type AsyncUserLogout = "POST_LOGOUT_INIT" |
     "POST_LOGOUT_FAIL" | "POST_LOGOUT_SUCCESS"
 
-  type AsyncUserUpdate = "PATCH_INFO_INIT" | "PATCH_INFO_FAIL" | "PATCH_INFO_SUCCESS"
+  type AsyncUserUpdate = "PUT_USER_INIT" | "PUT_USER_FAIL" | "PUT_USER_SUCCESS"
+
+  type AsyncUserDelete = "DELETE_USER_INIT" | "DELETE_USER_FAIL" | "DELETE_USER_SUCCESS"
 
   type AsyncUserFilter = "POST_FILTER_INIT" | "POST_FILTER_FAIL" | "POST_FILTER_SUCCESS"
 
@@ -100,7 +102,7 @@ declare namespace AnotherTodoClient {
   type AsyncTodoDelete = "DELTE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
 
 
-  type UserActionTypes = AsyncUserRegister | AsyncUserLogin | AsyncUserLogout | AsyncUserUpdate |
+  type UserActionTypes = AsyncUserRegister | AsyncUserLogin | AsyncUserLogout | AsyncUserUpdate | AsyncUserDelete |
     AsyncUserFilter | AsyncUserDeleteFilter | SyncUserActions
 
   type TodoActionTypes = SyncTodoActions | AsyncTodoRead | AsyncTodoPost | AsyncTodoPatch | AsyncTodoDelete
@@ -127,9 +129,9 @@ declare namespace AnotherTodoClient {
     payload ?: userDataResponse | postLoginReq | errorResponse
   }
 
-  interface AsyncPatchAction implements ReduxAction {
+  interface AsyncUserUpdateAction implements ReduxAction {
     type    : AsyncUserUpdate
-    payload ?: UserStoreShape | UserDataOptional
+    payload ?: UserStoreShape | UserDataOptional | errorResponse
   }
 
   interface AsyncLogOutAction implements ReduxAction {
@@ -151,6 +153,7 @@ declare namespace AnotherTodoClient {
   }
   interface UserStoreShape extends UserDataOptional {
     userId         : string | undefined
+    email          : string | undefined
     username       : string | undefined
   }
 

@@ -23,6 +23,8 @@ import {
   getLogout,
 } from './middleware/userAuthMiddleware';
 import checkFormErrors from './middleware/commonMiddleware';
+import { deleteUser } from './middleware/userDeleteMiddelware';
+import putUser from './middleware/userUpdateMiddleware';
 // import { checkFormErrors } from './middleware/commonMiddleware';
 
 
@@ -70,17 +72,31 @@ router.post(
  */
 router.post('/logout', getLogout);
 
+/**
+ * ANCHOR: DELETE user
+ * =============================================================
+ */
+router.delete('/delete', deleteUser);
 
 /**
  * ANCHOR: GET single user data
  * =============================================================
- * TODO Figure out what to do with this
- *
- * Requirements(NOTE should be replaced with actual test specs):
  *
  */
-// router.get('/:id', () => {
 
-// });
+router.get('/:id', (req,res,next) => {
+  console.log(req.session)
+  res.status(200).send()
+})
+
+/**
+ * ANCHOR: PUT User update
+ * =============================================================
+ *
+ */
+router.put('/:id', putUser)
+
+
+
 
 export default router;

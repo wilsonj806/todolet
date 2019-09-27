@@ -25,6 +25,7 @@ import routerUser from './routes/user';
  */
 (async (): Promise<any> => {
   try {
+    mongoose.set('useFindAndModify', false);
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       dbName,
@@ -41,7 +42,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // NOTE if the corsOptions needs to be more complex, use Object.assign and more corsOptions objects
-app.use(cors(NodeENV === 'production' ? corsOptions : undefined));
+app.use(cors(corsOptions));
 
 /**
  * ANCHOR Use and configure Express session middleware
@@ -70,8 +71,9 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+const staticLocation = NodeENV === 'production' ? '../client/build' : './client/build'
 
-app.use(express.static(path.join(__dirname,'../client/build')));
+app.use(express.static(path.join(__dirname, staticLocation)));
 /**
  * ANCHOR Routes
  * =============================================================
@@ -80,9 +82,8 @@ app.use(express.static(path.join(__dirname,'../client/build')));
 app.use('/api/user', routerUser);
 
 
-
 app.get('/*', (req, res) =>
-  res.sendFile(path.join(__dirname,'../client/build','index.html')
+  res.sendFile(path.join(__dirname, staticLocation,'index.html')
 ))
 /* eslint-enable no-console */
 

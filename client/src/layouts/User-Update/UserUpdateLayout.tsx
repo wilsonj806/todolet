@@ -13,11 +13,12 @@ import TextField from '../../containers/TextInputWrapper';
 
 import useStyles from './userUpdate.styles';
 import { deleteUser } from '../../actions/userDelete.action';
-// import { updateUser } from '../../actions/userUpdate.action';
+import { putUser } from '../../actions/userUpdate.action';
 import { StoreShape } from '../../types';
 
-// TODO update so there's different form id/ name attributes for each thing
-const UserSettingsLayout: FC<any> = (props) => {
+// FIXME if the user update form gets bigger, extract the state to a custom hook
+
+const UserUpdateLayout: FC<any> = (props) => {
   const classes = useStyles()
   // ----- React Redux state
   const user = useSelector<StoreShape, any>(state => state.authorizedUser)
@@ -25,13 +26,18 @@ const UserSettingsLayout: FC<any> = (props) => {
 
   // ----- Local State
   const [error, setError] = useState('')
+  const [username, setUsername] = useState('')
   const [confirmUsername, setConfirmUsername] = useState('')
   const [renderDeleteConfirm, setRenderDeleteConfirm] = useState(false)
+
+  useEffect(() => {
+    setUsername('')
+  }, [user])
 
   const handleSaveUpdates = async (event: SyntheticEvent<HTMLButtonElement>) => {
     try {
       event.preventDefault()
-      console.log('This needs an implementation')
+      await dispatch(putUser({ username }, user.userId))
     } catch (err) {
       console.log(err)
       setError(err.message)
@@ -41,8 +47,9 @@ const UserSettingsLayout: FC<any> = (props) => {
   const handleDeleteConfirmSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     try {
       event.preventDefault()
+
       if (user.username !== confirmUsername) throw new Error('Usernames do not match')
-      await dispatch(deleteUser())
+      return await dispatch(deleteUser())
     } catch (err) {
       console.log(err)
       setError(err.message)
@@ -50,7 +57,7 @@ const UserSettingsLayout: FC<any> = (props) => {
   }
 
   const RenderConfirmDeleteUser = renderDeleteConfirm ? (
-    <form>
+    <form name="user-delete">
       <TextField
         id="confirm-username"
         name="confirm-username"
@@ -88,13 +95,13 @@ const UserSettingsLayout: FC<any> = (props) => {
         User Settings
       </Typography>
       <div className={ classes.formCtr }>
-        <form>
+        <form name="user-update">
           <TextField
             id="username"
             name="username"
             label="Username"
-            value={ confirmUsername }
-            reactHookFn={ setConfirmUsername }
+            value={ username }
+            reactHookFn={ setUsername }
             classes={{ root: classes.textInput }}
           />
           <Button
@@ -119,4 +126,4 @@ const UserSettingsLayout: FC<any> = (props) => {
   )
 }
 
-export default UserSettingsLayout
+export default UserUpdateLayout

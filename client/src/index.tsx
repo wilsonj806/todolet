@@ -4,5 +4,6 @@ import 'typeface-roboto';
 
 // import './index.css';
 import App from './App';
+console.log('hydrating');
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.hydrate(<App />, document.getElementById('root'));

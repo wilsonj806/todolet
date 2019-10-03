@@ -7,6 +7,7 @@ import FormService from './FormService';
 import { AsyncServiceReturn } from '../types';
 import { postLoginReq, postUserReq } from '../../../types';
 
+const endpointPrefix = '/api';
 
 const { validateForm, validatePasswordFields } = FormService;
 const { parseError, parseResponse } = AxiosService
@@ -18,7 +19,7 @@ const postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceReturn> =>
     // Checks that both password fields match
     validatePasswordFields(reqObj);
 
-    const response : AxiosResponse<any> = await axios.post('/user/register', reqObj);
+    const response : AxiosResponse<any> = await axios.post(endpointPrefix + '/user/register', reqObj);
 
     return parseResponse(response)
   } catch (error) {
@@ -41,7 +42,7 @@ const postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn> => {
 
 const postLogout =  async (): Promise<AsyncServiceReturn> => {
   try {
-    const response = await axios.post('/user/logout');
+    const response = await axios.post(endpointPrefix + '/user/logout');
     const { data } = response;
     const { msg } = data;
 
@@ -59,7 +60,7 @@ const postLogout =  async (): Promise<AsyncServiceReturn> => {
 const putUser = async (reqObj: any, userId: string) => {
   try {
     validateForm(reqObj);
-    const response : AxiosResponse<any> = await axios.put('/user/' + userId, reqObj)
+    const response : AxiosResponse<any> = await axios.put(endpointPrefix + '/user/' + userId, reqObj)
 
     return parseResponse(response)
   } catch (error) {
@@ -70,7 +71,7 @@ const putUser = async (reqObj: any, userId: string) => {
 
 const deleteUser = async (): Promise<AsyncServiceReturn> => {
   try {
-    const response = await axios.delete('/user/delete')
+    const response = await axios.delete(endpointPrefix + '/user/delete')
     return parseResponse(response)
   } catch (error) {
     return parseError(error)

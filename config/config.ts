@@ -5,7 +5,7 @@ import { CorsOptions } from 'cors';
 
 const {
   NODE_ENV: NodeENV, DBNAME, DBNAME_LOCAL, SESSION_SECRET,
-}: ENV = process.env;
+} = process.env;
 
 const uri: any = (NodeENV === 'production')
   ? process.env.MONGODB_URI
@@ -33,7 +33,7 @@ store.on('error', (error): any => console.error(error));
 const day: number = 1000 * 60 * 60 * 24;
 
 const sessConfig: SessionOptions = {
-  secret: SESSION_SECRET,
+  secret: SESSION_SECRET || '',
   store,
   resave: true,
   saveUninitialized: false,
@@ -57,7 +57,11 @@ const corsOptions: CorsOptions = {
   credentials: true
 };
 
+const ApiUri = process.env.NODE_ENV === 'production' ? 'https://wj-anothertodo.herokuapp.com/'
+: `http://localhost:${process.env.PORT}`;
+
 export {
+  ApiUri,
   uri,
   dbName,
   PORT,

@@ -6,12 +6,13 @@ import rootReducer from './reducers/root.reducer';
   ESLint/ TSLint will yell at you for this but this is for the Redux DevTools, should be safe and the fix is to add it as a property to window
 */
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default function configureStore(preloadedState = undefined) {
+export default function configureStore(preloadedState = {}) {
   return createStore(
     rootReducer,
     preloadedState,
-    process.env.NODE_ENV === 'production' ? applyMiddleware(thunkMiddleware) : composeEnhancers(applyMiddleware(thunkMiddleware)), // let's use use async reducers/ actions
+    applyMiddleware(thunkMiddleware)
+    // process.env.NODE_ENV === 'production' ? applyMiddleware(thunkMiddleware) : composeEnhancers(applyMiddleware(thunkMiddleware)), // let's use use async reducers/ actions
   )
 }

@@ -11,10 +11,10 @@ import { staticLocation } from '../expressApp';
 
 import App from '../client/src/App'
 
-
 const router = express.Router();
 
-router.get('/*', (req, res) => {
+router.get('/*', (req: any, res: any) => {
+  // TODO handle routing the client
   const sheets = new ServerStyleSheets();
   const htmlTemplate = (reactDom: any, css: any): string =>
   (`
@@ -36,7 +36,7 @@ router.get('/*', (req, res) => {
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
       <div id="app">${ reactDom }</div>
-      <script src="/dist/app.js"></script>
+      <script src="/dist/app.bundle.js"></script>
     </body>
     </html>
   `)

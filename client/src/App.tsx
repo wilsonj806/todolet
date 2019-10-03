@@ -1,7 +1,9 @@
 import { Provider } from 'react-redux';
-import React, { FunctionComponent } from 'react';
+import React, { FC, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+
 
 import configureStore from './store/configureStore'
 
@@ -23,9 +25,17 @@ const store = configureStore({
   // }
 })
 
-const App: FunctionComponent<any> = () => {
+const App: FC<any> = () => {
+  const history = createMemoryHistory();
+  useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles != null) {
+      jssStyles.parentNode!.removeChild(jssStyles);
+    }
+  }, []);
+
   return (
-    <Router>
+    <Router history={ history }>
       <ThemeProvider theme={ theme }>
         <Provider store={ store }>
           <RouteContainer/>

@@ -6,6 +6,7 @@ Ideally we'd have started the app by building everything for server-side renderi
 Genearl issues related to porting everything over:
 - No longer have the luxury of `react-scripts` to handle image assets and CSS
 - No long have the convenience of building our app with the HTML template in the `public` directory
+- React Router needs adjustments to handle the routing from the server
 
 Re the first point: The above means we need to properly build an API route for serving static assets. In addition, we'll need some way to do that when we deploy the app.
 - Heroku isn't recommended as they use ephemeral filesystem, which means you lose whatever's not on the slug whenever the dyno restarts

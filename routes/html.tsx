@@ -1,6 +1,9 @@
 import path from 'path'
 import express from 'express';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { StaticRouter } from 'react-router-dom';
+
 import { renderToString } from 'react-dom/server'
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles'
 
@@ -10,12 +13,19 @@ import {
 import { staticLocation } from '../expressApp';
 
 import App from '../client/src/App'
+import routes from './routes.client';
+import configureStore from '../client/src/store/configureStore';
+import RouteContainer from '../client/src/containers/RouteContainer'
 
 const router = express.Router();
 
 router.get('/*', (req: any, res: any) => {
   // TODO handle routing the client
+  console.log('this is req url: ', req.url);
   const sheets = new ServerStyleSheets();
+  const store = configureStore(
+
+  );
   const htmlTemplate = (reactDom: any, css: any): string =>
   (`
     <!DOCTYPE html>
@@ -41,8 +51,14 @@ router.get('/*', (req: any, res: any) => {
     </html>
   `)
 
+  const context = {};
+  console.log('trying to build jsx');
   const jsx = (
-    <App/>
+    <Provider store={ store }>
+      <StaticRouter context={ context } location={ req.url }>
+        <App/>
+      </StaticRouter>
+    </Provider>
   );
   const reactDom = renderToString(sheets.collect(jsx));
   const css = sheets.toString();

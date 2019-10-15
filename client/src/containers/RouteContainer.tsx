@@ -15,19 +15,18 @@ const RouteContainer: FunctionComponent<any> = (props) => {
   const authorizedUser = useSelector((state: StoreShape) => state.authorizedUser);
   const { username, userId } = authorizedUser;
   const isNotAuthorized: boolean = username === undefined || userId === undefined;
+  console.log(authorizedUser);
 
   const AuthorizedRoutes = (
     <>
     <Route path='/account' exact component={ UserUpdatePage }/>
-    <Route path='/*' render={ () => <Redirect to='/'/> }/>
     </>
   );
   const UnauthorizedRoutes = (
     <>
-      <Route path={'/login'} exact component={ LoginPage }/>
+      <Route path='/login' exact component={ LoginPage }/>
       <Route path='/logout' exact component={ LogoutPage }/>
       <Route path='/register' exact component={ RegisterPage }/>
-      <Route path='/*' render={ () => <Redirect to='/'/> }/>
     </>
   )
 

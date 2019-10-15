@@ -7,7 +7,6 @@
     "target": "es6",
     "moduleResolution": "node",
     "typeRoots": [
-      "./client/node_modules/@types",
       "**/node_modules/@types",
       "./types"
     ],

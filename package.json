@@ -16,7 +16,6 @@
     "start": "node dist/server.js",
     "dev:client": "webpack --config config/webpack.config.js --watch --env.NODE_ENV=development",
     "dev:server": "nodemon --exec babel-node --extensions '.ts','.tsx','.js' server.ts",
-    "client": "npm start --prefix client",
     "watch-ts": "tsc --watch",
     "test:ts": "jest --config=jest.config.js --watch",
     "test:tsx": "jest --config=react.jest.config.js --watch",

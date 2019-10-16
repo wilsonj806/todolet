@@ -33,7 +33,7 @@ const postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn> => {
   try {
     // NOTE this method checks which keys are missing and throws an error that lists said missing keys
     validateForm(reqObj);
-    const response : AxiosResponse<any> = await axios.post('/user/login', reqObj);
+    const response : AxiosResponse<any> = await axios.post(endpointPrefix + '/user/login', reqObj);
     return parseResponse(response)
   } catch (error) {
     return parseError(error);

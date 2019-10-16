@@ -18,7 +18,7 @@ import configureStore from '../client/src/store/configureStore';
 
 const router = express.Router();
 
-router.get('/*', (req: any, res: any) => {
+router.get('/*', (req: any, res: any, next: any) => {
   console.log('this is req url: ', req.url);
   const sheets = new ServerStyleSheets();
   const store = configureStore(
@@ -64,6 +64,7 @@ router.get('/*', (req: any, res: any) => {
     .set({ "Content-Type": "text/html" })
     .send( htmlTemplate( reactDom, css ) );
 
+  next();
 });
 
 export default router

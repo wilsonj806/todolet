@@ -12,8 +12,10 @@ const plugins = [
   // )
 ]
 
-module.exports = {
-  mode: "development",
+module.exports = env => {
+  const { NODE_ENV } = env;
+  return {
+  mode: NODE_ENV || "development",
   context: path.join( __dirname, "../" ),
   devtool: "source-map",
   target: "web",
@@ -21,6 +23,7 @@ module.exports = {
     app: "./client/src/index.tsx"
   },
   output: {
+    pathinfo: false,
     path: path.join(__dirname, '../dist'),
     // publicPath: '/',
     filename: '[name].bundle.js',
@@ -28,11 +31,11 @@ module.exports = {
   },
   resolve: {
     modules: [
-        path.resolve( "../client/src" ),
+        // path.resolve( "../client/src" ),
         // "client/node_modules",
         "node_modules"
     ],
-    extensions: ['.ts', '.tsx', '.env', '.js']
+    extensions: ['.ts', '.tsx', '.js']
   },
   plugins,
   module: {
@@ -64,4 +67,5 @@ module.exports = {
       },
     ],
   },
+}
 };

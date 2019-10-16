@@ -9,11 +9,12 @@
   },
   "scripts": {
     "heroku-prebuild": "npm i --only=dev && npm i && cd client && npm i && cd ../ && echo Dependencies installed",
-    "build:client": "webpack --config config/webpack.config.js && echo Webpack client build successful",
+    "build:client": "webpack --config config/webpack.config.js --env.NODE_ENV=production && echo Webpack client build successful",
     "build:server": "tsc && echo Server code build successful",
     "heroku-postbuild": "npm run build:server && npm run build:client && npm run gulp && npm prune && cd client && npm prune && cd ../ && echo Packages pruned",
     "gulp": "gulp",
     "start": "node dist/server.js",
+    "dev:client": "webpack --config config/webpack.config.js --watch --env.NODE_ENV=development",
     "dev:server": "nodemon --exec babel-node --extensions '.ts','.tsx','.js' server.ts",
     "client": "npm start --prefix client",
     "watch-ts": "tsc --watch",
@@ -97,6 +98,7 @@
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "typescript": "3.2.4",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "4.29.6",
     "webpack-cli": "^3.3.9",
     "webpack-node-externals": "^1.7.2"

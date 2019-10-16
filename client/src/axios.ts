@@ -1,6 +1,5 @@
 import { ApiUri } from './appconfig/config'
 import axios from 'axios';
-
 const instance = axios.create({
   baseURL: ApiUri,
   withCredentials: true,

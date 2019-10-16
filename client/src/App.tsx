@@ -1,8 +1,7 @@
 import { Provider } from 'react-redux';
 import React, { FC, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import { Switch } from 'react-router-dom';
 
 
 import configureStore from './store/configureStore'
@@ -23,7 +22,6 @@ const store = configureStore(
 )
 
 const App: FC<any> = () => {
-  console.log('got to here')
   useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles != null) {

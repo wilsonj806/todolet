@@ -15,12 +15,10 @@ import { staticLocation } from '../expressApp';
 import App from '../client/src/App'
 import routes from './routes.client';
 import configureStore from '../client/src/store/configureStore';
-import RouteContainer from '../client/src/containers/RouteContainer'
 
 const router = express.Router();
 
 router.get('/*', (req: any, res: any) => {
-  // TODO handle routing the client
   console.log('this is req url: ', req.url);
   const sheets = new ServerStyleSheets();
   const store = configureStore(
@@ -52,7 +50,6 @@ router.get('/*', (req: any, res: any) => {
   `)
 
   const context = {};
-  console.log('trying to build jsx');
   const jsx = (
     <Provider store={ store }>
       <StaticRouter context={ context } location={ req.url }>

@@ -21,3 +21,38 @@ Below are the requirements to fix how assets are served:
   - preferably put it in the routes directory
   - configure it to serve static assets, so pull everything from `client/public` and stick it into a static folder
 - need to find a solution for serving static assets for deployment
+
+## Notes
+### React Router and SSR
+Router Router lets you do a bunch of stuff with SSR, but does require several changes.
+
+As we aren't sending static files from the server, we have to account for additional client requests like the below.
+```json
+{
+  Request_URL: "http://localhost:5000/login",
+  Request_Method: "GET",
+  ...other headers
+}
+
+```
+
+This means that we need to add React Router into our route for servering the front end code. For the most part that's pretty straight-forwards.
+
+We'll also need to update out front end code to accomodate the above. Instead of rendering the React DOM, we're hydrating it.
+- the reason is that our server is sending **static** markup up, so all we need to do is send and load the bundled JavaScript into the client
+
+In addition, we need to ensure that React renders our Router **before** the app like so:
+```js
+ReactDOM.hydrate(
+  (
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  )
+),
+document.getElementById('root')
+```
+
+This ensures that our Router is executed and "rendered" **before** the app.
+- if we don't the app crashes with a "Browser Router history needs a DOM" error
+  - presumably this because React Router is getting confused between what the server is rendering and what the client needs

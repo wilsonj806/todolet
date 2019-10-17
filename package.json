@@ -19,7 +19,7 @@
     "watch-ts": "tsc --watch",
     "test:ts": "jest --config=jest.config.js --watch",
     "test:tsx": "jest --config=react.jest.config.js --watch",
-    "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js & rm -rf ./todolet_coverage_* "
+    "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js & rm -rf ./todolet_coverage_*"
   },
   "dependencies": {
     "@material-ui/core": "4.4.1",
@@ -59,6 +59,7 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@jedmao/redux-mock-store": "^2.0.3",
     "@shelf/jest-mongodb": "^1.0.1",
     "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.2.0",
@@ -82,6 +83,7 @@
     "@types/supertest": "^2.0.7",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
+    "axios-mock-adapter": "^1.17.0",
     "babel-loader": "8.0.5",
     "coveralls": "^3.0.3",
     "del": "^5.1.0",

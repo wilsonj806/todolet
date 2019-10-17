@@ -72,9 +72,9 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-const staticLocation = NodeENV === 'production' ? '../client/build' : './client/build'
+const staticLocation = NodeENV === 'production' ? express.static(path.join(__dirname, '../assets')) : express.static(path.join(__dirname, 'assets'))
 
-app.use('/static', express.static(path.join(__dirname, 'assets')));
+app.use('/static', staticLocation);
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 /**
  * ANCHOR Routes

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 
 import { renderToString } from 'react-dom/server'
-import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles'
+import { ServerStyleSheets, StylesProvider, createGenerateClassName } from '@material-ui/styles'
 
 import {
   uri, dbName, sessConfig, corsOptions, NodeENV
@@ -20,7 +20,11 @@ const router = express.Router();
 
 router.get('/*', (req: any, res: any, next: any) => {
   console.log('this is req url: ', req.url);
-  const sheets = new ServerStyleSheets();
+  const sheets = new ServerStyleSheets({
+    serverGenerateClassName: createGenerateClassName({
+      productionPrefix: 'prd',
+    })
+  });
   const store = configureStore(
 
   );
@@ -48,7 +52,6 @@ router.get('/*', (req: any, res: any, next: any) => {
     </body>
     </html>
   `)
-
   const context = {};
   const jsx = (
     <Provider store={ store }>

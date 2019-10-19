@@ -10,10 +10,10 @@
   "scripts": {
     "heroku-prebuild": "npm i --only=dev && npm i && cd client && npm i && cd ../ && echo Dependencies installed",
     "build:client": "webpack --config config/webpack.config.js --env.NODE_ENV=production && echo Webpack client build successful",
-    "build:server": "tsc && echo Server code build successful",
+    "build:server": "webpack --config config/webpack.server.config.js --env.NODE_ENV=production && echo Webpack server build successful",
     "heroku-postbuild": "npm run build:server && npm run build:client && npm run gulp && npm prune && cd client && npm prune && cd ../ && echo Packages pruned",
     "gulp": "gulp",
-    "start": "node dist/server.js",
+    "start": "node dist/server.bundle.js",
     "dev:client": "webpack --config config/webpack.config.js --watch --env.NODE_ENV=development",
     "dev:server": "nodemon --exec babel-node --extensions '.ts','.tsx','.js' server.ts",
     "watch-ts": "tsc --watch",

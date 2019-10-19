@@ -2,20 +2,25 @@ const webpack = require("webpack");
 const dev = process.env.NODE_ENV !== "production";
 const path = require( "path" );
 const TerserPlugin = require('terser-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+
 // const { BundleAnalyzerPlugin } = require( "webpack-bundle-analyzer" );
 
-module.exports = env => {
+module.exports = (env) => {
   const { NODE_ENV } = env;
   const isEnvProd = NODE_ENV === 'production'
-  console.log(process.argv)
+  console.log(process.argv);
 
   return {
     mode: NODE_ENV || "development",
     context: path.join( __dirname, "../" ),
     devtool: "source-map",
-    target: "web",
+    target: "node",
+    externals: [
+      nodeExternals()
+    ],
     entry: {
-      app: "./client/src/index.tsx"
+      server: "./server.ts"
     },
     output: {
       pathinfo: false,

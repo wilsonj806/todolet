@@ -17,7 +17,7 @@ import {
   postLogin,
   postLoginFail,
   getLogout,
-} from '../routes/middleware/userAuthMiddleware';
+} from '../middleware/userAuthMiddleware';
 
 
 /**

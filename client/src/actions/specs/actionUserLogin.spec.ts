@@ -25,7 +25,7 @@ const userFail = {
   password: 'wasdaaa',
 }
 
-const endpoint = '/user/login';
+const endpoint = '/api/user/login';
 
 describe('An action creator that handles async user login', () => {
   afterEach(() => mock.reset())

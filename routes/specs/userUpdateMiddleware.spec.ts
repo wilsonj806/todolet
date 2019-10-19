@@ -1,8 +1,8 @@
-import User from '../models/user'
+import User from '../../models/user'
 import { responseMock, requestMock } from "./mocks/mockReqRes";
-import { IUserObj } from '../types';
+import { IUserObj } from '../../types';
 
-import putUser from '../routes/middleware/userUpdateMiddleware'
+import putUser from '../middleware/userUpdateMiddleware'
 
 describe('A middleware function for updating a user', () => {
   let res;

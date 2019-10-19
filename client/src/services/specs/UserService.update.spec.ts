@@ -20,7 +20,7 @@ describe('A service function for updating a user', () => {
 
   const updatedUser = Object.assign({}, user, updateData)
 
-  const endpoint = '/user/' + user.userId;
+  const endpoint = '/api/user/' + user.userId;
 
   afterEach(() => mock.reset())
 
@@ -85,7 +85,7 @@ test('it should return an obect with the updated user info if it succeeded', asy
 
 
 describe('A service function for deleting a user', () => {
-  const endpoint = '/user/delete';
+  const endpoint = '/api/user/delete';
 
   afterEach(() => mock.reset())
 

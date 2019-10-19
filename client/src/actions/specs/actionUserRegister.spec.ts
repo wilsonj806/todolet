@@ -24,6 +24,7 @@ const mock = new MockAdapter(axios);
 
 describe('An action creator that handles async user registration', () => {
   afterEach(() => mock.reset())
+  const endpoint = '/api/user/register'
 
   test('it dispatches an action signifying that a Registration dispatch has been initiated', async (done) => {
     const store = mockStore({ selectedUser: {}});
@@ -33,7 +34,7 @@ describe('An action creator that handles async user registration', () => {
       { type: POST_REGISTER_SUCCESS, payload: user,  }
     ]
     // NOTE not trying to mock what mongoose returns, that's pretty intense
-    mock.onPost('/user/register').reply(
+    mock.onPost(endpoint).reply(
       200,
       { msg: 'hi', data: user }
     );
@@ -50,7 +51,7 @@ describe('An action creator that handles async user registration', () => {
       { type: POST_REGISTER_SUCCESS, payload: user }
     ]
 
-    mock.onPost('/user/register').reply(
+    mock.onPost(endpoint).reply(
       200,
       { msg: 'hi', data: user }
     );
@@ -68,7 +69,7 @@ describe('An action creator that handles async user registration', () => {
       { type: POST_REGISTER_FAIL, payload: 'hi' }
     ]
 
-    mock.onPost('/user/register').reply(
+    mock.onPost(endpoint).reply(
       400,
       { msg: 'hi', error: user }
     );

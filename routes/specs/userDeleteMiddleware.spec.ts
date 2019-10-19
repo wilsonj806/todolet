@@ -1,8 +1,8 @@
 import { responseMock, requestMock } from "./mocks/mockReqRes";
 
-import { deleteUser } from '../routes/middleware/userDeleteMiddelware'
+import { deleteUser } from '../middleware/userDeleteMiddelware'
 
-import User from '../models/user'
+import User from '../../models/user'
 
 
 const user = {

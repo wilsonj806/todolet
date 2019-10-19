@@ -39,7 +39,7 @@ const updatedUser = Object.assign({}, user, updateData)
 
 const initState : DeepPartial<StoreShape> = { authorizedUser: { ...user }}
 
-const endpoint = '/user/' + user.userId;
+const endpoint = '/api/user/' + user.userId;
 
 describe('An action creator that handles async user login', () => {
   afterEach(() => {

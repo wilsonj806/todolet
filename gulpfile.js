@@ -9,14 +9,13 @@ async function clean(cb) {
     '*.{js,ts,tsx}',
     'client/**',
     'client/.storybook',
-    '!client/build/**',
     '!**/package-lock.json',
     '!**/package.json',
     '!node_modules/**',
-    '!client/node_modules/**',
     '!Procfile',
     '!dist/**',
     '!gulpfile.js',
+    '!assets/**',
   ];
   const deletedPaths = await del(arr, { dryRun: false });
 

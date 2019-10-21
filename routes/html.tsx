@@ -17,9 +17,8 @@ import routes from './routes.client';
 import configureStore from '../client/src/store/configureStore';
 
 const router = express.Router();
-
+// TODO decompose this into a different file
 router.get('/*', (req: any, res: any, next: any) => {
-  console.log('this is req url: ', req.url);
   const sheets = new ServerStyleSheets({
     serverGenerateClassName: createGenerateClassName({
       productionPrefix: 'prd',
@@ -28,7 +27,8 @@ router.get('/*', (req: any, res: any, next: any) => {
   const store = configureStore(
 
   );
-  const htmlTemplate = (reactDom: any, css: any): string =>
+
+  const htmlTemplate = (reactDom: string, css: string): string =>
   (`
     <!DOCTYPE html>
     <html lang="en">

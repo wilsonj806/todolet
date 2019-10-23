@@ -1,5 +1,5 @@
-import path from 'path'
-import express from 'express';
+import { RequestHandler } from 'express';
+
 import React from 'react';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
@@ -9,26 +9,14 @@ import { ServerStyleSheets, StylesProvider, createGenerateClassName } from '@mat
 
 import {
   uri, dbName, sessConfig, corsOptions, NodeENV
-} from '../config/config';
-import { staticLocation } from '../expressApp';
+} from '../../config/config';
+import { staticLocation } from '../../expressApp';
 
-import App from '../client/src/App'
-import routes from './routes.client';
-import configureStore from '../client/src/store/configureStore';
+import App from '../../client/src/App'
+import routes from './../routes.client';
+import configureStore from '../../client/src/store/configureStore';
 
-const router = express.Router();
-// TODO decompose this into a different file
-router.get('/*', (req: any, res: any, next: any) => {
-  const sheets = new ServerStyleSheets({
-    serverGenerateClassName: createGenerateClassName({
-      productionPrefix: 'prd',
-    })
-  });
-  const store = configureStore(
-
-  );
-
-  const htmlTemplate = (reactDom: string, css: string): string =>
+const htmlTemplate = (reactDom: string, css: string, title: string = 'Todolet'): string =>
   (`
     <!DOCTYPE html>
     <html lang="en">
@@ -38,7 +26,7 @@ router.get('/*', (req: any, res: any, next: any) => {
         name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no"
       />
-      <title>Todolet</title>
+      <title>${ title }</title>
       <link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
       <style id="jss-server-side">${ css }</style>
@@ -51,7 +39,18 @@ router.get('/*', (req: any, res: any, next: any) => {
       <script src="/dist/app.bundle.js"></script>
     </body>
     </html>
-  `)
+`)
+
+const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
+  const sheets = new ServerStyleSheets({
+    serverGenerateClassName: createGenerateClassName({
+      productionPrefix: 'prd',
+    })
+  });
+  const store = configureStore(
+
+  );
+
   const context = {};
   const jsx = (
     <Provider store={ store }>
@@ -68,6 +67,11 @@ router.get('/*', (req: any, res: any, next: any) => {
     .send( htmlTemplate( reactDom, css ) );
 
   next();
-});
+};
 
-export default router
+
+
+export {
+  returnHtml,
+  htmlTemplate
+}

@@ -8,10 +8,12 @@ import LogoutPage from '../pages/LogoutPage';
 import RegisterPage from '../pages/RegisterPage';
 import MainPage from '../pages/MainPage';
 import UserUpdatePage from '../pages/UserUpdatePage';
+import NotFoundPage from '../pages/404Page';
 import { StoreShape } from '../types';
 
 const RouteContainer: FunctionComponent<any> = (props) => {
   // TODO distinguish between unauthenticated and authenticated routes
+  // TODO handle 404 and 500 errors
   const authorizedUser = useSelector((state: StoreShape) => state.authorizedUser);
   const { username, userId } = authorizedUser;
   const isNotAuthorized: boolean = username === undefined || userId === undefined;
@@ -34,6 +36,7 @@ const RouteContainer: FunctionComponent<any> = (props) => {
     <>
       <Route path='/' exact component={ isNotAuthorized ? LoginPage : MainPage }/>
       { authorizedUser.userId && authorizedUser.username ? AuthorizedRoutes : UnauthorizedRoutes }
+      <Route path='*'component={ NotFoundPage }/>
     </>
   )
 }

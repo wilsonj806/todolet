@@ -5,7 +5,7 @@ import NotFoundLayout from '../layouts/404/404Layout';
 
 const NotFoundPage: FC = () => {
   return (
-    <LayoutWrapper>
+    <LayoutWrapper NO_NAV={ true }>
       <NotFoundLayout/>
     </LayoutWrapper>
   )

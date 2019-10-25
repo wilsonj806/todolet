@@ -5,7 +5,7 @@ import LogoutLayout from '../layouts/Logout/LogoutLayout';
 
 const LogoutPage: FunctionComponent<any> = () => {
   return (
-    <LayoutWrapper>
+    <LayoutWrapper NO_NAV={ true }>
       <LogoutLayout/>
     </LayoutWrapper>
   )

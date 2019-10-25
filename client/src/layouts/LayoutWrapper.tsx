@@ -7,13 +7,17 @@ import Main from '../components/Main';
 import Nav from './Nav/Nav';
 import { StoreShape, UserStoreShape } from '../types';
 
-const LayoutWrapper: FunctionComponent<any> = (props) => {
+interface LayoutWrapperProps {
+  NO_NAV ?: boolean
+}
+
+const LayoutWrapper: FunctionComponent<LayoutWrapperProps> = (props) => {
   const user : UserStoreShape = useSelector((state : StoreShape) => state["authorizedUser"])
   const userCheck = user.userId && user.username;
 
   const noPadding = !userCheck ? true : undefined;
 
-  const NavToRender = userCheck ? <Nav/> : null;
+  const NavToRender = userCheck  && !props.NO_NAV ? <Nav/> : null;
   return (
       <Body>
         { NavToRender }

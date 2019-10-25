@@ -22,7 +22,7 @@ const postLoginFail: ErrorRequestHandler = (err, req, res, next): any => {
 
 const getLogout: RequestHandler = (req, res, next): any => {
   req.logout();
-  res.status(200).json(responsifyNoData('Logged out successfully'));
+  res.redirect(200, '/');
   next();
 };
 

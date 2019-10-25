@@ -22,9 +22,11 @@ const responseMock = (): any => {
     status: null,
     json: null,
     locals: {},
-    mockJson: null
+    mockJson: null,
+    redirect: null
   };
   res.status = jest.fn().mockReturnValue(res);
+  res.redirect = jest.fn().mockReturnValue(res);
   res.json = jest.fn().mockImplementation((obj) => {
     res.mockJson = obj;
     return res;

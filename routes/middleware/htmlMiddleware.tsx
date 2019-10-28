@@ -15,8 +15,11 @@ import { staticLocation } from '../../expressApp';
 import App from '../../client/src/App'
 import routes from './../routes.client';
 import configureStore from '../../client/src/store/configureStore';
+import { StoreShape } from '../../client/src/types';
+import { INIT_APP_STATE } from '../../client/src/store/reducers/root.reducer';
 
-const htmlTemplate = (reactDom: string, css: string, title: string = 'Todolet'): string =>
+
+const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = INIT_APP_STATE, title: string = 'Todolet'): string =>
   (`
     <!DOCTYPE html>
     <html lang="en">
@@ -36,6 +39,9 @@ const htmlTemplate = (reactDom: string, css: string, title: string = 'Todolet'):
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
       <div id="app">${ reactDom }</div>
+      <script>
+        window.__REDUX_DATA__ = ${ JSON.stringify( reduxState) }
+      </script>
       <script src="/dist/app.bundle.js"></script>
     </body>
     </html>
@@ -64,6 +70,7 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
   res
     .status(200)
     .set({ "Content-Type": "text/html" })
+    // FIXME
     .send( htmlTemplate( reactDom, css ) );
 
   next();

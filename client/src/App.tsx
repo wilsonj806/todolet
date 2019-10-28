@@ -2,13 +2,14 @@ import { Provider } from 'react-redux';
 import React, { FC, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import { Switch } from 'react-router-dom';
-
+import window from 'window-or-global'
 
 import configureStore from './store/configureStore'
 
 
 import RouteContainer from './containers/RouteContainer';
 import { createMuiTheme } from '@material-ui/core';
+import { INIT_APP_STATE } from './store/reducers/root.reducer';
 
 const theme = createMuiTheme({
   // zIndex: {
@@ -18,7 +19,7 @@ const theme = createMuiTheme({
 });
 
 const store = configureStore(
-  // window ? window.__REDUX_DATA__ : null
+  window.__REDUX_DATA__ || INIT_APP_STATE
 )
 
 const App: FC<any> = () => {

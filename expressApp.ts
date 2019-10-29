@@ -76,7 +76,7 @@ const staticLocation = NodeENV === 'production' ? express.static(path.join(__dir
 
 console.log(NodeENV, NodeENV === 'production','\n');
 console.log(path.join(__dirname, '../', 'assets','\n'));
-console.log('this is dirname', __dirname);
+console.log('this is assets path', path.dirname('../assets'));
 
 app.use('/static', staticLocation);
 app.use('/dist', express.static(path.join(__dirname, 'dist')));

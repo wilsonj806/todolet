@@ -65,7 +65,7 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
 
   const sheets = new ServerStyleSheets({
     serverGenerateClassName: createGenerateClassName({
-      productionPrefix: 'prd',
+      productionPrefix: 'jss',
     })
   });
   const store = configureStore(

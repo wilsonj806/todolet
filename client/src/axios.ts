@@ -3,7 +3,7 @@ import axios from 'axios';
 // NOTE It's a repeat of the var in <rootdir>/config/config.ts
 const PORT = process.env.PORT || 5000 || 8000;
 
-const ApiUri = process.env.NODE_ENV === 'production' ? 'https://wj-anothertodo.herokuapp.com/'
+const ApiUri = process.env.NODE_ENV === 'production' ? 'https://wj-todolet.herokuapp.com/'
 : `http://localhost:${ PORT }`;
 
 

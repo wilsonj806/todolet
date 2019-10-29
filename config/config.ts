@@ -43,7 +43,7 @@ const sessConfig: SessionOptions = {
   },
 };
 
-const whitelist = NodeENV === 'production' ? ['http://localhost:3000', 'https://wj-todolet.herokuapp.com'] : ['http://localhost:3000', 'http://localhost:5000']
+const whitelist = NodeENV === 'production' ? ['https://wj-todolet.herokuapp.com'] : ['http://localhost:3000', 'http://localhost:5000']
 
 const corsOptions: CorsOptions = {
   origin: (origin: any, callback: any) => {
@@ -57,7 +57,7 @@ const corsOptions: CorsOptions = {
   credentials: true
 };
 
-const ApiUri = process.env.NODE_ENV === 'production' ? 'https://wj-anothertodo.herokuapp.com/'
+const ApiUri = process.env.NODE_ENV === 'production' ? 'https://wj-todoloet.herokuapp.com/'
 : `http://localhost:${ PORT }`;
 
 export {

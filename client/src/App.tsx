@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import React, { FC, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
-import { Switch } from 'react-router-dom';
+// import { Switch } from 'react-router-dom';
 import window from 'window-or-global'
 
 import configureStore from './store/configureStore'
@@ -33,9 +33,7 @@ const App: FC<any> = () => {
   return (
     <ThemeProvider theme={ theme }>
       <Provider store={ store }>
-        <Switch>
           <RouteContainer/>
-        </Switch>
       </Provider>
     </ThemeProvider>
   );

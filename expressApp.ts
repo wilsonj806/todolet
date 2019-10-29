@@ -74,10 +74,6 @@ app.use(passport.session());
 
 const staticLocation = NodeENV === 'production' ? express.static(path.join(__dirname, '../assets')) : express.static(path.join(__dirname, 'assets'))
 
-console.log(NodeENV, NodeENV === 'production','\n');
-console.log(path.join(__dirname, '../', 'assets','\n'));
-console.log('this is assets path', path.dirname('../assets'));
-
 app.use('/static', staticLocation);
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 /**

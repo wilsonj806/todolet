@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux'
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 // ----- Pages
 import LoginPage from '../pages/LoginPage';
@@ -32,12 +32,12 @@ const RouteContainer: FunctionComponent<any> = (props) => {
   )
 
   return (
-    <>
+    <Switch>
       <Route path='/' exact component={ isNotAuthorized ? LoginPage : MainPage }/>
       { authorizedUser.userId && authorizedUser.username ? AuthorizedRoutes : UnauthorizedRoutes }
       <Route path='/logout' exact component={ LogoutPage }/>
-      <Route path='*'component={ NotFoundPage }/>
-    </>
+      <Route component={ NotFoundPage }/>
+    </Switch>
   )
 }
 

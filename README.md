@@ -1,4 +1,4 @@
-![TodoLet Logo](./client/src/assets/Logo-Heading(720x266).png)
+![TodoLet Logo](./assets/logos/logoheadingsm.png)
 # TodoLet
 ## Status
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/wilsonj806/todolet.svg)](https://github.com/wilsonj806/todolet)

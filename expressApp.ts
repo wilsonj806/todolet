@@ -72,11 +72,12 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-console.log(process.cwd());
-const staticLocation = NodeENV === 'production' ? express.static(path.join(__dirname, '../assets')) : express.static(path.join(__dirname, 'assets'))
+// NOTE Heroku doesn't like it when you use __dirname
+  // it spits out undefined in Heroku, use process.cwd() instead
+const staticLocation = express.static(path.join(process.cwd(), '/assets'));
 
-app.use('/static', staticLocation);
-app.use('/dist', express.static(path.join(__dirname, 'dist')));
+app.use('/static', express.static(path.join(process.cwd(), '/assets')));
+app.use('/dist', express.static(path.join(process.cwd(), 'dist')));
 /**
  * ANCHOR Routes
  * =============================================================

@@ -72,6 +72,7 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+console.log(process.cwd());
 const staticLocation = NodeENV === 'production' ? express.static(path.join(__dirname, '../assets')) : express.static(path.join(__dirname, 'assets'))
 
 app.use('/static', staticLocation);

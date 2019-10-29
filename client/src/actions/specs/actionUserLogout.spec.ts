@@ -15,7 +15,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const mock = new MockAdapter(axios);
 
-const endpoint = '/user/logout';
+const endpoint = '/api/user/logout';
 
 describe('An action creator that handles async user logout', () => {
   afterEach(() => mock.reset())

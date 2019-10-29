@@ -9,12 +9,12 @@
  *   - postRegisterFailure()
  */
 import { requestMock, responseMock } from './mocks/mockReqRes';
-import User from '../models/user';
+import User from '../../models/user';
 
 import {
   findUserWithUsername,
   postRegisterFailure,
-} from '../routes/middleware/userRegistrationMiddleware';
+} from '../middleware/userRegistrationMiddleware';
 
 
 /**

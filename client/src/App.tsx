@@ -1,13 +1,15 @@
 import { Provider } from 'react-redux';
-import React, { FunctionComponent } from 'react';
+import React, { FC, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import window from 'window-or-global'
 
 import configureStore from './store/configureStore'
 
 
 import RouteContainer from './containers/RouteContainer';
 import { createMuiTheme } from '@material-ui/core';
+import { INIT_APP_STATE } from './store/reducers/root.reducer';
 
 const theme = createMuiTheme({
   // zIndex: {
@@ -16,22 +18,26 @@ const theme = createMuiTheme({
   // }
 });
 
-const store = configureStore({
-  // authorizedUser: {
-  //   userId: '111',
-  //   username: 'guest'
-  // }
-})
+const store = configureStore(
+  window.__REDUX_DATA__ || INIT_APP_STATE
+)
 
-const App: FunctionComponent<any> = () => {
+const App: FC<any> = () => {
+  useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles != null) {
+      jssStyles.parentNode!.removeChild(jssStyles);
+    }
+  }, []);
+
   return (
-    <Router>
-      <ThemeProvider theme={ theme }>
-        <Provider store={ store }>
+    <ThemeProvider theme={ theme }>
+      <Provider store={ store }>
+        <Switch>
           <RouteContainer/>
-        </Provider>
-      </ThemeProvider>
-    </Router>
+        </Switch>
+      </Provider>
+    </ThemeProvider>
   );
 }
 

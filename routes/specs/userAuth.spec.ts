@@ -17,7 +17,7 @@ import {
   postLogin,
   postLoginFail,
   getLogout,
-} from '../routes/middleware/userAuthMiddleware';
+} from '../middleware/userAuthMiddleware';
 
 
 /**
@@ -132,15 +132,10 @@ describe('A middleware function for completing a logout request', () => {
     expect(req.logout).toHaveBeenCalled();
   });
 
-  test('it should return a json response with a message and HTTP status code', () => {
+  test('it should tell the client to redirect', () => {
     getLogout(req, res, next);
 
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({
-        msg: expect.any(String),
-      })
-    );
+    expect(res.redirect).toHaveBeenCalledWith(200, '/');
   });
 
   test('it should call the next middleware function in the stack', () => {

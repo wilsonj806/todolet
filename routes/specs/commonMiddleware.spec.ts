@@ -8,11 +8,11 @@
  * =============================================================
  *
  */
-import User from '../models/user';
+import User from '../../models/user';
 
 // import { checkForErrors } from '../routes/middleware/commonMiddleware';
 import { requestMock, responseMock } from './mocks/mockReqRes';
-import checkFormErrors from '../routes/middleware/commonMiddleware';
+import checkFormErrors from '../middleware/commonMiddleware';
 
 /**
  * ANCHOR Unit tests

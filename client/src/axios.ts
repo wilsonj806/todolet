@@ -1,11 +1,14 @@
 import axios from 'axios';
 
-// might be overkill for now since CRA's probably going to end up building a static bundle
-const urlPath = process.env.REACT_APP_ENV === 'production' ? `https://wj-todolet.herokuapp.com/api`
-  :`http://localhost:5000/api`;
+// NOTE It's a repeat of the var in <rootdir>/config/config.ts
+const PORT = process.env.PORT || 5000 || 8000;
+
+const ApiUri = process.env.NODE_ENV === 'production' ? 'https://wj-anothertodo.herokuapp.com/'
+: `http://localhost:${ PORT }`;
+
 
 const instance = axios.create({
-  baseURL: urlPath,
+  baseURL: ApiUri,
   withCredentials: true,
   // Necessary so the thing doesn't throw on >400 error
   validateStatus: () => true

@@ -15,7 +15,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const mock = new MockAdapter(axios);
 
-const endpoint = '/user/delete';
+const endpoint = '/api/user/delete';
 
 describe('An action creator that handles async user delete', () => {
   afterEach(() => mock.reset())

@@ -1,6 +1,6 @@
 {
   "name": "todolet",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "private": true,
   "license": "MIT",
   "repository": {
@@ -8,19 +8,24 @@
     "url": "https://github.com/wilsonj806/todolet.git"
   },
   "scripts": {
-    "heroku-prebuild": "npm i --only=dev && npm i && cd client && npm i && cd ../ && echo Dependencies installed",
-    "build": "tsc && echo Server code build successful && cd client && npm run build && cd ../ && echo React build success",
-    "heroku-postbuild": "npm run build && npm run gulp && npm prune && cd client && npm prune && cd ../ && echo Packages pruned",
+    "heroku-prebuild": "npm i --only=dev && echo Dependencies installed",
+    "build:client": "webpack --config config/webpack.config.js --env.NODE_ENV=production && echo Webpack client build successful",
+    "build:server": "webpack --config config/webpack.server.config.js --env.NODE_ENV=production && echo Webpack server build successful",
+    "heroku-postbuild": "npm run build:server && npm run build:client && npm run gulp && npm prune && echo Packages pruned",
     "gulp": "gulp",
-    "start": "node dist/server.js",
-    "server": "nodemon --exec babel-node --extensions '.ts' server.ts ",
-    "client": "npm start --prefix client",
+    "start": "node dist/server.bundle.js",
+    "dev:client": "webpack --config config/webpack.config.js --watch --env.NODE_ENV=development",
+    "dev:server": "nodemon --exec babel-node --extensions '.ts','.tsx','.js' server.ts",
     "watch-ts": "tsc --watch",
-    "test": "jest --config=jest.config.js --watch",
-    "test-client": "jest --config=react.jest.config.js --watch",
-    "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || echo 'Failed to push coverage report' && rm -rf ./todolet_coverage_* "
+    "test:ts": "jest --config=jest.config.js --watch",
+    "test:tsx": "jest --config=react.jest.config.js --watch",
+    "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./todolet_coverage_* && echo 'Coverage reporting done'"
   },
   "dependencies": {
+    "@material-ui/core": "4.4.1",
+    "@material-ui/icons": "^4.2.0",
+    "@use-hooks/axios": "^1.3.0",
+    "axios": "^0.19.0",
     "bcryptjs": "2.4.3",
     "body-parser": "1.19.0",
     "concurrently": "3.6.0",
@@ -35,7 +40,14 @@
     "mongoose": "5.5.7",
     "mongoose-type-url": "1.0.6",
     "passport": "0.4.0",
-    "passport-local": "1.0.0"
+    "passport-local": "1.0.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-redux": "7.1.0",
+    "react-router-dom": "5.1.2",
+    "redux": "4.0.1",
+    "redux-thunk": "^2.3.0",
+    "window-or-global": "1.0.1"
   },
   "browserslist": [
     ">0.2%",
@@ -48,7 +60,10 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@jedmao/redux-mock-store": "^2.0.3",
     "@shelf/jest-mongodb": "^1.0.1",
+    "@testing-library/jest-dom": "^4.1.0",
+    "@testing-library/react": "^9.2.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/connect-mongodb-session": "^0.0.0",
     "@types/cors": "^2.8.5",
@@ -69,19 +84,26 @@
     "@types/supertest": "^2.0.7",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
+    "axios-mock-adapter": "^1.17.0",
+    "babel-loader": "8.0.5",
     "coveralls": "^3.0.3",
     "del": "^5.1.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-watch": "^5.1.2",
+    "file-loader": "^4.2.0",
     "gulp": "^4.0.2",
     "jest": "24.7.1",
     "lcov-result-merger": "^3.1.0",
     "nodemon": "^1.17.5",
     "supertest": "^4.0.2",
+    "terser-webpack-plugin": "^2.1.3",
     "ts-jest": "^24.0.2",
-    "typescript": "3.2.4"
+    "typescript": "3.2.4",
+    "webpack": "4.29.6",
+    "webpack-cli": "^3.3.9",
+    "webpack-node-externals": "^1.7.2"
   },
   "engines": {
     "node": "10.10.0"

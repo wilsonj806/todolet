@@ -6,7 +6,7 @@ import UserService from '../UserService';
 
 const mock = new MockAdapter(axios);
 describe('A service function for registering a new user', () => {
-  const endpoint = '/user/register';
+  const endpoint = '/api/user/register';
 
   afterEach(() => mock.reset())
 
@@ -98,7 +98,7 @@ test('it should return an obect with the user info if it succeeded', async (done
 
 
 describe('A service function for logging a client in', () => {
-  const endpoint = '/user/login'
+  const endpoint = '/api/user/login'
 
   afterEach(() => {
     // remove all onPost/ onGet/ etc handlers
@@ -198,7 +198,7 @@ describe('A service function for logging a client in', () => {
 })
 
 describe('A service function for logging a client in', () => {
-  const endpoint = '/user/login'
+  const endpoint = '/api/user/login'
 
   afterEach(() => {
     // remove all onPost/ onGet/ etc handlers
@@ -298,7 +298,7 @@ describe('A service function for logging a client in', () => {
 })
 
 describe('A service function for logging a user out', () => {
-  const endpoint = '/user/logout';
+  const endpoint = '/api/user/logout';
 
   afterEach(() => mock.reset())
 

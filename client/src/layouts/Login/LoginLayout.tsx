@@ -11,7 +11,7 @@ import Link from '@material-ui/core/Link';
 // ----- App specific components
 import TextField from '../../containers/TextInputWrapper';
 
-import Logo from '../../assets/Logo(512x512).png';
+// import Logo from '../../assets/Logo(512x512).png';
 import useStyles from './login.styles';
 import { postLogin } from '../../actions/userLogin.action';
 import { StoreShape } from '../../types';
@@ -51,7 +51,7 @@ const Login: FunctionComponent<any> = (props) => {
   return (
     <Container maxWidth="xs" classes={{ root: classes.rootStyle }}>
       { RenderRedirect }
-      <img src={ Logo } alt="Logo" className={ classes.logo }/>
+      <img src={ '/static/logos/logolg.png' } alt="Logo" className={ classes.logo }/>
       <div className={ classes.formWrapper }>
         <Typography variant="h1" classes={{ h1: classes.heading }}>TodoLet</Typography>
         <Typography paragraph classes={{ paragraph: classes.paragraph }}>Login to the app here!</Typography>

@@ -5,7 +5,6 @@ node_js:
   - "stable"
 install:
   - npm install
-  - cd "client" && npm install && cd "../"
 cache: npm
 services:
   - mongodb
@@ -21,6 +20,6 @@ env:
 jobs:
   include:
     - stage: "Unit test codebase"
-      # type check code, ensures the code doesn't break before Heroku builds it
-      script: npm run build -- --noEmit
+      # Build serverside and clientside code, make sure it doesn't crash
+      script: npm run build:client && npm run build:server
       script: npm run coverage

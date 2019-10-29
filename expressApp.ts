@@ -14,6 +14,7 @@ import {
 import passportConfig from './config/passport';
 
 import routerUser from './routes/user';
+import routerHtml from './routes/html'
 
 /* eslint-disable no-console */
 
@@ -71,9 +72,10 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-const staticLocation = NodeENV === 'production' ? '../client/build' : './client/build'
+const staticLocation = NodeENV === 'production' ? express.static(path.join(__dirname, '../assets')) : express.static(path.join(__dirname, 'assets'))
 
-app.use(express.static(path.join(__dirname, staticLocation)));
+app.use('/static', staticLocation);
+app.use('/dist', express.static(path.join(__dirname, 'dist')));
 /**
  * ANCHOR Routes
  * =============================================================
@@ -81,10 +83,14 @@ app.use(express.static(path.join(__dirname, staticLocation)));
  */
 app.use('/api/user', routerUser);
 
+app.get('/test', (req,res,next) => {
+  res.status(200).json({ message: 'hi' })
+})
 
-app.get('/*', (req, res) =>
-  res.sendFile(path.join(__dirname, staticLocation,'index.html')
-))
+app.use('/', routerHtml)
+// app.get('/*', (req, res) =>
+//   res.sendFile(path.join(__dirname, staticLocation,'index.html')
+// ))
 /* eslint-enable no-console */
 
-export { app, mongoose };
+export { app, mongoose, staticLocation };

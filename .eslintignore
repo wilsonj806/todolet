@@ -6,7 +6,10 @@ node_modules/
 *.d.ts
 *.config.js
 *.config.ts
+webpack.server.js
 
 # tests
 __mocks__/
 specs/
+
+# config

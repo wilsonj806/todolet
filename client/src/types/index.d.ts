@@ -18,6 +18,11 @@ import { AnyAction } from 'redux'
 export = AnotherTodoClient;
 export as namespace Client;
 
+declare global {
+  interface Window {
+    __REDUX_DATA__?: StoreShape
+  }
+}
 declare namespace AnotherTodoClient {
   // ----- NOTE Service types and interfaces
   type ServiceStatus = 'FAILURE' | 'SUCCESS'

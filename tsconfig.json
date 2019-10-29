@@ -3,16 +3,18 @@
     "outDir": "dist",
     "module": "commonjs",
     "noEmit": false,
-    "jsx": "preserve",
+    "jsx": "react",
     "target": "es6",
     "moduleResolution": "node",
     "typeRoots": [
-      "./node_modules/@types",
+      "**/node_modules/@types",
       "./types"
     ],
     "lib": [
+      "dom",
       "es6",
-      "es7"
+      "es7",
+      "esnext"
     ],
     "sourceMap": true,
     "allowJs": true,
@@ -27,12 +29,20 @@
     "resolveJsonModule": true,
     "isolatedModules": false
   },
-  "exclude": [
-    "client/**/*"
+  "include":[
+    "**/*.tsx",
+    "**/*.ts"
   ],
-  "include": [
-    "routes/**/*",
-    "models/*",
-    "server.ts"
+  "exclude": [
+    "**/node_modules/**/*",
+    "**/client/build/*",
+    "**/client/public/*",
+    "**/.storybook/*",
+    "**/*.stories.js",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/gulpfile.js",
+    "**/specs/**/*",
+    "*.config.js"
   ]
 }

@@ -17,6 +17,7 @@ import routes from './../routes.client';
 import configureStore from '../../client/src/store/configureStore';
 import { StoreShape } from '../../client/src/types';
 import { INIT_APP_STATE } from '../../client/src/store/reducers/root.reducer';
+// import User from '../../models/user';
 
 
 const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = INIT_APP_STATE, title: string = 'Todolet'): string =>
@@ -48,13 +49,27 @@ const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = IN
 `)
 
 const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
+  // TODO check if there's a session and prepopulate
+  // const prepopulatedState: StoreShape = {
+  //   authorizedUser: {}
+  // }
+  // const { passport } = req.session;
+  // const userId = passport && passport.user ? passport.user.userId.toString() : undefined;
+  // try {
+  //   const user = await User.findById(userId);
+  //   console.log(user);
+  //   prepopulatedState.authorizedUser = user
+  // } catch (error) {
+  //   res.redirect(500, '/500-err')
+  // }
+
   const sheets = new ServerStyleSheets({
     serverGenerateClassName: createGenerateClassName({
       productionPrefix: 'prd',
     })
   });
   const store = configureStore(
-
+    // prepopulatedState
   );
 
   const context = {};

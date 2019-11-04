@@ -18,6 +18,7 @@ Yet another Todo app, this app will be full stack and will be deployed. In addit
 - [App Deployment](./docs/DEPLOYMENT.md)
 - [Testing](./docs/TESTING.md)
 - [DevOps](./docs/DEVOPS.md)
+- [Dockerization](./docs/DOCKERIZING.md)
 
 ## Currently Planned
 Below is a rough "roadmap" of things to add. At this point, a lot of the below is out of scope of what I intended with the project, but are things worth learning/ doing.

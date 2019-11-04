@@ -1,0 +1,30 @@
+# Unrelated to the container
+.git/
+.vscode/
+extra/
+coverage/
+todolet_coverage_*/
+
+# Unused files
+package-lock.json
+.gitignore
+.eslintignore
+*.md
+.env
+# we generate the environment in the container or something else does it
+LICENSE
+
+# Generated directories
+node_modules
+dist
+
+# Logging
+logs
+*.log
+npm-debug.log*
+
+# Runtime_data
+pids
+*.pid
+*.seed
+*.pid.lock

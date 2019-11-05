@@ -6,7 +6,6 @@ coverage/
 todolet_coverage_*/
 
 # Unused files
-package-lock.json
 .gitignore
 .eslintignore
 *.md

@@ -21,8 +21,8 @@
     "dev:client": "webpack --config config/webpack.config.js --watch --env.NODE_ENV=development",
     "dev:server": "nodemon --exec babel-node --extensions '.ts','.tsx','.js' server.ts",
     "watch-ts": "tsc --watch",
-    "test:ts": "jest --config=jest.config.js --watch",
-    "test:tsx": "jest --config=react.jest.config.js --watch",
+    "test:ts": "jest --config=config/jest.config.js --watch",
+    "test:tsx": "jest --config=config/react.jest.config.js --watch",
     "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./todolet_coverage_* && echo 'Coverage reporting done'"
   },
   "dependencies": {

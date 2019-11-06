@@ -5,7 +5,6 @@ then
 elif [ "$env" = "staging" ]
 then
   echo this is staging $env
-  # npm run coverage &&
   ## npm run staging:client && npm run staging:server
 elif [ "$env" = "prod" ]
 then

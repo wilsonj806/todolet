@@ -23,7 +23,7 @@
     "watch-ts": "tsc --watch",
     "test:ts": "jest --config=config/jest.config.js --watch",
     "test:tsx": "jest --config=config/react.jest.config.js --watch",
-    "coverage": "jest --coverage --config=jest.config.js && jest --coverage --config=react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./todolet_coverage_* && echo 'Coverage reporting done'"
+    "coverage": "jest --coverage --config=config/jest.config.js && jest --coverage --config=config/react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./todolet_coverage_* && echo 'Coverage reporting done'"
   },
   "dependencies": {
     "@material-ui/core": "4.4.1",
@@ -32,7 +32,6 @@
     "axios": "^0.19.0",
     "bcryptjs": "2.4.3",
     "body-parser": "1.19.0",
-    "concurrently": "3.6.0",
     "connect-flash": "0.1.1",
     "connect-mongodb-session": "2.1.1",
     "cors": "^2.8.5",
@@ -90,6 +89,7 @@
     "@typescript-eslint/parser": "^1.9.0",
     "axios-mock-adapter": "^1.17.0",
     "babel-loader": "8.0.5",
+    "concurrently": "^3.6.0",
     "coveralls": "^3.0.3",
     "del": "^5.1.0",
     "eslint": "^5.16.0",

@@ -22,7 +22,7 @@ const postLoginFail: ErrorRequestHandler = (err, req, res, next): any => {
 
 const getLogout: RequestHandler = (req, res, next): any => {
   req.logout();
-  res.redirect(200, '/');
+  res.redirect(200, '/logout');
   next();
 };
 

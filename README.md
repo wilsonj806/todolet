@@ -71,8 +71,25 @@ To run the server once, use the below script:
 
 To run the server with file monitoring, use the below script:
 ```
-  npm run server
+  npm run dev:server
 ```
+
+### Docker Compose
+There's also the option of using Docker Compose to run the app locally. This will require a version of [Docker Desktop](https://www.docker.com/products/docker-desktop) installed as well as a Docker account.
+
+You'll need to modify your `.env` file so that the below looks like:
+```
+  MONGO_URI_LOCAL=mongodb://mongo:27017/
+```
+
+To run the app, change directory into the app directory and run:
+```
+  docker-compose up
+```
+
+Note that Nodemon, Docker, and Mongo don't play well together, so it's preferred that you make changes in big batches rather than saving repeatedly(i.e don't save one file, update another file, and save that to trigger like 3 rebuilds, Nodemon won't like that)
+
+The plan is to start using Webpack instead, but that's overkill in development to a certain degree and is not a priority.
 
 ### Using TypeScript
 

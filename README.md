@@ -28,9 +28,9 @@ Below is a rough "roadmap" of things to add. At this point, a lot of the below i
 
 A quick explanation:
 
-1) Docker is overkill in a lot of ways, but gives for easier testing environments, and consistent app deployments. It's also really handy to know for jobs.
+~~1) Docker is overkill in a lot of ways, but gives for easier testing environments, and consistent app deployments. It's also really handy to know for jobs.~~
 
-   Server-side rendering(SSR) is listed as the Heroku app is serving the entire thing. It's lumped with Docker as SSR will involve overhauling the entire app, and it's file structure. Will be pretty ugly.
+   ~~Server-side rendering(SSR) is listed as the Heroku app is serving the entire thing. It's lumped with Docker as SSR will involve overhauling the entire app, and it's file structure. Will be pretty ugly.~~
 
 2) Todos API is the other missing core functionality of the app. Pretty straight-forwards
 

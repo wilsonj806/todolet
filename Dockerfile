@@ -22,7 +22,6 @@ RUN chmod +x ./docker.sh && ./docker.sh
 # THEN tell Cypress to run E2E tests when we get there
 # RUN cypress
 
-
 # Stage 2 move build files
 FROM node:10-buster-slim as prod-build
 
@@ -38,6 +37,6 @@ COPY --from=dev-build /src/dist/server.bundle.js dist/server.bundle.js
 
 RUN ls
 
-EXPOSE 8080
+EXPOSE 5000
 
 CMD ["npm", "run", "start"]

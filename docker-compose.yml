@@ -1,0 +1,26 @@
+# Docker compose for dev
+# $ cat .env
+version: '3'
+services:
+  app:
+    # run using node
+    image: node:10-buster
+    container_name: todolet-dev
+    restart: always
+    # Mount everything in pwd to /src in the container
+    volumes:
+      - .:/src
+    working_dir: /src
+    build:
+      context: .
+    command: npm run dev:server
+    links:
+      - mongo
+    env_file: .env
+    ports:
+      - '5000:5000'
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'

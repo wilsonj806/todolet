@@ -18,7 +18,7 @@
     "heroku-postbuild": "npm run build:server && npm run build:client && npm run gulp && npm prune && echo Packages pruned",
     "gulp": "gulp",
     "start": "node dist/server.bundle.js",
-    "dev:client": "webpack --config config/webpack.config.js --watch --env.NODE_ENV=development",
+    "dev:client": "webpack --config config/webpack.config.js --env.NODE_ENV=development",
     "dev:server": "nodemon --exec babel-node --extensions '.ts','.tsx','.js' server.ts",
     "watch-ts": "tsc --watch",
     "test:ts": "jest --config=config/jest.config.js --watch",

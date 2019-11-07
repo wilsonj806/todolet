@@ -1,7 +1,8 @@
 #!/bin/bash
 if [ "$env" = "dev" ]
 then
-  echo this is dev $env
+  echo this is dev &&
+  npm run dev:client
 elif [ "$env" = "staging" ]
 then
   echo this is staging $env

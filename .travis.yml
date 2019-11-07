@@ -1,10 +1,9 @@
-# NOTE CI Runs on Ubuntu
 # Configure Node.jS environment
 language: node_js
 node_js:
   - "stable"
 install:
-  - npm install
+  - npm ci
 cache: npm
 services:
   - mongodb

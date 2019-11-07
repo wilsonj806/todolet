@@ -31,11 +31,12 @@ const RouteContainer: FunctionComponent<any> = (props) => {
     </>
   )
 
+  // NOTE RENDER CONDITIONAL ROUTES LAST
   return (
     <Switch>
       <Route path='/' exact component={ isNotAuthorized ? LoginPage : MainPage }/>
-      { authorizedUser.userId && authorizedUser.username ? AuthorizedRoutes : UnauthorizedRoutes }
       <Route path='/logout' exact component={ LogoutPage }/>
+      { authorizedUser.userId && authorizedUser.username ? AuthorizedRoutes : UnauthorizedRoutes }
       <Route component={ NotFoundPage }/>
     </Switch>
   )

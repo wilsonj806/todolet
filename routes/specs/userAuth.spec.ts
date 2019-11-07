@@ -135,7 +135,7 @@ describe('A middleware function for completing a logout request', () => {
   test('it should tell the client to redirect', () => {
     getLogout(req, res, next);
 
-    expect(res.redirect).toHaveBeenCalledWith(200, '/');
+    expect(res.redirect).toHaveBeenCalledWith(200, '/logout');
   });
 
   test('it should call the next middleware function in the stack', () => {

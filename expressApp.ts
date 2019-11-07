@@ -10,6 +10,8 @@ import 'dotenv/config';
 import {
   uri, dbName, sessConfig, corsOptions, NodeENV
 } from './config/config';
+import Todos from './models/todo';
+
 
 import passportConfig from './config/passport';
 
@@ -24,18 +26,29 @@ import routerHtml from './routes/html'
  *
  * NOTE The app runs off of `app/dist` because that's where TypeScript builds the app to
  */
-(async (): Promise<any> => {
+mongoose.connection.on('connected', () => {
+  console.log('Connection Successful');
+})
+
+mongoose.connection.on('error', function(err) {
+  console.log('error');
+  setTimeout(connectToDb, 5000)
+})
+
+
+const connectToDb = async (): Promise<any> => {
   try {
     mongoose.set('useFindAndModify', false);
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       dbName,
     });
-    console.log('Connection successful');
   } catch (error) {
-    console.error('Error alert, see below for additional logging \n', error);
+    console.log('Error alert, see below for additional logging \n', error);
   }
-})();
+}
+
+connectToDb();
 
 const app = express();
 

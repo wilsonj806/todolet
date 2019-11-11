@@ -15,7 +15,7 @@ module.exports = env => {
     devtool: "source-map",
     target: "web",
     entry: {
-      app: "./client/src/index.tsx"
+      app: "./client/index.tsx"
     },
     output: {
       pathinfo: false,

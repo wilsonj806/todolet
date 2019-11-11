@@ -1,4 +1,4 @@
-import { postUserReq } from "../../../server/types";
+import { postUserReq } from "../../server/types";
 
 const validateForm = <T extends {[key:string] : any}>(obj: T) : Error | null => {
   const entries = Object.entries(obj);

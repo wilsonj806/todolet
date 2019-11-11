@@ -16,7 +16,7 @@
 /// <reference types="express" />
 
 import { Document, MongooseDocument } from "mongoose";
-import { TodoStoreShape, UserStoreShape } from '../../client/src/types'
+import { TodoStoreShape, UserStoreShape } from '../../client/types'
 
 
 

@@ -7,7 +7,7 @@ import {
   AsyncRegisterAction,
   UserStoreShape
 } from '../types';
-import { postUserReq, userDataResponse, errorResponse } from '../../../server/types';
+import { postUserReq, userDataResponse, errorResponse } from '../../server/types';
 
 
 // ----- NOTE Exported Action types

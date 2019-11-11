@@ -1,4 +1,4 @@
-import { postLoginReq, postUserReq } from '../../../server/types';
+import { postLoginReq, postUserReq } from '../../server/types';
 import { AsyncServiceReturn, ServiceSuccessObject, ServiceFailObject } from '../types';
 import { AxiosResponse } from 'axios';
 

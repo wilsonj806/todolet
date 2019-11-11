@@ -28,13 +28,15 @@ Below is a rough "roadmap" of things to add. At this point, a lot of the below i
 
 A quick explanation:
 
-~~1) Docker is overkill in a lot of ways, but gives for easier testing environments, and consistent app deployments. It's also really handy to know for jobs.~~
+~~1) Docker and SSR have been integrated~~
 
-   ~~Server-side rendering(SSR) is listed as the Heroku app is serving the entire thing. It's lumped with Docker as SSR will involve overhauling the entire app, and it's file structure. Will be pretty ugly.~~
-
-2) Todos API is the other missing core functionality of the app. Pretty straight-forwards
+2) Todos API and the client side functionality surrounding that is the other missing core functionality of the app. Pretty straight-forwards
 
 3) Integration tests are definitely overkill, but if we have Docker up and running, we can make some quick integration tests to validate the app. Caching is arguably vital as there's a lot of repeated requests and if we're doing SSR, then caching should be relatively simple
+
+So the release of the Todos API and maybe integration tests will be release v0.8.0, which more or less means the app is ready for production, but is missing some small stuff.
+
+v1.0.0 would definitely include some custom styling, and some other stuff that hasn't been determined yet.
 
 ## Cloning Instructions
 You'll need to have some version of Node.js(and subsequently npm, which is included) installed. Currently running everything on Node v10.10.0/ NPM v6.4.1 but it should work fine on older versions of Node/ NPM.

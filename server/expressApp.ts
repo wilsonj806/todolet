@@ -9,11 +9,11 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import {
   uri, dbName, sessConfig, corsOptions, NodeENV
-} from './config/config';
+} from './config';
 import Todos from './models/todo';
 
 
-import passportConfig from './config/passport';
+import passportConfig from './passport';
 
 import routerUser from './routes/user';
 import routerHtml from './routes/html'

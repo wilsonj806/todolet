@@ -6,7 +6,7 @@ import UserService from '../services/UserService';
 import {
   ReduxAction,
 } from '../types';
-import { errorResponse } from '../../../types';
+import { errorResponse } from '../../../server/types';
 
 
 export const POST_LOGOUT_INIT = 'POST_LOGOUT_INIT'

@@ -11,7 +11,7 @@
  */
 
 /// <reference types="react" />
-import { userDataResponse, responseObj, postUserReq, postLoginReq, errorResponse } from "../../../types";
+import { userDataResponse, responseObj, postUserReq, postLoginReq, errorResponse } from "../../../server/types";
 import { AnyAction } from 'redux'
 
 

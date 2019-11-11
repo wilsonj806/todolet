@@ -5,7 +5,7 @@ import AxiosService from './AxiosService';
 import FormService from './FormService';
 
 import { AsyncServiceReturn } from '../types';
-import { postLoginReq, postUserReq } from '../../../types';
+import { postLoginReq, postUserReq } from '../../../server/types';
 
 const endpointPrefix = '/api';
 

@@ -1,10 +1,10 @@
 import { Store } from 'redux';
-import LoginPage from '../client/src/pages/LoginPage';
-import LogoutPage from '../client/src/pages/LogoutPage';
-import RegisterPage from '../client/src/pages/RegisterPage';
-import MainPage from '../client/src/pages/MainPage';
-import UserUpdatePage from '../client/src/pages/UserUpdatePage';
-import { StoreShape } from '../client/src/types';
+import LoginPage from '../../client/src/pages/LoginPage';
+import LogoutPage from '../../client/src/pages/LogoutPage';
+import RegisterPage from '../../client/src/pages/RegisterPage';
+import MainPage from '../../client/src/pages/MainPage';
+import UserUpdatePage from '../../client/src/pages/UserUpdatePage';
+import { StoreShape } from '../../client/src/types';
 
 /**
  * React Router's matchPatch() looks like this:

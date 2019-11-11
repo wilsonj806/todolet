@@ -9,14 +9,14 @@ import { ServerStyleSheets, StylesProvider, createGenerateClassName } from '@mat
 
 import {
   uri, dbName, sessConfig, corsOptions, NodeENV
-} from '../../config/config';
+} from '../../config';
 import { staticLocation } from '../../expressApp';
 
-import App from '../../client/src/App'
+import App from '../../../client/src/App'
 import routes from './../routes.client';
-import configureStore from '../../client/src/store/configureStore';
-import { StoreShape } from '../../client/src/types';
-import { INIT_APP_STATE } from '../../client/src/store/reducers/root.reducer';
+import configureStore from '../../../client/src/store/configureStore';
+import { StoreShape } from '../../../client/src/types';
+import { INIT_APP_STATE } from '../../../client/src/store/reducers/root.reducer';
 // import User from '../../models/user';
 
 

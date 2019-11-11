@@ -6,7 +6,7 @@ import UserService from '../services/UserService';
 import {
   ReduxAction,
 } from '../types';
-import { errorResponse } from '../../../types';
+import { errorResponse } from '../../../server/types';
 
 
 export const DELETE_USER_INIT = 'DELETE_USER_INIT'

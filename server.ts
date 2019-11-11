@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import {
   dbName, PORT,
-} from './config/config';
-import { app } from './expressApp';
+} from './server/config';
+import { app } from './server/expressApp';
 
 
 /* eslint-disable no-console */

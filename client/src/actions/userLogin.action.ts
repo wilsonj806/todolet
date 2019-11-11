@@ -6,7 +6,7 @@ import UserService from '../services/UserService';
 import {
   AsyncLoginAction,
 } from '../types';
-import { postLoginReq, userDataResponse, errorResponse } from '../../../types';
+import { postLoginReq, userDataResponse, errorResponse } from '../../../server/types';
 
 
 export const POST_LOGIN_INIT = 'POST_LOGIN_INIT'

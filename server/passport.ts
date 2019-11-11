@@ -1,9 +1,9 @@
 import psLocal from 'passport-local';
 import bcrypt from 'bcryptjs';
 import { PassportStatic } from 'passport';
-import User from '../models/user';
+import User from './models/user';
 
-import { IUserObj } from '../types';
+import { IUserObj } from './types';
 
 const LocalStrategy = psLocal.Strategy;
 

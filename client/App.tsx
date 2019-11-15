@@ -12,10 +12,10 @@ import { createMuiTheme } from '@material-ui/core';
 import { INIT_APP_STATE } from './store/reducers/root.reducer';
 
 const theme = createMuiTheme({
-  // zIndex: {
-  //   appBar: 1200,
-  //   drawer: 1100
-  // }
+  zIndex: {
+    appBar: 1200,
+    drawer: 1100
+  }
 });
 
 const store = configureStore(

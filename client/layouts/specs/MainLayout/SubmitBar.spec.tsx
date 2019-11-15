@@ -70,6 +70,16 @@ describe('A layout that renders the login page', () => {
     expect(input).toBeTruthy()
   })
 
+  test('it renders with a select element for the Todo priority', () => {
+    const { container } = render(
+        <SubmitBar/>
+    )
+
+    const input = container.querySelector('input[name=priority]');
+
+    expect(input).toBeTruthy()
+  })
+
   // Submit is async, but we need to stay on the page for it to do anything
   // We can make our async thunk return true when it finishes, so on finishing up, if response === true, rest form
   test('it submits the form on click of the submit button', async (done) => {

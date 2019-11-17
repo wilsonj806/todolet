@@ -36,7 +36,22 @@ A quick explanation:
 
 So the release of the Todos API and maybe integration tests will be release v0.8.0, which more or less means the app is ready for production, but is missing some small stuff.
 
-v1.0.0 would definitely include some custom styling, and some other stuff that hasn't been determined yet.
+
+## Post v0.8.0
+Post v0.8.0 support features would include a couple of things to push the app beyond what it currently is/ what it'll be by v0.8.0.
+
+It'd include some of the below:
+- custom styling and theming
+  - can't have the app looking like stock Material-UI, although this isn't a massive concern right now
+- move the app to AWS and run it using a microservie architecture
+  - one service for the Users service, one for the Todos service, one for serving the app
+  - it keeps the app slick and in comparison to Heroku, I can have constant uptime on the server
+    - the cost is getting charged for requests made whereas you have free hours on Heroku
+  - also means a more complex build stage
+- more end to end tests, or add end to end tests if there aren't any
+  - self-explanatory, it makes sure the app actually works before new features are added
+- get Hot Module Reloading working with Docker
+  - still overkill, but right now Docker Compose doesn't work nearly as well as it could, which is annoying
 
 ## Cloning Instructions
 You'll need to have some version of Node.js(and subsequently npm, which is included) installed. Currently running everything on Node v10.10.0/ NPM v6.4.1 but it should work fine on older versions of Node/ NPM.

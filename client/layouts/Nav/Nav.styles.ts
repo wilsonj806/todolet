@@ -15,7 +15,7 @@ const NavStyles = makeStyles((theme: Theme) =>
       },
       zIndex: theme.zIndex.drawer - 2
     },
-    toolbar: theme.mixins.toolbar,
+    // toolbar: theme.mixins.toolbar,
     drawerPaper: {
       paddingTop: '4rem',
       width: DRAWER_WIDTH,

@@ -4,10 +4,6 @@ import mongoose from 'mongoose';
 // ANCHOR Todo Schema
 /* eslint-disable @typescript-eslint/camelcase */
 const todoSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
   todo: {
     type: String,
     required: true,

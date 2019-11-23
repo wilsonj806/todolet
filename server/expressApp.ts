@@ -17,6 +17,7 @@ import passportConfig from './passport';
 
 import routerUser from './routes/user';
 import routerHtml from './routes/html'
+import routerTodo from './routes/todo';
 
 /* eslint-disable no-console */
 
@@ -97,6 +98,7 @@ app.use('/dist', express.static(path.join(process.cwd(), 'dist')));
  *
  */
 app.use('/api/user', routerUser);
+app.use('/api/todo', routerTodo);
 
 app.get('/test', (req,res,next) => {
   res.status(200).json({ message: 'hi' })

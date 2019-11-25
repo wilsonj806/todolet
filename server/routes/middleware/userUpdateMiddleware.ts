@@ -11,7 +11,7 @@ const VALID_KEYS_LENGTH = VALID_KEYS.length;
 // FIXME TODO implement key validation
 const putUser: RequestHandler = async (req, res, next) => {
   try {
-    const { user, body } = req
+    const { user, body } = req as any;
     if (user == undefined) {
       return res.status(500).json({ msg: 'you not loggedin' })
     };
@@ -34,7 +34,7 @@ const updateUserTodos: RequestHandler = async (req, res, next) => {
   if (user == undefined) {
     return res.status(500).json({ msg: 'you not loggedin' })
   };
-  const { todos, _id } = user;
+  const { todos, _id } = user as any;
   const todoId = res.locals.new_todo;
   if (!todoId) {
     return res.status(500).json({ msg: 'not authorized to see this' })

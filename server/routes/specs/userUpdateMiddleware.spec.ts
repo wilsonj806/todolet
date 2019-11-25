@@ -2,7 +2,7 @@ import User from '../../models/user'
 import { responseMock, requestMock } from "./mocks/mockReqRes";
 import { IUserObj } from '../../types';
 
-import { putUser } from '../middleware/userUpdateMiddleware'
+import { putUser, updateUserTodos } from '../middleware/userUpdateMiddleware'
 
 describe('A middleware function for updating a user', () => {
   let res;
@@ -83,6 +83,76 @@ describe('A middleware function for updating a user', () => {
     await putUser(req, res, next);
 
     expect(res.json).toHaveBeenCalled();
+    done()
+  })
+})
+
+describe('A middleware function for adding new todos to a user', () => {
+  let res;
+  const next = jest.fn();
+  const regex = /^(Error\:)/;
+  // FIXME setting req.user.attributes isn't great, it's implementation details
+  const user = {
+    _id: '1239oij',
+    username: 'guest',
+    todos: []
+  };
+
+  beforeAll(() => {
+    res = responseMock();
+  });
+
+  test('it calls the data base to update the user document', async (done) => {
+    const req = requestMock();
+    req.user = user;
+    res.locals = {}
+    res.locals.new_todo = '333333';
+    const spy = jest.spyOn(User, 'findByIdAndUpdate')
+
+    await updateUserTodos(req, res, next);
+
+    expect(spy).toHaveBeenCalled();
+    done()
+  })
+
+  test('it sends a response if successful', async (done) => {
+    const req = requestMock();
+    req.user = user;
+    res.locals = {}
+    res.locals.new_todo = '333333';
+    jest.spyOn(User, 'findByIdAndUpdate')
+      .mockReturnValue(user as any);
+
+    await updateUserTodos(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    done()
+  })
+
+  test('it sends a json object over if successful', async (done) => {
+    const req = requestMock();
+    req.user = user;
+    res.locals = {}
+    res.locals.new_todo = '333333';
+    jest.spyOn(User, 'findByIdAndUpdate')
+
+    await updateUserTodos(req, res, next);
+
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({user})
+    );
+    done()
+  })
+
+  test('it sends a response if it failed', async (done) => {
+    const req = requestMock();
+    req.user = user;
+    res.locals = {}
+    res.locals.new_todo = '333333';
+    jest.spyOn(User, 'findByIdAndUpdate').mockImplementation(() => {throw new Error('fail')})
+    await updateUserTodos(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(500);
     done()
   })
 })

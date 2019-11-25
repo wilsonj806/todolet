@@ -2,7 +2,7 @@ import User from '../../models/user'
 import { responseMock, requestMock } from "./mocks/mockReqRes";
 import { IUserObj } from '../../types';
 
-import putUser from '../middleware/userUpdateMiddleware'
+import { putUser } from '../middleware/userUpdateMiddleware'
 
 describe('A middleware function for updating a user', () => {
   let res;
@@ -10,12 +10,9 @@ describe('A middleware function for updating a user', () => {
   const regex = /^(Error\:)/;
   // FIXME setting req.user.attributes isn't great, it's implementation details
   const user = {
-    _id: [1, 2, 3 ,4],
+    _id: '1239oij',
     username: 'guest'
   };
-
-  jest.spyOn(User, 'findById')
-    .mockImplementation(() => user as any)
 
   beforeAll(() => {
     res = responseMock();
@@ -33,12 +30,14 @@ describe('A middleware function for updating a user', () => {
   })
 
   test('it should try to update the user', async (done) => {
-    const spy = jest.spyOn(User, 'findOneAndUpdate')
-      .mockImplementation(() => user as any)
+    expect.assertions(1);
+    const spy = jest.spyOn(User, 'findByIdAndUpdate')
+      .mockImplementation((): any => Promise.resolve(user as any))
 
     const req = requestMock();
-    req.user = {};
+    req.user = {...user};
     req.user._doc = { ...user };
+    req.body = { username: 'guest2'};
     await putUser(req, res, next);
 
     expect(spy).toHaveBeenCalled()
@@ -47,10 +46,10 @@ describe('A middleware function for updating a user', () => {
 
   test('it should send an error response if it fails', async (done) => {
     const testMsg = 'test error'
-    jest.spyOn(User, 'findOneAndUpdate')
+    jest.spyOn(User, 'findByIdAndUpdate')
       .mockImplementation(() => { throw new Error(testMsg)})
     const req = requestMock();
-    req.user = {};
+    req.user = {...user};
     req.user._doc = { ...user };
     await putUser(req, res, next);
 
@@ -64,7 +63,7 @@ describe('A middleware function for updating a user', () => {
     req.user = {};
     req.user._doc = {...user};
 
-    jest.spyOn(User, 'findOneAndUpdate')
+    jest.spyOn(User, 'findByIdAndUpdate')
       .mockImplementation(() => 'test user updated' as any)
 
     await putUser(req, res, next);
@@ -78,7 +77,7 @@ describe('A middleware function for updating a user', () => {
     req.user = {};
     req.user._doc = { ...user };
 
-    jest.spyOn(User, 'findOneAndUpdate')
+    jest.spyOn(User, 'findByIdAndUpdate')
       .mockImplementation((arg1, arg2) => 'test user updated' as any)
 
     await putUser(req, res, next);

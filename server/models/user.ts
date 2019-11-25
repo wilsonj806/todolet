@@ -31,7 +31,12 @@ const userSchema = new mongoose.Schema({
   tagFilters: {
     type: [String],
     required: false,
-  }
+  },
+  todos: {
+    type: [{}],
+    required: false,
+    default: []
+  },
 });
 /* eslint-enable @typescript-eslint/camelcase */
 

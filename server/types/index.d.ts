@@ -83,6 +83,7 @@ declare namespace AnotherTodoServer {
     email    : string
     password : string
     sessionId : string
+    todos: Array<any>
     sortTodoBy ?: string
     projectFilters ?: Array<string>
     tagFilters ?: Array<string>

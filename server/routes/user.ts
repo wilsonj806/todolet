@@ -24,7 +24,7 @@ import {
 } from './middleware/userAuthMiddleware';
 import checkFormErrors from './middleware/commonMiddleware';
 import { deleteUser } from './middleware/userDeleteMiddelware';
-import putUser from './middleware/userUpdateMiddleware';
+import { putUser } from './middleware/userUpdateMiddleware';
 // import { checkFormErrors } from './middleware/commonMiddleware';
 
 

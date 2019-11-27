@@ -15,6 +15,7 @@ const todoSchema = new mongoose.Schema({
   date_added: {
     type: Date,
     required: true,
+    default: new Date()
   },
   tags: {
     type: [String],

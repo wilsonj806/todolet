@@ -25,6 +25,8 @@ describe('A middleware function for posting new todos', () => {
       todo: 'hello',
       priority: 'high'
     });
+    req.user = user;
+
     const spy = jest.spyOn(Todo, 'create');
     postNewTodo(req, res, next);
     expect(spy).toHaveBeenCalled();
@@ -35,9 +37,14 @@ describe('A middleware function for posting new todos', () => {
       todo: 'hello',
       priority: 'high'
     });
-    const spy = jest.spyOn(Todo, 'create');
+    req.user = user;
+
+
+    jest.spyOn(Todo, 'create')
+      .mockImplementation(() => {
+        throw new Error('mock err')
+      });
     postNewTodo(req, res, next);
-    expect(spy).toHaveBeenCalled();
 
     expect(res.status).toHaveBeenCalledWith(500);
   })
@@ -47,6 +54,9 @@ describe('A middleware function for posting new todos', () => {
       todo: 'hello',
       priority: 'high'
     });
+    req.user = user;
+
+
     jest.spyOn(Todo, 'create')
       .mockReturnValue(true as any);
     await postNewTodo(req, res, next);
@@ -69,17 +79,53 @@ describe('A middleware function for getting all todos for a user', () => {
   beforeAll(() => {
     res = responseMock();
   });
-  test('it should call the user db', () => {
+  test('it should call the user db', async (done) => {
+    const req = requestMock();
+    req.user = user;
+
     const spy = jest.spyOn(User, 'findById');
+
+    await getUsersTodos(req, res, next);
+
+    expect(spy).toHaveBeenCalled();
+    done()
   })
 
-  test('it should call the todos db', () => {
+  test('it should call the todos db', async (done) => {
+    const req = requestMock();
+    req.user = user;
+
+    jest.spyOn(User, 'findById')
+      .mockImplementation(() => user as any);
     const spy = jest.spyOn(Todo, 'find');
+
+    await getUsersTodos(req, res, next);
+
+    expect(spy).toHaveBeenCalled();
+    done();
   })
 
-  test('it should send an HTTP response with the todos', () => {
+  test('it should send an HTTP response with a 200 status code', async (done) => {
+    const req = requestMock();
+    req.user = user;
 
+  jest.spyOn(User, 'findById')
+    .mockImplementation(() => user as any);
+  jest.spyOn(Todo, 'find')
+    .mockImplementation(() => [] as any);
+
+    await getUsersTodos(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(200)
+    done();
+  })
+
+  test('it should send an HTTP response with the todos', async (done) => {
+    const req = requestMock();
+    req.user = user;
+
+    await getUsersTodos(req, res, next);
     expect(res.json).toHaveBeenCalled()
+    done();
   })
 
   test('it should send an error response if it failed', () => {

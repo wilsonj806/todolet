@@ -88,7 +88,9 @@ declare namespace AnotherTodoServer {
     projectFilters ?: Array<string>
     tagFilters ?: Array<string>
   }
-  interface IUserModel extends IUserObj, Document {}
+  interface IUserModel extends IUserObj, Document {
+    [key: string]: any
+  }
   interface todoObj extends mongodbObj {
     _id        ?: any
     username   : string

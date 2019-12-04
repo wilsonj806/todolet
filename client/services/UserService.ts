@@ -42,7 +42,7 @@ const postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn> => {
 
 const postLogout =  async (): Promise<AsyncServiceReturn> => {
   try {
-    const response = await axios.post(endpointPrefix + '/user/logout');
+    const response = await axios.post(endpointPrefix + '/logout');
     const { data } = response;
     const { msg } = data;
 

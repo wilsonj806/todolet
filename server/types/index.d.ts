@@ -16,7 +16,7 @@
 /// <reference types="express" />
 
 import { Document, MongooseDocument } from "mongoose";
-import { TodoStoreShape, UserStoreShape } from '../../client/types'
+import { TodoShape, UserStoreShape } from '../../client/types'
 
 
 
@@ -55,6 +55,13 @@ declare namespace AnotherTodoServer {
     "username" : string
     "password" : string
   }
+
+  type priorityVal = "High" | "Medium" | "Low"
+  interface postTodoReq {
+    "todo" : string
+    "priority" : string
+  }
+
   interface responseObj {
     "msg"         : Array<string> | string
     [key: string] : any
@@ -65,7 +72,7 @@ declare namespace AnotherTodoServer {
   }
 
   interface todoDataResponse extends responseObj {
-    "data" : Array<TodoStoreShape>
+    "data" : Array<TodoShape>
   }
 
   interface errorResponse extends responseObj {

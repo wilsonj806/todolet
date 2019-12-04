@@ -150,6 +150,7 @@ declare namespace AnotherTodoClient {
     sortTodoBy     ?: string | undefined
     projectFilters ?: Array<any>
     tagFilters     ?: Array<any>
+    todos          ?: Array<any>
   }
 
   interface ClientServerConnectShape {
@@ -162,9 +163,8 @@ declare namespace AnotherTodoClient {
     username       : string | undefined
   }
 
-  interface TodoStoreShape {
+  interface TodoShape {
     id            : Number
-    userId        : string
     priority      : "HIGH" | "MEDIUM" | "LOW"
     todoText      : string
     projectFilter ?: string | undefined
@@ -174,7 +174,7 @@ declare namespace AnotherTodoClient {
   interface StoreShape {
     clientServerConnect : ClientServerConnectShape
     authorizedUser : UserStoreShape
-    todosList ?: TodoStoreShape
+    todosList ?: Array<TodoShape>
   }
 
   // ----- NOTE Test Helpers

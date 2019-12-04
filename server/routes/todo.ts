@@ -15,7 +15,8 @@ const router = express.Router();
 
 router.post('/',
   postNewTodo,
-  updateUserTodos
+  updateUserTodos,
+  getUsersTodos
 )
 
 router.get('/',

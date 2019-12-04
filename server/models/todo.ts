@@ -21,6 +21,10 @@ const todoSchema = new mongoose.Schema({
     type: [String],
     default: undefined,
   },
+  isCompleted: {
+    type: Boolean,
+    default: false
+  }
 });
 /* eslint-enable @typescript-eslint/camelcase */
 

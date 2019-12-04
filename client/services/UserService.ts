@@ -7,7 +7,7 @@ import FormService from './FormService';
 import { AsyncServiceReturn } from '../types';
 import { postLoginReq, postUserReq } from '../../server/types';
 
-const endpointPrefix = '/api';
+const endpointPrefix = '/api/user';
 
 const { validateForm, validatePasswordFields } = FormService;
 const { parseError, parseResponse } = AxiosService
@@ -19,7 +19,7 @@ const postNewUser = async (reqObj: postUserReq ): Promise<AsyncServiceReturn> =>
     // Checks that both password fields match
     validatePasswordFields(reqObj);
 
-    const response : AxiosResponse<any> = await axios.post(endpointPrefix + '/user/register', reqObj);
+    const response : AxiosResponse<any> = await axios.post(endpointPrefix + '/register', reqObj);
 
     return parseResponse(response)
   } catch (error) {
@@ -33,7 +33,7 @@ const postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn> => {
   try {
     // NOTE this method checks which keys are missing and throws an error that lists said missing keys
     validateForm(reqObj);
-    const response : AxiosResponse<any> = await axios.post(endpointPrefix + '/user/login', reqObj);
+    const response : AxiosResponse<any> = await axios.post(endpointPrefix + '/login', reqObj);
     return parseResponse(response)
   } catch (error) {
     return parseError(error);
@@ -60,7 +60,7 @@ const postLogout =  async (): Promise<AsyncServiceReturn> => {
 const putUser = async (reqObj: any, userId: string) => {
   try {
     validateForm(reqObj);
-    const response : AxiosResponse<any> = await axios.put(endpointPrefix + '/user/' + userId, reqObj)
+    const response : AxiosResponse<any> = await axios.put(endpointPrefix + '/' + userId, reqObj)
 
     return parseResponse(response)
   } catch (error) {
@@ -71,7 +71,7 @@ const putUser = async (reqObj: any, userId: string) => {
 
 const deleteUser = async (): Promise<AsyncServiceReturn> => {
   try {
-    const response = await axios.delete(endpointPrefix + '/user/delete')
+    const response = await axios.delete(endpointPrefix + '/delete')
     return parseResponse(response)
   } catch (error) {
     return parseError(error)

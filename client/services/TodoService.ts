@@ -15,34 +15,35 @@ const { parseError, parseResponse } = AxiosService
 const endpointPrefix = '/api/todo';
 
 // TODO unify JSON response so it complies with JSON API specs
+// TODO Fix *any* typecasting
 
 const postTodo = async (reqObj: postTodoReq) => {
   // validate input
   try {
     validateForm<postTodoReq>(reqObj);
-    const response : AxiosResponse<any> = await axios.post(endpointPrefix, reqObj);
+    const response : AxiosResponse<any> | any = await axios.post(endpointPrefix, reqObj);
 
-    if (response.data.msg) {
-      throw new Error(response.data.msg)
+    if (response.data.errors) {
+      throw new Error(response.data.errors)
     }
 
     return response.data.todos;
   } catch (error) {
-    throw new Error( error )
+    throw error
   }
 }
 
 const getTodos = async () => {
   try {
-    const response : AxiosResponse<any> = await axios.get(endpointPrefix);
+    const response : AxiosResponse<any> | any = await axios.get(endpointPrefix);
     console.log(response);
-    if (response.data.msg) {
-      throw new Error(response.data.msg)
+    if (response.data.errors) {
+      throw new Error(response.data.errors)
     }
 
     return response.data.todos;
   } catch (error) {
-    throw new Error( error )
+    throw error
   }
 }
 

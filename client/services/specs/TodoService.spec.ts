@@ -41,9 +41,9 @@ describe('A method for posting a new todo', () => {
 
   it.skip('should return an error if the request fails', async (done) => {
     const mockResponse = {
-      msg: 'testing failure',
+      errors: 'testing failure',
     }
-    const mockError = new Error(mockResponse.msg);
+    const mockError = new Error(mockResponse.errors);
 
     mock.onPost(endpoint).reply(
       400,
@@ -88,7 +88,7 @@ describe('A method for getting all todos', () => {
 
   it.skip('should return an error if the request fails', async (done) => {
     const mockResponse = {
-      msg: 'testing failure',
+      errors: 'testing failure',
     }
     mock.onGet(endpoint).reply(
       400,

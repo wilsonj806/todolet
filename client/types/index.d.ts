@@ -174,7 +174,7 @@ declare namespace AnotherTodoClient {
   interface StoreShape {
     clientServerConnect : ClientServerConnectShape
     authorizedUser : UserStoreShape
-    todosList ?: Array<TodoShape>
+    todosList : Array<TodoShape>
   }
 
   // ----- NOTE Test Helpers

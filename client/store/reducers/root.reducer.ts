@@ -4,7 +4,15 @@ import { POST_LOGOUT_FAIL, POST_LOGOUT_SUCCESS, POST_LOGOUT_INIT } from '../../a
 import { POST_REGISTER_FAIL, POST_REGISTER_INIT, POST_REGISTER_SUCCESS } from '../../actions/userRegistration.action';
 import { PUT_USER_INIT, PUT_USER_FAIL, PUT_USER_SUCCESS } from '../../actions/userUpdate.action';
 import { DELETE_USER_SUCCESS, DELETE_USER_INIT, DELETE_USER_FAIL } from '../../actions/userDelete.action';
-import { StoreShape, UserStoreShape, ReduxAction, ClientServerConnectShape } from '../../types';
+import {
+  StoreShape,
+  UserStoreShape,
+  ReduxAction,
+  ClientServerConnectShape,
+  TodoShape
+} from '../../types';
+import { GET_TODOS_SUCCESS, GET_TODOS_INIT, GET_TODOS_FAIL } from '../../actions/todoGetAll.action';
+import { POST_TODO_SUCCESS, POST_TODO_INIT, POST_TODO_FAIL } from '../../actions/todoAdd.action';
 
 // FIXME something's really weird with some of the key names and how it aligns with other stuff
 const INIT_USER_STATE : UserStoreShape = {
@@ -13,6 +21,7 @@ const INIT_USER_STATE : UserStoreShape = {
   username: undefined,
   projectFilters: [],
   tagFilters: [],
+  todos: []
 }
 
 // NOTE this is new and won't be found in docs/CLIENTSTATE.md
@@ -22,7 +31,18 @@ const INIT_CLIENTSERVER_STATE : ClientServerConnectShape = {
 
 const INIT_APP_STATE : StoreShape = {
   authorizedUser: INIT_USER_STATE,
-  clientServerConnect: INIT_CLIENTSERVER_STATE
+  clientServerConnect: INIT_CLIENTSERVER_STATE,
+  todosList: []
+}
+
+const todosList = (state: TodoShape[] = [], action: ReduxAction) : TodoShape[] => {
+  switch(action.type) {
+    case POST_TODO_SUCCESS:
+    case GET_TODOS_SUCCESS:
+      return { ...state, ...action.payload }
+    default:
+      return state
+  }
 }
 
 const authorizedUser = (state : UserStoreShape = INIT_USER_STATE, action : ReduxAction): UserStoreShape => {
@@ -59,6 +79,8 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
     case PUT_USER_INIT:
     case POST_REGISTER_INIT:
     case DELETE_USER_INIT:
+    case POST_TODO_INIT:
+    case GET_TODOS_INIT:
       return { ...state, isFetching: true }
     case POST_LOGIN_SUCCESS:
     case POST_LOGIN_FAIL:
@@ -68,6 +90,8 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
     case PUT_USER_FAIL:
     case DELETE_USER_SUCCESS:
     case DELETE_USER_FAIL:
+    case POST_TODO_FAIL:
+    case GET_TODOS_FAIL:
       return { ...state, isFetching: false }
     default:
       return state
@@ -78,6 +102,7 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
 const rootReducer : Reducer<StoreShape> = combineReducers({
   authorizedUser,
   clientServerConnect,
+  todosList,
 })
 
 export default rootReducer

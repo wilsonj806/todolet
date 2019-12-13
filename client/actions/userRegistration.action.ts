@@ -40,9 +40,9 @@ export const postNewUser = (request : postUserReq) => {
       const { status, msg } = result;
 
       if (status === 'FAILURE') throw new Error(msg);
-      return dispatch(receiveRegisterSuccess(result.payload))
+      dispatch(receiveRegisterSuccess(result.payload))
     } catch (error) {
-      return dispatch(receiveRegisterFailure(error.message));
+      dispatch(receiveRegisterFailure(error.message));
     }
   }
 }

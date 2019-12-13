@@ -44,9 +44,9 @@ export const putUser = (request : any, userId: string) => {
         const { msg } = result;
         throw new Error(msg)
       }
-      return dispatch(receiveUserUpdateSuccess(result.payload))
+      dispatch(receiveUserUpdateSuccess(result.payload))
     } catch (error) {
-      return dispatch(receiveUserUpdateFailure(error.message));
+      dispatch(receiveUserUpdateFailure(error.message));
     }
   }
 }

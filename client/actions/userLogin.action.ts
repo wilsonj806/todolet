@@ -38,9 +38,9 @@ export const postLogin = (request : postLoginReq) => {
       const { status, msg } = result;
 
       if (status === 'FAILURE') throw new Error(msg);
-      return dispatch(receiveLoginSuccess(result.payload))
+      dispatch(receiveLoginSuccess(result.payload))
     } catch (error) {
-      return dispatch(receiveLoginFailure(error.message));
+      dispatch(receiveLoginFailure(error.message));
     }
   }
 }

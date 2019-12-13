@@ -36,9 +36,9 @@ export const postLogout = () => {
       const { status, msg } = result;
 
       if (status === 'FAILURE') throw new Error(msg);
-      return dispatch(receiveLogoutSuccess())
+      dispatch(receiveLogoutSuccess())
     } catch (error) {
-      return dispatch(receiveLogoutFailure(error.message));
+      dispatch(receiveLogoutFailure(error.message));
     }
   }
 }

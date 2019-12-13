@@ -36,9 +36,9 @@ export const deleteUser = () => {
       const { status, msg } = result;
 
       if (status === 'FAILURE') throw new Error(msg);
-      return dispatch(receiveDeleteUserSuccess())
+      dispatch(receiveDeleteUserSuccess())
     } catch (error) {
-      return dispatch(receiveDeleteUserFailure(error.message));
+      dispatch(receiveDeleteUserFailure(error.message));
     }
   }
 }

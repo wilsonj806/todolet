@@ -141,6 +141,10 @@ describe('A layout that renders the login page', () => {
     )
 
     const submitBtn = container.querySelector('[type=submit]');
+    /** NOTE jest.spyOn doesn't like it if you try spy on
+     * ... a method AND you destructure it to use it like const { postTodo } = TodoService;
+     * YOUR TEST WILL FAIL IF YOU DO SO
+     **/
     const spy = jest.spyOn(UserService, 'postLogin')
 
     fireEvent.click(submitBtn!)

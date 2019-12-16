@@ -27,12 +27,12 @@ const receivePostNewTodoFail = (err : any) : any => ({
 
 // ----- NOTE Exported Redux Thunk action
 // TODO finish the rest of this
-const { postTodo } = TodoService
-export const postNewTodo = (request : any) => {
+export const postNewTodo = (request : any, stateFns: any) => {
   return async (dispatch: Dispatch) => {
     dispatch(requestPostNewTodo());
     try {
-      const res = await postTodo(request);
+      const res = await TodoService.postTodo(request);
+      stateFns.forEach( (fn: any) => fn('') );
       dispatch(receivePostNewTodoSuccess(res))
     } catch (err) {
       dispatch(receivePostNewTodoFail(err.message))

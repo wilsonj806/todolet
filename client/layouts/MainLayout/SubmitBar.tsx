@@ -1,5 +1,7 @@
 import React, { FC, useState, ChangeEvent, SyntheticEvent } from 'react';
 
+import { useDispatch } from 'react-redux'
+
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -12,6 +14,8 @@ import useStyles from './SubmitBar.styles';
 
 import TextInputWrapper from "../../containers/TextInputWrapper";
 
+import { postNewTodo } from '../../actions/todoAdd.action';
+
 
 /**
  * Submit bar
@@ -21,13 +25,18 @@ import TextInputWrapper from "../../containers/TextInputWrapper";
  * - needs to make a POST request on submit
  *
  */
+
 const SubmitBar: FC<any> = () => {
+  // Redux state
+  const dispatch = useDispatch();
+
   // Styling
   const classes = useStyles();
 
   // Local State
   const [ todo, setTodo ] = useState('');
   const [ priority, setPriority ] = useState('');
+  const [ error, setError ] = useState('')
 
   // Event Handlers
   // Type casting not working as expected but handleSelect is only for the select element
@@ -35,9 +44,20 @@ const SubmitBar: FC<any> = () => {
     setPriority(event.target.value)
   }
 
-  const handleSubmit = (event: SyntheticEvent<HTMLButtonElement>) => {
+  // TODO implement this
+  const handleSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log('hi');
+    const request = {
+      todo,
+      priority
+    };
+    try {
+      await dispatch(postNewTodo(request, [setTodo, setPriority]))
+      setTodo('');
+      setPriority('');
+    } catch (error) {
+      setError(error)
+    }
   }
 
   // TODO fix the Select so it uses the unified Input component

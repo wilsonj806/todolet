@@ -8,16 +8,18 @@ import useStyles from './PriorityDisplay.styles';
 
 const PriorityDisplay : FC<any> = (props) => {
   const { priority } = props;
+  const classes = useStyles();
   const bgColor = getBgColor(priority, useStyles);
   return (
-    <div>
+    <div className={ classes.rootBox }>
       <Box
         bgcolor={ bgColor }
         className={ bgColor }
         css={{
           width: '1rem',
           height: '1rem',
-          borderRadius: '0.5rem'
+          borderRadius: '0.5rem',
+          marginRight: '1rem'
         }}
       />
     <Typography>{ priority }</Typography>

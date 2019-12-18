@@ -41,9 +41,8 @@ const updateUserTodos: RequestHandler = async (req, res, next) => {
   }
   const updated = { todos: [...todos, todoId] };
   try {
-    const updatedUser = await User.findByIdAndUpdate(_id, updated, { new: true });
+    await User.findByIdAndUpdate(_id, updated, { new: true });
 
-    res.status(200).json({ msg: 'updating todos', user: updatedUser});
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: 'it broke' })

@@ -33,7 +33,7 @@ const getUsersTodos: RequestHandler = async (req, res, next) => {
     // console.log('this is user\n', user);
     const dbUser = await User.findById(user._id);
     const { todos }: any = dbUser;
-    console.log('this is todo ids ',todos);
+    // console.log('this is todo ids ',todos);
     const fetchedTodos = await Todo.find({
       _id: {
         $in: todos

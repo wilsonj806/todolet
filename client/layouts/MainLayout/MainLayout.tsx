@@ -1,8 +1,12 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import Typography from '@material-ui/core/Typography';
 
 import SubmitBar from './SubmitBar';
+import TodoList from '../../components/TodoList/TodoList';
+import { StoreShape } from '../../types';
+
+import { getAllTodos } from '../../actions/todoGetAll.action';
 /**
  * Need:
  * - A SubmitBar
@@ -12,10 +16,18 @@ import SubmitBar from './SubmitBar';
  */
 
 const MainLayout : FC<any> = (props) => {
+  const todosList = useSelector<StoreShape, any>((state) => state.todosList);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllTodos());
+  }, [])
+
   return (
     <div>
       <SubmitBar/>
-      <Typography variant='h1'>Work In Progress</Typography>
+      <TodoList todosList={ todosList }/>
     </div>
   )
 }

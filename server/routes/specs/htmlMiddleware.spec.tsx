@@ -13,7 +13,7 @@ describe('A function that generates an HTML doc', () => {
   })
 
   test('it renders with a custom title', () => {
-    const strAssert = htmlTemplate('', '', '404');
+    const strAssert = htmlTemplate('', '', {} as any, '404');
     const regex = new RegExp('404')
     expect(regex.test(strAssert)).toBe(true)
   })

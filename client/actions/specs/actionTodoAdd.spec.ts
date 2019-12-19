@@ -22,6 +22,10 @@ describe('An action creator that handles async todo addition', () => {
   const mockTodo = {todo: 'hi', priority: 'High'};
   const mockSuccess = { msg: 'hi', todos: [] };
   const mockError = new Error('hi');
+  const mockCallbackArr = [
+    jest.fn(),
+    jest.fn(),
+  ]
 
   test('it dispatches an action signifying that a Post Todo dispatch has been initiated', async (done) => {
     const store = mockStore({ selectedUser: {}});
@@ -35,7 +39,7 @@ describe('An action creator that handles async todo addition', () => {
       mockSuccess
     );
     // TODO add a mock Todo object
-    await store.dispatch<any>(postNewTodo(mockTodo))
+    await store.dispatch<any>(postNewTodo(mockTodo, mockCallbackArr))
 
     expect(store.getActions()).toStrictEqual(expectedActions);
     done()
@@ -54,7 +58,7 @@ describe('An action creator that handles async todo addition', () => {
       mockSuccess
     );
 
-    await store.dispatch<any>(postNewTodo(mockTodo))
+    await store.dispatch<any>(postNewTodo(mockTodo, mockCallbackArr))
 
     expect(store.getActions()).toStrictEqual(expectedActions);
     done()
@@ -73,7 +77,7 @@ describe('An action creator that handles async todo addition', () => {
       { errors: mockError.message }
     );
 
-    await store.dispatch<any>(postNewTodo(mockTodo))
+    await store.dispatch<any>(postNewTodo(mockTodo, mockCallbackArr))
     expect(store.getActions()).toStrictEqual(expectedActions);
     done()
   })

@@ -1,8 +1,10 @@
+import { SetStateAction } from 'react'
 import { Dispatch } from 'redux';
 import TodoService from '../services/TodoService';
 
 import {
   ReduxAction,
+  TodoShape
 } from '../types';
 import { errorResponse } from '../../server/types';
 
@@ -15,7 +17,7 @@ const requestPostNewTodo = () : ReduxAction => ({
 })
 
 // TODO type the JSON param
-const receivePostNewTodoSuccess = (json : unknown) : ReduxAction => ({
+const receivePostNewTodoSuccess = (json : Array<TodoShape>) : ReduxAction => ({
   type: POST_TODO_SUCCESS,
   payload: json
 })
@@ -26,13 +28,12 @@ const receivePostNewTodoFail = (err : any) : any => ({
 })
 
 // ----- NOTE Exported Redux Thunk action
-// TODO finish the rest of this
-export const postNewTodo = (request : any, stateFns: any) => {
+export const postNewTodo = (request : any, stateFns: SetStateAction<any>[]) => {
   return async (dispatch: Dispatch) => {
     dispatch(requestPostNewTodo());
     try {
       const res = await TodoService.postTodo(request);
-      stateFns.forEach( (fn: any) => fn('') );
+      stateFns.forEach( (fn: SetStateAction<any>) => fn('') );
       dispatch(receivePostNewTodoSuccess(res))
     } catch (err) {
       dispatch(receivePostNewTodoFail(err.message))

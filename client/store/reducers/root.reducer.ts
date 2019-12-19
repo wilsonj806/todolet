@@ -39,7 +39,7 @@ const todosList = (state: TodoShape[] = [], action: ReduxAction) : TodoShape[] =
   switch(action.type) {
     case POST_TODO_SUCCESS:
     case GET_TODOS_SUCCESS:
-      return { ...state, ...action.payload }
+      return [ ...action.payload ]
     default:
       return state
   }
@@ -54,7 +54,7 @@ const authorizedUser = (state : UserStoreShape = INIT_USER_STATE, action : Redux
     case POST_LOGOUT_SUCCESS:
       return { ...INIT_USER_STATE }
     case DELETE_USER_SUCCESS:
-      return {... INIT_USER_STATE }
+      return {...INIT_USER_STATE }
     default:
       return state
   }

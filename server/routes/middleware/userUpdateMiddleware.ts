@@ -42,12 +42,11 @@ const updateUserTodos: RequestHandler = async (req, res, next) => {
   const updated = { todos: [...todos, todoId] };
   try {
     await User.findByIdAndUpdate(_id, updated, { new: true });
-
+    next()
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: 'it broke' })
   }
-  next()
 }
 
 export {

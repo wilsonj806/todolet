@@ -115,21 +115,8 @@ describe('A middleware function for adding new todos to a user', () => {
     done()
   })
 
-  test('it sends a response if successful', async (done) => {
-    const req = requestMock();
-    req.user = user;
-    res.locals = {}
-    res.locals.new_todo = '333333';
-    jest.spyOn(User, 'findByIdAndUpdate')
-      .mockReturnValue(user as any);
 
-    await updateUserTodos(req, res, next);
-
-    expect(res.status).toHaveBeenCalledWith(200);
-    done()
-  })
-
-  test('it sends a json object over if successful', async (done) => {
+  test('it calls next if user update is successful', async (done) => {
     const req = requestMock();
     req.user = user;
     res.locals = {}
@@ -138,9 +125,7 @@ describe('A middleware function for adding new todos to a user', () => {
 
     await updateUserTodos(req, res, next);
 
-    expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({user})
-    );
+    expect(next).toHaveBeenCalled();
     done()
   })
 

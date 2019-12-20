@@ -23,7 +23,7 @@ Yet another Todo app, this app will be full stack and will be deployed. In addit
 ## Currently Planned
 Below is a rough "roadmap" of things to add. At this point, a lot of the below is out of scope of what I intended with the project, but are things worth learning/ doing.
 ```
-  Todos API => Integration Tests/ Caching => Fin
+  Todos API(Create Read) => Todos API(Update Delete) => Integration Tests/ Caching => Fin
 ```
 
 A quick explanation:

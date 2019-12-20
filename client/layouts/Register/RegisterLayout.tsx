@@ -30,7 +30,6 @@ const Register: FC<any> = (props) => {
   // FIXME replace the below with a proper toast
   const [ error, setError] = useState('');
 
-
   useEffect(() => {
     const { userId, username } = userState
 
@@ -48,9 +47,12 @@ const Register: FC<any> = (props) => {
       setError(err);
     }
   }
+  // const RedirectWrap = undefined;
+  const RedirectWrap = shouldRedirect ? <Redirect push={true} from='/register' to='/'/> : undefined;
 
   return (
     <Container maxWidth="xs" classes={{ root: classes.rootStyle }}>
+      { RedirectWrap }
       <img src={ '/static/logos/logolg.png' } alt="Logo" className={ classes.logo }/>
       <div className={ classes.formWrapper }>
         <Typography variant="h1" classes={{ h1: classes.heading }}>TodoLet</Typography>

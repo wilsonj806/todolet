@@ -159,7 +159,6 @@ declare namespace AnotherTodoClient {
     sortTodoBy     ?: string | undefined
     projectFilters ?: Array<any>
     tagFilters     ?: Array<any>
-    todos          ?: Array<any>
   }
 
   interface ClientServerConnectShape {
@@ -170,6 +169,7 @@ declare namespace AnotherTodoClient {
     userId         : string | undefined
     email          : string | undefined
     username       : string | undefined
+    todos          : Array<any> | undefined
   }
 
   interface TodoShape {

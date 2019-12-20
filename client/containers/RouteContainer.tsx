@@ -27,14 +27,15 @@ const RouteContainer: FunctionComponent<any> = (props) => {
   const UnauthorizedRoutes = (
     <>
       <Route path='/login' exact component={ LoginPage }/>
-      <Route path='/register' exact component={ RegisterPage }/>
     </>
   )
 
   // NOTE RENDER CONDITIONAL ROUTES LAST
+  // FIXME Monkeypatched the register route
   return (
     <Switch>
       <Route path='/' exact component={ isNotAuthorized ? LoginPage : MainPage }/>
+      <Route path='/register' exact component={ RegisterPage }/>
       <Route path='/logout' exact component={ LogoutPage }/>
       { authorizedUser.userId && authorizedUser.username ? AuthorizedRoutes : UnauthorizedRoutes }
       <Route component={ NotFoundPage }/>

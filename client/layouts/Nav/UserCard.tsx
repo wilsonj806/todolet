@@ -7,17 +7,20 @@ import { StoreShape } from '../../types';
 
 // TODO need to add a thing for when the user isn't actually logged in
 
-const UserCard: FunctionComponent<any> = (props) => {
+const UserCard: FunctionComponent<any> = () => {
   /*
    * Grab User from useContext
    * - it should include a userID
    * - with the userId value, call useEffect() on the backend that handles todos and make it fetch project tags and normal tags
   */
   const username = useSelector((state: StoreShape) => state.authorizedUser.username) || '';
+  const todos = useSelector((state: StoreShape) => state.authorizedUser.todos) || [];
   const avatar = useSelector((state: StoreShape) => state.authorizedUser.avatar) || '';
 
   const classes = useStyles();
-  const count = 3;
+
+  const todosCount = todos.length;
+
   return (
     <div className={ classes.paper }>
       <div className={ classes.avatarWrapper }>
@@ -31,7 +34,7 @@ const UserCard: FunctionComponent<any> = (props) => {
         </Avatar>
       </div>
       <Typography variant='h2' classes={{ h2: classes.heading }}>{`Hello ${ username }`}</Typography>
-      <Typography color='secondary' variant='h3' classes={{ h3: classes.subheading }}>{`# of Todos: ${ count }`}</Typography>
+      <Typography color='secondary' variant='h3' classes={{ h3: classes.subheading }}>{`# of Todos: ${ todosCount }`}</Typography>
     </div>
   )
 }

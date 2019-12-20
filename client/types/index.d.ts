@@ -76,6 +76,15 @@ declare namespace AnotherTodoClient {
     reactHookFn   : Dispatch<SetStateAction<any>>
     [key: string] : any
   }
+  type PriorityTypes = 'Low' | 'Medium' | 'High'
+  interface TodoItemProps {
+    todo  : TodoShape
+    index  : number
+  }
+
+  interface PriorityDisplayProps {
+    priority: PriorityTypes
+  }
 
   // ----- NOTE Redux Action Types
   type SyncUserActions = "POST_FILTER" | "DELETE_FILTER" | "LOGIN_GUEST"
@@ -164,9 +173,10 @@ declare namespace AnotherTodoClient {
   }
 
   interface TodoShape {
-    id            : Number
-    priority      : "HIGH" | "MEDIUM" | "LOW"
-    todoText      : string
+    id            ?: number
+    isCompleted   : boolean
+    priority      : PriorityTypes
+    todo          : string
     projectFilter ?: string | undefined
     tagFilter     ?: string | undefined
   }

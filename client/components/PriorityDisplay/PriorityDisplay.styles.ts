@@ -5,8 +5,13 @@ const useStyles = makeStyles((theme: Theme) =>
     rootBox: {
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'flex-end',
+    },
+    priorityWrap: {
+      display: 'flex',
+      alignItems: 'center',
       justifyContent: 'flex-start',
-      width: '6rem',
+      width: '6rem'
     },
     priorityHigh: {
       backgroundColor: 'red'

@@ -14,7 +14,7 @@ const SubmitBarStyles = makeStyles((theme: Theme) =>
       display: 'flex',
     },
     textInput: {
-      width: '30rem',
+      width: '69%',
       marginRight: '0.5rem',
     },
     button: {

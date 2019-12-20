@@ -1,5 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
+
+// ---- MUI Components
 import Typography from '@material-ui/core/Typography';
 
 import SubmitBar from './SubmitBar';
@@ -25,7 +27,8 @@ const MainLayout : FC<any> = (props) => {
   }, [])
 
   return (
-    <div>
+    <div style={{ margin: '0rem 1rem'}}>
+      <Typography variant="h2" component="h5">Todos</Typography>
       <SubmitBar/>
       <TodoList todosList={ todosList }/>
     </div>

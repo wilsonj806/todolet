@@ -98,6 +98,7 @@ declare namespace AnotherTodoServer {
   interface IUserModel extends IUserObj, Document {
     [key: string]: any
   }
+
   interface todoObj extends mongodbObj {
     _id        ?: any
     username   : string

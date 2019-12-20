@@ -6,9 +6,9 @@ import TodoList from '../TodoList/TodoList';
 
 describe('A component that renders Todos', () => {
   const mockTodos = [
-    {todo: 'test1', priority: 'High'},
-    {todo: 'test2', priority: 'Medium'},
-    {todo: 'test3', priority: 'Low'},
+    {todo: 'test1', priority: 'High', isCompleted: false},
+    {todo: 'test2', priority: 'Medium', isCompleted: false},
+    {todo: 'test3', priority: 'Low', isCompleted: false},
   ];
 
   test('it renders a list element', () => {

@@ -12,7 +12,7 @@ import TodoItem from '../TodoItem/TodoItem';
 const TodoList : FC<any> = (props) => {
   const { todosList } = props;
 
-  const TodoMap = todosList.map((todo : TodoShape, i : number) => <TodoItem key={ i } todo={ todo }/>);
+  const TodoMap = todosList.map((todo : TodoShape, i : number) => <TodoItem key={ i } todo={ todo } index={ i }/>);
 
   return (
     <div style={{ margin: '2rem 1rem'}}>

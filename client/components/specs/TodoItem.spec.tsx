@@ -7,12 +7,13 @@ import TodoItem from '../TodoItem/TodoItem';
 describe('A component for rendering a Todo Item', () => {
   const mockTodo = {
     todo: 'Test',
-    priority: 'Low'
+    priority: 'Low' as 'Low',
+    isCompleted: false
   };
 
   test('it renders the Todo Item', () => {
     const { getByText } = render(
-      <TodoItem todo={mockTodo}/>
+      <TodoItem todo={mockTodo} index={ 1 }/>
     )
 
     const text = getByText(mockTodo.todo);
@@ -22,7 +23,7 @@ describe('A component for rendering a Todo Item', () => {
 
   test('it renders with a Priority display', () => {
     const { getByText } = render(
-      <TodoItem todo={mockTodo}/>
+      <TodoItem todo={mockTodo} index={ 1 }/>
     )
 
     const text = getByText(mockTodo.priority);

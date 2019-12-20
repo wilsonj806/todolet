@@ -9,6 +9,11 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:not(:last-child)': {
         borderBottom: '1px solid #dbdbdb'
       }
+    },
+    leftWrapper: {
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center'
     }
   })
 )

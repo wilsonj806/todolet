@@ -23,18 +23,35 @@ Yet another Todo app, this app will be full stack and will be deployed. In addit
 ## Currently Planned
 Below is a rough "roadmap" of things to add. At this point, a lot of the below is out of scope of what I intended with the project, but are things worth learning/ doing.
 ```
-  Todos API => Integration Tests/ Caching => Fin
+  Todos API(Create Read) => Todos API(Update Delete) => Integration Tests/ Caching => Fin
 ```
 
 A quick explanation:
 
-~~1) Docker is overkill in a lot of ways, but gives for easier testing environments, and consistent app deployments. It's also really handy to know for jobs.~~
+~~1) Docker and SSR have been integrated~~
 
-   ~~Server-side rendering(SSR) is listed as the Heroku app is serving the entire thing. It's lumped with Docker as SSR will involve overhauling the entire app, and it's file structure. Will be pretty ugly.~~
-
-2) Todos API is the other missing core functionality of the app. Pretty straight-forwards
+2) Todos API and the client side functionality surrounding that is the other missing core functionality of the app. Pretty straight-forwards
 
 3) Integration tests are definitely overkill, but if we have Docker up and running, we can make some quick integration tests to validate the app. Caching is arguably vital as there's a lot of repeated requests and if we're doing SSR, then caching should be relatively simple
+
+So the release of the Todos API and maybe integration tests will be release v0.8.0, which more or less means the app is ready for production, but is missing some small stuff.
+
+
+## Post v0.8.0
+Post v0.8.0 support features would include a couple of things to push the app beyond what it currently is/ what it'll be by v0.8.0.
+
+It'd include some of the below:
+- custom styling and theming
+  - can't have the app looking like stock Material-UI, although this isn't a massive concern right now
+- move the app to AWS and run it using a microservie architecture
+  - one service for the Users service, one for the Todos service, one for serving the app
+  - it keeps the app slick and in comparison to Heroku, I can have constant uptime on the server
+    - the cost is getting charged for requests made whereas you have free hours on Heroku
+  - also means a more complex build stage
+- more end to end tests, or add end to end tests if there aren't any
+  - self-explanatory, it makes sure the app actually works before new features are added
+- get Hot Module Reloading working with Docker
+  - still overkill, but right now Docker Compose doesn't work nearly as well as it could, which is annoying
 
 ## Cloning Instructions
 You'll need to have some version of Node.js(and subsequently npm, which is included) installed. Currently running everything on Node v10.10.0/ NPM v6.4.1 but it should work fine on older versions of Node/ NPM.

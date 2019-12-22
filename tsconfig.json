@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "typeRoots": [
       "**/node_modules/@types",
-      "./types"
+      "server/types"
     ],
     "lib": [
       "dom",

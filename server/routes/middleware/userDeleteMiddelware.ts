@@ -12,7 +12,8 @@ const deleteUser: RequestHandler = async (req, res, next) => {
       return res.status(403).json(responsifyError('Invalid client session, delete operation not executed'))
     }
     const sessionId = req.session.passport.user.toString()
-    const passportId = req.user._id.toString()
+    const { _id } = req!.user as any;
+    const passportId = _id.toString()
 
     if (sessionId !== passportId) {
       return res.status(403).json(responsifyError('Invalid client session, delete operation not executed'))

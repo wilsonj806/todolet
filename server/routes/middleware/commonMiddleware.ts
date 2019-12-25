@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Response } from 'express';
 import { validationResult } from 'express-validator/check';
 import { errorResponse } from '../../types';
 import CommonService from './services/CommonService';
@@ -15,8 +15,12 @@ const checkFormErrors: RequestHandler = (req, res, next): any => {
   }
 };
 
-// export {
-//   checkFormErrors,
-// };
+const storeInResLocals = <T>(res : Response, propName : string, val : T) : void => {
+  res.locals[propName] = val;
+}
 
 export default checkFormErrors;
+export {
+  checkFormErrors,
+  storeInResLocals
+};

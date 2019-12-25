@@ -5,6 +5,8 @@
  */
 import { MockReq, MockRes } from "../../../types";
 
+// FIXME rethink how this works and replace with a factory because setup and teardown doesn't seem to be working as expected
+
 const requestMock = (sessionData: any = {}, body: any = {}, _validationErrors: any = []): any => ({
   session: {
     destroy: jest.fn(callback => callback()),

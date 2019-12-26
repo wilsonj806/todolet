@@ -52,28 +52,30 @@ const getUsersTodos: RequestHandler = async (req, res, next) => {
   }
 }
 
-const PREFETCHED_TODOS = '__PREFETCHED_TODOS__';
+const PREFETCHED_TODOS_KEY = '__PREFETCHED_TODOS__';
 const prefetchUserTodos: RequestHandler = async (req, res, next) => {
   const { user }: any = req;
   if (!user) {
-    return res.status(500).json({ msg: 'Not authorized to access this resource' })
-  };
-  try {
-    // console.log('this is user\n', user);
-    const dbUser = await User.findById(user._id);
-    const { todos }: any = dbUser;
-    // console.log('this is todo ids ',todos);
-    const fetchedTodos = await Todo.find({
-      _id: {
-        $in: todos
-      }
-    })
-
-    // Store the todos into res.locals
-    storeInResLocals(res,PREFETCHED_TODOS, fetchedTodos);
+    // NOTE If there's no valid session, then just keep going
     next();
-  } catch (e) {
-    res.status(500).json({ msg: 'Server error sorry :('})
+  } else {
+    try {
+      // console.log('this is user\n', user);
+      const dbUser = await User.findById(user._id);
+      const { todos }: any = dbUser;
+      // console.log('this is todo ids ',todos);
+      const fetchedTodos = await Todo.find({
+        _id: {
+          $in: todos
+        }
+      })
+
+      // Store the todos into res.locals
+      storeInResLocals(res,PREFETCHED_TODOS_KEY, fetchedTodos);
+      next();
+    } catch (e) {
+      res.status(500).json({ msg: 'Server error sorry :('})
+    }
   }
 }
 
@@ -81,6 +83,6 @@ export {
   postNewTodo,
   getUsersTodos,
   prefetchUserTodos,
-  PREFETCHED_TODOS,
+  PREFETCHED_TODOS_KEY,
   NEW_TODO
 }

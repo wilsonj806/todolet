@@ -1,9 +1,14 @@
 import { requestMock, responseMock } from './mocks/mockReqRes';
 
 import {
+  STATE_KEY,
   htmlTemplate,
-  returnHtml
+  returnHtml,
+  gatherState
 } from '../middleware/htmlMiddleware';
+
+import { PREFETCHED_TODOS_KEY } from '../middleware/todoMiddleware';
+
 
 describe('A function that generates an HTML doc', () => {
   test('it renders with a default title', () => {
@@ -35,4 +40,60 @@ describe('A function that generates an HTML doc', () => {
     expect(assert).toBe(true);
   })
 
+})
+
+describe('A middleware function for gathering values from res.locals for prefetching state', () => {
+  let res;
+  const next = jest.fn();
+  const user = {
+    _id: [1, 2, 3 ,4],
+    username: 'guest',
+    todos: ['333','444']
+  };
+
+  beforeAll(() => {
+    console.log('running setup');
+    res = responseMock();
+    res.locals = Object.assign({});
+    console.log(res.locals);
+  });
+
+  afterAll(() => {
+    console.log('running clean up')
+    res.locals = Object.assign({});
+  })
+  test('it calls next if the required value isn\'t there', () => {
+    const req = requestMock();
+
+    gatherState(req, res, next);
+    expect(next).toHaveBeenCalled()
+  })
+
+  test('it does not continue with the function if the required value isn\'t there', () => {
+    const req = requestMock();
+
+    gatherState(req, res, next);
+    expect(res.locals).not.toHaveProperty(STATE_KEY)
+  })
+
+  test('it gathers state and adds it as a new res.locals value', () => {
+    const req = requestMock();
+    req.user = user;
+    const res = responseMock();
+    const arr = [1,2,3,4]
+    res.locals[PREFETCHED_TODOS_KEY] = arr
+
+    gatherState(req, res, next);
+    expect(res.locals).toHaveProperty(STATE_KEY)
+  })
+
+  test('it calls the next function in the middleware chain', () => {
+    const req = requestMock();
+    req.user = user;
+    const res = responseMock();
+    res.locals[PREFETCHED_TODOS_KEY] = []
+
+    gatherState(req, res, next);
+    expect(next).toHaveBeenCalled()
+  })
 })

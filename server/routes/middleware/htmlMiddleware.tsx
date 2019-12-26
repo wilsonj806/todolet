@@ -17,6 +17,8 @@ import routes from './../routes.client';
 import configureStore from '../../../client/store/configureStore';
 import { StoreShape } from '../../../client/types';
 import { INIT_APP_STATE } from '../../../client/store/reducers/root.reducer';
+import { PREFETCHED_TODOS_KEY } from './todoMiddleware';
+import { storeInResLocals } from './commonMiddleware';
 // import User from '../../models/user';
 
 
@@ -47,31 +49,48 @@ const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = IN
     </body>
     </html>
 `)
+const STATE_KEY = '__STATE__';
+
+const gatherState : RequestHandler = (req, res, next) => {
+  // console.log(req.user);
+  if (!req.user || !res.locals[PREFETCHED_TODOS_KEY]) {
+    // NOTE If there's no prefetched_todos then keep going
+    next();
+  } else {
+    const todosList = [ ...res.locals[PREFETCHED_TODOS_KEY] ];
+    const { username, _id: userId, todos, projectFilters, tagFilters, email } = req.user as any;
+    const authorizedUser = Object.assign({}, {
+      username,
+      userId,
+      todos,
+      tagFilters,
+      projectFilters,
+      email
+    });
+
+    const state = {
+      ...INIT_APP_STATE,
+      authorizedUser,
+      todosList,
+    }
+    storeInResLocals(res, STATE_KEY, state);
+    next();
+  }
+}
 
 const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
-  // TODO check if there's a session and prepopulate
-  // const prepopulatedState: StoreShape = {
-  //   authorizedUser: {}
-  // }
-  // const { passport } = req.session;
-  // const userId = passport && passport.user ? passport.user.userId.toString() : undefined;
-  // try {
-  //   const user = await User.findById(userId);
-  //   console.log(user);
-  //   prepopulatedState.authorizedUser = user
-  // } catch (error) {
-  //   res.redirect(500, '/500-err')
-  // }
-
+  const initState = { ...res.locals[STATE_KEY] }
+  // console.log(initState);
   const sheets = new ServerStyleSheets({
     serverGenerateClassName: createGenerateClassName({
       productionPrefix: 'jss',
     })
   });
+  // console.log(initState);
   const store = configureStore(
-    // prepopulatedState
+    initState
   );
-
+  // console.log('this is store state', store.getState())
   const context = {};
   const jsx = (
     <Provider store={ store }>
@@ -81,12 +100,21 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
     </Provider>
   );
   const reactDom = renderToString(sheets.collect(jsx));
+  // console.log(reactDom);
   const css = sheets.toString();
+  // console.log('this is state', store.getState())
+  const finalState = store.getState();
+  const html = htmlTemplate(
+    reactDom,
+    css,
+    finalState
+  );
+
   res
     .status(200)
     .set({ "Content-Type": "text/html" })
     // FIXME
-    .send( htmlTemplate( reactDom, css ) );
+    .send(html);
 
   next();
 };
@@ -94,6 +122,8 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
 
 
 export {
+  gatherState,
   returnHtml,
-  htmlTemplate
+  htmlTemplate,
+  STATE_KEY
 }

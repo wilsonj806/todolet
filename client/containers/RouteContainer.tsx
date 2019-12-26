@@ -17,7 +17,7 @@ const RouteContainer: FunctionComponent<any> = (props) => {
   const authorizedUser = useSelector((state: StoreShape) => state.authorizedUser);
   const { username, userId } = authorizedUser;
   const isNotAuthorized: boolean = username === undefined || userId === undefined;
-  console.log(authorizedUser);
+  // console.log('this is authorized user', authorizedUser);
 
   const AuthorizedRoutes = (
     <>
@@ -30,11 +30,14 @@ const RouteContainer: FunctionComponent<any> = (props) => {
     </>
   )
 
+  const HomeRoute = isNotAuthorized ? LoginPage : MainPage;
+
+  console.log(HomeRoute.name);
   // NOTE RENDER CONDITIONAL ROUTES LAST
   // FIXME Monkeypatched the register route
   return (
     <Switch>
-      <Route path='/' exact component={ isNotAuthorized ? LoginPage : MainPage }/>
+      <Route path='/' exact component={ HomeRoute }/>
       <Route path='/register' exact component={ RegisterPage }/>
       <Route path='/logout' exact component={ LogoutPage }/>
       { authorizedUser.userId && authorizedUser.username ? AuthorizedRoutes : UnauthorizedRoutes }

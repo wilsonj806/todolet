@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import ReactDOM from 'react-dom';
+// @ts-ignore
 import window from 'window-or-global'
 
 

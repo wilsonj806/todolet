@@ -5,7 +5,6 @@ import { storeInResLocals } from './commonMiddleware';
 import Todo from '../../models/todo';
 import User from '../../models/user';
 
-// FIXME check if the getTodos functions even needs to call the Users database
 
 const NEW_TODO = '__NEW_TODO__';
 const postNewTodo: RequestHandler = async (req, res, next) => {
@@ -37,8 +36,8 @@ const getUsersTodos: RequestHandler = async (req, res, next) => {
   };
   try {
     // console.log('this is user\n', user);
-    const dbUser = await User.findById(user._id);
-    const { todos }: any = dbUser;
+    // const dbUser = await User.findById(user._id);
+    const { todos }: any = user;
     // console.log('this is todo ids ',todos);
     const fetchedTodos = await Todo.find({
       _id: {

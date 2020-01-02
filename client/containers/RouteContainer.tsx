@@ -15,6 +15,7 @@ const RouteContainer: FunctionComponent<any> = (props) => {
   // TODO distinguish between unauthenticated and authenticated routes
   // TODO handle 404 and 500 errors
   const authorizedUser = useSelector((state: StoreShape) => state.authorizedUser);
+  console.log(authorizedUser);
   const { username, userId } = authorizedUser;
   const isNotAuthorized: boolean = username === undefined || userId === undefined;
   // console.log('this is authorized user', authorizedUser);
@@ -27,10 +28,12 @@ const RouteContainer: FunctionComponent<any> = (props) => {
   const UnauthorizedRoutes = (
     <>
       <Route path='/login' exact component={ LoginPage }/>
+      <Route path='/register' exact component={ RegisterPage }/>
     </>
   )
 
   const HomeRoute = isNotAuthorized ? LoginPage : MainPage;
+  const RoutesToRender = isNotAuthorized ? UnauthorizedRoutes : AuthorizedRoutes;
 
   console.log(HomeRoute.name);
   // NOTE RENDER CONDITIONAL ROUTES LAST
@@ -38,9 +41,8 @@ const RouteContainer: FunctionComponent<any> = (props) => {
   return (
     <Switch>
       <Route path='/' exact component={ HomeRoute }/>
-      <Route path='/register' exact component={ RegisterPage }/>
       <Route path='/logout' exact component={ LogoutPage }/>
-      { authorizedUser.userId && authorizedUser.username ? AuthorizedRoutes : UnauthorizedRoutes }
+      { RoutesToRender }
       <Route component={ NotFoundPage }/>
     </Switch>
   )

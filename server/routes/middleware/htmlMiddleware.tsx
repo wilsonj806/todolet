@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Request } from 'express';
 
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -13,7 +13,7 @@ import {
 import { staticLocation } from '../../expressApp';
 
 import App from '../../../client/App'
-import routes from './../routes.client';
+import { checkSessionAndUrl } from './../routes.client';
 import configureStore from '../../../client/store/configureStore';
 import { StoreShape } from '../../../client/types';
 import { INIT_APP_STATE } from '../../../client/store/reducers/root.reducer';
@@ -21,6 +21,7 @@ import { PREFETCHED_TODOS_KEY } from './todoMiddleware';
 import { storeInResLocals } from './commonMiddleware';
 // import User from '../../models/user';
 
+// TODO do proper server side routing for requests
 
 const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = INIT_APP_STATE, title: string = 'Todolet'): string =>
   (`
@@ -53,11 +54,12 @@ const STATE_KEY = '__STATE__';
 
 const gatherState : RequestHandler = (req, res, next) => {
   // console.log(req.user);
-  if (!req.user || !res.locals[PREFETCHED_TODOS_KEY]) {
+  if (!req.user) {
     // NOTE If there's no prefetched_todos then keep going
     next();
   } else {
-    const todosList = [ ...res.locals[PREFETCHED_TODOS_KEY] ];
+    // @ts-ignore
+    const todosList = req.user[PREFETCHED_TODOS_KEY] ? [ ...res.locals[PREFETCHED_TODOS_KEY] ] : [];
     const { username, _id: userId, todos, projectFilters, tagFilters, email } = req.user as any;
     const authorizedUser = Object.assign({}, {
       username,
@@ -78,6 +80,7 @@ const gatherState : RequestHandler = (req, res, next) => {
   }
 }
 
+
 const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
   const initState = { ...res.locals[STATE_KEY] }
   // console.log(initState);
@@ -92,9 +95,11 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
   );
   // console.log('this is store state', store.getState())
   const context = {};
+  const finalUrl = checkSessionAndUrl(req);
+  const status = finalUrl === req.url ? 200 : 303
   const jsx = (
     <Provider store={ store }>
-      <StaticRouter context={ context } location={ req.url }>
+      <StaticRouter context={ context } location={ finalUrl }>
         <App/>
       </StaticRouter>
     </Provider>
@@ -109,9 +114,12 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
     css,
     finalState
   );
+  // if (context.url) {
+  //   return res.redirect(301, context.url)
+  // }
 
   res
-    .status(200)
+    .status(status)
     .set({ "Content-Type": "text/html" })
     // FIXME
     .send(html);

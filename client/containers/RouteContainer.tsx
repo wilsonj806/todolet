@@ -43,7 +43,12 @@ const RouteContainer: FunctionComponent<any> = (props) => {
       <Route path='/' exact component={ HomeRoute }/>
       <Route path='/logout' exact component={ LogoutPage }/>
       { RoutesToRender }
-      <Route component={ NotFoundPage }/>
+      <Route path='/404'>
+        { NotFoundPage }
+      </Route>
+      <Route>
+        { NotFoundPage }
+      </Route>
     </Switch>
   )
 }

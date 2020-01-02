@@ -19,10 +19,12 @@ const postNewTodo: RequestHandler = async (req, res, next) => {
     // Fetch the id from the new todo
     const newTodoId = result._id.toString();
     // put the id into res.locals
+    // console.log('this is new todo id', newTodoId);
     storeInResLocals(res,NEW_TODO, newTodoId);
+    // console.log(res.locals[NEW_TODO]);
     next()
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json({msg: 'It broke'})
     next(err);
   }
@@ -44,8 +46,9 @@ const getUsersTodos: RequestHandler = async (req, res, next) => {
         $in: todos
       }
     })
+    const { password, __v, ...authorizedUser } = user._doc;
     // console.log(fetchedTodos);
-    res.status(200).json({ todos: fetchedTodos });
+    res.status(200).json({ todos: fetchedTodos, authorizedUser });
   } catch (e) {
     res.status(500).json({ msg: 'Server error sorry :('})
   }

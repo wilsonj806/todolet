@@ -3,6 +3,7 @@ import { responseMock, requestMock } from "./mocks/mockReqRes";
 import { IUserObj } from '../../types';
 
 import { putUser, updateUserTodos } from '../middleware/userUpdateMiddleware'
+import { NEW_TODO } from '../middleware/todoMiddleware';
 
 describe('A middleware function for updating a user', () => {
   let res;
@@ -92,7 +93,8 @@ describe('A middleware function for adding new todos to a user', () => {
   const next = jest.fn();
   const regex = /^(Error\:)/;
   // FIXME setting req.user.attributes isn't great, it's implementation details
-  const user = {
+  let user;
+  const init = {
     _id: '1239oij',
     username: 'guest',
     todos: []
@@ -100,13 +102,14 @@ describe('A middleware function for adding new todos to a user', () => {
 
   beforeAll(() => {
     res = responseMock();
+    user = {...init};
   });
 
-  test('it calls the data base to update the user document', async (done) => {
+  test('it calls the database to update the user document', async (done) => {
     const req = requestMock();
-    req.user = user;
+    req.user = {...init};
     res.locals = {}
-    res.locals.new_todo = '333333';
+    res.locals[NEW_TODO] = '333333';
     const spy = jest.spyOn(User, 'findByIdAndUpdate')
 
     await updateUserTodos(req, res, next);
@@ -118,10 +121,10 @@ describe('A middleware function for adding new todos to a user', () => {
 
   test('it calls next if user update is successful', async (done) => {
     const req = requestMock();
-    req.user = user;
+    req.user = {...init};
     res.locals = {}
-    res.locals.new_todo = '333333';
-    jest.spyOn(User, 'findByIdAndUpdate')
+    res.locals[NEW_TODO] = '333333';
+    jest.spyOn(User, 'findByIdAndUpdate').mockImplementation(() => ({...init}) as any)
 
     await updateUserTodos(req, res, next);
 
@@ -131,9 +134,9 @@ describe('A middleware function for adding new todos to a user', () => {
 
   test('it sends a response if it failed', async (done) => {
     const req = requestMock();
-    req.user = user;
+    req.user = {...init};
     res.locals = {}
-    res.locals.new_todo = '333333';
+    res.locals[NEW_TODO] = '333333';
     jest.spyOn(User, 'findByIdAndUpdate').mockImplementation(() => {throw new Error('fail')})
     await updateUserTodos(req, res, next);
 

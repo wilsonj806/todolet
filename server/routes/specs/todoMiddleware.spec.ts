@@ -79,15 +79,13 @@ describe('A middleware function for getting all todos for a user', () => {
   beforeAll(() => {
     res = responseMock();
   });
-  test('it should call the user db', async (done) => {
+  test('it should check for a valid session', async (done) => {
     const req = requestMock();
-    req.user = user;
-
-    const spy = jest.spyOn(User, 'findById');
+    req.user = undefined;
 
     await getUsersTodos(req, res, next);
 
-    expect(spy).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
     done()
   })
 
@@ -108,23 +106,30 @@ describe('A middleware function for getting all todos for a user', () => {
   test('it should send an HTTP response with a 200 status code', async (done) => {
     const req = requestMock();
     req.user = user;
+    req.user._doc = user;
 
-  jest.spyOn(User, 'findById')
-    .mockImplementation(() => user as any);
-  jest.spyOn(Todo, 'find')
-    .mockImplementation(() => [] as any);
+    jest.spyOn(Todo, 'find')
+      .mockImplementation(() => [] as any);
 
     await getUsersTodos(req, res, next);
     expect(res.status).toHaveBeenCalledWith(200)
     done();
   })
 
-  test('it should send an HTTP response with the todos', async (done) => {
+  test('it should send an HTTP response with the todos and the updated user', async (done) => {
     const req = requestMock();
     req.user = user;
+    req.user._doc = user;
+    const arr = [1,2,3]
+    jest.spyOn(Todo, 'find')
+    .mockImplementation(() => arr as any);
+
 
     await getUsersTodos(req, res, next);
-    expect(res.json).toHaveBeenCalled()
+    expect(res.json).toHaveBeenCalledWith({
+      todos: arr,
+      authorizedUser: user
+    })
     done();
   })
 
@@ -133,8 +138,10 @@ describe('A middleware function for getting all todos for a user', () => {
     // console.log(res.locals);
     const req = requestMock();
     req.user = user;
+    req.user._doc = user;
 
-    jest.spyOn(User, 'findById')
+
+    jest.spyOn(Todo, 'find')
       .mockImplementation(() => { throw new Error('test') });
     await getUsersTodos(req, res, next);
     expect(res.status).toHaveBeenCalledWith(500);

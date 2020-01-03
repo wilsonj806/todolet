@@ -6,6 +6,11 @@ import TodoService from '../TodoService';
 const { postTodo, getTodos } = TodoService;
 
 const mock = new MockAdapter(axios);
+const initUser = {
+  username: 'guest',
+  userId: 'aaaaa',
+  todos: []
+}
 
 describe('A method for posting a new todo', () => {
   const endpoint = '/api/todo';
@@ -13,6 +18,7 @@ describe('A method for posting a new todo', () => {
     todo: 'hi',
     priority: 'Low'
   }
+
 
   afterEach(() => mock.reset())
 
@@ -24,18 +30,25 @@ describe('A method for posting a new todo', () => {
   })
 
   it('should return the data included in the todos property', async (done) => {
-    const mockData = [{todo: 'mock data'}]
+    const mockData = {
+      todos: [
+        {todo: 'mock data'}
+      ],
+      authorizedUser: { ...initUser }
+    }
+    const assert = [
+      mockData.todos,
+      mockData.authorizedUser
+    ]
 
     mock.onPost(endpoint)
       .reply(
         200,
-        {
-          todos: mockData
-        }
+        mockData
       )
 
     const res = await postTodo(mockReq)
-    expect(res).toStrictEqual(mockData);
+    expect(res).toStrictEqual(assert);
     done()
   })
 
@@ -71,18 +84,23 @@ describe('A method for getting all todos', () => {
   })
 
   it('should return the data included in the todos property', async (done) => {
-    const mockData = [{todo: 'mock data'}]
+    const mockData = {
+      todos: [{todo: 'mock data'}],
+      authorizedUser: {...initUser}
+    }
+    const assert = [
+      mockData.todos,
+      mockData.authorizedUser
+    ]
 
     mock.onGet(endpoint)
       .reply(
         200,
-        {
-          todos: mockData
-        }
+        mockData
       )
 
     const res = await getTodos()
-    expect(res).toStrictEqual(mockData);
+    expect(res).toStrictEqual(assert);
     done()
   })
 

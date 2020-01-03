@@ -22,12 +22,11 @@ const postTodo = async (reqObj: postTodoReq) => {
   try {
     validateForm<postTodoReq>(reqObj);
     const response : AxiosResponse<any> | any = await axios.post(endpointPrefix, reqObj);
-
     if (response.data.errors) {
       throw new Error(response.data.errors)
     }
-
-    return response.data.todos;
+    const { todos, authorizedUser } = response.data;
+    return [ todos, authorizedUser ];
   } catch (error) {
     throw error
   }
@@ -36,12 +35,12 @@ const postTodo = async (reqObj: postTodoReq) => {
 const getTodos = async () => {
   try {
     const response : AxiosResponse<any> | any = await axios.get(endpointPrefix);
-    console.log(response);
+    // console.log(response);
     if (response.data.errors) {
       throw new Error(response.data.errors)
     }
-
-    return response.data.todos;
+    const { todos, authorizedUser } = response.data;
+    return [ todos, authorizedUser ];
   } catch (error) {
     throw error
   }

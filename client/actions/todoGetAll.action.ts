@@ -5,6 +5,7 @@ import {
   ReduxAction,
 } from '../types';
 import { errorResponse } from '../../server/types';
+import { receiveUserUpdateSuccess } from './userUpdate.action';
 
 export const GET_TODOS_INIT = 'GET_TODOS_INIT'
 export const GET_TODOS_FAIL = 'GET_TODOS_FAIL'
@@ -26,13 +27,14 @@ const receiveTodosFail = (err : any) : any => ({
 })
 
 // ----- NOTE Exported Redux Thunk action
-const { getTodos } = TodoService
 export const getAllTodos = () => {
   return async (dispatch: Dispatch) => {
     dispatch(requestTodos());
     try {
-      const res = await getTodos();
-      dispatch(receiveTodosSuccess(res))
+      const [ todos, authorizedUser ] = await TodoService.getTodos();
+      // dispatch(receiveTodosSuccess(res))
+      dispatch(receiveTodosSuccess(todos))
+      dispatch(receiveUserUpdateSuccess(authorizedUser))
     } catch (err) {
       dispatch(receiveTodosFail(err.message))
     }

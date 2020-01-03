@@ -5,15 +5,15 @@ import UserService from '../services/UserService';
 // ----- NOTE TypeScript types(client and server)
 import {
   AsyncUserUpdateAction,
-  UserStoreShape
+  UserStoreShape,
 } from '../types';
 import { postUserReq, userDataResponse, errorResponse } from '../../server/types';
 
 
 // ----- NOTE Exported Action types
-export const PUT_USER_INIT = 'PUT_USER_INIT'
-export const PUT_USER_FAIL = 'PUT_USER_FAIL'
-export const PUT_USER_SUCCESS = 'PUT_USER_SUCCESS'
+export const PUT_USER_INIT = 'PUT_USER_INIT';
+export const PUT_USER_FAIL = 'PUT_USER_FAIL';
+export const PUT_USER_SUCCESS = 'PUT_USER_SUCCESS';
 
 
 // ----- NOTE Registration action creators
@@ -21,19 +21,19 @@ const requestUserUpdate = () : AsyncUserUpdateAction => ({
   type: PUT_USER_INIT,
 })
 
-const receiveUserUpdateSuccess = (json : userDataResponse) : AsyncUserUpdateAction => ({
+export const receiveUserUpdateSuccess = (json: userDataResponse): AsyncUserUpdateAction => ({
   type: PUT_USER_SUCCESS,
-  payload: json
-})
+  payload: json,
+});
 
-const receiveUserUpdateFailure = (json : errorResponse) : AsyncUserUpdateAction => ({
+const receiveUserUpdateFailure = (json: errorResponse): AsyncUserUpdateAction => ({
   type: PUT_USER_FAIL,
-  payload: json
-})
+  payload: json,
+});
 
 // ----- NOTE Exported Redux Thunk action
-export const putUser = (request : any, userId: string) => {
-  return async (dispatch : Dispatch) => {
+export const putUser= (request: any, userId: string): any => {
+  return async (dispatch: Dispatch): Promise<void> => {
     dispatch(requestUserUpdate());
     try {
       const result = await UserService.putUser(request, userId);
@@ -42,11 +42,11 @@ export const putUser = (request : any, userId: string) => {
 
       if (status === 'FAILURE') {
         const { msg } = result;
-        throw new Error(msg)
+        throw new Error(msg);
       }
-      dispatch(receiveUserUpdateSuccess(result.payload))
+      dispatch(receiveUserUpdateSuccess(result.payload));
     } catch (error) {
       dispatch(receiveUserUpdateFailure(error.message));
     }
-  }
-}
+  };
+};

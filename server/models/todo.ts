@@ -24,6 +24,10 @@ const todoSchema = new mongoose.Schema({
   isCompleted: {
     type: Boolean,
     default: false
+  },
+  userIndex: {
+    type: Number,
+    default: 0,
   }
 });
 /* eslint-enable @typescript-eslint/camelcase */

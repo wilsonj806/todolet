@@ -2,7 +2,7 @@ import User from '../../models/user'
 import Todo from '../../models/todo'
 import { requestMock, responseMock } from './mocks/mockReqRes';
 
-import { postNewTodo, getUsersTodos, prefetchUserTodos } from '../middleware/todoMiddleware';
+import { postNewTodo, getUsersTodos, prefetchUserTodos, updateTodo } from '../middleware/todoMiddleware';
 
 describe('A middleware function for posting new todos', () => {
   let res;
@@ -11,7 +11,8 @@ describe('A middleware function for posting new todos', () => {
   // FIXME setting req.user.attributes isn't great, it's implementation details
   const user = {
     _id: [1, 2, 3 ,4],
-    username: 'guest'
+    username: 'guest',
+    todos: []
   };
 
   beforeAll(() => {
@@ -226,6 +227,75 @@ describe('A middleware function that gets all todos for a user and stores them f
       .mockImplementation(() => { throw new Error('test') });
     await prefetchUserTodos(req, res, next);
     expect(res.status).toHaveBeenCalledWith(500);
+    done();
+  })
+})
+
+describe('A middleware function for updating todos', () => {
+  let res;
+  const next = jest.fn();
+  const regex = /^(Error\:)/;
+  // FIXME setting req.user.attributes isn't great, it's implementation details
+  const user = {
+    _id: [1, 2, 3 ,4],
+    username: 'guest',
+    todos: []
+  };
+  const mockBody = {
+    originalTodo: {
+      todo: 'hello',
+      priority: 'high',
+      isCompleted: false
+    },
+    updatedValue: {
+      isCompleted: true
+    }
+  };
+
+  beforeAll(() => {
+    res = responseMock();
+  });
+
+  test('it should call the database and update a todo', () => {
+    // Setup the request with the Todo
+    // Add a todo entry and a priority entry
+    const req = requestMock({}, mockBody);
+    req.user = user;
+    req.params._id = '11111'
+
+    const spy = jest.spyOn(Todo, 'findByIdAndUpdate')
+
+    updateTodo(req, res, next);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  test('it should send a response with an error if it failed', () => {
+    const req = requestMock({}, mockBody);
+    req.user = user;
+    req.params._id = '11111'
+
+
+    jest.spyOn(Todo, 'findByIdAndUpdate')
+      .mockImplementation(() => {
+        throw new Error('mock err')
+      });
+    updateTodo(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+  })
+
+  test('it should send a response with the updated todo', async (done) => {
+    const req = requestMock({}, mockBody);
+    req.user = user;
+    req.params._id
+
+
+    jest.spyOn(Todo, 'findByIdAndUpdate')
+      .mockReturnValue(mockBody.originalTodo as any);
+    await updateTodo(req, res, next);
+    expect(res.json).toHaveBeenCalledWith({
+      updatedTodo: mockBody.originalTodo
+    });
     done();
   })
 })

@@ -12,6 +12,7 @@ const requestMock = (sessionData: any = {}, body: any = {}, _validationErrors: a
     destroy: jest.fn(callback => callback()),
     ...sessionData},
   body,
+  params: {},
   logout: jest.fn().mockImplementation(() => true)
 });
 

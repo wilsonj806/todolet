@@ -3,7 +3,8 @@ import { body } from 'express-validator/check';
 
 import {
   postNewTodo,
-  getUsersTodos
+  getUsersTodos,
+  updateTodo
 } from './middleware/todoMiddleware'
 import {
   updateUserTodos,
@@ -13,14 +14,22 @@ import {
 
 const router = express.Router();
 
-router.post('/',
+router.post(
+  '/',
   postNewTodo,
   updateUserTodos,
   getUsersTodos
 )
 
-router.get('/',
+router.get(
+  '/',
   getUsersTodos
+)
+
+router.put(
+  '/:_id',
+  updateTodo,
+  // getUsersTodos
 )
 
 export default router;

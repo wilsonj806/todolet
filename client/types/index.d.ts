@@ -173,7 +173,7 @@ declare namespace AnotherTodoClient {
   }
 
   interface TodoShape {
-    id            ?: number
+    _id           ?: string
     isCompleted   : boolean
     priority      : PriorityTypes
     todo          : string

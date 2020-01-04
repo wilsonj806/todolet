@@ -14,7 +14,12 @@ const postNewTodo: RequestHandler = async (req, res, next) => {
     return res.status(500).json({ msg: 'you not loggedin' })
   };
   try {
-    const result = await Todo.create({...body});
+    const { todos: userTodos } = user;
+    const newTodo = {
+      ...body,
+      userIndex: userTodos.length !== 0 ? userTodos.length : 0
+    }
+    const result = await Todo.create(newTodo);
     // console.log(result._id.toString());
     // Fetch the id from the new todo
     const newTodoId = result._id.toString();
@@ -81,10 +86,32 @@ const prefetchUserTodos: RequestHandler = async (req, res, next) => {
   }
 }
 
+const updateTodo: RequestHandler = async (req, res, next) => {
+  const { user } = req;
+  if (!user || !req.params) {
+    return res.status(403).json({ msg: 'Not authorized to access this resource' })
+  };
+  try {
+    console.log(req.body);
+    const { originalTodo, updatedValue } = req.body;
+    const { _id } = req.params;
+    const todoToUpdate = { ...originalTodo, ...updatedValue };
+    console.log(todoToUpdate);
+    const updatedTodo = await Todo.findByIdAndUpdate(_id, todoToUpdate, { new: true });
+    console.log(updatedTodo);
+    res.status(200).json({
+      updatedTodo
+    })
+  } catch (e) {
+    res.status(500).json({ msg: 'server error' });
+  }
+}
+
 export {
   postNewTodo,
   getUsersTodos,
   prefetchUserTodos,
+  updateTodo,
   PREFETCHED_TODOS_KEY,
   NEW_TODO
 }

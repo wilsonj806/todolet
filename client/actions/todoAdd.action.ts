@@ -31,8 +31,8 @@ const receivePostNewTodoFail = (err : any) : any => ({
 
 // ----- NOTE Exported Redux Thunk action
 // FIXME this only returns the TODOS and NOT the updated user
-export const postNewTodo = (request : any, stateFns: SetStateAction<any>[]) => {
-  return async (dispatch: Dispatch) => {
+export const postNewTodo = (request : any, stateFns: SetStateAction<any>[]) =>
+  async (dispatch: Dispatch) => {
     dispatch(requestPostNewTodo());
     try {
       const [ todos, authorizedUser ] = await TodoService.postTodo(request);
@@ -44,5 +44,5 @@ export const postNewTodo = (request : any, stateFns: SetStateAction<any>[]) => {
       dispatch(receivePostNewTodoFail(err.message))
     }
   }
-}
+
 

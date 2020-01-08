@@ -28,8 +28,8 @@ const receiveLogoutFailure = (json : errorResponse) : ReduxAction => ({
 })
 
 // ----- NOTE Exported Redux Thunk action
-export const postLogout = () => {
-  return async (dispatch : Dispatch) => {
+export const postLogout = () =>
+  async (dispatch : Dispatch) => {
     dispatch(requestLogout());
     try {
       const result = await UserService.postLogout();
@@ -41,4 +41,3 @@ export const postLogout = () => {
       dispatch(receiveLogoutFailure(error.message));
     }
   }
-}

@@ -27,8 +27,8 @@ const receiveTodosFail = (err : any) : any => ({
 })
 
 // ----- NOTE Exported Redux Thunk action
-export const getAllTodos = () => {
-  return async (dispatch: Dispatch) => {
+export const getAllTodos = () =>
+  async (dispatch: Dispatch) => {
     dispatch(requestTodos());
     try {
       const [ todos, authorizedUser ] = await TodoService.getTodos();
@@ -39,4 +39,4 @@ export const getAllTodos = () => {
       dispatch(receiveTodosFail(err.message))
     }
   }
-}
+

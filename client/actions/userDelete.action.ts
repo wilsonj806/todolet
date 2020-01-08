@@ -28,8 +28,8 @@ const receiveDeleteUserFailure = (json : errorResponse) : ReduxAction => ({
 })
 
 // ----- NOTE Exported Redux Thunk action
-export const deleteUser = () => {
-  return async (dispatch : Dispatch) => {
+export const deleteUser = () =>
+  async (dispatch : Dispatch) => {
     dispatch(requestDeleteUser());
     try {
       const result = await UserService.deleteUser();
@@ -41,4 +41,3 @@ export const deleteUser = () => {
       dispatch(receiveDeleteUserFailure(error.message));
     }
   }
-}

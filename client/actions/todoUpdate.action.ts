@@ -29,8 +29,8 @@ const receivePutTodoFail = (err : any) : any => ({
 })
 
 export const updateTodo = (todo: TodoShape) =>
-  <T extends { [key in keyof TodoShape] ?: any }>(updatedValue: T) => {
-    return async (dispatch: any) => {
+  <T extends { [key in keyof TodoShape] ?: any }>(updatedValue: T) =>
+    async (dispatch: any) => {
       try {
         dispatch(requestPutTodo());
         const updatedTodo = await TodoService.updateTodo(todo, updatedValue)
@@ -39,7 +39,7 @@ export const updateTodo = (todo: TodoShape) =>
         dispatch(receivePutTodoFail(e))
       }
     }
-  }
+
 
 /**
  * End result at the reducer end

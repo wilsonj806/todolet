@@ -32,8 +32,8 @@ const receiveRegisterFailure = (json : errorResponse) : AsyncRegisterAction => (
 })
 
 // ----- NOTE Exported Redux Thunk action
-export const postNewUser = (request : postUserReq) => {
-  return async (dispatch : Dispatch) => {
+export const postNewUser = (request : postUserReq) =>
+  async (dispatch : Dispatch) => {
     dispatch(requestRegister());
     try {
       const result = await UserService.postNewUser(request);
@@ -45,4 +45,3 @@ export const postNewUser = (request : postUserReq) => {
       dispatch(receiveRegisterFailure(error.message));
     }
   }
-}

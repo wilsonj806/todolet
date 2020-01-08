@@ -32,8 +32,8 @@ const receiveUserUpdateFailure = (json: errorResponse): AsyncUserUpdateAction =>
 });
 
 // ----- NOTE Exported Redux Thunk action
-export const putUser= (request: any, userId: string): any => {
-  return async (dispatch: Dispatch): Promise<void> => {
+export const putUser= (request: any, userId: string): any =>
+  async (dispatch: Dispatch): Promise<void> => {
     dispatch(requestUserUpdate());
     try {
       const result = await UserService.putUser(request, userId);
@@ -49,4 +49,3 @@ export const putUser= (request: any, userId: string): any => {
       dispatch(receiveUserUpdateFailure(error.message));
     }
   };
-};

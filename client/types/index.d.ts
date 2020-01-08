@@ -111,7 +111,7 @@ declare namespace AnotherTodoClient {
 
   type AsyncTodoPost = "POST_TODO_INIT" | "POST_TODO_FAIL" | "POST_TODO_SUCCESS"
 
-  type AsyncTodoPatch = "PATCH_TODO_INIT" | "PATCH_TODO_FAIL" | "PATCH_TODO_SUCCESS"
+  type AsyncTodoPatch = "PUT_TODO_INIT" | "PUT_TODO_FAIL" | "PUT_TODO_SUCCESS"
 
   type AsyncTodoDelete = "DELTE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
 
@@ -177,6 +177,7 @@ declare namespace AnotherTodoClient {
     isCompleted   : boolean
     priority      : PriorityTypes
     todo          : string
+    userIndex     : number
     projectFilter ?: string | undefined
     tagFilter     ?: string | undefined
   }

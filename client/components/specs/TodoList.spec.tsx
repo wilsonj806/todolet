@@ -1,19 +1,46 @@
 import React from 'react';
+import { DeepPartial } from 'redux';
+
+// ----- Testing libs
 import { render, cleanup, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
+// ----- Redux stuff
+import ReduxWrap from '../../layouts/test-helpers/ReduxWrap.helper.spec';
+import configureStore from '../../store/configureStore';
+
+
 import TodoList from '../TodoList/TodoList';
+import { StoreShape, TodoShape } from '../../types';
+
 
 describe('A component that renders Todos', () => {
   const mockTodos = [
-    {todo: 'test1', priority: 'High', isCompleted: false},
-    {todo: 'test2', priority: 'Medium', isCompleted: false},
-    {todo: 'test3', priority: 'Low', isCompleted: false},
-  ];
+    {todo: 'test1', priority: 'High', isCompleted: false, _id: '11', userIndex: 0},
+    {todo: 'test2', priority: 'Medium', isCompleted: false, _id: '12', userIndex: 1},
+    {todo: 'test3', priority: 'Low', isCompleted: false, _id: '13', userIndex: 2},
+  ] as TodoShape[];
+
+  const authenticatedState : DeepPartial<StoreShape> = {
+    authorizedUser : {
+      userId : '1111',
+      username : 'guest'
+    },
+    clientServerConnect : {
+      isFetching : false
+    },
+    todosList: mockTodos
+  }
+
+
+
+  const authenticatedStore = configureStore(authenticatedState)
 
   test('it renders a list element', () => {
     const { container } = render(
-      <TodoList todosList={ mockTodos }/>
+      <ReduxWrap store={ authenticatedStore }>
+        <TodoList todosList={ mockTodos }/>
+      </ReduxWrap>
     )
 
     act(() => {
@@ -24,7 +51,9 @@ describe('A component that renders Todos', () => {
   })
   test('it renders todos', () => {
     const { container } = render(
-      <TodoList todosList={ mockTodos }/>
+      <ReduxWrap store={ authenticatedStore }>
+        <TodoList todosList={ mockTodos }/>
+      </ReduxWrap>
     )
     act(() => {
       const ul = container.querySelector('ul');

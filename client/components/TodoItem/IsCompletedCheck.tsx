@@ -3,15 +3,29 @@ import { useDispatch } from 'react-redux';
 
 import CheckBox from '@material-ui/core/Checkbox';
 
-// TODO Plan out Todo updates
-const IsCompletedCheckbox : FC<any> = (props) => {
+import { TodoCheckboxProps } from '../../types';
 
+// TODO Plan out Todo updates
+const IsCompletedCheckbox : FC<TodoCheckboxProps> = (props) => {
+  const { reduxUpdateTodo, isCompleted } = props;
+  const dispatch = useDispatch();
+  // console.dir(props.curriedUpdateTodo);
   const handleChange = (event : ChangeEvent<any>) : void => {
-    console.log('hi')
+    try {
+      event.preventDefault()
+
+      const updatedValue = {
+        isCompleted: !isCompleted
+      }
+      dispatch(reduxUpdateTodo(updatedValue))
+    } catch (e) {
+      console.log(e);
+      // dispatch(clientError())
+    }
   }
-  const { id, isCompleted } = props;
+
   return (
-    <CheckBox checked={ isCompleted } disabled={ true }/>
+    <CheckBox checked={ isCompleted } onChange={ handleChange }/>
   )
 }
 

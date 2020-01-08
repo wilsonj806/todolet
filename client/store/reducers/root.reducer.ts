@@ -13,6 +13,7 @@ import {
 } from '../../types';
 import { GET_TODOS_SUCCESS, GET_TODOS_INIT, GET_TODOS_FAIL } from '../../actions/todoGetAll.action';
 import { POST_TODO_SUCCESS, POST_TODO_INIT, POST_TODO_FAIL } from '../../actions/todoAdd.action';
+import { PUT_TODO_SUCCESS, PUT_TODO_INIT, PUT_TODO_FAIL } from '../../actions/todoUpdate.action';
 
 // FIXME something's really weird with some of the key names and how it aligns with other stuff
 const INIT_USER_STATE : UserStoreShape = {
@@ -39,7 +40,12 @@ const todosList = (state: TodoShape[] = [], action: ReduxAction) : TodoShape[] =
   switch(action.type) {
     case POST_TODO_SUCCESS:
     case GET_TODOS_SUCCESS:
-      return [ ...action.payload ]
+      return [...action.payload]
+    case PUT_TODO_SUCCESS:
+      const { userIndex } = action.payload;
+      const copyOfState = [...state];
+      copyOfState[userIndex] = action.payload
+      return copyOfState
     default:
       return state
   }
@@ -81,6 +87,7 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
     case DELETE_USER_INIT:
     case POST_TODO_INIT:
     case GET_TODOS_INIT:
+    case PUT_TODO_INIT:
       return { ...state, isFetching: true }
     case POST_LOGIN_SUCCESS:
     case POST_LOGIN_FAIL:
@@ -92,6 +99,8 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
     case DELETE_USER_FAIL:
     case POST_TODO_FAIL:
     case GET_TODOS_FAIL:
+    case PUT_TODO_SUCCESS:
+    case PUT_TODO_FAIL:
       return { ...state, isFetching: false }
     default:
       return state

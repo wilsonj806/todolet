@@ -12,17 +12,20 @@ import useStyles from './TodoItem.styles';
 
 import { TodoItemProps } from '../../types';
 
+import { updateTodo } from '../../actions/todoUpdate.action';
+
 // TODO Add preliminary checkbox
 const TodoItem : FC<TodoItemProps> = (props) => {
   const classes = useStyles();
-  const { todo: Todo } = props;
-  const { todo, priority, id, isCompleted } = Todo;
+  const { todo: TodoObj } = props;
+  const { todo, priority, _id, isCompleted } = TodoObj;
+  const strikeThruStyling = isCompleted ? classes.listItemStrike : classes.listItem;
   return (
     <ListItem classes={{
-      root: classes.listItem
+      root: strikeThruStyling
     }}>
       <div className={ classes.leftWrapper }>
-        <Checkbox id={ id } isCompleted={ isCompleted }/>
+        <Checkbox isCompleted={ isCompleted } reduxUpdateTodo={ updateTodo(TodoObj) }/>
         <Typography>
           { todo }
         </Typography>

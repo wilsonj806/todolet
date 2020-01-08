@@ -86,6 +86,11 @@ declare namespace AnotherTodoClient {
     priority: PriorityTypes
   }
 
+  interface TodoCheckboxProps {
+    isCompleted : boolean
+    reduxUpdateTodo : <T extends { [key in keyof TodoShape] ?: any }>(updatedValue: T) => (dispatch: any) => Promise<void>
+  }
+
   // ----- NOTE Redux Action Types
   type SyncUserActions = "POST_FILTER" | "DELETE_FILTER" | "LOGIN_GUEST"
 

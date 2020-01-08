@@ -52,9 +52,7 @@ const SubmitBar: FC<any> = () => {
       priority
     };
     try {
-      await dispatch(postNewTodo(request, [setTodo, setPriority]))
-      setTodo('');
-      setPriority('');
+      dispatch(postNewTodo(request, [setTodo, setPriority]))
     } catch (error) {
       setError(error)
     }

@@ -27,8 +27,6 @@ import { StoreShape } from '../../client/types';
 const checkSessionAndUrl = (req: Request) => {
   const commonRoutes = [
     'favicon.ico',
-    'logout',
-    'home',
   ]
   const authenticatedRoutes = [
     'account',
@@ -37,6 +35,7 @@ const checkSessionAndUrl = (req: Request) => {
   const unauthenticatedRoutes = [
     'register',
     'login',
+    'logout',
     ...commonRoutes
   ];
   /**
@@ -57,15 +56,17 @@ const checkSessionAndUrl = (req: Request) => {
     const regex = new RegExp(route);
     return regex.test(url);
   })
+
+  const doesUserExist = Object.keys(req.user).length > 0;
   // checks if routes match as expected
-  if ((hasMatchingAuthRoute && req.user) || (hasMatchingUnauthRoute && !req.user)) {
-    return req.url
-  } else if (hasMatchingAuthRoute && !req.user) {
-    return '/'
-  } else if (hasMatchingUnauthRoute && req.user) {
-    return '/'
+  if ((hasMatchingAuthRoute && doesUserExist) || (hasMatchingUnauthRoute && doesUserExist === false) || req.url === '/') {
+    return 200
+  } else if (hasMatchingAuthRoute && doesUserExist === false) {
+    return 300
+  } else if (hasMatchingUnauthRoute && doesUserExist) {
+    return 300
   } else {
-    return '/404'
+    return 404
   }
 }
 // const routes = (store : Store<StoreShape>): any[] => {

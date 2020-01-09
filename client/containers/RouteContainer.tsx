@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux'
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 // ----- Pages
 import LoginPage from '../pages/LoginPage';
@@ -12,43 +12,32 @@ import NotFoundPage from '../pages/404Page';
 import { StoreShape } from '../types';
 
 const RouteContainer: FunctionComponent<any> = (props) => {
-  // TODO distinguish between unauthenticated and authenticated routes
   // TODO handle 404 and 500 errors
   const authorizedUser = useSelector((state: StoreShape) => state.authorizedUser);
-  console.log(authorizedUser);
   const { username, userId } = authorizedUser;
   const isNotAuthorized: boolean = username === undefined || userId === undefined;
-  // console.log('this is authorized user', authorizedUser);
 
-  const AuthorizedRoutes = (
-    <>
-      <Route path='/account' exact component={ UserUpdatePage }/>
-    </>
-  );
-  const UnauthorizedRoutes = (
-    <>
-      <Route path='/login' exact component={ LoginPage }/>
-      <Route path='/register' exact component={ RegisterPage }/>
-    </>
-  )
+  const HomeRoute = isNotAuthorized ? LoginPage : MainPage
+  // const RoutesToRender = isNotAuthorized ? UnauthorizedRoutes : AuthorizedRoutes;
+  // console.dir(RoutesToRender);
 
-  const HomeRoute = isNotAuthorized ? LoginPage : MainPage;
-  const RoutesToRender = isNotAuthorized ? UnauthorizedRoutes : AuthorizedRoutes;
+  // FIXME Not scalable but it works
+  const AccountRoute = isNotAuthorized ? <Redirect exact to='/'/> : <UserUpdatePage/>;
 
-  console.log(HomeRoute.name);
-  // NOTE RENDER CONDITIONAL ROUTES LAST
+  const RegisterRoute = !isNotAuthorized ? <Redirect exact to='/'/> : <RegisterPage/>;
+  const LogoutRoute = !isNotAuthorized ? <Redirect exact to='/'/> : <LogoutPage/>;
+  const LoginRoute = !isNotAuthorized ? <Redirect exact to='/'/> : <LogoutPage/>;
+  // NOTE RENDER CONDITIONAL ROUTES LAST, REACT ROUTER RENDERS REACT FRAGMENTS WEIRD
   // FIXME Monkeypatched the register route
   return (
     <Switch>
       <Route path='/' exact component={ HomeRoute }/>
-      <Route path='/logout' exact component={ LogoutPage }/>
-      { RoutesToRender }
-      <Route path='/404'>
-        { NotFoundPage }
-      </Route>
-      <Route>
-        { NotFoundPage }
-      </Route>
+      <Route path='/404' exact component={ NotFoundPage }/>
+      <Route path='/account' exact render={ () => AccountRoute }/>
+      <Route path='/logout' exact render={ () => LogoutRoute }/>
+      <Route path='/login' exact render={ () => LoginRoute }/>
+      <Route path='/register' exact render={ () => RegisterRoute }/>
+      <Route component={ NotFoundPage }/>
     </Switch>
   )
 }

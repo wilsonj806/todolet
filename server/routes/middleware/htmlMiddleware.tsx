@@ -22,7 +22,7 @@ import { storeInResLocals } from './commonMiddleware';
 // import User from '../../models/user';
 
 // TODO do proper server side routing for requests
-
+// TODO add more tests to handle different status pages
 const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = INIT_APP_STATE, title: string = 'Todolet'): string =>
   (`
     <!DOCTYPE html>
@@ -95,8 +95,11 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
   );
   // console.log('this is store state', store.getState())
   const context = {};
-  const finalUrl = checkSessionAndUrl(req);
-  const status = finalUrl === req.url ? 200 : 303
+  const status = checkSessionAndUrl(req);
+  const finalUrl = status === 200 ? req.url :
+    status === 300 ? '/' :
+      '/404';
+
   const jsx = (
     <Provider store={ store }>
       <StaticRouter context={ context } location={ finalUrl }>

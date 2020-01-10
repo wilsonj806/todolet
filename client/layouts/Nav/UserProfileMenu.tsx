@@ -44,14 +44,14 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
   return (
     <>
       <IconButton
-         aria-controls="avatar-menu" aria-haspopup="true" onClick={handleClick}
-         color='primary'
-        >
+        aria-controls="avatar-menu" aria-haspopup="true" onClick={handleClick}
+        color='primary'
+      >
         <AccountCircle fontSize='large' color='primary'
           classes={{
             colorPrimary: classes.colorPrimary
           }}
-          />
+        />
       </IconButton>
       <Menu
         id="avatar-menu"
@@ -60,14 +60,14 @@ const UserProfileMenu: FunctionComponent<any> = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
-          <Link to="/help">Help</Link>
+        <MenuItem classes={{ root: classes.item }} onClick={handleClose}>
+          <Link to="/help" className={ classes.link }>Help</Link>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to="/account">My Account</Link>
+        <MenuItem classes={{ root: classes.item }} onClick={handleClose}>
+          <Link to="/account" className={ classes.link }>My Account</Link>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to="/logout" onClick={ () => dispatch(postLogout())}>Logout</Link>
+        <MenuItem classes={{ root: classes.item }} onClick={handleClose}>
+          <Link to="/logout" onClick={ () => dispatch(postLogout())} className={ classes.link }>Logout</Link>
         </MenuItem>
       </Menu>
     </>

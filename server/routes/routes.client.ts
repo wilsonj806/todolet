@@ -57,7 +57,7 @@ const checkSessionAndUrl = (req: Request) => {
     return regex.test(url);
   })
 
-  const doesUserExist = Object.keys(req.user).length > 0;
+  const doesUserExist = Object.keys(req.user || {}).length > 0;
   // checks if routes match as expected
   if ((hasMatchingAuthRoute && doesUserExist) || (hasMatchingUnauthRoute && doesUserExist === false) || req.url === '/') {
     return 200

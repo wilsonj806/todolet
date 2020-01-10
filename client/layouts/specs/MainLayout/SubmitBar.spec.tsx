@@ -48,11 +48,11 @@ describe('A layout that renders the login page', () => {
 
   afterEach(() => {
     jest.restoreAllMocks()
-
+    mock.resetHistory();
     cleanup()
   });
 
-  test('it renders with a form element', () => {
+  it('renders with a form element', () => {
     const { container } = render(
       <ReduxWrap store={store}>
         <SubmitBar/>
@@ -63,7 +63,7 @@ describe('A layout that renders the login page', () => {
     expect(form).toBeTruthy()
   })
 
-  test('it renders with a submit button element inside of a form', () => {
+  it('renders with a submit button element inside of a form', () => {
     const { container } = render(
       <ReduxWrap store={store}>
         <SubmitBar/>
@@ -76,7 +76,7 @@ describe('A layout that renders the login page', () => {
     expect(parent).toBeTruthy()
   })
 
-  test('it renders with an input element for the Todo', () => {
+  it('renders with an input element for the Todo', () => {
     const { container } = render(
       <ReduxWrap store={store}>
         <SubmitBar/>
@@ -88,7 +88,7 @@ describe('A layout that renders the login page', () => {
     expect(input).toBeTruthy()
   })
 
-  test('it renders with a select element for the Todo priority', () => {
+  it('renders with a select element for the Todo priority', () => {
     const { container } = render(
       <ReduxWrap store={store}>
         <SubmitBar/>
@@ -102,7 +102,7 @@ describe('A layout that renders the login page', () => {
 
   // Submit is async, but we need to stay on the page for it to do anything
   // We can make our async thunk return true when it finishes, so on finishing up, if response === true, rest form
-  test('it submits the form on click of the submit button', async (done) => {
+  it('submits the form on click of the submit button', async (done) => {
     const testStr = 'test todo';
     // const formSbumitStore = configureStore(init)
     const { container } = render(
@@ -111,14 +111,12 @@ describe('A layout that renders the login page', () => {
       </ReduxWrap>
     )
 
-    mock.onPost(endpoint).reply(200, [{ todo: testStr, priority: 'Low'}])
 
     /** NOTE jest.spyOn doesn't like it if you try spy on
      * ... a method AND you destructure it to use it like const { postTodo } = TodoService;
      * YOUR TEST WILL FAIL IF YOU DO SO
      **/
     const spy = jest.spyOn(TodoService, 'postTodo')
-      .mockImplementation(() => [{ todo: testStr, priority: 'Low'}] as any)
 
     expect(spy).not.toHaveBeenCalled();
 
@@ -137,9 +135,12 @@ describe('A layout that renders the login page', () => {
       const selectLow = menuRoot.querySelector('li[data-value=Low]');
       await fireEvent.click(selectLow!);
 
-      fireEvent.click(submitBtn!)
+      await fireEvent.click(submitBtn!)
     })
-    expect(spy).toHaveBeenCalled()
+
+    // Asserting that the API was called via Axios Mock
+    const assertApiCall = mock.history.post.length > 0;
+    expect(assertApiCall).toBe(true)
     done()
   })
 })

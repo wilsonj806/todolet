@@ -2,7 +2,8 @@ import React from 'react';
 import { DeepPartial } from 'redux';
 
 // ----- Test libs
-import { render, cleanup } from '@testing-library/react';
+import MockAdapter from 'axios-mock-adapter';
+import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 // ----- Redux stuff
@@ -10,22 +11,18 @@ import ReduxWrap from '../../layouts/test-helpers/ReduxWrap.helper.spec';
 import configureStore from '../../store/configureStore';
 
 
+import axios from '../../axios';
 import TodoItem from '../TodoItem/TodoItem';
 
 import { StoreShape } from '../../types';
 
-
+const mock = new MockAdapter(axios);
 describe('A component for rendering a Todo Item', () => {
-  const authenticatedState : DeepPartial<StoreShape> = {
-    authorizedUser : {
-      userId : '1111',
-      username : 'guest'
-    },
-    clientServerConnect : {
-      isFetching : false
-    },
-    todosList: []
-  }
+  afterEach(() => {
+    mock.reset();
+    mock.resetHistory();
+  })
+  const endpoint = '/api/todo/';
 
   const mockTodo = {
     todo: 'Test',
@@ -34,9 +31,27 @@ describe('A component for rendering a Todo Item', () => {
     userIndex:0
   };
 
+  const mockCompletedTodo = {
+    todo: 'Test',
+    priority: 'Low' as 'Low',
+    isCompleted: true,
+    userIndex:0
+  };
+
+  const authenticatedState : DeepPartial<StoreShape> = {
+    authorizedUser : {
+      userId : '1111',
+      username : 'guest'
+    },
+    clientServerConnect : {
+      isFetching : false
+    },
+    todosList: [mockTodo]
+  }
+
   const authenticatedStore = configureStore(authenticatedState)
 
-  test('it renders the Todo Item', () => {
+  it('renders the Todo Item', () => {
     const { getByText } = render(
       <ReduxWrap store={ authenticatedStore }>
         <TodoItem todo={mockTodo} index={ 1 }/>
@@ -48,7 +63,7 @@ describe('A component for rendering a Todo Item', () => {
     expect(text).toBeTruthy();
   })
 
-  test('it renders with a Priority display', () => {
+  it('renders with a Priority display', () => {
     const { getByText } = render(
       <ReduxWrap store={ authenticatedStore }>
         <TodoItem todo={mockTodo} index={ 1 }/>
@@ -58,5 +73,33 @@ describe('A component for rendering a Todo Item', () => {
     const text = getByText(mockTodo.priority);
 
     expect(text).toBeTruthy();
+  })
+
+  it('calls the backend if you click the completed box', async (done) => {
+    const { getByText } = render(
+      <ReduxWrap store={ authenticatedStore }>
+        <TodoItem todo={mockTodo} index={ 1 }/>
+      </ReduxWrap>
+    )
+    const todo = getByText(mockTodo.todo);
+    const parent = todo.parentElement;
+    const input = parent.querySelector('input[type=checkbox]');
+    await fireEvent.click(input!);
+    const assertApiCall = mock.history.put.length > 0;
+    expect(assertApiCall).toBe(true);
+    done();
+  })
+
+  it('renders a crossed out todo box if the todo is completed', async (done) => {
+    const { container } = render(
+      <ReduxWrap store={ authenticatedStore }>
+        <TodoItem todo={mockCompletedTodo} index={ 1 }/>
+      </ReduxWrap>
+    )
+    const todo = container.querySelector('li');
+    const regex = /(listItemStrike)/gi;
+    const assertStrikeThruClass = regex.test(todo.className);
+    expect(assertStrikeThruClass).toBe(true);
+    done();
   })
 })

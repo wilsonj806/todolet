@@ -13,7 +13,6 @@ import App from './App';
 
 import { INIT_APP_STATE } from './store/reducers/root.reducer';
 
-
 const stateToUse = window.__REDUX_DATA__ || INIT_APP_STATE;
 const store = configureStore(
   stateToUse
@@ -25,5 +24,10 @@ const jsx = (
       <App/>
     </Provider>
   </Router>
-)
+);
+
+(() => {
+  const ssrData = document.querySelector('script#redux-data');
+  ssrData!.textContent = ""
+})()
 ReactDOM.hydrate(jsx, document.getElementById('app'));

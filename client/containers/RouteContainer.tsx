@@ -17,26 +17,30 @@ const RouteContainer: FunctionComponent<any> = (props) => {
   const { username, userId } = authorizedUser;
   const isNotAuthorized: boolean = username === undefined || userId === undefined;
 
-  const HomeRoute = isNotAuthorized ? LoginPage : MainPage
-  // const RoutesToRender = isNotAuthorized ? UnauthorizedRoutes : AuthorizedRoutes;
-  // console.dir(RoutesToRender);
+  const RedirectHome = () => <Redirect to='/'/>
 
-  // FIXME Not scalable but it works
-  const AccountRoute = isNotAuthorized ? <Redirect exact to='/'/> : <UserUpdatePage/>;
+  const AuthorizedRoutes = (
+    <>
+      <Route path={['/']} exact component={ MainPage }/>
+      <Route path={['/register', '/login']} exact component={ RedirectHome }/>
+      <Route path='/account' exact component={ UserUpdatePage }/>
+    </>
+  );
+  const UnauthorizedRoutes = (
+    <>
+      <Route path={['/','/login', '/account']} exact component={ LoginPage }/>
+      <Route path={['/account']} exact component={ RedirectHome }/>
+      <Route path='/logout' exact component={ LogoutPage}/>
+      <Route path='/register' exact component={ RegisterPage }/>
+    </>
+  )
 
-  const RegisterRoute = !isNotAuthorized ? <Redirect exact to='/'/> : <RegisterPage/>;
-  const LogoutRoute = !isNotAuthorized ? <Redirect exact to='/'/> : <LogoutPage/>;
-  const LoginRoute = !isNotAuthorized ? <Redirect exact to='/'/> : <LogoutPage/>;
-  // NOTE RENDER CONDITIONAL ROUTES LAST, REACT ROUTER RENDERS REACT FRAGMENTS WEIRD
-  // FIXME Monkeypatched the register route
+  // const HomeRoute = isNotAuthorized ? LoginPage : MainPage;
+  const RoutesToRender = isNotAuthorized ? UnauthorizedRoutes : AuthorizedRoutes;
   return (
     <Switch>
-      <Route path='/' exact component={ HomeRoute }/>
+      { RoutesToRender }
       <Route path='/404' exact component={ NotFoundPage }/>
-      <Route path='/account' exact render={ () => AccountRoute }/>
-      <Route path='/logout' exact render={ () => LogoutRoute }/>
-      <Route path='/login' exact render={ () => LoginRoute }/>
-      <Route path='/register' exact render={ () => RegisterRoute }/>
       <Route component={ NotFoundPage }/>
     </Switch>
   )

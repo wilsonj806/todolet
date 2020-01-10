@@ -26,9 +26,13 @@ const postLoginFail: ErrorRequestHandler = (err, req, res, next): any => {
 
 
 const getLogout: RequestHandler = (req, res, next): any => {
-  req.logout();
-  res.redirect(200, '/logout');
-  next();
+  req.session.destroy((err) => {
+    if (err) {
+      throw new Error(err.message)
+    }
+    req.logout();
+    res.status(200).send();
+  })
 };
 
 export {

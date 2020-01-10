@@ -25,15 +25,16 @@ describe('An action creator that handles async todo addition', () => {
     userId: 'aaaaa',
     todos: []
   }
-  const mockSuccess = { msg: 'hi', todos: [], authorizedUser: initUser };
+  const updatedUser = {...initUser, todos: ['hh'] };
+  const mockSuccess = { msg: 'hi', todos: ['hh'], authorizedUser: updatedUser };
   const mockError = new Error('hi');
 
-  test('it dispatches an action signifying that a Post Todo dispatch has been initiated', async (done) => {
-    const store = mockStore({ selectedUser: {}});
+  it('dispatches an action signifying that a Post Todo dispatch has been initiated', async (done) => {
+    const store = mockStore<any>({ selectedUser: initUser });
     const expectedActions = [
       { type: GET_TODOS_INIT },
-      { type: GET_TODOS_SUCCESS, payload: [],  },
-      { type: PUT_USER_SUCCESS, payload: initUser }
+      { type: GET_TODOS_SUCCESS, payload: ['hh'],  },
+      { type: PUT_USER_SUCCESS, payload: updatedUser }
     ]
     // NOTE not trying to mock what mongoose returns, that's pretty intense
     mock.onGet(endpoint).reply(
@@ -47,13 +48,13 @@ describe('An action creator that handles async todo addition', () => {
     done()
   })
 
-  test('it dispatches a todo success with a response object if the action succeeded', async (done) => {
-    const store = mockStore({ selectedUser: {}});
+  it('dispatches a todo success with a response object if the action succeeded', async (done) => {
+    const store = mockStore<any>({ selectedUser: initUser });
     const expectedActions = [
       { type: GET_TODOS_INIT },
       // TODO add the actual payload in
-      { type: GET_TODOS_SUCCESS, payload: [] },
-      { type: PUT_USER_SUCCESS, payload: initUser }
+      { type: GET_TODOS_SUCCESS, payload: ['hh'] },
+      { type: PUT_USER_SUCCESS, payload: updatedUser }
     ]
 
     mock.onGet(endpoint).reply(
@@ -67,8 +68,8 @@ describe('An action creator that handles async todo addition', () => {
     done()
   })
 
-  test('it dispatches a todo failure with a response object if the action failed', async (done) => {
-    const store = mockStore({ selectedUser: {}});
+  it('dispatches a todo failure with a response object if the action failed', async (done) => {
+    const store = mockStore<any>({ selectedUser: initUser });
     const expectedActions = [
       { type: GET_TODOS_INIT },
       { type: GET_TODOS_FAIL, payload: mockError.message }

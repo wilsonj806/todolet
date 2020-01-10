@@ -43,7 +43,7 @@ const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = IN
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
       <div id="app">${ reactDom }</div>
-      <script>
+      <script id="redux-data">
         window.__REDUX_DATA__ = ${ JSON.stringify( reduxState) }
       </script>
       <script src="/dist/app.bundle.js"></script>

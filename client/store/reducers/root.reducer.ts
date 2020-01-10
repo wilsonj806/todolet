@@ -91,6 +91,8 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
       return { ...state, isFetching: true }
     case POST_LOGIN_SUCCESS:
     case POST_LOGIN_FAIL:
+    case POST_LOGOUT_SUCCESS:
+    case POST_LOGOUT_FAIL:
     case POST_REGISTER_SUCCESS:
     case POST_REGISTER_FAIL:
     case PUT_USER_SUCCESS:

@@ -40,7 +40,7 @@ describe('A middleware function for sending a response when login succeeds', () 
     res = responseMock();
   });
 
-  test('it should return a json response with a message and HTTP status code', () => {
+  it('should return a json response with a message and HTTP status code', () => {
     const req = requestMock();
     req.user = {};
     req.user._doc = {...user};
@@ -50,7 +50,7 @@ describe('A middleware function for sending a response when login succeeds', () 
     expect(res.status).toHaveBeenCalledWith(200);
   });
 
-  test('it should return a json response with the user info', () => {
+  it('should return a json response with the user info', () => {
     const req = requestMock();
     req.user = {};
     req.user._doc = { ...user };
@@ -67,7 +67,7 @@ describe('A middleware function for sending a response when login succeeds', () 
     );
   });
 
-  test('it should call the next middleware function in the stack', () => {
+  it('should call the next middleware function in the stack', () => {
     const req = requestMock();
     req.user = {}
     req.user._doc = user;
@@ -92,7 +92,7 @@ describe('A middleware function for sending a response when login fails', () => 
     res = responseMock();
   });
 
-  test('it should return a json response with a message, and HTTP status code', () => {
+  it('should return a json response with a message, and HTTP status code', () => {
     const req = requestMock();
 
     postLoginFail(err, req, res, next);
@@ -105,7 +105,7 @@ describe('A middleware function for sending a response when login fails', () => 
     );
   });
 
-  test('it should call the next middleware function in the stack', () => {
+  it('should call the next middleware function in the stack', () => {
     const req = requestMock();
 
     postLoginFail(err, req, res, next);
@@ -126,21 +126,17 @@ describe('A middleware function for completing a logout request', () => {
     res = responseMock();
   });
 
-  test('it should call a function or method for logging out', () => {
+  it('should call a function or method for logging out', () => {
     getLogout(req, res, next);
 
-    expect(req.logout).toHaveBeenCalled();
+    expect(req.session.destroy).toHaveBeenCalled();
   });
 
-  test('it should tell the client to redirect', () => {
+  it('should send a 200 status', () => {
     getLogout(req, res, next);
 
-    expect(res.redirect).toHaveBeenCalledWith(200, '/logout');
+    expect(res.status).toHaveBeenCalledWith(200);
   });
 
-  test('it should call the next middleware function in the stack', () => {
-    getLogout(req, res, next);
 
-    expect(next).toHaveBeenCalled();
-  });
 });

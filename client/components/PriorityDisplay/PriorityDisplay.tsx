@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import useStyles from './PriorityDisplay.styles';
 
@@ -31,9 +32,20 @@ const PriorityDisplay : FC<PriorityDisplayProps> = (props) => {
         <Typography>{ priority }</Typography>
       </div>
       <Button
+        classes={{ root: classes.editButton }}
         variant='contained'
         color='primary'
+        type='button'
+        size='small'
+      >
+        <EditIcon/>
+      </Button>
+      <Button
+        classes={{ root: classes.deleteButton }}
+        variant='contained'
         disabled={ true }
+        color='primary'
+        type='button'
         size='small'
       >
         <DeleteIcon/>

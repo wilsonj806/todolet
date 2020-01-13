@@ -21,8 +21,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     priorityLow: {
       backgroundColor: 'green'
+    },
+    deleteButton: {
+      margin: '0 0.1875rem',
+      backgroundColor: 'red'
+    },
+    editButton: {
+      margin: '0 0.1875rem'
     }
-  })
-)
+  }))
 
 export default useStyles;

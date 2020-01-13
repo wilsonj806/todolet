@@ -90,6 +90,7 @@ describe('A component for rendering a Todo Item', () => {
     done();
   })
 
+  // TODO add a quick smoke test that ensures that some actions include an EDIT_TODO_INIT action
   it('renders a crossed out todo box if the todo is completed', async (done) => {
     const { container } = render(
       <ReduxWrap store={ authenticatedStore }>

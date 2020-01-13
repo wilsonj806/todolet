@@ -1,11 +1,12 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 
 // ----- MUI components
-import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
+import Collapse from '@material-ui/core/Collapse';
+import Typography from '@material-ui/core/Typography';
 
-import PriorityDisplay from '../PriorityDisplay/PriorityDisplay';
+import PriorityDisplay from '../../components/PriorityDisplay/PriorityDisplay';
 import Checkbox from './IsCompletedCheck';
 
 import useStyles from './TodoItem.styles';
@@ -17,9 +18,13 @@ import { updateTodo } from '../../actions/todoUpdate.action';
 // TODO Add preliminary checkbox
 const TodoItem : FC<TodoItemProps> = (props) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
   const { todo: TodoObj } = props;
   const { todo, priority, _id, isCompleted } = TodoObj;
   const strikeThruStyling = isCompleted ? classes.listItemStrike : classes.listItem;
+
+
   return (
     <ListItem classes={{
       root: strikeThruStyling
@@ -29,8 +34,11 @@ const TodoItem : FC<TodoItemProps> = (props) => {
         <Typography>
           { todo }
         </Typography>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <Typography>Hello World</Typography>
+        </Collapse>
       </div>
-      <PriorityDisplay priority={ priority }/>
+      <PriorityDisplay priority={ priority } handleEditBtnClick={ }/>
     </ListItem>
   )
 }

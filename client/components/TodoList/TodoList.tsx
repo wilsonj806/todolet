@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 // ----- MUI components
 import List from '@material-ui/core/List';
 import { TodoShape } from '../../types';
-import TodoItem from '../TodoItem/TodoItem';
+import TodoItem from '../../containers/TodoItem/TodoItem';
 
 
 const TodoList : FC<any> = (props) => {

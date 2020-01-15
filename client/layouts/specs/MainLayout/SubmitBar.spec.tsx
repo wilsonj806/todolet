@@ -55,7 +55,7 @@ describe('A layout that renders the login page', () => {
   it('renders with a form element', () => {
     const { container } = render(
       <ReduxWrap store={store}>
-        <SubmitBar/>
+        <SubmitBar isUpdateBar={false}/>
       </ReduxWrap>
     )
 
@@ -66,7 +66,7 @@ describe('A layout that renders the login page', () => {
   it('renders with a submit button element inside of a form', () => {
     const { container } = render(
       <ReduxWrap store={store}>
-        <SubmitBar/>
+        <SubmitBar isUpdateBar={false}/>
       </ReduxWrap>
     )
 
@@ -79,7 +79,7 @@ describe('A layout that renders the login page', () => {
   it('renders with an input element for the Todo', () => {
     const { container } = render(
       <ReduxWrap store={store}>
-        <SubmitBar/>
+        <SubmitBar isUpdateBar={false}/>
       </ReduxWrap>
     )
 
@@ -91,7 +91,7 @@ describe('A layout that renders the login page', () => {
   it('renders with a select element for the Todo priority', () => {
     const { container } = render(
       <ReduxWrap store={store}>
-        <SubmitBar/>
+        <SubmitBar isUpdateBar={false}/>
       </ReduxWrap>
     )
 
@@ -107,7 +107,7 @@ describe('A layout that renders the login page', () => {
     // const formSbumitStore = configureStore(init)
     const { container } = render(
       <ReduxWrap store={store}>
-        <SubmitBar/>
+        <SubmitBar isUpdateBar={false}/>
       </ReduxWrap>
     )
 

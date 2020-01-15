@@ -15,8 +15,9 @@ import useStyles from './SubmitBar.styles';
 import TextInputWrapper from "../../containers/TextInputWrapper";
 
 import { postNewTodo } from '../../actions/todoAdd.action';
+import { updateTodo } from '../../actions/todoUpdate.action';
 
-
+import { SubmitBarProps } from '../../types';
 /**
  * Submit bar
  * - needs a Select Element
@@ -26,7 +27,8 @@ import { postNewTodo } from '../../actions/todoAdd.action';
  *
  */
 
-const SubmitBar: FC<any> = () => {
+const SubmitBar: FC<SubmitBarProps> = (props) => {
+  const { isUpdateBar, todo: Todo, reduxUpdateTodo } = props;
   // Redux state
   const dispatch = useDispatch();
 
@@ -43,9 +45,9 @@ const SubmitBar: FC<any> = () => {
   const handleSelect = (event: ChangeEvent<any>) => {
     setPriority(event.target.value)
   }
+  // TODO figure out how to retool this to allow for update Todo
 
-  // TODO implement this
-  const handleSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handlePostTodoSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const request = {
       todo,
@@ -57,6 +59,8 @@ const SubmitBar: FC<any> = () => {
       setError(error)
     }
   }
+
+  const BtnText = isUpdateBar ? 'Update Todo' : 'Add Todo';
 
   // TODO fix the Select so it uses the unified Input component
   return (
@@ -96,9 +100,9 @@ const SubmitBar: FC<any> = () => {
           color="primary"
           variant="contained"
           classes={{ root: classes.button }}
-          onClick={ handleSubmit }
+          onClick={ handlePostTodoSubmit }
         >
-          Add Todo
+          { BtnText }
         </Button>
       </form>
     </div>

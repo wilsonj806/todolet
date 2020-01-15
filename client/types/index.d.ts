@@ -76,6 +76,13 @@ declare namespace AnotherTodoClient {
     reactHookFn   : Dispatch<SetStateAction<any>>
     [key: string] : any
   }
+
+  interface SubmitBarProps {
+    isUpdateBar     : boolean
+    todo            ?: TodoShape
+    reduxUpdateTodo ?: <T extends { [key in keyof TodoShape] ?: any }>(updatedValue: T) => (dispatch: any) => Promise<void>
+  }
+
   type PriorityTypes = 'Low' | 'Medium' | 'High'
   interface TodoItemProps {
     todo  : TodoShape
@@ -84,6 +91,7 @@ declare namespace AnotherTodoClient {
 
   interface PriorityDisplayProps {
     priority: PriorityTypes
+    handleEditBtnClick : () => void
   }
 
   interface TodoCheckboxProps {

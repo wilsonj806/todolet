@@ -4,16 +4,18 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     listItem: {
       display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexFlow: 'column nowrap',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
       '&:not(:last-child)': {
         borderBottom: '1px solid #dbdbdb'
       },
     },
     listItemStrike: {
       display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexFlow: 'column nowrap',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
       '&:not(:last-child)': {
         borderBottom: '1px solid #dbdbdb'
       },
@@ -27,10 +29,29 @@ const useStyles = makeStyles((theme: Theme) =>
         zIndex: 100,
       }
     },
-    leftWrapper: {
+    listItemExpand: {
+      display: 'flex',
+      flexFlow: 'column nowrap',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+      '&:not(:last-child)': {
+        borderBottom: '1px solid #dbdbdb'
+      },
+    },
+    checkBoxWrapper: {
+      minWidth: '50%',
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center'
+    },
+    todoWrapper: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%'
+    },
+    collapse: {
+      width: '100%',
+      paddingLeft: '2rem',
     }
   }))
 

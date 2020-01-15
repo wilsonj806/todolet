@@ -29,7 +29,7 @@ const MainLayout : FC<any> = (props) => {
   return (
     <div style={{ margin: '0rem 1rem'}}>
       <Typography variant="h2" component="h5">Todos</Typography>
-      <SubmitBar/>
+      <SubmitBar isUpdateBar={ false }/>
       <TodoList todosList={ todosList }/>
     </div>
   )

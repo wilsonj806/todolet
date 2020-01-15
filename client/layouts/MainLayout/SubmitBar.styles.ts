@@ -1,5 +1,6 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
+// TODO do this with currying to do different widths?
 const SubmitBarStyles = makeStyles((theme: Theme) =>
   createStyles({
     form: {

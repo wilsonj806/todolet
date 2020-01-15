@@ -13,7 +13,7 @@ import { PriorityDisplayProps } from '../../types';
 
 
 const PriorityDisplay : FC<PriorityDisplayProps> = (props) => {
-  const { priority } = props;
+  const { priority, handleEditBtnClick } = props;
   const classes = useStyles();
   const bgColor = getBgColor(priority, useStyles);
   return (
@@ -33,6 +33,7 @@ const PriorityDisplay : FC<PriorityDisplayProps> = (props) => {
       </div>
       <Button
         classes={{ root: classes.editButton }}
+        onClick={ handleEditBtnClick }
         variant='contained'
         color='primary'
         type='button'

@@ -17,7 +17,7 @@ import TextInputWrapper from "../../containers/TextInputWrapper";
 import { postNewTodo } from '../../actions/todoAdd.action';
 import { updateTodo } from '../../actions/todoUpdate.action';
 
-import { SubmitBarProps } from '../../types';
+import { SubmitBarProps, PriorityTypes } from '../../types';
 /**
  * Submit bar
  * - needs a Select Element
@@ -26,18 +26,18 @@ import { SubmitBarProps } from '../../types';
  * - needs to make a POST request on submit
  *
  */
-
 const SubmitBar: FC<SubmitBarProps> = (props) => {
   const { isUpdateBar, todo: Todo, reduxUpdateTodo } = props;
+  if (isUpdateBar && (!props.todo || !reduxUpdateTodo)) throw new Error('Update Bar needs a todo prop to render')
   // Redux state
   const dispatch = useDispatch();
 
   // Styling
-  const classes = useStyles();
+  const classes = useStyles(isUpdateBar)();
 
   // Local State
-  const [ todo, setTodo ] = useState('');
-  const [ priority, setPriority ] = useState('');
+  const [ todo, setTodo ] = useState(isUpdateBar ? Todo!.todo : '');
+  const [ priority, setPriority ] = useState(isUpdateBar ? Todo!.priority : '');
   const [ error, setError ] = useState('')
 
   // Event Handlers
@@ -45,7 +45,6 @@ const SubmitBar: FC<SubmitBarProps> = (props) => {
   const handleSelect = (event: ChangeEvent<any>) => {
     setPriority(event.target.value)
   }
-  // TODO figure out how to retool this to allow for update Todo
 
   const handlePostTodoSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -60,12 +59,26 @@ const SubmitBar: FC<SubmitBarProps> = (props) => {
     }
   }
 
-  const BtnText = isUpdateBar ? 'Update Todo' : 'Add Todo';
+  const handleUpdateTodoSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const request = {
+      todo,
+      priority
+    };
+    try {
+      // TODO handle closing the submitbar on success
+      dispatch(reduxUpdateTodo!(request))
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
+  const BtnText = isUpdateBar ? 'Update Todo' : 'Add Todo';
+  const IdVal = isUpdateBar ? 'todo-update' : 'todo-submit'
   // TODO fix the Select so it uses the unified Input component
   return (
     <div>
-      <form id="todo-submit" className={ classes.form }>
+      <form id={ IdVal } className={ classes.form }>
         <TextInputWrapper
           id="todo"
           label="New Todo"
@@ -100,7 +113,7 @@ const SubmitBar: FC<SubmitBarProps> = (props) => {
           color="primary"
           variant="contained"
           classes={{ root: classes.button }}
-          onClick={ handlePostTodoSubmit }
+          onClick={ isUpdateBar ? handleUpdateTodoSubmit : handlePostTodoSubmit }
         >
           { BtnText }
         </Button>

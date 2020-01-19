@@ -1,7 +1,6 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-// TODO do this with currying to do different widths?
-const SubmitBarStyles = makeStyles((theme: Theme) =>
+const SubmitBarStyles = (isUpdateBar: boolean) => makeStyles((theme: Theme) =>
   createStyles({
     form: {
       width: '100%',
@@ -11,18 +10,17 @@ const SubmitBarStyles = makeStyles((theme: Theme) =>
       alignItems: 'baseline',
     },
     select: {
-      width: '8rem',
+      width: isUpdateBar ? '6.25rem' : '8rem',
       display: 'flex',
     },
     textInput: {
-      width: '69%',
+      minWidth: isUpdateBar ? '60%' : '69%',
       marginRight: '0.5rem',
     },
     button: {
       margin: '0 0.75rem',
     }
 
-  }),
-);
+  }));
 
 export default SubmitBarStyles

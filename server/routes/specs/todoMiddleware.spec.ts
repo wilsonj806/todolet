@@ -2,7 +2,7 @@ import User from '../../models/user'
 import Todo from '../../models/todo'
 import { requestMock, responseMock } from './mocks/mockReqRes';
 
-import { postNewTodo, getUsersTodos, prefetchUserTodos, updateTodo } from '../middleware/todoMiddleware';
+import { postNewTodo, getUsersTodos, prefetchUserTodos, updateTodo, deleteTodo } from '../middleware/todoMiddleware';
 
 describe('A middleware function for posting new todos', () => {
   let res;
@@ -19,7 +19,7 @@ describe('A middleware function for posting new todos', () => {
     res = responseMock();
   });
 
-  test('it should call the database and post it', () => {
+  it('should call the database and post it', () => {
     // Setup the request with the Todo
     // Add a todo entry and a priority entry
     const req = requestMock({}, {
@@ -33,7 +33,7 @@ describe('A middleware function for posting new todos', () => {
     expect(spy).toHaveBeenCalled();
   })
 
-  test('it should send a response with an error if it failed', () => {
+  it('should send a response with an error if it failed', () => {
     const req = requestMock({}, {
       todo: 'hello',
       priority: 'high'
@@ -50,7 +50,7 @@ describe('A middleware function for posting new todos', () => {
     expect(res.status).toHaveBeenCalledWith(500);
   })
 
-  test('it should call the next middleware function in the stack', async (done) => {
+  it('should call the next middleware function in the stack', async (done) => {
     const req = requestMock({}, {
       todo: 'hello',
       priority: 'high'
@@ -80,7 +80,7 @@ describe('A middleware function for getting all todos for a user', () => {
   beforeAll(() => {
     res = responseMock();
   });
-  test('it should check for a valid session', async (done) => {
+  it('should check for a valid session', async (done) => {
     const req = requestMock();
     req.user = undefined;
 
@@ -90,7 +90,7 @@ describe('A middleware function for getting all todos for a user', () => {
     done()
   })
 
-  test('it should call the todos db', async (done) => {
+  it('should call the todos db', async (done) => {
     const req = requestMock();
     req.user = user;
 
@@ -104,7 +104,7 @@ describe('A middleware function for getting all todos for a user', () => {
     done();
   })
 
-  test('it should send an HTTP response with a 200 status code', async (done) => {
+  it('should send an HTTP response with a 200 status code', async (done) => {
     const req = requestMock();
     req.user = user;
     req.user._doc = user;
@@ -117,7 +117,7 @@ describe('A middleware function for getting all todos for a user', () => {
     done();
   })
 
-  test('it should send an HTTP response with the todos and the updated user', async (done) => {
+  it('should send an HTTP response with the todos and the updated user', async (done) => {
     const req = requestMock();
     req.user = user;
     req.user._doc = user;
@@ -134,7 +134,7 @@ describe('A middleware function for getting all todos for a user', () => {
     done();
   })
 
-  test('it should send an error response if it failed', async (done) => {
+  it('should send an error response if it failed', async (done) => {
     const res = responseMock();
     // console.log(res.locals);
     const req = requestMock();
@@ -172,7 +172,7 @@ describe('A middleware function that gets all todos for a user and stores them f
     console.log('running clean up')
     res.locals = Object.assign({});
   })
-  test('it should call the user db', async (done) => {
+  it('should call the user db', async (done) => {
     const req = requestMock();
     req.user = user;
 
@@ -184,7 +184,7 @@ describe('A middleware function that gets all todos for a user and stores them f
     done()
   })
 
-  test('it should call the todos db', async (done) => {
+  it('should call the todos db', async (done) => {
     const req = requestMock();
     req.user = user;
 
@@ -198,7 +198,7 @@ describe('A middleware function that gets all todos for a user and stores them f
     done();
   })
 
-  test('it should store the todos in res.locals', async (done) => {
+  it('should store the todos in res.locals', async (done) => {
     const res = responseMock();
     // console.log(res.locals);
     const req = requestMock();
@@ -217,7 +217,7 @@ describe('A middleware function that gets all todos for a user and stores them f
     done();
   })
 
-  test('it should send an error response if it failed', async (done) => {
+  it('should send an error response if it failed', async (done) => {
     const res = responseMock();
     // console.log(res.locals);
     const req = requestMock();
@@ -239,7 +239,7 @@ describe('A middleware function for updating todos', () => {
   const user = {
     _id: [1, 2, 3 ,4],
     username: 'guest',
-    todos: []
+    todos: ['11111']
   };
   const mockBody = {
     originalTodo: {
@@ -256,7 +256,7 @@ describe('A middleware function for updating todos', () => {
     res = responseMock();
   });
 
-  test('it should call the database and update a todo', () => {
+  it('should call the database and update a todo', () => {
     // Setup the request with the Todo
     // Add a todo entry and a priority entry
     const req = requestMock({}, mockBody);
@@ -269,7 +269,7 @@ describe('A middleware function for updating todos', () => {
     expect(spy).toHaveBeenCalled();
   })
 
-  test('it should send a response with an error if it failed', () => {
+  it('should send a response with an error if it failed', () => {
     const req = requestMock({}, mockBody);
     req.user = user;
     req.params._id = '11111'
@@ -284,7 +284,7 @@ describe('A middleware function for updating todos', () => {
     expect(res.status).toHaveBeenCalledWith(500);
   })
 
-  test('it should send a response with the updated todo', async (done) => {
+  it('should send a response with the updated todo', async (done) => {
     const req = requestMock({}, mockBody);
     req.user = user;
     req.params._id
@@ -296,6 +296,74 @@ describe('A middleware function for updating todos', () => {
     expect(res.json).toHaveBeenCalledWith({
       updatedTodo: mockBody.originalTodo
     });
+    done();
+  })
+})
+
+
+describe('A middleware function for deleting a todo', () => {
+  let res;
+  const next = jest.fn();
+  const mockParam = '1111'
+  // FIXME setting req.user.attributes isn't great, it's implementation details
+  const user = {
+    _id: [1, 2, 3 ,4],
+    username: 'guest',
+    todos: [mockParam]
+  };
+  const mockBody = {
+    originalTodo: {
+      todo: 'hello',
+      priority: 'high',
+      isCompleted: false
+    },
+    updatedValue: {
+      isCompleted: true
+    }
+  };
+
+  beforeAll(() => {
+    res = responseMock();
+  });
+
+  it('should call the database and update a todo', () => {
+    // Setup the request with the Todo
+    // Add a todo entry and a priority entry
+    const req = requestMock({});
+    req.user = user;
+    req.params.todoId = mockParam
+
+    const spy = jest.spyOn(Todo, 'findByIdAndDelete')
+
+    deleteTodo(req, res, next);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should send a response with an error if it failed', () => {
+    const req = requestMock({});
+    req.user = user;
+    req.params.todoId = mockParam
+
+
+    jest.spyOn(Todo, 'findByIdAndDelete')
+      .mockImplementation(() => {
+        throw new Error('mock err')
+      });
+    deleteTodo(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+  })
+
+  it('should call next on success', async (done) => {
+    const req = requestMock({});
+    req.user = user;
+    req.params.todoId = mockParam
+
+
+    jest.spyOn(Todo, 'findByIdAndDelete')
+      .mockReturnValue(true as any);
+    await deleteTodo(req, res, next);
+    expect(next).toHaveBeenCalled();
     done();
   })
 })

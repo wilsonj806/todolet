@@ -57,7 +57,25 @@ const updateUserTodos: RequestHandler = async (req, res, next) => {
   }
 }
 
+const deleteSingleUserTodo: RequestHandler = async (req, res, next) => {
+  const { user } = req;
+  if (user == undefined) {
+    return res.status(500).json({ msg: 'you not loggedin' })
+  };
+  const { todos, _id } = user;
+  const newTodos = todos.filter(todo => todo !== req.params.todoId)
+  try {
+    const updatedUser = await User.findByIdAndUpdate(_id, newTodos, { new: true });
+    req!.user!.todos = updatedUser!.todos;
+    // res.status(200).send('Todo delete success')
+    next();
+  } catch (e) {
+    res.status(500).json({ msg: 'server err'})
+  }
+}
+
 export {
   putUser,
   updateUserTodos,
+  deleteSingleUserTodo
 }

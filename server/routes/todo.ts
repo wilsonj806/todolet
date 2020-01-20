@@ -4,10 +4,12 @@ import { body } from 'express-validator/check';
 import {
   postNewTodo,
   getUsersTodos,
-  updateTodo
+  updateTodo,
+  deleteTodo
 } from './middleware/todoMiddleware'
 import {
   updateUserTodos,
+  deleteSingleUserTodo
 } from './middleware/userUpdateMiddleware'
 
 // TODO check if we need the :userid param
@@ -30,6 +32,13 @@ router.put(
   '/:_id',
   updateTodo,
   // getUsersTodos
+  )
+
+router.delete(
+  '/:todoId',
+  deleteTodo,
+  deleteSingleUserTodo,
+  getUsersTodos
 )
 
 export default router;

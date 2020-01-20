@@ -88,22 +88,39 @@ const prefetchUserTodos: RequestHandler = async (req, res, next) => {
 
 const updateTodo: RequestHandler = async (req, res, next) => {
   const { user } = req;
-  if (!user || !req.params) {
+  if (!user) {
     return res.status(403).json({ msg: 'Not authorized to access this resource' })
-  };
+  } else if (!req.params) {
+    return res.status(400).json({ msg: 'Bad request'})
+  }
   try {
-    console.log(req.body);
     const { originalTodo, updatedValue } = req.body;
     const { _id } = req.params;
     const todoToUpdate = { ...originalTodo, ...updatedValue };
-    console.log(todoToUpdate);
     const updatedTodo = await Todo.findByIdAndUpdate(_id, todoToUpdate, { new: true });
-    console.log(updatedTodo);
     res.status(200).json({
       updatedTodo
     })
   } catch (e) {
     res.status(500).json({ msg: 'server error' });
+  }
+}
+
+const deleteTodo: RequestHandler = async (req, res, next) => {
+  const { user } = req;
+  if (!user) {
+    return res.status(403).json({ msg: 'Not authorized to access this resource' })
+  } else if (!req.params) {
+    return res.status(400).json({ msg: 'Bad request'})
+  }
+  try {
+    const { todoId } = req.params;
+    const result = await Todo.findByIdAndDelete(todoId)
+    if (!result) return res.status(404).json({ msg: 'Resource not found'})
+
+    next()
+  } catch (e) {
+    res.status(500).json({ msg: 'server error'})
   }
 }
 
@@ -113,5 +130,6 @@ export {
   prefetchUserTodos,
   updateTodo,
   PREFETCHED_TODOS_KEY,
-  NEW_TODO
+  NEW_TODO,
+  deleteTodo
 }

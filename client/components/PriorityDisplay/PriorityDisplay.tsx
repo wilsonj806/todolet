@@ -34,6 +34,7 @@ const PriorityDisplay : FC<PriorityDisplayProps> = (props) => {
       <Button
         classes={{ root: classes.editButton }}
         onClick={ handleEditBtnClick }
+        id='btn-display-update-form'
         variant='contained'
         color='primary'
         type='button'

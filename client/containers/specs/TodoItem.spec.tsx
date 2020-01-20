@@ -103,4 +103,21 @@ describe('A component for rendering a Todo Item', () => {
     expect(assertStrikeThruClass).toBe(true);
     done();
   })
+
+  it('renders a submit bar when you click the edit button', () => {
+    const { container } = render(
+      <ReduxWrap store={ authenticatedStore }>
+        <TodoItem todo={mockCompletedTodo} index={ 1 }/>
+      </ReduxWrap>
+    )
+    act(() => {
+      const editBtn = container.querySelector('button#btn-display-update-form');
+
+      fireEvent.click(editBtn);
+    })
+    const assertForm = container.querySelector('form#todo-update')
+    expect(assertForm).not.toBe(null)
+    // expect.assertions(1);
+    // expect(assertStrikeThruClass).toBe(true);
+  })
 })

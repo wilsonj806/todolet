@@ -47,11 +47,12 @@ const useStyles = makeStyles((theme: Theme) =>
     todoWrapper: {
       display: 'flex',
       justifyContent: 'space-between',
-      width: '100%'
+      width: '100%',
     },
     collapse: {
       width: '100%',
       paddingLeft: '2rem',
+      paddingBottom: '0.125rem'
     }
   }))
 

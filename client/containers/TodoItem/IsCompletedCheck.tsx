@@ -12,8 +12,6 @@ const IsCompletedCheckbox : FC<TodoCheckboxProps> = (props) => {
   // console.dir(props.curriedUpdateTodo);
   const handleChange = (event : ChangeEvent<any>) : void => {
     try {
-      event.preventDefault()
-
       const updatedValue = {
         isCompleted: !isCompleted
       }

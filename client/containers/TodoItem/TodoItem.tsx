@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 
-
 // ----- MUI components
 import ListItem from '@material-ui/core/ListItem';
 import Collapse from '@material-ui/core/Collapse';
@@ -17,9 +16,11 @@ import { TodoItemProps } from '../../types';
 import { updateTodo } from '../../actions/todoUpdate.action';
 
 const TodoItem : FC<TodoItemProps> = (props) => {
-  const classes = useStyles();
+  // ----- Local State
   const [open, setOpen] = useState(false);
 
+  // ----- Styling
+  const classes = useStyles();
   const { todo: TodoObj } = props;
   const { todo, priority, _id, isCompleted } = TodoObj;
 
@@ -30,6 +31,7 @@ const TodoItem : FC<TodoItemProps> = (props) => {
 
   const handleEditBtnClick = (): void => setOpen(!open);
 
+  // FIXME Buttons aren't super accessible
   return (
     <ListItem classes={{
       root: itemStyling
@@ -44,7 +46,11 @@ const TodoItem : FC<TodoItemProps> = (props) => {
         <PriorityDisplay priority={ priority } handleEditBtnClick={ handleEditBtnClick }/>
       </div>
       <Collapse in={open} timeout="auto" unmountOnExit classes={{ entered: classes.collapse }}>
-        <SubmitBar isUpdateBar={ true }/>
+        <SubmitBar
+          isUpdateBar={ true }
+          todo={ TodoObj }
+          reduxUpdateTodo={ updateTodo(TodoObj) }
+        />
       </Collapse>
     </ListItem>
   )

@@ -34,7 +34,7 @@ describe('An action creator that handles async todo addition', () => {
     jest.fn(),
   ]
 
-  test('it dispatches an action signifying that a Post Todo dispatch has been initiated', async (done) => {
+  it('dispatches an action signifying that a Post Todo dispatch has been initiated', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_TODO_INIT },
@@ -53,7 +53,7 @@ describe('An action creator that handles async todo addition', () => {
     done()
   })
 
-  test('it dispatches a todo success with a response object if the action succeeded', async (done) => {
+  it('dispatches a todo success with a response object if the action succeeded', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_TODO_INIT },
@@ -73,7 +73,7 @@ describe('An action creator that handles async todo addition', () => {
     done()
   })
 
-  test('it dispatches a todo failure with a response object if the action failed', async (done) => {
+  it('dispatches a todo failure with a response object if the action failed', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_TODO_INIT },

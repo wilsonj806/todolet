@@ -7,7 +7,7 @@ import Body from '../Body';
 describe('A Body component', () => {
   afterEach(() => cleanup())
 
-  test('it should have an id value of "app-root"', () => {
+  it('should have an id value of "app-root"', () => {
     const { container } = render(
       <Body>
         <p>I am here</p>
@@ -17,7 +17,7 @@ describe('A Body component', () => {
     expect(body).toBeTruthy();
   })
 
-  test('it should render children', () => {
+  it('should render children', () => {
     const { container } = render(
       <Body>
         <p>Hello There</p>

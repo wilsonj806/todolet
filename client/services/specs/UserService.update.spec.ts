@@ -25,7 +25,7 @@ describe('A service function for updating a user', () => {
   afterEach(() => mock.reset())
 
 
-test('it should return an obect with the updated user info if it succeeded', async (done) => {
+it('should return an obect with the updated user info if it succeeded', async (done) => {
 
     mock.onPut(endpoint).reply(
       200,
@@ -39,7 +39,7 @@ test('it should return an obect with the updated user info if it succeeded', asy
 
   })
 
-  test('it should return an error object if it failed with a 4** error', async (done) => {
+  it('should return an error object if it failed with a 4** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -63,7 +63,7 @@ test('it should return an obect with the updated user info if it succeeded', asy
     done();
 
   })
-  test('it should return an error object if it failed with a 5** error', async (done) => {
+  it('should return an error object if it failed with a 5** error', async (done) => {
     const mockResponse = {
       msg: 'testing failure',
     }
@@ -89,7 +89,7 @@ describe('A service function for deleting a user', () => {
 
   afterEach(() => mock.reset())
 
-  test('it should return an obect with a status key if it succeeded', async (done) => {
+  it('should return an obect with a status key if it succeeded', async (done) => {
     mock.onDelete(endpoint).reply(
       200,
       { msg: 'hi' }
@@ -101,7 +101,7 @@ describe('A service function for deleting a user', () => {
     done();
   })
 
-  test('it should return an error object if it failed with a 5** error', async (done) => {
+  it('should return an error object if it failed with a 5** error', async (done) => {
     const mockResponse = {
       msg: 'testing failure',
     }
@@ -120,7 +120,7 @@ describe('A service function for deleting a user', () => {
     done();
   })
 
-  test('it should return an error object if it failed with a 4** error', async (done) => {
+  it('should return an error object if it failed with a 4** error', async (done) => {
     const mockResponse = {
       msg: 'testing failure',
     }

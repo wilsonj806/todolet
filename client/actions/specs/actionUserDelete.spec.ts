@@ -20,7 +20,7 @@ const endpoint = '/api/user/delete';
 describe('An action creator that handles async user delete', () => {
   afterEach(() => mock.reset())
 
-  test('it dispatches an action signifying that a Delete User dispatch has been initiated', async (done) => {
+  it('dispatches an action signifying that a Delete User dispatch has been initiated', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: DELETE_USER_INIT },
@@ -38,7 +38,7 @@ describe('An action creator that handles async user delete', () => {
     done()
   })
 
-  test('it dispatches a Delete User success with a response object if the action succeeded', async (done) => {
+  it('dispatches a Delete User success with a response object if the action succeeded', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: DELETE_USER_INIT },
@@ -56,7 +56,7 @@ describe('An action creator that handles async user delete', () => {
     done()
   })
 
-  test('it dispatches a Delete user failure with a response object if the action failed', async (done) => {
+  it('dispatches a Delete user failure with a response object if the action failed', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: DELETE_USER_INIT },

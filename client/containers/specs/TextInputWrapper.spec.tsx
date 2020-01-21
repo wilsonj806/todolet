@@ -6,7 +6,7 @@ import TextInputWrapper from '../TextInputWrapper';
 describe('A component that renders an input', () => {
   afterEach(() => cleanup())
 
-  test('it should render a label element', () => {
+  it('should render a label element', () => {
     const labelText = 'Test Label';
     const Wrapper = () => {
       const [value, setValue] = useState('');
@@ -25,7 +25,7 @@ describe('A component that renders an input', () => {
     )
     expect(getByLabelText(labelText)).toBeTruthy();
   })
-  test('it should render an input element with a password type', () => {
+  it('should render an input element with a password type', () => {
     const labelText = 'Test Label';
     const Wrapper = () => {
       const [value, setValue] = useState('');
@@ -49,7 +49,7 @@ describe('A component that renders an input', () => {
     expect(assertPwdInput).toBeTruthy();
   })
 
-  test('it should update the text input\'s value on change', () => {
+  it('should update the text input\'s value on change', () => {
     const testStr = 'testing ';
     const labelText = 'Test Label';
     const Wrapper = () => {

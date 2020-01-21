@@ -41,7 +41,7 @@ const authenticatedStore = configureStore(authenticatedState)
 describe('A UserCard component', () => {
   afterEach(() => cleanup())
 
-  test('it renders the user\'s name', () => {
+  it('renders the user\'s name', () => {
     const { getByText } = render(
       <ReduxWrap store={ authenticatedStore }>
         <UserCard/>
@@ -50,7 +50,7 @@ describe('A UserCard component', () => {
     expect(getByText('Hello ' + authenticatedState.authorizedUser!.username)).toBeTruthy();
   })
 
-  test('it renders a placeholder avatar if there is no avatar', () => {    const { container } = render(
+  it('renders a placeholder avatar if there is no avatar', () => {    const { container } = render(
       <ReduxWrap store={ authenticatedStore }>
         <UserCard/>
       </ReduxWrap>
@@ -59,7 +59,7 @@ describe('A UserCard component', () => {
     expect(img).toBeNull();
   })
 
-  test('it renders an avatar if available', () => {
+  it('renders an avatar if available', () => {
     const copyInit = { ...authenticatedState }
     copyInit.authorizedUser!.avatar = 'https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/7_avatar-512.png'
     const testAvatarStateStore = configureStore(copyInit)

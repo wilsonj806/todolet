@@ -39,11 +39,11 @@ describe('An action creator that handles async todo updates', () => {
   const mockSuccess = { updatedTodo: { ...mockTodo } };
   const mockError = new Error('hi');
 
-  test('it dispatches an action signifying that an Update Todo dispatch has been initiated', async (done) => {
+  it('dispatches an action signifying that an Update Todo dispatch has been initiated', async (done) => {
     done()
   })
 
-  test('it dispatches a todo success with a response object if the action succeeded', async (done) => {
+  it('dispatches a todo success with a response object if the action succeeded', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: PUT_TODO_INIT },
@@ -62,7 +62,7 @@ describe('An action creator that handles async todo updates', () => {
     done()
   })
 
-  test('it dispatches a todo failure with a response object if the action failed', async (done) => {
+  it('dispatches a todo failure with a response object if the action failed', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: PUT_TODO_INIT },

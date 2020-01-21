@@ -26,7 +26,7 @@ describe('An action creator that handles async user registration', () => {
   afterEach(() => mock.reset())
   const endpoint = '/api/user/register'
 
-  test('it dispatches an action signifying that a Registration dispatch has been initiated', async (done) => {
+  it('dispatches an action signifying that a Registration dispatch has been initiated', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_REGISTER_INIT },
@@ -44,7 +44,7 @@ describe('An action creator that handles async user registration', () => {
     done()
   })
 
-  test('it dispatches a registration success with a response object if the action succeeded', async (done) => {
+  it('dispatches a registration success with a response object if the action succeeded', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_REGISTER_INIT },
@@ -62,7 +62,7 @@ describe('An action creator that handles async user registration', () => {
     done()
   })
 
-  test('it dispatches a registration failure with a response object if the action failed', async (done) => {
+  it('dispatches a registration failure with a response object if the action failed', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_REGISTER_INIT },

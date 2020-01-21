@@ -47,7 +47,7 @@ describe('An action creator that handles async user login', () => {
 
   })
 
-  test('it dispatches an action signifying that a User Update dispatch has been initiated', async (done) => {
+  it('dispatches an action signifying that a User Update dispatch has been initiated', async (done) => {
     const store = mockStore(initState);
     const expectedActions = [
       { type: PUT_USER_INIT },
@@ -65,7 +65,7 @@ describe('An action creator that handles async user login', () => {
     done()
   })
 
-  test('it dispatches a User Update success with a response object if the action succeeded', async (done) => {
+  it('dispatches a User Update success with a response object if the action succeeded', async (done) => {
     const store = mockStore(initState);
     const expectedActions = [
       { type: PUT_USER_INIT },
@@ -83,7 +83,7 @@ describe('An action creator that handles async user login', () => {
     done()
   })
 
-  test('it dispatches a User Update failure with a response object if the action failed', async (done) => {
+  it('dispatches a User Update failure with a response object if the action failed', async (done) => {
     const store = mockStore(initState);
     const expectedActions = [
       { type: PUT_USER_INIT },

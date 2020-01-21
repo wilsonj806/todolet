@@ -43,7 +43,7 @@ describe('A route container to handle client side routing', () => {
     cleanup()
   })
 
-  test('it should render the login page when  unauthenticed and accessing the home page', () => {
+  it('should render the login page when  unauthenticed and accessing the home page', () => {
     const { getAllByText } = renderWithRouter(
       <ReduxWrap store={ unauthenticatedStore }>
         <RouteContainer/>
@@ -56,7 +56,7 @@ describe('A route container to handle client side routing', () => {
     expect(assertLoginText).toBe(true)
   })
 
-  test('it should render a page with a Nav when authenticated', () => {
+  it('should render a page with a Nav when authenticated', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ authenticatedStore }>
         <RouteContainer/>

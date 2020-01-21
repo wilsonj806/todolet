@@ -17,7 +17,7 @@ describe('A component that renders a navbar', () => {
 
   afterEach(() => cleanup())
 
-  test('it should render with one NAV tag', () => {
+  it('should render with one NAV tag', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ globalStore }>
         <Nav/>
@@ -28,7 +28,7 @@ describe('A component that renders a navbar', () => {
     expect(assertOneNav.length).toBe(1);
   })
 
-  test('it should render with a heading that has the app name in it', () => {
+  it('should render with a heading that has the app name in it', () => {
     const APP_NAME = 'TodoLet';
     const { getByText, container } = renderWithRouter(
       <ReduxWrap  store={ globalStore }>
@@ -40,7 +40,7 @@ describe('A component that renders a navbar', () => {
     expect(getByText(APP_NAME)).toBeTruthy();
   })
 
-  test('it should render at least one menu', () => {
+  it('should render at least one menu', () => {
     const { container } = renderWithRouter(
       <ReduxWrap  store={ globalStore }>
         <Nav/>

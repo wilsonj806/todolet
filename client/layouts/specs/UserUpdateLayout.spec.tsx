@@ -56,7 +56,7 @@ describe('A layout for updating user info and settings', () => {
 
   describe('a portion of the layout that lets you update a user', () => {
 
-    test('it renders with a form to update the user', () => {
+    it('renders with a form to update the user', () => {
       const { container } = renderWithRouter(
         <ReduxWrap store={ globalStore }>
           <UserUpdateLayout/>
@@ -67,7 +67,7 @@ describe('A layout for updating user info and settings', () => {
       expect(assertForm).not.toBeNull()
     })
 
-    test('it renders with a submit button for the update form', () => {
+    it('renders with a submit button for the update form', () => {
       const { container } = renderWithRouter(
         <ReduxWrap store={ globalStore }>
           <UserUpdateLayout/>
@@ -80,7 +80,7 @@ describe('A layout for updating user info and settings', () => {
       expect(assertBtn).not.toBeNull()
     })
 
-    test('it calls the backend to update the user', () => {
+    it('calls the backend to update the user', () => {
       const spy = jest.spyOn(axios, 'put')
       const { container } = renderWithRouter(
         <ReduxWrap store={ globalStore }>
@@ -116,7 +116,7 @@ describe('A layout for updating user info and settings', () => {
   })
 
   describe('a portion of the layout that lets you delete the user', () => {
-    test('it does not delete the current user when the delete user button is clicked', () => {
+    it('does not delete the current user when the delete user button is clicked', () => {
       const spy = jest.spyOn(axios, 'delete')
 
       const { container } = renderWithRouter(
@@ -131,7 +131,7 @@ describe('A layout for updating user info and settings', () => {
       expect(spy).not.toHaveBeenCalled()
     })
 
-    test('it renders an input element to verify that the user wants to delete their account', () => {
+    it('renders an input element to verify that the user wants to delete their account', () => {
       const { container } = renderWithRouter(
         <ReduxWrap store={ globalStore }>
           <UserUpdateLayout/>
@@ -146,7 +146,7 @@ describe('A layout for updating user info and settings', () => {
       expect(assertInput).toBeTruthy()
     })
 
-    test('it does not initially render an input element to verify that the user wants to delete their account', () => {
+    it('does not initially render an input element to verify that the user wants to delete their account', () => {
       const { container } = renderWithRouter(
         <ReduxWrap store={ globalStore }>
           <UserUpdateLayout/>
@@ -158,7 +158,7 @@ describe('A layout for updating user info and settings', () => {
       expect(assertInput).toBeNull()
     })
 
-    test('it makes the delete user request when the user verifies that they want to delete their account', async (done) => {
+    it('makes the delete user request when the user verifies that they want to delete their account', async (done) => {
       const spy = jest.spyOn(axios, 'delete')
 
       const { container } = renderWithRouter(

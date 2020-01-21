@@ -30,7 +30,7 @@ const endpoint = '/api/user/login';
 describe('An action creator that handles async user login', () => {
   afterEach(() => mock.reset())
 
-  test('it dispatches an action signifying that a Login dispatch has been initiated', async (done) => {
+  it('dispatches an action signifying that a Login dispatch has been initiated', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_LOGIN_INIT },
@@ -48,7 +48,7 @@ describe('An action creator that handles async user login', () => {
     done()
   })
 
-  test('it dispatches a Login success with a response object if the action succeeded', async (done) => {
+  it('dispatches a Login success with a response object if the action succeeded', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_LOGIN_INIT },
@@ -66,7 +66,7 @@ describe('An action creator that handles async user login', () => {
     done()
   })
 
-  test('it dispatches a Login failure with a response object if the action failed', async (done) => {
+  it('dispatches a Login failure with a response object if the action failed', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_LOGIN_INIT },

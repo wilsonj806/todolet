@@ -58,7 +58,7 @@ describe('A layout that renders the login page', () => {
     )
   });
 
-  test('it renders with a form element', () => {
+  it('renders with a form element', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
         <Login/>
@@ -69,7 +69,7 @@ describe('A layout that renders the login page', () => {
     expect(form).toBeTruthy()
   })
 
-  test('it renders with a submit button element inside of a form', () => {
+  it('renders with a submit button element inside of a form', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
         <Login/>
@@ -82,7 +82,7 @@ describe('A layout that renders the login page', () => {
     expect(parent).toBeTruthy()
   })
 
-  test('it renders with an input element for the username', () => {
+  it('renders with an input element for the username', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
         <Login/>
@@ -94,7 +94,7 @@ describe('A layout that renders the login page', () => {
     expect(input).toBeTruthy()
   })
 
-  test('it renders with an input element with the password type', () => {
+  it('renders with an input element with the password type', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
         <Login/>
@@ -106,7 +106,7 @@ describe('A layout that renders the login page', () => {
     expect(input).toBeTruthy()
   })
 
-  test('it handles change events to the password input element', () => {
+  it('handles change events to the password input element', () => {
     const testStr = 'test pwd'
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
@@ -119,7 +119,7 @@ describe('A layout that renders the login page', () => {
     expect(input!.value).toBe(testStr)
   })
 
-  test('it handles change events to the username input element', () => {
+  it('handles change events to the username input element', () => {
     const testStr = 'guest'
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
@@ -132,7 +132,7 @@ describe('A layout that renders the login page', () => {
     expect(input!.value).toBe(testStr)
   })
 
-  test('it submits the form on click of the submit button', () => {
+  it('submits the form on click of the submit button', () => {
     const formSbumitStore = configureStore(init)
     const { container } = renderWithRouter(
       <ReduxWrap store={ formSbumitStore }>
@@ -151,7 +151,7 @@ describe('A layout that renders the login page', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('it redirects to the registration page on click', () => {
+  it('redirects to the registration page on click', () => {
     const targetPath = '/register'
     const { getByText } = renderWithRouter(
       <ReduxWrap store={ store }>
@@ -165,7 +165,7 @@ describe('A layout that renders the login page', () => {
     expect(getByText(targetPath)).toBeTruthy()
   })
 
-  test('it does not reset the form if form submit fails', () => {
+  it('does not reset the form if form submit fails', () => {
     const resetFormTestStore = configureStore(init)
 
     const failLoginForm = {
@@ -194,7 +194,7 @@ describe('A layout that renders the login page', () => {
     expect(pwdInput!.value).toBe(failLoginForm.password)
   })
 
-  test('it updates state on submitting a valid registration form', () => {
+  it('updates state on submitting a valid registration form', () => {
     const submitValidFormStore = configureStore(init)
     const spy = jest.spyOn(UserService, 'postLogin')
 
@@ -223,7 +223,7 @@ describe('A layout that renders the login page', () => {
     expect(isFetching).toBe(true)
   })
 
-  test('it redirects on successful login', async (done) => {
+  it('redirects on successful login', async (done) => {
     const redirectTestStore = configureStore(init)
     jest.spyOn(UserService, 'postLogin')
     .mockImplementation((req) => Promise.resolve({

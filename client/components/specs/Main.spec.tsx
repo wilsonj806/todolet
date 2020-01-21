@@ -5,7 +5,7 @@ import '@testing-library/jest-dom/extend-expect';
 import Main from '../Main';
 
 describe('A Main component', () => {
-  test('it should render with a main tag at the root', () => {
+  it('should render with a main tag at the root', () => {
     const { container } = render(
       <Main>
         <p>Hello There</p>
@@ -16,7 +16,7 @@ describe('A Main component', () => {
     expect(container.firstElementChild!.tagName).toBe('MAIN');
   })
 
-  test('it should render children', () => {
+  it('should render children', () => {
     const { container } = render(
       <Main>
         <p>Hello There</p>
@@ -29,7 +29,7 @@ describe('A Main component', () => {
     expect(main!.childNodes.length).toBe(2);
   })
 
-  test('it should render with padding by default', () => {
+  it('should render with padding by default', () => {
     const { container } = render(
       <Main>
         <p>Hello There</p>
@@ -41,7 +41,7 @@ describe('A Main component', () => {
     expect(main!.style.paddingTop).not.toBe("0px");
   })
 
-  test('it should render without padding when passed the relevant prop', () => {
+  it('should render without padding when passed the relevant prop', () => {
     const { container } = render(
       <Main noPadding={ true }>
         <p>Hello There</p>

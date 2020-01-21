@@ -36,7 +36,7 @@ describe('A component that renders Todos', () => {
 
   const authenticatedStore = configureStore(authenticatedState)
 
-  test('it renders a list element', () => {
+  it('renders a list element', () => {
     const { container } = render(
       <ReduxWrap store={ authenticatedStore }>
         <TodoList todosList={ mockTodos }/>
@@ -49,7 +49,7 @@ describe('A component that renders Todos', () => {
     });
     expect.assertions(1)
   })
-  test('it renders todos', () => {
+  it('renders todos', () => {
     const { container } = render(
       <ReduxWrap store={ authenticatedStore }>
         <TodoList todosList={ mockTodos }/>

@@ -26,7 +26,7 @@ describe('A middleware function for deleting a user', () => {
     res = responseMock();
   });
 
-  test('it should log the user out before deleting the user', async (done) => {
+  it('should log the user out before deleting the user', async (done) => {
 
     await deleteUser(req, res, next)
 
@@ -34,7 +34,7 @@ describe('A middleware function for deleting a user', () => {
     done()
   })
 
-  test('it should try deleting the user from the database', async (done) => {
+  it('should try deleting the user from the database', async (done) => {
     const spy = jest.spyOn(User, 'findByIdAndDelete');
 
     await deleteUser(req, res, next)
@@ -43,7 +43,7 @@ describe('A middleware function for deleting a user', () => {
     done()
   })
 
-  test('it should send a success response if it succeeds', async (done) => {
+  it('should send a success response if it succeeds', async (done) => {
     jest.spyOn(User, 'findByIdAndDelete')
       .mockImplementation((req): any => ({ username: 'test delete'}));
 
@@ -58,7 +58,7 @@ describe('A middleware function for deleting a user', () => {
     done();
   })
 
-  test('it should send a failure response if the requested user to delete is invalid', async (done) => {
+  it('should send a failure response if the requested user to delete is invalid', async (done) => {
     jest.spyOn(User, 'findByIdAndDelete')
       .mockImplementation((req): any => {throw new Error('test fail')});
 
@@ -73,7 +73,7 @@ describe('A middleware function for deleting a user', () => {
     done()
   })
 
-  test('it should send an error response if it fails', async (done) => {
+  it('should send an error response if it fails', async (done) => {
     jest.spyOn(User, 'findByIdAndDelete').mockImplementation((req): any => { throw new Error('test error') });
 
     deleteUser(req, res, next)

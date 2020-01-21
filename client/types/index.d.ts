@@ -92,6 +92,7 @@ declare namespace AnotherTodoClient {
   interface PriorityDisplayProps {
     priority: PriorityTypes
     handleEditBtnClick : () => void
+    handleDeleteBtnClick : () => void
   }
 
   interface TodoCheckboxProps {

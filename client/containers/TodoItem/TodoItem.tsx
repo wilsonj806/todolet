@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // ----- MUI components
 import ListItem from '@material-ui/core/ListItem';
@@ -14,8 +15,11 @@ import useStyles from './TodoItem.styles';
 import { TodoItemProps } from '../../types';
 
 import { updateTodo } from '../../actions/todoUpdate.action';
+import { deleteTodo } from '../../actions/todoDelete.action';
 
 const TodoItem : FC<TodoItemProps> = (props) => {
+  // ----- Redux related
+  const dispatch = useDispatch();
   // ----- Local State
   const [open, setOpen] = useState(false);
 
@@ -30,6 +34,7 @@ const TodoItem : FC<TodoItemProps> = (props) => {
       classes.listItemStrike : classes.listItem;
 
   const handleEditBtnClick = (): void => setOpen(!open);
+  const handleDeleteBtnClick = (): void => dispatch(deleteTodo(_id))
 
   // FIXME Buttons aren't super accessible
   return (
@@ -43,7 +48,11 @@ const TodoItem : FC<TodoItemProps> = (props) => {
             { todo }
           </Typography>
         </div>
-        <PriorityDisplay priority={ priority } handleEditBtnClick={ handleEditBtnClick }/>
+        <PriorityDisplay
+          priority={ priority }
+          handleEditBtnClick={ handleEditBtnClick }
+          handleDeleteBtnClick={ handleDeleteBtnClick }
+        />
       </div>
       <Collapse in={open} timeout="auto" unmountOnExit classes={{ entered: classes.collapse }}>
         <SubmitBar

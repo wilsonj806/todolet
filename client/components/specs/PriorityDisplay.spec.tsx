@@ -1,12 +1,12 @@
 import React from 'react';
-import { render, cleanup, act } from '@testing-library/react';
+import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import PriorityDisplay from '../PriorityDisplay/PriorityDisplay';
 
 
 describe('A component that renders a simple Priority display', () => {
-  test('it renders the priority text', () => {
+  it('renders the priority text', () => {
     const high = 'High'
     const { getByText } = render(
       <PriorityDisplay priority={ high }/>
@@ -19,7 +19,7 @@ describe('A component that renders a simple Priority display', () => {
     expect(assertPriorityDisplay).not.toBeNull();
   })
 
-  test('it renders a colored box with different classes based on the priority', () => {
+  it('renders a colored box with different classes based on the priority', () => {
     const high = 'High'
     const low = 'Low';
     const medium = 'Medium'
@@ -51,4 +51,29 @@ describe('A component that renders a simple Priority display', () => {
 
     expect.assertions(3);
   })
+
+  it('executes the callback if you click the edit button', () => {
+    const high = 'High'
+    const spy = jest.fn();
+
+    const { container } = render(
+      <PriorityDisplay priority={ high } handleEditBtnClick={ spy } handleDeleteBtnClick={ () => true }/>
+    )
+    const btn = container.querySelector('button#btn-display-update-form')
+    fireEvent.click(btn);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('executes the callback if you click the delete button', () => {
+    const high = 'High'
+    const spy = jest.fn();
+
+    const { container } = render(
+      <PriorityDisplay priority={ high } handleEditBtnClick={ () => true } handleDeleteBtnClick={ spy }/>
+    )
+    const btn = container.querySelector('button#btn-delete-todo')
+    fireEvent.click(btn);
+    expect(spy).toHaveBeenCalled();
+  })
+
 })

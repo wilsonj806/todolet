@@ -13,7 +13,7 @@ import { PriorityDisplayProps } from '../../types';
 
 
 const PriorityDisplay : FC<PriorityDisplayProps> = (props) => {
-  const { priority, handleEditBtnClick } = props;
+  const { priority, handleEditBtnClick, handleDeleteBtnClick } = props;
   const classes = useStyles();
   const bgColor = getBgColor(priority, useStyles);
   return (
@@ -44,8 +44,9 @@ const PriorityDisplay : FC<PriorityDisplayProps> = (props) => {
       </Button>
       <Button
         classes={{ root: classes.deleteButton }}
+        onClick={ handleDeleteBtnClick }
+        id='btn-delete-todo'
         variant='contained'
-        disabled={ true }
         color='primary'
         type='button'
         size='small'

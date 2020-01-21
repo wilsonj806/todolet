@@ -4,7 +4,7 @@ import axios from '../../axios';
 import TodoService from '../TodoService';
 import { PriorityTypes, TodoShape } from '../../types';
 
-const { postTodo, getTodos, updateTodo } = TodoService;
+const { postTodo, getTodos, updateTodo, deleteTodo } = TodoService;
 
 // NOTE these tests include WORKING expect async Fn throw tests
 const mock = new MockAdapter(axios);
@@ -169,6 +169,58 @@ describe('A service function for updating a Todo', () => {
       }
     );
     await expect(updateTodo(mockTodo as TodoShape, mockUpdatedValues))
+      .rejects
+      .toThrow();
+  })
+})
+
+describe('A service function for deleting a Todo', () => {
+  afterEach(() => {
+    mock.reset()
+    mock.resetHistory()
+  })
+  const mockTodoId = '1111'
+  const endpoint = '/api/todo/' + mockTodoId;
+
+  const initUser = {
+    username: 'guest',
+    userId: 'aaaaa',
+    todos: [mockTodoId]
+  }
+
+  const updatedUser = { ...initUser, todos: [] };
+
+  const mockSuccess = { todos: [], authorizedUser: updatedUser }
+  const mockServiceReturn = [[], updatedUser]
+
+  it('should call axios', async (done) => {
+    mock.onDelete(endpoint).reply(
+      200,
+      mockSuccess
+    );
+    await deleteTodo(mockTodoId)
+    expect(mock.history.delete.length).toBe(1);
+    done()
+  })
+
+  it('should return both todos and the updated user on success', async (done) => {
+    mock.onDelete(endpoint).reply(
+      200,
+      mockSuccess
+    );
+    const assertRes = await deleteTodo(mockTodoId)
+    expect(assertRes).toStrictEqual(mockServiceReturn);
+    done();
+  })
+
+  it('should throw an error if it failed', async () => {
+    mock.onDelete(endpoint).reply(
+      500,
+      {
+        errors: 'test err'
+      }
+    );
+    await expect(deleteTodo(mockTodoId))
       .rejects
       .toThrow();
   })

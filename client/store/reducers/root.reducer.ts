@@ -14,6 +14,7 @@ import {
 import { GET_TODOS_SUCCESS, GET_TODOS_INIT, GET_TODOS_FAIL } from '../../actions/todoGetAll.action';
 import { POST_TODO_SUCCESS, POST_TODO_INIT, POST_TODO_FAIL } from '../../actions/todoAdd.action';
 import { PUT_TODO_SUCCESS, PUT_TODO_INIT, PUT_TODO_FAIL } from '../../actions/todoUpdate.action';
+import { DELETE_TODO_SUCCESS, DELETE_TODO_INIT, DELETE_TODO_FAIL } from '../../actions/todoDelete.action';
 
 // FIXME something's really weird with some of the key names and how it aligns with other stuff
 const INIT_USER_STATE : UserStoreShape = {
@@ -40,6 +41,7 @@ const todosList = (state: TodoShape[] = [], action: ReduxAction) : TodoShape[] =
   switch(action.type) {
     case POST_TODO_SUCCESS:
     case GET_TODOS_SUCCESS:
+    case DELETE_TODO_SUCCESS:
       return [...action.payload]
     case PUT_TODO_SUCCESS:
       const { userIndex } = action.payload;

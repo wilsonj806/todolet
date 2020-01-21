@@ -79,20 +79,26 @@ const updateTodo = async <T extends { [key in keyof TodoShape] ?: any },>(todo :
     throw error;
   }
 }
-// const test = {
-//   _id: 'aaaa',
-//   todo: 'aaaa',
-//   priority: 'High' as PriorityTypes,
-//   isCompleted: false,
-// }
-// const test2 = {
-//   todo: 'uuuuuu'
-// }
-// updateTodo(test, test2);
+
+const deleteTodo = async (todoId: string) => {
+  try {
+    const uri = endpointPrefix + '/' + todoId;
+    const response : AxiosResponse<any> | any = await axios.delete(uri);
+    if (response.data.errors) {
+      throw new Error(response.data.errors)
+    }
+
+    const { todos, authorizedUser } = response.data;
+    return [ todos, authorizedUser ];
+  } catch (error) {
+    throw error;
+  }
+}
 const TodoService = {
   postTodo,
   getTodos,
-  updateTodo
+  updateTodo,
+  deleteTodo
 }
 
 export default TodoService;

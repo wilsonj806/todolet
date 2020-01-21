@@ -32,7 +32,7 @@ router.put(
   '/:_id',
   updateTodo,
   // getUsersTodos
-  )
+)
 
 router.delete(
   '/:todoId',

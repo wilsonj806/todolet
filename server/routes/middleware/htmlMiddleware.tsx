@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Request } from 'express';
 
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -13,13 +13,16 @@ import {
 import { staticLocation } from '../../expressApp';
 
 import App from '../../../client/App'
-import routes from './../routes.client';
+import { checkSessionAndUrl } from './../routes.client';
 import configureStore from '../../../client/store/configureStore';
 import { StoreShape } from '../../../client/types';
 import { INIT_APP_STATE } from '../../../client/store/reducers/root.reducer';
+import { PREFETCHED_TODOS_KEY } from './todoMiddleware';
+import { storeInResLocals } from './commonMiddleware';
 // import User from '../../models/user';
 
-
+// TODO do proper server side routing for requests
+// TODO add more tests to handle different status pages
 const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = INIT_APP_STATE, title: string = 'Todolet'): string =>
   (`
     <!DOCTYPE html>
@@ -40,53 +43,89 @@ const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = IN
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
       <div id="app">${ reactDom }</div>
-      <script>
+      <script id="redux-data">
         window.__REDUX_DATA__ = ${ JSON.stringify( reduxState) }
       </script>
       <script src="/dist/app.bundle.js"></script>
     </body>
     </html>
 `)
+const STATE_KEY = '__STATE__';
+
+const gatherState : RequestHandler = (req, res, next) => {
+  // console.log(req.user);
+  if (!req.user) {
+    // NOTE If there's no prefetched_todos then keep going
+    next();
+  } else {
+    // @ts-ignore
+    const todosList = req.user[PREFETCHED_TODOS_KEY] ? [ ...res.locals[PREFETCHED_TODOS_KEY] ] : [];
+    const { username, _id: userId, todos, projectFilters, tagFilters, email } = req.user as any;
+    const authorizedUser = Object.assign({}, {
+      username,
+      userId,
+      todos,
+      tagFilters,
+      projectFilters,
+      email
+    });
+
+    const state = {
+      ...INIT_APP_STATE,
+      authorizedUser,
+      todosList,
+    }
+    storeInResLocals(res, STATE_KEY, state);
+    next();
+  }
+}
+
 
 const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
-  // TODO check if there's a session and prepopulate
-  // const prepopulatedState: StoreShape = {
-  //   authorizedUser: {}
-  // }
-  // const { passport } = req.session;
-  // const userId = passport && passport.user ? passport.user.userId.toString() : undefined;
-  // try {
-  //   const user = await User.findById(userId);
-  //   console.log(user);
-  //   prepopulatedState.authorizedUser = user
-  // } catch (error) {
-  //   res.redirect(500, '/500-err')
-  // }
-
+  const initState = { ...res.locals[STATE_KEY] }
+  // console.log(initState);
   const sheets = new ServerStyleSheets({
     serverGenerateClassName: createGenerateClassName({
       productionPrefix: 'jss',
     })
   });
+  // console.log(initState);
   const store = configureStore(
-    // prepopulatedState
+    initState
   );
-
+  // console.log('this is store state', store.getState())
   const context = {};
+  const status = checkSessionAndUrl(req);
+  const finalUrl = status === 200 ? req.url :
+    status === 300 ? '/' :
+      '/404';
+
   const jsx = (
     <Provider store={ store }>
-      <StaticRouter context={ context } location={ req.url }>
+      <StaticRouter context={ context } location={ finalUrl }>
         <App/>
       </StaticRouter>
     </Provider>
   );
   const reactDom = renderToString(sheets.collect(jsx));
+  // console.log(reactDom);
   const css = sheets.toString();
+  // console.log('this is state', store.getState())
+  const finalState = store.getState();
+  const html = htmlTemplate(
+    reactDom,
+    css,
+    finalState
+  );
+  // if (context.url) {
+  //   return res.redirect(301, context.url)
+  // }
+
   res
-    .status(200)
+    .status(status)
     .set({ "Content-Type": "text/html" })
     // FIXME
-    .send( htmlTemplate( reactDom, css ) );
+    .send(html);
 
   next();
 };
@@ -94,6 +133,8 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
 
 
 export {
+  gatherState,
   returnHtml,
-  htmlTemplate
+  htmlTemplate,
+  STATE_KEY
 }

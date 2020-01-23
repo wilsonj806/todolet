@@ -36,15 +36,10 @@ const Login: FunctionComponent<any> = (props) => {
     if (userId || username) setShouldRedirect(true)
   }, [userState])
 
-  const handleFormSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleFormSubmit = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const obj = { username, password };
-    try {
-      await dispatch(postLogin(obj))
-    } catch (err) {
-      console.log('hi');
-      setError(err);
-    }
+    dispatch(postLogin(obj))
   }
   const RenderRedirect = shouldRedirect ? <Redirect to='/'/> : null;
 

@@ -23,7 +23,8 @@
     "watch-ts": "tsc --watch",
     "test:ts": "jest --config=config/jest.config.js --watch",
     "test:tsx": "jest --config=config/react.jest.config.js --watch",
-    "coverage": "jest --coverage --config=config/jest.config.js && jest --coverage --config=config/react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./todolet_coverage_* && echo 'Coverage reporting done'"
+    "coverage": "jest --coverage --config=config/jest.config.js && jest --coverage --config=config/react.jest.config.js && mkdir coverage && touch coverage/lcov.info && lcov-result-merger 'todolet_coverage_*/lcov.info' './coverage/lcov.info' && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./todolet_coverage_* && echo 'Coverage reporting done'",
+    "analyze": "source-map-explorer 'dist/*.bundle.js'"
   },
   "dependencies": {
     "@material-ui/core": "4.6.1",
@@ -81,7 +82,7 @@
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "@types/react-redux": "^7.1.5",
-    "@types/react-router-dom": "^4.3.5",
+    "@types/react-router-dom": "^5.1.3",
     "@types/storybook__react": "^4.0.2",
     "@types/styled-components": "^4.1.22",
     "@types/supertest": "^2.0.8",
@@ -101,8 +102,9 @@
     "jest": "24.7.1",
     "lcov-result-merger": "^3.1.0",
     "nodemon": "^1.19.4",
+    "source-map-explorer": "^2.2.2",
     "supertest": "^4.0.2",
-    "terser-webpack-plugin": "^2.2.1",
+    "terser-webpack-plugin": "^2.3.2",
     "ts-jest": "^24.1.0",
     "typescript": "3.2.4",
     "webpack": "4.29.6",

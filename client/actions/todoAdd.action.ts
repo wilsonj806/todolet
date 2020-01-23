@@ -4,9 +4,11 @@ import TodoService from '../services/TodoService';
 
 import {
   ReduxAction,
-  TodoShape
+  TodoShape,
+  StoreShape
 } from '../types';
 import { errorResponse } from '../../server/types';
+import { receiveUserUpdateSuccess } from './userUpdate.action';
 
 export const POST_TODO_INIT = 'POST_TODO_INIT'
 export const POST_TODO_FAIL = 'POST_TODO_FAIL'
@@ -16,8 +18,8 @@ const requestPostNewTodo = () : ReduxAction => ({
   type: POST_TODO_INIT
 })
 
-// TODO type the JSON param
-const receivePostNewTodoSuccess = (json : Array<TodoShape>) : ReduxAction => ({
+// ----- NOTE the input param is basically the entire store because we need to update the entire store with the updated User data
+const receivePostNewTodoSuccess = (json : StoreShape) : ReduxAction => ({
   type: POST_TODO_SUCCESS,
   payload: json
 })
@@ -28,15 +30,19 @@ const receivePostNewTodoFail = (err : any) : any => ({
 })
 
 // ----- NOTE Exported Redux Thunk action
-export const postNewTodo = (request : any, stateFns: SetStateAction<any>[]) => {
-  return async (dispatch: Dispatch) => {
+// FIXME this only returns the TODOS and NOT the updated user
+export const postNewTodo = (request : any, stateFns: SetStateAction<any>[]) =>
+  async (dispatch: Dispatch) => {
     dispatch(requestPostNewTodo());
     try {
-      const res = await TodoService.postTodo(request);
+      const [ todos, authorizedUser ] = await TodoService.postTodo(request);
       stateFns.forEach( (fn: SetStateAction<any>) => fn('') );
-      dispatch(receivePostNewTodoSuccess(res))
+
+      dispatch(receivePostNewTodoSuccess(todos))
+      dispatch(receiveUserUpdateSuccess(authorizedUser))
     } catch (err) {
       dispatch(receivePostNewTodoFail(err.message))
     }
   }
-}
+
+

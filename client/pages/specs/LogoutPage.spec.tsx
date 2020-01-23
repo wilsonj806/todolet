@@ -50,7 +50,7 @@ describe('A page that lets the user log in', () => {
       </HashRouter>
     )
   })
-  test('it renders without a NAV component', () => {
+  it('renders without a NAV component', () => {
     const { container } = render(
       <ReduxWrap store={ unauthenticatedStore }>
         <HashRouter>

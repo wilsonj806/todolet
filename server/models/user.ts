@@ -27,10 +27,12 @@ const userSchema = new mongoose.Schema({
   projectFilters: {
     type: [String],
     required: false,
+    default: []
   },
   tagFilters: {
     type: [String],
     required: false,
+    default: []
   },
   todos: {
     type: [{}],

@@ -2,9 +2,12 @@ import { Dispatch } from 'redux';
 import TodoService from '../services/TodoService';
 
 import {
-  ReduxAction,
+  ReduxAction, TodoShape,
 } from '../types';
 import { errorResponse } from '../../server/types';
+import { receiveUserUpdateSuccess } from './userUpdate.action';
+
+import { INIT_USER_STATE } from '../store/reducers/root.reducer';
 
 export const GET_TODOS_INIT = 'GET_TODOS_INIT'
 export const GET_TODOS_FAIL = 'GET_TODOS_FAIL'
@@ -26,15 +29,16 @@ const receiveTodosFail = (err : any) : any => ({
 })
 
 // ----- NOTE Exported Redux Thunk action
-const { getTodos } = TodoService
-export const getAllTodos = () => {
-  return async (dispatch: Dispatch) => {
+// TODO FIXME make this have a bool input indicating if it's an update or not?
+export const getAllTodos = () =>
+  async (dispatch: Dispatch) => {
     dispatch(requestTodos());
     try {
-      const res = await getTodos();
-      dispatch(receiveTodosSuccess(res))
+      const [ todos, authorizedUser ] = await TodoService.getTodos();
+      dispatch(receiveTodosSuccess(todos))
+      dispatch(receiveUserUpdateSuccess(authorizedUser))
     } catch (err) {
       dispatch(receiveTodosFail(err.message))
     }
   }
-}
+

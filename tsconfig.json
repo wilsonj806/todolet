@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "typeRoots": [
       "**/node_modules/@types",
-      "server/types"
+      "server/types",
+      "client/types"
     ],
     "lib": [
       "dom",
@@ -30,6 +31,8 @@
     "isolatedModules": false
   },
   "include":[
+    "server/*",
+    "client/*",
     "**/*.tsx",
     "**/*.ts"
   ],

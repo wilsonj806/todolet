@@ -10,7 +10,7 @@ import { StoreShape } from '../types';
 
 describe('A store for global state', () => {
   // easy smoke test
-  test('it should render initial app state', () => {
+  it('should render initial app state', () => {
     const store = configureStore();
 
     const state = store.getState();
@@ -18,7 +18,7 @@ describe('A store for global state', () => {
     expect(state).toStrictEqual(INIT_APP_STATE)
   })
 
-  test('it should pass the store around', () => {
+  it('should pass the store around', () => {
     const store = configureStore();
 
     const { getByText } = render(

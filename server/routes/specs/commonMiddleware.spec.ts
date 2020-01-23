@@ -12,7 +12,7 @@ import User from '../../models/user';
 
 // import { checkForErrors } from '../routes/middleware/commonMiddleware';
 import { requestMock, responseMock } from './mocks/mockReqRes';
-import checkFormErrors from '../middleware/commonMiddleware';
+import { checkFormErrors, storeInResLocals } from '../middleware/commonMiddleware';
 
 /**
  * ANCHOR Unit tests
@@ -29,7 +29,7 @@ describe('A middleware function to check the form for errors', () => {
   });
 
 
-  test('it should send a response with a list of form errors if it failed', () => {
+  it('should send a response with a list of form errors if it failed', () => {
     const req = requestMock({}, {
       username: 'guest',
       password: undefined,
@@ -46,7 +46,7 @@ describe('A middleware function to check the form for errors', () => {
     expect(res.json).toHaveBeenCalled();
   });
 
-  test('it should go to the next middleware function if there are no issues', () => {
+  it('should go to the next middleware function if there are no issues', () => {
     const req = requestMock({}, {
       username: 'guest',
       password: undefined,
@@ -60,7 +60,7 @@ describe('A middleware function to check the form for errors', () => {
     expect(next).toHaveBeenCalled();
   });
 
-  test('it should send a response starting with "Error":', () => {
+  it('should send a response starting with "Error":', () => {
     const req = requestMock({}, {
       username: 'guest',
       password: undefined,
@@ -77,3 +77,17 @@ describe('A middleware function to check the form for errors', () => {
     expect(regexTest).toBe(true);
   });
 });
+
+describe('A function for inserting entries into res.locals', () => {
+  let res;
+  beforeAll(() => {
+    res = responseMock();
+  });
+
+  it('inserts an entry with the desired name and value into response', () => {
+    const name = 'test';
+    const val = 1;
+    storeInResLocals(res, name, val);
+    expect(res.locals).toHaveProperty(name, val);
+  })
+})

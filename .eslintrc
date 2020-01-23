@@ -6,7 +6,8 @@
       "jsx": true
     },
     "useJSXTextNode": true,
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
+    "sourceType": "module"
   },
   "settings": {
     "import/resolver": {
@@ -15,7 +16,6 @@
       }
     }
   },
-  "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended"],
   "env": {
     "node": true,
     "browser": true,

@@ -76,6 +76,13 @@ declare namespace AnotherTodoClient {
     reactHookFn   : Dispatch<SetStateAction<any>>
     [key: string] : any
   }
+
+  interface SubmitBarProps {
+    isUpdateBar     : boolean
+    todo            ?: TodoShape
+    reduxUpdateTodo ?: <T extends { [key in keyof TodoShape] ?: any }>(updatedValue: T) => (dispatch: any) => Promise<void>
+  }
+
   type PriorityTypes = 'Low' | 'Medium' | 'High'
   interface TodoItemProps {
     todo  : TodoShape
@@ -84,6 +91,13 @@ declare namespace AnotherTodoClient {
 
   interface PriorityDisplayProps {
     priority: PriorityTypes
+    handleEditBtnClick : () => void
+    handleDeleteBtnClick : () => void
+  }
+
+  interface TodoCheckboxProps {
+    isCompleted : boolean
+    reduxUpdateTodo : <T extends { [key in keyof TodoShape] ?: any }>(updatedValue: T) => (dispatch: any) => Promise<void>
   }
 
   // ----- NOTE Redux Action Types
@@ -111,7 +125,7 @@ declare namespace AnotherTodoClient {
 
   type AsyncTodoPost = "POST_TODO_INIT" | "POST_TODO_FAIL" | "POST_TODO_SUCCESS"
 
-  type AsyncTodoPatch = "PATCH_TODO_INIT" | "PATCH_TODO_FAIL" | "PATCH_TODO_SUCCESS"
+  type AsyncTodoPatch = "PUT_TODO_INIT" | "PUT_TODO_FAIL" | "PUT_TODO_SUCCESS"
 
   type AsyncTodoDelete = "DELTE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
 
@@ -173,10 +187,11 @@ declare namespace AnotherTodoClient {
   }
 
   interface TodoShape {
-    id            ?: number
+    _id           ?: string
     isCompleted   : boolean
     priority      : PriorityTypes
     todo          : string
+    userIndex     : number
     projectFilter ?: string | undefined
     tagFilter     ?: string | undefined
   }

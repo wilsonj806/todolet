@@ -10,7 +10,7 @@ describe('A service function for registering a new user', () => {
 
   afterEach(() => mock.reset())
 
-  test('it should throw if required fields are missing', async (done) => {
+  it('should throw if required fields are missing', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'wasd',
@@ -26,7 +26,7 @@ describe('A service function for registering a new user', () => {
     )
     done()
   })
-test('it should return an obect with the user info if it succeeded', async (done) => {
+it('should return an obect with the user info if it succeeded', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'wasd',
@@ -46,7 +46,7 @@ test('it should return an obect with the user info if it succeeded', async (done
 
   })
 
-  test('it should return an error object if it failed with a 4** error', async (done) => {
+  it('should return an error object if it failed with a 4** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -70,7 +70,7 @@ test('it should return an obect with the user info if it succeeded', async (done
     done();
 
   })
-  test('it should return an error object if it failed with a 5** error', async (done) => {
+  it('should return an error object if it failed with a 5** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -106,7 +106,7 @@ describe('A service function for logging a client in', () => {
   })
 
 
-  test('it should throw if required fields are missing', async (done) => {
+  it('should throw if required fields are missing', async (done) => {
     const reqObj = {
       username: 'guest',
       password: ''
@@ -121,7 +121,7 @@ describe('A service function for logging a client in', () => {
     )
     done()
   })
-  test('it should return an obect with the user info if it succeeded', async (done) => {
+  it('should return an obect with the user info if it succeeded', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'wasd'
@@ -147,7 +147,7 @@ describe('A service function for logging a client in', () => {
 
   })
 
-  test('it should return an error object if it failed with a 4** error', async (done) => {
+  it('should return an error object if it failed with a 4** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -171,7 +171,7 @@ describe('A service function for logging a client in', () => {
     done();
 
   })
-  test('it should return an error object if it failed with a 5** error', async (done) => {
+  it('should return an error object if it failed with a 5** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -206,7 +206,7 @@ describe('A service function for logging a client in', () => {
   })
 
 
-  test('it should throw if required fields are missing', async (done) => {
+  it('should throw if required fields are missing', async (done) => {
     const reqObj = {
       username: 'guest',
       password: ''
@@ -221,7 +221,7 @@ describe('A service function for logging a client in', () => {
     )
     done()
   })
-  test('it should return an obect with the user info if it succeeded', async (done) => {
+  it('should return an obect with the user info if it succeeded', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'wasd'
@@ -247,7 +247,7 @@ describe('A service function for logging a client in', () => {
 
   })
 
-  test('it should return an error object if it failed with a 4** error', async (done) => {
+  it('should return an error object if it failed with a 4** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -271,7 +271,7 @@ describe('A service function for logging a client in', () => {
     done();
 
   })
-  test('it should return an error object if it failed with a 5** error', async (done) => {
+  it('should return an error object if it failed with a 5** error', async (done) => {
     const reqObj = {
       username: 'guest',
       password: 'your mom'
@@ -302,7 +302,7 @@ describe('A service function for logging a user out', () => {
 
   afterEach(() => mock.reset())
 
-  test('it should return an obect with a status key if it succeeded', async (done) => {
+  it('should return an obect with a status key if it succeeded', async (done) => {
     mock.onPost(endpoint).reply(
       200,
       { msg: 'hi' }
@@ -314,7 +314,7 @@ describe('A service function for logging a user out', () => {
     done();
   })
 
-  test('it should return an error object if it failed with a 5** error', async (done) => {
+  it('should return an error object if it failed with a 5** error', async (done) => {
     const mockResponse = {
       msg: 'testing failure',
     }

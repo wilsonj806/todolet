@@ -2,7 +2,8 @@ import User from '../../models/user'
 import { responseMock, requestMock } from "./mocks/mockReqRes";
 import { IUserObj } from '../../types';
 
-import { putUser, updateUserTodos } from '../middleware/userUpdateMiddleware'
+import { putUser, updateUserTodos, deleteSingleUserTodo } from '../middleware/userUpdateMiddleware'
+import { NEW_TODO } from '../middleware/todoMiddleware';
 
 describe('A middleware function for updating a user', () => {
   let res;
@@ -18,7 +19,7 @@ describe('A middleware function for updating a user', () => {
     res = responseMock();
   });
 
-  test.skip('it should error out if there are incorrect fields', async (done) => {
+  it.skip('should error out if there are incorrect fields', async (done) => {
     const req = requestMock();
     req.user = {};
     req.user._doc = { ...user };
@@ -29,7 +30,7 @@ describe('A middleware function for updating a user', () => {
     done()
   })
 
-  test('it should try to update the user', async (done) => {
+  it('should try to update the user', async (done) => {
     expect.assertions(1);
     const spy = jest.spyOn(User, 'findByIdAndUpdate')
       .mockImplementation((): any => Promise.resolve(user as any))
@@ -44,7 +45,7 @@ describe('A middleware function for updating a user', () => {
     done()
   })
 
-  test('it should send an error response if it fails', async (done) => {
+  it('should send an error response if it fails', async (done) => {
     const testMsg = 'test error'
     jest.spyOn(User, 'findByIdAndUpdate')
       .mockImplementation(() => { throw new Error(testMsg)})
@@ -58,7 +59,7 @@ describe('A middleware function for updating a user', () => {
     done()
   })
 
-  test('it should send a success response with a 200 HTTP code if it suceeds', async (done) => {
+  it('should send a success response with a 200 HTTP code if it suceeds', async (done) => {
     const req = requestMock();
     req.user = {};
     req.user._doc = {...user};
@@ -72,7 +73,7 @@ describe('A middleware function for updating a user', () => {
     done()
   })
 
-  test('it should send a success response with json if it suceeds', async (done) => {
+  it('should send a success response with json if it suceeds', async (done) => {
     const req = requestMock();
     req.user = {};
     req.user._doc = { ...user };
@@ -87,12 +88,14 @@ describe('A middleware function for updating a user', () => {
   })
 })
 
+
 describe('A middleware function for adding new todos to a user', () => {
   let res;
   const next = jest.fn();
   const regex = /^(Error\:)/;
   // FIXME setting req.user.attributes isn't great, it's implementation details
-  const user = {
+  let user;
+  const init = {
     _id: '1239oij',
     username: 'guest',
     todos: []
@@ -100,13 +103,14 @@ describe('A middleware function for adding new todos to a user', () => {
 
   beforeAll(() => {
     res = responseMock();
+    user = {...init};
   });
 
-  test('it calls the data base to update the user document', async (done) => {
+  it('calls the database to update the user document', async (done) => {
     const req = requestMock();
-    req.user = user;
+    req.user = {...init};
     res.locals = {}
-    res.locals.new_todo = '333333';
+    res.locals[NEW_TODO] = '333333';
     const spy = jest.spyOn(User, 'findByIdAndUpdate')
 
     await updateUserTodos(req, res, next);
@@ -116,12 +120,12 @@ describe('A middleware function for adding new todos to a user', () => {
   })
 
 
-  test('it calls next if user update is successful', async (done) => {
+  it('calls next if user update is successful', async (done) => {
     const req = requestMock();
-    req.user = user;
+    req.user = {...init};
     res.locals = {}
-    res.locals.new_todo = '333333';
-    jest.spyOn(User, 'findByIdAndUpdate')
+    res.locals[NEW_TODO] = '333333';
+    jest.spyOn(User, 'findByIdAndUpdate').mockImplementation(() => ({...init}) as any)
 
     await updateUserTodos(req, res, next);
 
@@ -129,13 +133,67 @@ describe('A middleware function for adding new todos to a user', () => {
     done()
   })
 
-  test('it sends a response if it failed', async (done) => {
+  it('sends a response if it failed', async (done) => {
     const req = requestMock();
-    req.user = user;
+    req.user = {...init};
     res.locals = {}
-    res.locals.new_todo = '333333';
+    res.locals[NEW_TODO] = '333333';
     jest.spyOn(User, 'findByIdAndUpdate').mockImplementation(() => {throw new Error('fail')})
     await updateUserTodos(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    done()
+  })
+})
+
+describe('A middleware function for deleting a todo from a user', () => {
+  let res;
+  const next = jest.fn();
+  const regex = /^(Error\:)/;
+  // FIXME setting req.user.attributes isn't great, it's implementation details
+  let user;
+  const init = {
+    _id: '1239oij',
+    username: 'guest',
+    todos: ['11111']
+  };
+
+  beforeAll(() => {
+    res = responseMock();
+    user = {...init};
+  });
+
+  it('calls the database to update the user document', async (done) => {
+    const req = requestMock();
+    req.user = {...init};
+    req.params = { todoId : '11111' }
+    const spy = jest.spyOn(User, 'findByIdAndUpdate')
+
+    await deleteSingleUserTodo(req, res, next);
+
+    expect(spy).toHaveBeenCalled();
+    done()
+  })
+
+
+  it('calls next if user update is successful', async (done) => {
+    const req = requestMock();
+    req.user = {...init};
+    req.params = { todoId : '11111' }
+    jest.spyOn(User, 'findByIdAndUpdate').mockImplementation(() => ({...init}) as any)
+
+    await deleteSingleUserTodo(req, res, next);
+
+    expect(next).toHaveBeenCalled();
+    done()
+  })
+
+  it('sends a response if it failed', async (done) => {
+    const req = requestMock();
+    req.user = {...init};
+    req.params = { todoId : '11111' }
+    jest.spyOn(User, 'findByIdAndUpdate').mockImplementation(() => {throw new Error('fail')})
+    await deleteSingleUserTodo(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(500);
     done()

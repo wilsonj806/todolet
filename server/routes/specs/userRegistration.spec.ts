@@ -34,7 +34,7 @@ describe('A middleware function to query the database to see if there\'s a match
   });
 
 
-  test('it should call the next middleware function if there\'s no matching user',
+  it('should call the next middleware function if there\'s no matching user',
     async (done) => {
       const req = requestMock({}, {
         username: 'guest',
@@ -49,7 +49,7 @@ describe('A middleware function to query the database to see if there\'s a match
   });
 
   // FIXME make this test more comprehensive/ make it fail if the error message doesn't say there was a matching user
-  test('it should return an error response with JSON if there is a matching user',
+  it('should return an error response with JSON if there is a matching user',
     async (done) => {
       const regex = /username:(?=.*\bexists\b)(?=.*\balready\b)/i
       const req = requestMock({}, {
@@ -71,7 +71,7 @@ describe('A middleware function to query the database to see if there\'s a match
       done();
   });
 
-  test('it should return a response with JSON if there is a database error',
+  it('should return a response with JSON if there is a database error',
     async (done) => {
       const req = requestMock({}, {
         username: 'guest',
@@ -93,7 +93,7 @@ describe('A middleware function to query the database to see if there\'s a match
       done();
   });
 
-  test('it should send a response starting with "Error":', async (done) => {
+  it('should send a response starting with "Error":', async (done) => {
     const req = requestMock({}, {
       username: 'guest',
       password: undefined,
@@ -124,7 +124,7 @@ describe('A middleware function for sending a response when login fails', () => 
     res = responseMock();
   });
 
-  test('it should return a json response with a message, and HTTP status code', () => {
+  it('should return a json response with a message, and HTTP status code', () => {
     const req = requestMock();
 
     postRegisterFailure(err, req, res, next);
@@ -137,7 +137,7 @@ describe('A middleware function for sending a response when login fails', () => 
     );
   });
 
-  test('it should call the next middleware function in the stack', () => {
+  it('should call the next middleware function in the stack', () => {
     const req = requestMock();
 
     postRegisterFailure(err, req, res, next);

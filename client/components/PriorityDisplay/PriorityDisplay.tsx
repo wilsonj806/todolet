@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import useStyles from './PriorityDisplay.styles';
 
@@ -12,7 +13,7 @@ import { PriorityDisplayProps } from '../../types';
 
 
 const PriorityDisplay : FC<PriorityDisplayProps> = (props) => {
-  const { priority } = props;
+  const { priority, handleEditBtnClick, handleDeleteBtnClick } = props;
   const classes = useStyles();
   const bgColor = getBgColor(priority, useStyles);
   return (
@@ -31,9 +32,23 @@ const PriorityDisplay : FC<PriorityDisplayProps> = (props) => {
         <Typography>{ priority }</Typography>
       </div>
       <Button
+        classes={{ root: classes.editButton }}
+        onClick={ handleEditBtnClick }
+        id='btn-display-update-form'
         variant='contained'
         color='primary'
-        disabled={ true }
+        type='button'
+        size='small'
+      >
+        <EditIcon/>
+      </Button>
+      <Button
+        classes={{ root: classes.deleteButton }}
+        onClick={ handleDeleteBtnClick }
+        id='btn-delete-todo'
+        variant='contained'
+        color='primary'
+        type='button'
         size='small'
       >
         <DeleteIcon/>

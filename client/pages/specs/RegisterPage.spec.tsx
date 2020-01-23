@@ -56,7 +56,7 @@ describe('A page that lets the user log in', () => {
     )
   })
 
-  test('it renders without a NAV component', () => {
+  it('renders without a NAV component', () => {
     const { container } = render(
       <ReduxWrap store={ unauthenticatedStore }>
         <HashRouter>
@@ -69,7 +69,7 @@ describe('A page that lets the user log in', () => {
     expect(assertNoNav).toBeFalsy()
   })
 
-  test('it redirects if there\'s a user logged in', async (done) => {
+  it('redirects if there\'s a user logged in', async (done) => {
     const startingPath = '/register'
     const targetPath ='/'
     const {  getByText } = renderWithRouter(

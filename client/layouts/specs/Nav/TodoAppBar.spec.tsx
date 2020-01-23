@@ -16,7 +16,7 @@ const store = configureStore();
 describe('A component that renders an AppBar', () => {
   afterEach(() => cleanup())
 
-  test('it should render with a heading that has the app name in it', () => {
+  it('should render with a heading that has the app name in it', () => {
     const APP_NAME = 'TodoLet';
     const { getByText, container } = renderWithRouter(
         <ReduxWrap store={ store }>
@@ -28,7 +28,7 @@ describe('A component that renders an AppBar', () => {
     expect(getByText(APP_NAME)).toBeTruthy();
   })
 
-  test('it should render at least one menu', () => {
+  it('should render at least one menu', () => {
     const { container } = renderWithRouter(
         <ReduxWrap  store={ store }>
           <TodoAppBar/>

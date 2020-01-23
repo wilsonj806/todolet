@@ -30,8 +30,8 @@ const receiveLoginFailure = (json : errorResponse) : AsyncLoginAction => ({
 })
 
 // ----- NOTE Exported Redux Thunk action
-export const postLogin = (request : postLoginReq) => {
-  return async (dispatch : Dispatch) => {
+export const postLogin = (request : postLoginReq) =>
+  async (dispatch : Dispatch) => {
     dispatch(requestLogin());
     try {
       const result = await UserService.postLogin(request);
@@ -43,4 +43,3 @@ export const postLogin = (request : postLoginReq) => {
       dispatch(receiveLoginFailure(error.message));
     }
   }
-}

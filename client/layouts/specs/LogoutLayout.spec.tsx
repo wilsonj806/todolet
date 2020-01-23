@@ -52,7 +52,7 @@ describe('A layout that renders when a user logs out', () => {
     )
   });
 
-  test('it renders with text indicating that they\'ve logged out', () => {
+  it('renders with text indicating that they\'ve logged out', () => {
     const { getByText } = renderWithRouter(
       <ReduxWrap store={ unauthenticatedStore }>
         <LogoutLayout/>
@@ -64,7 +64,7 @@ describe('A layout that renders when a user logs out', () => {
     expect(assertHeading).toBeTruthy()
   })
 
-  test('it renders with a link to direct the user to the login page', () => {
+  it('renders with a link to direct the user to the login page', () => {
     const startingPath = '/logout'
     const targetPath = '/'
     const { container } = renderWithRouter(
@@ -79,7 +79,7 @@ describe('A layout that renders when a user logs out', () => {
     expect(assertLink).toBeTruthy()
   })
 
-  test('it redirects the user if they click on the link prompting them to login', async (done) => {
+  it('redirects the user if they click on the link prompting them to login', async (done) => {
     const startingPath = '/logout';
     const targetPath = '/'
     const { getByText, container } = renderWithRouter(

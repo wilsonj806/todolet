@@ -39,9 +39,9 @@ mongoose.connection.on('error', function(err) {
 
 const connectToDb = async (): Promise<any> => {
   try {
-    mongoose.set('useFindAndModify', false);
     await mongoose.connect(uri, {
       useNewUrlParser: true,
+      useUnifiedTopology: true,
       dbName,
     });
   } catch (error) {

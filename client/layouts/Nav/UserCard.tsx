@@ -13,9 +13,10 @@ const UserCard: FunctionComponent<any> = () => {
    * - it should include a userID
    * - with the userId value, call useEffect() on the backend that handles todos and make it fetch project tags and normal tags
   */
-  const username = useSelector((state: StoreShape) => state.authorizedUser.username) || '';
-  const todos = useSelector((state: StoreShape) => state.authorizedUser.todos) || [];
-  const avatar = useSelector((state: StoreShape) => state.authorizedUser.avatar) || '';
+  const user = useSelector((state: StoreShape) => state.authorizedUser) || '';
+  const username = user.username || '';
+  const todos = user.todos || [];
+  const avatar = user.avatar || '';
 
   const classes = useStyles();
 

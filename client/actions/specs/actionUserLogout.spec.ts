@@ -20,7 +20,7 @@ const endpoint = '/api/user/logout';
 describe('An action creator that handles async user logout', () => {
   afterEach(() => mock.reset())
 
-  test('it dispatches an action signifying that a Logout dispatch has been initiated', async (done) => {
+  it('dispatches an action signifying that a Logout dispatch has been initiated', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_LOGOUT_INIT },
@@ -38,7 +38,7 @@ describe('An action creator that handles async user logout', () => {
     done()
   })
 
-  test('it dispatches a Logout success with a response object if the action succeeded', async (done) => {
+  it('dispatches a Logout success with a response object if the action succeeded', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_LOGOUT_INIT },
@@ -56,7 +56,7 @@ describe('An action creator that handles async user logout', () => {
     done()
   })
 
-  test('it dispatches a Logout failure with a response object if the action failed', async (done) => {
+  it('dispatches a Logout failure with a response object if the action failed', async (done) => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_LOGOUT_INIT },

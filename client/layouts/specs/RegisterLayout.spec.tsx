@@ -59,7 +59,7 @@ describe('A layout that renders the registration page', () => {
     )
   });
 
-  test('it renders with a form element', () => {
+  it('renders with a form element', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
         <Register/>
@@ -70,7 +70,7 @@ describe('A layout that renders the registration page', () => {
     expect(form).toBeTruthy()
   })
 
-  test('it renders with a submit button element inside of a form', () => {
+  it('renders with a submit button element inside of a form', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
         <Register/>
@@ -84,7 +84,7 @@ describe('A layout that renders the registration page', () => {
   })
 
 
-  test('it submits the form on click of the submit button', () => {
+  it('submits the form on click of the submit button', () => {
     const { container } = renderWithRouter(
       <ReduxWrap store={ store }>
         <Register/>
@@ -98,7 +98,7 @@ describe('A layout that renders the registration page', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('it updates state on submitting a valid login form', () => {
+  it('updates state on submitting a valid login form', () => {
     const stateUpdateTestStore = configureStore(init)
     const spy = jest.spyOn(UserService, 'postNewUser')
 
@@ -131,7 +131,7 @@ describe('A layout that renders the registration page', () => {
     expect(isFetching).toBe(true)
   })
 
-  test('it redirects on successful registration', async (done) => {
+  it('redirects on successful registration', async (done) => {
     const registerSuccessStore = configureStore(init)
     jest.spyOn(UserService, 'postNewUser')
       .mockImplementation((req) => Promise.resolve({

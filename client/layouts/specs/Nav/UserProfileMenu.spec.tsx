@@ -28,7 +28,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
       </HashRouter>
     )
   });
-  test('it goes to a help page when the appropriate menu link is clicked', () => {
+  it('goes to a help page when the appropriate menu link is clicked', () => {
     const targetPath = '/help';
     const { container, getByText } = renderWithRouter(
         <ReduxWrap store={ store }>
@@ -46,7 +46,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
     expect(getByText(targetPath)).toBeTruthy();
   })
 
-  test('it goes to an account page when the appropriate menu link is clicked', () => {
+  it('goes to an account page when the appropriate menu link is clicked', () => {
     const targetPath = '/account';
     const { container, getByText } = renderWithRouter(
       <ReduxWrap  store={ store }>
@@ -64,7 +64,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
     expect(getByText(targetPath)).toBeTruthy();
   })
 
-  test('it goes to a Logout page when the appropriate menu link is clicked', () => {
+  it('goes to a Logout page when the appropriate menu link is clicked', () => {
     const targetPath = '/logout';
     const { container, getByText } = renderWithRouter(
       <ReduxWrap  store={ store }>
@@ -82,7 +82,7 @@ describe('A component that renders a profile icon that expands to a menu', () =>
     expect(getByText(targetPath)).toBeTruthy();
   })
 
-  test('it logs the user out when you click the logout link in the menu', () => {
+  it('logs the user out when you click the logout link in the menu', () => {
     const spy = jest.spyOn(UserService, "postLogout");
     const targetPath = '/logout';
     const { container, getByText } = renderWithRouter(

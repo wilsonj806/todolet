@@ -18,7 +18,7 @@ describe('A FiltersCard component', () => {
   const globalStore = configureStore();
   afterEach(() => cleanup())
 
-  test('it should render tags when the tag tab is clicked', () => {
+  it('should render tags when the tag tab is clicked', () => {
     const { getAllByRole, container } = render(
       <ReduxWrap store={ globalStore }>
         <FiltersCard/>
@@ -35,7 +35,7 @@ describe('A FiltersCard component', () => {
     expect(assert).toBeTruthy();
   });
 
-  test('it should render projects when the tabs are toggled back and forth', () => {
+  it('should render projects when the tabs are toggled back and forth', () => {
     const { getAllByRole, container } = render(
       <ReduxWrap store={ globalStore }>
         <FiltersCard/>
@@ -56,7 +56,7 @@ describe('A FiltersCard component', () => {
     expect(assert).toBeTruthy();
   });
 
-  test('it should only toggle one button\'s aria attribute on click', () => {
+  it('should only toggle one button\'s aria attribute on click', () => {
     const { container } = render(
       <ReduxWrap store={ globalStore }>
         <FiltersCard/>
@@ -69,7 +69,7 @@ describe('A FiltersCard component', () => {
   });
 
 
-  test('it should prepopulate the Projects tab', () => {
+  it('should prepopulate the Projects tab', () => {
     const exampleState : Array<any> = [
       { color: 'pink', name: 'Showroom'},
       { color: 'black', name: 'TodoLet'},
@@ -95,7 +95,7 @@ describe('A FiltersCard component', () => {
     expect(assert).toBe(true);
   })
 
-  test('it should prepopulate the Tags tab', () => {
+  it('should prepopulate the Tags tab', () => {
     const exampleState = [
       { color: 'pink', name: 'Finances'},
       { color: 'black', name: 'Career'},

@@ -41,7 +41,7 @@ const unauthenticatedStore = configureStore(unauthenticatedState)
 describe('A component for building the app layout', () => {
   afterEach(() => cleanup())
 
-  test('it should render with one NAV tag', () => {
+  it('should render with one NAV tag', () => {
     const { container } = renderWithRouter(
         <ReduxWrap store={ authenticatedStore }>
           <LayoutWrapper/>
@@ -52,7 +52,7 @@ describe('A component for building the app layout', () => {
     expect(assertOneNav.length).toBe(1);
   })
 
-  test('it should render with no NAV tag if no user is provided', () => {
+  it('should render with no NAV tag if no user is provided', () => {
     const { container } = renderWithRouter(
         <ReduxWrap store={ unauthenticatedStore }>
           <LayoutWrapper/>
@@ -63,7 +63,7 @@ describe('A component for building the app layout', () => {
     expect(assertNoNav.length).toBe(0);
   })
 
-  test('it should render with one MAIN tag', () => {
+  it('should render with one MAIN tag', () => {
     const { container } = renderWithRouter(
         <ReduxWrap store={ unauthenticatedStore }>
           <LayoutWrapper/>

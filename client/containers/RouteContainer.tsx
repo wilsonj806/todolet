@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux'
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 // ----- Pages
 import LoginPage from '../pages/LoginPage';
@@ -12,32 +12,35 @@ import NotFoundPage from '../pages/404Page';
 import { StoreShape } from '../types';
 
 const RouteContainer: FunctionComponent<any> = (props) => {
-  // TODO distinguish between unauthenticated and authenticated routes
   // TODO handle 404 and 500 errors
   const authorizedUser = useSelector((state: StoreShape) => state.authorizedUser);
   const { username, userId } = authorizedUser;
   const isNotAuthorized: boolean = username === undefined || userId === undefined;
-  console.log(authorizedUser);
+
+  const RedirectHome = () => <Redirect to='/'/>
 
   const AuthorizedRoutes = (
     <>
+      <Route path={['/']} exact component={ MainPage }/>
+      <Route path={['/register', '/login']} exact component={ RedirectHome }/>
       <Route path='/account' exact component={ UserUpdatePage }/>
     </>
   );
   const UnauthorizedRoutes = (
     <>
-      <Route path='/login' exact component={ LoginPage }/>
+      <Route path={['/','/login', '/account']} exact component={ LoginPage }/>
+      <Route path={['/account']} exact component={ RedirectHome }/>
+      <Route path='/logout' exact component={ LogoutPage}/>
+      <Route path='/register' exact component={ RegisterPage }/>
     </>
   )
 
-  // NOTE RENDER CONDITIONAL ROUTES LAST
-  // FIXME Monkeypatched the register route
+  // const HomeRoute = isNotAuthorized ? LoginPage : MainPage;
+  const RoutesToRender = isNotAuthorized ? UnauthorizedRoutes : AuthorizedRoutes;
   return (
     <Switch>
-      <Route path='/' exact component={ isNotAuthorized ? LoginPage : MainPage }/>
-      <Route path='/register' exact component={ RegisterPage }/>
-      <Route path='/logout' exact component={ LogoutPage }/>
-      { authorizedUser.userId && authorizedUser.username ? AuthorizedRoutes : UnauthorizedRoutes }
+      { RoutesToRender }
+      <Route path='/404' exact component={ NotFoundPage }/>
       <Route component={ NotFoundPage }/>
     </Switch>
   )

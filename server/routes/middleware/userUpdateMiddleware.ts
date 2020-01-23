@@ -65,9 +65,9 @@ const deleteSingleUserTodo: RequestHandler = async (req, res, next) => {
   const { todos, _id } = user;
   const newTodos = todos.filter(todo => todo !== req.params.todoId)
   try {
-    const updatedUser = await User.findByIdAndUpdate(_id, newTodos, { new: true });
+    // $set the todos property value to the newTodos NOT just add to it
+    const updatedUser = await User.findByIdAndUpdate(_id, { $set: { todos: newTodos }}, { new: true });
     req!.user!.todos = updatedUser!.todos;
-    // res.status(200).send('Todo delete success')
     next();
   } catch (e) {
     res.status(500).json({ msg: 'server err'})

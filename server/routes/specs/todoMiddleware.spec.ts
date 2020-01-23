@@ -2,13 +2,12 @@ import User from '../../models/user'
 import Todo from '../../models/todo'
 import { requestMock, responseMock } from './mocks/mockReqRes';
 
-import { postNewTodo, getUsersTodos, prefetchUserTodos, updateTodo, deleteTodo } from '../middleware/todoMiddleware';
+import { postNewTodo, getUsersTodos, prefetchUserTodos, updateTodo, deleteTodo, DECREMENT_FROM_USER_INDEX, bulkUpdateTodoIndices } from '../middleware/todoMiddleware';
 
 describe('A middleware function for posting new todos', () => {
   let res;
   const next = jest.fn();
   const regex = /^(Error\:)/;
-  // FIXME setting req.user.attributes isn't great, it's implementation details
   const user = {
     _id: [1, 2, 3 ,4],
     username: 'guest',
@@ -70,7 +69,6 @@ describe('A middleware function for getting all todos for a user', () => {
   let res = responseMock();
   const next = jest.fn();
   const regex = /^(Error\:)/;
-  // FIXME setting req.user.attributes isn't great, it's implementation details
   const user = {
     _id: [1, 2, 3 ,4],
     username: 'guest',
@@ -136,7 +134,6 @@ describe('A middleware function for getting all todos for a user', () => {
 
   it('should send an error response if it failed', async (done) => {
     const res = responseMock();
-    // console.log(res.locals);
     const req = requestMock();
     req.user = user;
     req.user._doc = user;
@@ -154,7 +151,6 @@ describe('A middleware function that gets all todos for a user and stores them f
   let res;
   const next = jest.fn();
   const regex = /^(Error\:)/;
-  // FIXME setting req.user.attributes isn't great, it's implementation details
   const user = {
     _id: [1, 2, 3 ,4],
     username: 'guest',
@@ -162,14 +158,11 @@ describe('A middleware function that gets all todos for a user and stores them f
   };
 
   beforeAll(() => {
-    console.log('running setup');
     res = responseMock();
     res.locals = Object.assign({});
-    console.log(res.locals);
   });
 
   afterAll(() => {
-    console.log('running clean up')
     res.locals = Object.assign({});
   })
   it('should call the user db', async (done) => {
@@ -200,7 +193,6 @@ describe('A middleware function that gets all todos for a user and stores them f
 
   it('should store the todos in res.locals', async (done) => {
     const res = responseMock();
-    // console.log(res.locals);
     const req = requestMock();
     req.user = user;
 
@@ -208,18 +200,16 @@ describe('A middleware function that gets all todos for a user and stores them f
       .mockImplementation(() => user as any);
     jest.spyOn(Todo, 'find')
       .mockImplementation(() => [] as any);
-    // const storeInResLocals = jest.fn;
+
     const initRes = { ...res.locals };
     await prefetchUserTodos(req, res, next);
-    // console.log(res.locals);
-    // expect(res.json).toHaveBeenCalled()
+
     expect(res.locals).not.toStrictEqual(initRes);
     done();
   })
 
   it('should send an error response if it failed', async (done) => {
     const res = responseMock();
-    // console.log(res.locals);
     const req = requestMock();
     req.user = user;
 
@@ -235,7 +225,6 @@ describe('A middleware function for updating todos', () => {
   let res;
   const next = jest.fn();
   const regex = /^(Error\:)/;
-  // FIXME setting req.user.attributes isn't great, it's implementation details
   const user = {
     _id: [1, 2, 3 ,4],
     username: 'guest',
@@ -305,7 +294,6 @@ describe('A middleware function for deleting a todo', () => {
   let res;
   const next = jest.fn();
   const mockParam = '1111'
-  // FIXME setting req.user.attributes isn't great, it's implementation details
   const user = {
     _id: [1, 2, 3 ,4],
     username: 'guest',
@@ -326,7 +314,7 @@ describe('A middleware function for deleting a todo', () => {
     res = responseMock();
   });
 
-  it('should call the database and update a todo', () => {
+  it('should call the database and delete a todo', () => {
     // Setup the request with the Todo
     // Add a todo entry and a priority entry
     const req = requestMock({});
@@ -354,15 +342,83 @@ describe('A middleware function for deleting a todo', () => {
     expect(res.status).toHaveBeenCalledWith(500);
   })
 
+  it('should add a new prop to res.locals', async (done) => {
+    const req = requestMock({});
+    req.user = user;
+    req.params.todoId = mockParam
+    const assertDeletedUserIndex = { [DECREMENT_FROM_USER_INDEX]: 0 };
+
+    jest.spyOn(Todo, 'findByIdAndDelete').mockReturnValue({ userIndex: 0 })
+
+    await deleteTodo(req, res, next);
+    expect(res.locals).toStrictEqual(assertDeletedUserIndex);
+    done();
+  })
+
   it('should call next on success', async (done) => {
     const req = requestMock({});
     req.user = user;
     req.params.todoId = mockParam
 
 
-    jest.spyOn(Todo, 'findByIdAndDelete')
-      .mockReturnValue(true as any);
+    jest.spyOn(Todo, 'findByIdAndDelete').mockReturnValue({ userIndex: 0 })
+
     await deleteTodo(req, res, next);
+    expect(next).toHaveBeenCalled();
+    done();
+  })
+})
+
+describe('A middleware function for bulk updating the userIndex property of todos', () => {
+  let res;
+  const next = jest.fn();
+  const mockParam = '1111'
+  const user = {
+    _id: [1, 2, 3 ,4],
+    username: 'guest',
+    todos: [mockParam]
+  };
+
+  beforeAll(() => {
+    res = responseMock();
+  });
+
+  it('should call the database and bulk update todos', () => {
+    // Setup the request with the Todo
+    const req = requestMock({});
+    req.user = user;
+    req.params.todoId = mockParam
+
+    const spy = jest.spyOn(Todo, 'updateMany')
+
+    bulkUpdateTodoIndices(req, res, next);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should send a response with an error if it failed', () => {
+    const req = requestMock({});
+    req.user = user;
+    req.params.todoId = mockParam
+
+
+    jest.spyOn(Todo, 'updateMany')
+      .mockImplementation(() => {
+        throw new Error('mock err')
+      });
+    bulkUpdateTodoIndices(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+  })
+
+  it('should call next on success', async (done) => {
+    const req = requestMock({});
+    req.user = user;
+    req.params.todoId = mockParam
+
+
+    jest.spyOn(Todo, 'updateMany').mockReturnValue({ userIndex: 0 })
+
+    await bulkUpdateTodoIndices(req, res, next);
     expect(next).toHaveBeenCalled();
     done();
   })

@@ -68,6 +68,7 @@ const prefetchUserTodos: RequestHandler = async (req, res, next) => {
   } else {
     try {
       // console.log('this is user\n', user);
+      // FIXME figure out if you even need this DB call
       const dbUser = await User.findById(user._id);
       const { todos }: any = dbUser;
       // console.log('this is todo ids ',todos);
@@ -106,6 +107,7 @@ const updateTodo: RequestHandler = async (req, res, next) => {
   }
 }
 
+const DECREMENT_FROM_USER_INDEX ='DECREMENT_FROM_USER_INDEX';
 const deleteTodo: RequestHandler = async (req, res, next) => {
   const { user } = req;
   if (!user) {
@@ -115,9 +117,23 @@ const deleteTodo: RequestHandler = async (req, res, next) => {
   }
   try {
     const { todoId } = req.params;
+
     const result = await Todo.findByIdAndDelete(todoId)
     if (!result) return res.status(404).json({ msg: 'Resource not found'})
+    const { userIndex } = result;
+    storeInResLocals(res, DECREMENT_FROM_USER_INDEX, userIndex);
 
+    next()
+  } catch (e) {
+    res.status(500).json({ msg: 'server error'})
+  }
+}
+
+const bulkUpdateTodoIndices: RequestHandler = async (req, res, next) => {
+  try {
+    const userIndex = res.locals[DECREMENT_FROM_USER_INDEX];
+    // Update all todos with a userIndex greater than the userIndex of the deleted todo(decrement by 1)
+    const update = await Todo.updateMany({ userIndex: { $gt: userIndex }}, { $inc: { userIndex: -1 } });
     next()
   } catch (e) {
     res.status(500).json({ msg: 'server error'})
@@ -131,5 +147,7 @@ export {
   updateTodo,
   PREFETCHED_TODOS_KEY,
   NEW_TODO,
-  deleteTodo
+  deleteTodo,
+  DECREMENT_FROM_USER_INDEX,
+  bulkUpdateTodoIndices
 }

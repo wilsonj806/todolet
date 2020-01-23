@@ -5,7 +5,8 @@ import {
   postNewTodo,
   getUsersTodos,
   updateTodo,
-  deleteTodo
+  deleteTodo,
+  bulkUpdateTodoIndices
 } from './middleware/todoMiddleware'
 import {
   updateUserTodos,
@@ -37,6 +38,7 @@ router.put(
 router.delete(
   '/:todoId',
   deleteTodo,
+  bulkUpdateTodoIndices,
   deleteSingleUserTodo,
   getUsersTodos
 )

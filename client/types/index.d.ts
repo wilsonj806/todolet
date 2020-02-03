@@ -49,6 +49,12 @@ declare namespace AnotherTodoClient {
 
   type FiltersArray = Array<FiltersEntry>
 
+  // ----- NOTE THIRD PARTY NOTIFICATION STATE
+  interface Notifications {
+    key : string | number | undefined
+    options ?: { [key: string] : any }
+  }
+
   // ----- NOTE Props
   interface BodyProps {
     children: ReactElement
@@ -101,6 +107,9 @@ declare namespace AnotherTodoClient {
   }
 
   // ----- NOTE Redux Action Types
+
+  type SyncNotificationActions = "ENQUEUE_SNACKBAR" | "CLOSE_SNACKBAR" | "REMOVE_SNACKBAR"
+
   type SyncUserActions = "POST_FILTER" | "DELETE_FILTER" | "LOGIN_GUEST"
 
   type AsyncUserRegister = "POST_REGISTER_INIT" | "POST_REGISTER_FAIL" |"POST_REGISTER_SUCCESS"
@@ -138,7 +147,7 @@ declare namespace AnotherTodoClient {
 
   // ----- NOTE Redux Actions
   interface ReduxAction extends AnyAction{
-    type          : UserActionTypes | TodoActionTypes
+    type          : UserActionTypes | TodoActionTypes | SyncNotificationActions
     [key: string] : any
   }
 
@@ -165,6 +174,16 @@ declare namespace AnotherTodoClient {
   interface AsyncLogOutAction implements ReduxAction {
     type    : AsyncUserLogout
     payload ?: responseObj
+  }
+
+  interface NotificationActionPayload {
+    key ?: string | number | undefined
+    notification ?: Notifications
+    dismissAll ?: any
+  }
+  interface NotificationAction implements ReduxAction {
+    type: SyncNotificationActions
+    payload : NotificationActionPayload
   }
 
   interface UserDataOptional {
@@ -200,6 +219,7 @@ declare namespace AnotherTodoClient {
     clientServerConnect : ClientServerConnectShape
     authorizedUser : UserStoreShape
     todosList : Array<TodoShape>
+    notifications : Array<Notifications>
   }
 
   // ----- NOTE Test Helpers

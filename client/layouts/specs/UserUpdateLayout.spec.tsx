@@ -5,8 +5,8 @@ import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
 import '@testing-library/jest-dom/extend-expect';
-import ReduxWrap from '../test-helpers/ReduxWrap.helper.spec';
-import renderWithRouter from '../test-helpers/router.helper.spec';
+import ReduxWrap from '../../test-helpers/ReduxWrap.helper.spec';
+import renderWithRouter from '../../test-helpers/router.helper.spec';
 import { act, render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 
 

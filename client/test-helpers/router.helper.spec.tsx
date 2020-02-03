@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history'
 import { ReactElement } from 'react';
-import { renderRouterFixtureConfig, RouterTestProps } from '../../types';
+import { renderRouterFixtureConfig, RouterTestProps } from '../types';
 
 const TestContainer: FunctionComponent<any> = ({ children }) => (
   <div>{ children }</div>
@@ -23,7 +23,7 @@ const RouterTest: FunctionComponent<RouterTestProps> = ({ children, startingPath
         <InitWrapper startingPath={ startingPath }>
           { children }
         </InitWrapper>
-        ) }/>
+        )}/>
       <Route path={ targetPath } render={ (routeProps) => <TestContainer>{ targetPath }</TestContainer> }/>
     </Router>
   )

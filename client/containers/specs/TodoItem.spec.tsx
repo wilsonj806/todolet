@@ -7,7 +7,7 @@ import { render, cleanup, act, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 // ----- Redux stuff
-import ReduxWrap from '../../layouts/test-helpers/ReduxWrap.helper.spec';
+import ReduxWrap from '../../test-helpers/ReduxWrap.helper.spec';
 import configureStore from '../../store/configureStore';
 
 

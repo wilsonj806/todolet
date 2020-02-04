@@ -348,7 +348,7 @@ describe('A middleware function for deleting a todo', () => {
     req.params.todoId = mockParam
     const assertDeletedUserIndex = { [DECREMENT_FROM_USER_INDEX]: 0 };
 
-    jest.spyOn(Todo, 'findByIdAndDelete').mockReturnValue({ userIndex: 0 })
+    jest.spyOn(Todo, 'findByIdAndDelete').mockReturnValue({ userIndex: 0 } as any)
 
     await deleteTodo(req, res, next);
     expect(res.locals).toStrictEqual(assertDeletedUserIndex);
@@ -361,7 +361,7 @@ describe('A middleware function for deleting a todo', () => {
     req.params.todoId = mockParam
 
 
-    jest.spyOn(Todo, 'findByIdAndDelete').mockReturnValue({ userIndex: 0 })
+    jest.spyOn(Todo, 'findByIdAndDelete').mockReturnValue({ userIndex: 0 } as any)
 
     await deleteTodo(req, res, next);
     expect(next).toHaveBeenCalled();
@@ -416,7 +416,7 @@ describe('A middleware function for bulk updating the userIndex property of todo
     req.params.todoId = mockParam
 
 
-    jest.spyOn(Todo, 'updateMany').mockReturnValue({ userIndex: 0 })
+    jest.spyOn(Todo, 'updateMany').mockReturnValue({ userIndex: 0 } as any)
 
     await bulkUpdateTodoIndices(req, res, next);
     expect(next).toHaveBeenCalled();

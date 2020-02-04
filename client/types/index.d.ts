@@ -50,9 +50,15 @@ declare namespace AnotherTodoClient {
   type FiltersArray = Array<FiltersEntry>
 
   // ----- NOTE THIRD PARTY NOTIFICATION STATE
+  interface NotificationOptions {
+    variant ?: string
+    key ?: string | number | undefined
+    [key: string] : any
+  }
   interface Notifications {
-    key : string | number | undefined
-    options ?: { [key: string] : any }
+    key ?: string | number | undefined
+    message ?: string
+    options ?: NotificationOptions
   }
 
   // ----- NOTE Props

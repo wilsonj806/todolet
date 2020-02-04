@@ -119,23 +119,22 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
 
 const notifications = (state: Notifications[] = [], action: NotificationAction) : Notifications[] => {
   const { type, payload } = action;
-  const { key, notification, dismissAll } = payload
   switch(type) {
     case ENQUEUE_SNACKBAR:
       return [
         ...state,
         {
-          key,
-          ...notification
+          key: payload.key,
+          ...payload.notification
         }
       ];
     case CLOSE_SNACKBAR:
       return state.map(notification =>
-        (dismissAll || notification.key === key)
-          ? { ... notification, dismissed: true }
+        (payload.dismissAll || notification.key === payload.key)
+          ? { ...notification, dismissed: true }
           : { ...notification })
     case REMOVE_SNACKBAR:
-      return state.filter(notification => notification.key !== key)
+      return state.filter(notification => notification.key !== payload.key)
     default:
       return state
   }

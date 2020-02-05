@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
 import UserService from '../services/UserService';
+import { enqueueSnackActionCreator } from './notifications.action'
 
 // ----- NOTE TypeScript types(client and server)
 import {
@@ -26,9 +27,8 @@ export const receiveUserUpdateSuccess = (json: userDataResponse): AsyncUserUpdat
   payload: json,
 });
 
-const receiveUserUpdateFailure = (json: errorResponse): AsyncUserUpdateAction => ({
+const receiveUserUpdateFailure = (): AsyncUserUpdateAction => ({
   type: PUT_USER_FAIL,
-  payload: json,
 });
 
 // ----- NOTE Exported Redux Thunk action
@@ -46,6 +46,12 @@ export const putUser= (request: any, userId: string): any =>
       }
       dispatch(receiveUserUpdateSuccess(result.payload));
     } catch (error) {
-      dispatch(receiveUserUpdateFailure(error.message));
+      dispatch(receiveUserUpdateFailure());
+      dispatch(enqueueSnackActionCreator({
+        message: error.message,
+        options: {
+          variant: 'error'
+        }
+      }));
     }
   };

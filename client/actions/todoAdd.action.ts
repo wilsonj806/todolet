@@ -1,6 +1,7 @@
 import { SetStateAction } from 'react'
 import { Dispatch } from 'redux';
 import TodoService from '../services/TodoService';
+import { enqueueSnackActionCreator } from './notifications.action'
 
 import {
   ReduxAction,
@@ -24,9 +25,8 @@ const receivePostNewTodoSuccess = (json : StoreShape) : ReduxAction => ({
   payload: json
 })
 
-const receivePostNewTodoFail = (err : any) : any => ({
+const receivePostNewTodoFail = () : any => ({
   type: POST_TODO_FAIL,
-  payload: err
 })
 
 // ----- NOTE Exported Redux Thunk action
@@ -36,12 +36,18 @@ export const postNewTodo = (request : any, stateFns: SetStateAction<any>[]) =>
     dispatch(requestPostNewTodo());
     try {
       const [ todos, authorizedUser ] = await TodoService.postTodo(request);
-      stateFns.forEach( (fn: SetStateAction<any>) => fn('') );
+      stateFns.forEach( (fn: SetStateAction<any>) => fn() );
 
       dispatch(receivePostNewTodoSuccess(todos))
       dispatch(receiveUserUpdateSuccess(authorizedUser))
     } catch (err) {
-      dispatch(receivePostNewTodoFail(err.message))
+      dispatch(receivePostNewTodoFail())
+      dispatch(enqueueSnackActionCreator({
+        message: err.message,
+        options: {
+          variant: 'error'
+        }
+      }));
     }
   }
 

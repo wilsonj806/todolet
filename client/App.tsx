@@ -3,6 +3,7 @@ import { ThemeProvider } from '@material-ui/styles';
 // import { Switch } from 'react-router-dom';
 
 import RouteContainer from './containers/RouteContainer';
+import Notifier from './containers/Notifier'
 import { createMuiTheme } from '@material-ui/core';
 
 const theme = createMuiTheme({
@@ -22,6 +23,7 @@ const App: FC<any> = () => {
 
   return (
     <ThemeProvider theme={ theme }>
+      <Notifier/>
       <RouteContainer/>
     </ThemeProvider>
   );

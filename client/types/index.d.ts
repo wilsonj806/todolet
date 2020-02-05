@@ -142,7 +142,7 @@ declare namespace AnotherTodoClient {
 
   type AsyncTodoPatch = "PUT_TODO_INIT" | "PUT_TODO_FAIL" | "PUT_TODO_SUCCESS"
 
-  type AsyncTodoDelete = "DELTE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
+  type AsyncTodoDelete = "DELETE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
 
 
   type UserActionTypes = AsyncUserRegister | AsyncUserLogin | AsyncUserLogout | AsyncUserUpdate | AsyncUserDelete |

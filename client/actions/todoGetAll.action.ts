@@ -1,5 +1,7 @@
 import { Dispatch } from 'redux';
 import TodoService from '../services/TodoService';
+import { enqueueSnackActionCreator } from './notifications.action'
+
 
 import {
   ReduxAction, TodoShape,
@@ -23,9 +25,8 @@ const receiveTodosSuccess = (json : unknown) : ReduxAction => ({
   payload: json
 })
 
-const receiveTodosFail = (err : any) : any => ({
+const receiveTodosFail = () : any => ({
   type: GET_TODOS_FAIL,
-  payload: err
 })
 
 // ----- NOTE Exported Redux Thunk action
@@ -38,7 +39,13 @@ export const getAllTodos = () =>
       dispatch(receiveTodosSuccess(todos))
       dispatch(receiveUserUpdateSuccess(authorizedUser))
     } catch (err) {
-      dispatch(receiveTodosFail(err.message))
+      dispatch(receiveTodosFail())
+      dispatch(enqueueSnackActionCreator({
+        message: err.message,
+        options: {
+          variant: 'error'
+        }
+      }));
     }
   }
 

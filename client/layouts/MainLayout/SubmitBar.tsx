@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent, SyntheticEvent } from 'react';
+import React, { FC, useState, ChangeEvent, SyntheticEvent, SetStateAction } from 'react';
 
 import { useDispatch } from 'react-redux'
 
@@ -15,7 +15,7 @@ import useStyles from './SubmitBar.styles';
 import TextInputWrapper from "../../containers/TextInputWrapper";
 
 import { postNewTodo } from '../../actions/todoAdd.action';
-import { updateTodo } from '../../actions/todoUpdate.action';
+import { enqueSnackActionCreator, enqueueSnackActionCreator } from '../../actions/notifications.action';
 
 import { SubmitBarProps, PriorityTypes } from '../../types';
 /**
@@ -38,39 +38,31 @@ const SubmitBar: FC<SubmitBarProps> = (props) => {
   // Local State
   const [ todo, setTodo ] = useState(isUpdateBar ? Todo!.todo : '');
   const [ priority, setPriority ] = useState(isUpdateBar ? Todo!.priority : '');
-  const [ error, setError ] = useState('')
 
   // Event Handlers
   // Type casting not working as expected but handleSelect is only for the select element
   const handleSelect = (event: ChangeEvent<any>) => {
     setPriority(event.target.value)
   }
+  const wrapHookFn = (hookFn: SetStateAction<any> = undefined) => (str = '') => hookFn(str);
 
-  const handlePostTodoSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handlePostTodoSubmit = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const request = {
       todo,
       priority
     };
-    try {
-      dispatch(postNewTodo(request, [setTodo, setPriority]))
-    } catch (error) {
-      setError(error)
-    }
+    dispatch(postNewTodo(request, [wrapHookFn(setTodo), wrapHookFn(setPriority)]))
   }
 
-  const handleUpdateTodoSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleUpdateTodoSubmit = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const request = {
       todo,
       priority
     };
-    try {
-      // TODO handle closing the submitbar on success
-      dispatch(reduxUpdateTodo!(request))
-    } catch (err) {
-      console.error(err);
-    }
+    // TODO handle closing the submitbar on success
+    dispatch(reduxUpdateTodo!(request))
   }
 
   const BtnText = isUpdateBar ? 'Update Todo' : 'Add Todo';
@@ -85,7 +77,7 @@ const SubmitBar: FC<SubmitBarProps> = (props) => {
           name="todo"
           value={ todo }
           classes={{ root: classes.textInput }}
-          reactHookFn={ setTodo }
+          reactHookFn={ wrapHookFn(setTodo) }
         />
         <FormControl>
           <InputLabel

@@ -3,9 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { TextInputWrapperProps } from '../types';
 // FIXME replace id with "name" attribute
 const TextInputWrapper: FC<TextInputWrapperProps> = (props) => {
-  const { type, classes, id, name, label, margin, value, reactHookFn } = props;
-  const otherProps = { ...props };
-  delete otherProps.reactHookFn;
+  const { type, classes, id, name, label, margin, value, reactHookFn, ...otherProps } = props;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     // FIXME type casting isn't working

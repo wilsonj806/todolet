@@ -1,4 +1,4 @@
-import React, { FunctionComponent, SyntheticEvent, useState, useEffect } from 'react';
+import React, { FC, SetStateAction, SyntheticEvent, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ import { postLogin } from '../../actions/userLogin.action';
 import { StoreShape } from '../../types';
 
 
-const Login: FunctionComponent<any> = (props) => {
+const Login: FC = () => {
   const userState = useSelector<StoreShape, any>(state=>state.authorizedUser);
 
   const dispatch = useDispatch();
@@ -27,14 +27,15 @@ const Login: FunctionComponent<any> = (props) => {
 
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
-  // FIXME replace the below with a proper toast
-  const [ error, setError] = useState('');
+
 
   useEffect(() => {
     const { userId, username } = userState
 
     if (userId || username) setShouldRedirect(true)
   }, [userState])
+
+  const wrapHookFn = (hookFn: SetStateAction<any> = undefined) => (str = '') => hookFn(str);
 
   const handleFormSubmit = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -58,7 +59,7 @@ const Login: FunctionComponent<any> = (props) => {
             margin="normal"
             label="Username"
             value={ username }
-            reactHookFn={ setUsername }
+            reactHookFn={ wrapHookFn(setUsername) }
             inputProps={ { width: '100%' } }
             classes={{ root: classes.formField }}
           />
@@ -70,7 +71,7 @@ const Login: FunctionComponent<any> = (props) => {
             type="password"
             label="Password"
             value={ password }
-            reactHookFn={ setPassword }
+            reactHookFn={ wrapHookFn(setPassword) }
             classes={{ root: classes.formField }}
           />
           <Button

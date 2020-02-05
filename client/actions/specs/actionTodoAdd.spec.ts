@@ -8,8 +8,9 @@ import {
   POST_TODO_FAIL,
   POST_TODO_SUCCESS,
 } from '../todoAdd.action';
-import axios from '../../axios';
 import { PUT_USER_SUCCESS } from '../userUpdate.action';
+import { ENQUEUE_SNACKBAR } from '../notifications.action';
+import axios from '../../axios';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -77,7 +78,8 @@ describe('An action creator that handles async todo addition', () => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_TODO_INIT },
-      { type: POST_TODO_FAIL, payload: mockError.message }
+      { type: POST_TODO_FAIL },
+      { type: ENQUEUE_SNACKBAR, payload: { }}
     ]
 
     mock.onPost(endpoint).reply(
@@ -87,7 +89,15 @@ describe('An action creator that handles async todo addition', () => {
     );
 
     await store.dispatch<any>(postNewTodo(mockTodo, mockCallbackArr))
-    expect(store.getActions()).toStrictEqual(expectedActions);
+
+    const actions = store.getActions();
+    expect(store.getActions().length).toBe(3);
+    expect(actions[expectedActions.length - 1]).toStrictEqual(
+      expect.objectContaining({
+        type: expect.stringMatching(ENQUEUE_SNACKBAR),
+        payload: expect.anything()
+      })
+    )
     done()
   })
 })

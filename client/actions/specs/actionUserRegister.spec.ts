@@ -8,6 +8,8 @@ import {
   POST_REGISTER_FAIL,
   POST_REGISTER_SUCCESS,
 } from '../userRegistration.action';
+import { ENQUEUE_SNACKBAR } from '../notifications.action';
+
 import axios from '../../axios';
 
 const middlewares = [thunk];
@@ -66,7 +68,9 @@ describe('An action creator that handles async user registration', () => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_REGISTER_INIT },
-      { type: POST_REGISTER_FAIL, payload: 'hi' }
+      { type: POST_REGISTER_FAIL },
+      { type: ENQUEUE_SNACKBAR, payload: { }}
+
     ]
 
     mock.onPost(endpoint).reply(
@@ -75,7 +79,14 @@ describe('An action creator that handles async user registration', () => {
     );
 
     await store.dispatch<any>(postNewUser(user))
-    expect(store.getActions()).toStrictEqual(expectedActions);
+    const actions = store.getActions();
+    expect(actions.length).toBe(3);
+    expect(actions[expectedActions.length - 1]).toStrictEqual(
+      expect.objectContaining({
+        type: expect.stringMatching(ENQUEUE_SNACKBAR),
+        payload: expect.anything()
+      })
+    )
     done()
   })
 })

@@ -8,6 +8,7 @@ import {
   StoreShape
 } from '../types';
 import { errorResponse } from '../../server/types';
+import { enqueueSnackActionCreator } from './notifications.action';
 
 export const PUT_TODO_INIT = 'PUT_TODO_INIT'
 export const PUT_TODO_FAIL = 'PUT_TODO_FAIL'
@@ -23,9 +24,8 @@ const receivePutTodoSuccess = (json : TodoShape) : ReduxAction => ({
   payload: json
 })
 
-const receivePutTodoFail = (err : any) : any => ({
+const receivePutTodoFail = () : any => ({
   type: PUT_TODO_FAIL,
-  payload: err
 })
 
 export const updateTodo = (todo: TodoShape) =>
@@ -36,7 +36,13 @@ export const updateTodo = (todo: TodoShape) =>
         const updatedTodo = await TodoService.updateTodo(todo, updatedValue)
         dispatch(receivePutTodoSuccess(updatedTodo));
       } catch(e) {
-        dispatch(receivePutTodoFail(e))
+        dispatch(receivePutTodoFail())
+        dispatch(enqueueSnackActionCreator({
+          message: e.message,
+          options: {
+            variant: 'error'
+          }
+        }));
       }
     }
 

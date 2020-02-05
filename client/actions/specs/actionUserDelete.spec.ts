@@ -9,6 +9,8 @@ import {
   DELETE_USER_FAIL,
   DELETE_USER_SUCCESS,
 } from '../userDelete.action';
+import { ENQUEUE_SNACKBAR } from '../notifications.action';
+
 import axios from '../../axios';
 
 const middlewares = [thunk];
@@ -60,7 +62,8 @@ describe('An action creator that handles async user delete', () => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: DELETE_USER_INIT },
-      { type: DELETE_USER_FAIL, payload: 'hi' }
+      { type: DELETE_USER_FAIL },
+      { type: ENQUEUE_SNACKBAR, payload: { }}
     ]
 
     mock.onDelete(endpoint).reply(
@@ -69,7 +72,14 @@ describe('An action creator that handles async user delete', () => {
     );
 
     await store.dispatch<any>(deleteUser())
-    expect(store.getActions()).toStrictEqual(expectedActions);
+    const actions = store.getActions();
+    expect(actions.length).toBe(3);
+    expect(actions[expectedActions.length - 1]).toStrictEqual(
+      expect.objectContaining({
+        type: expect.stringMatching(ENQUEUE_SNACKBAR),
+        payload: expect.anything()
+      })
+    )
     done()
   })
 })

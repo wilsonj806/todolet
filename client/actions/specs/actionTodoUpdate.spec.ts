@@ -8,7 +8,9 @@ import {
   PUT_TODO_FAIL,
   PUT_TODO_SUCCESS,
 } from '../todoUpdate.action';
+import { ENQUEUE_SNACKBAR } from '../notifications.action';
 import axios from '../../axios';
+
 import { PriorityTypes } from '../../types';
 
 const middlewares = [thunk];
@@ -66,7 +68,8 @@ describe('An action creator that handles async todo updates', () => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: PUT_TODO_INIT },
-      { type: PUT_TODO_FAIL, payload: mockError }
+      { type: PUT_TODO_FAIL },
+      { type: ENQUEUE_SNACKBAR, payload: { }}
     ]
 
     mock.onPut(endpoint).reply(
@@ -76,7 +79,14 @@ describe('An action creator that handles async todo updates', () => {
     );
 
     await store.dispatch<any>(updateTodo(mockTodo)(mockUpdate))
-    expect(store.getActions()).toStrictEqual(expectedActions);
+    const actions = store.getActions();
+    expect(actions.length).toBe(3);
+    expect(actions[expectedActions.length - 1]).toStrictEqual(
+      expect.objectContaining({
+        type: expect.stringMatching(ENQUEUE_SNACKBAR),
+        payload: expect.anything()
+      })
+    )
     done()
   })
 })

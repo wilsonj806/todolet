@@ -62,6 +62,15 @@ module.exports = env => {
       ],
     },
     optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/](react|react-dom|\@material-ui)[\\/]/,
+            name: 'vendor',
+            chunks: 'all'
+          }
+        }
+      },
       minimize: isEnvProd,
       minimizer: [
         new TerserPlugin({

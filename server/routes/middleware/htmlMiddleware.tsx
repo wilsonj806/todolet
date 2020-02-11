@@ -47,7 +47,8 @@ const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = IN
       <script id="redux-data">
         window.__REDUX_DATA__ = ${ JSON.stringify( reduxState) }
       </script>
-      <script src="/dist/app.bundle.js"></script>
+      <script src="/dist/vendor.bundle.js" defer></script>
+      <script src="/dist/app.bundle.js" defer></script>
     </body>
     </html>
 `)

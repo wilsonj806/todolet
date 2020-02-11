@@ -86,5 +86,36 @@ describe('A middleware function for deleting a user', () => {
     done()
   })
 
+  it('should send an error response if there is no express session', () => {
+    const req = {}
+
+    deleteUser(req, res, next)
+    expect(res.status).toHaveBeenCalledWith(403)
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        msg:expect.any(String)
+      })
+    );
+  })
+
+  it('should send an error response if session and passport ids don\'t match', () => {
+    const req = {
+      session: {
+        passport: { user: 'aaa' }
+      },
+      user: {
+        _id: 'bbb'
+      }
+    }
+
+    deleteUser(req, res, next)
+    expect(res.status).toHaveBeenCalledWith(403)
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        msg:expect.any(String)
+      })
+    );
+  })
+
 })
 

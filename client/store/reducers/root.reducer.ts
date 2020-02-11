@@ -74,18 +74,6 @@ const authorizedUser = (state : UserStoreShape = INIT_USER_STATE, action : Redux
   }
 }
 
-const globalErrors = (state: any, action : ReduxAction) => {
-  switch (action.type) {
-    case POST_LOGIN_FAIL:
-    case POST_LOGOUT_FAIL:
-    case POST_REGISTER_FAIL:
-    case PUT_USER_FAIL:
-      return { ...state, ...action.payload }
-    default:
-      return state
-  }
-}
-
 const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER_STATE, action : ReduxAction) : ClientServerConnectShape => {
   switch (action.type) {
     case POST_LOGIN_INIT:

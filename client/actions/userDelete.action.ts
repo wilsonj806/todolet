@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
 import UserService from '../services/UserService';
+import { enqueueSnackActionCreator } from './notifications.action'
 
 // ----- NOTE TypeScript types(client and server)
 import {
@@ -22,9 +23,8 @@ const receiveDeleteUserSuccess = () : ReduxAction => ({
   type: DELETE_USER_SUCCESS,
 })
 
-const receiveDeleteUserFailure = (json : errorResponse) : ReduxAction => ({
+const receiveDeleteUserFailure = () : ReduxAction => ({
   type: DELETE_USER_FAIL,
-  payload: json
 })
 
 // ----- NOTE Exported Redux Thunk action
@@ -38,6 +38,12 @@ export const deleteUser = () =>
       if (status === 'FAILURE') throw new Error(msg);
       dispatch(receiveDeleteUserSuccess())
     } catch (error) {
-      dispatch(receiveDeleteUserFailure(error.message));
+      dispatch(receiveDeleteUserFailure());
+      dispatch(enqueueSnackActionCreator({
+        message: error.message,
+        options: {
+          variant: 'error'
+        }
+      }));
     }
   }

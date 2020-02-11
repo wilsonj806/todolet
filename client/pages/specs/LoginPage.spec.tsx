@@ -4,14 +4,14 @@ import { HashRouter, Route, Redirect } from 'react-router-dom';
 
 // ----- Test Helpers
 import '@testing-library/jest-dom/extend-expect';
-import renderWithRouter from '../../layouts/test-helpers/router.helper.spec';
+import renderWithRouter from '../../test-helpers/router.helper.spec';
 import { render, cleanup, waitForElement } from '@testing-library/react';
 
 import configureStore from '../../store/configureStore'
 import LoginPage from '../LoginPage'
 
 import { StoreShape } from '../../types';
-import ReduxWrap from '../../layouts/test-helpers/ReduxWrap.helper.spec';
+import ReduxWrap from '../../test-helpers/ReduxWrap.helper.spec';
 
 
 

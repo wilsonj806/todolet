@@ -10,6 +10,7 @@ import {
 } from '../todoGetAll.action';
 import axios from '../../axios';
 import { PUT_USER_SUCCESS } from '../userUpdate.action';
+import { ENQUEUE_SNACKBAR } from '../notifications.action';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -72,7 +73,8 @@ describe('An action creator that handles async todo addition', () => {
     const store = mockStore<any>({ selectedUser: initUser });
     const expectedActions = [
       { type: GET_TODOS_INIT },
-      { type: GET_TODOS_FAIL, payload: mockError.message }
+      { type: GET_TODOS_FAIL },
+      { type: ENQUEUE_SNACKBAR, payload: { }}
     ]
 
     mock.onGet(endpoint).reply(
@@ -82,7 +84,14 @@ describe('An action creator that handles async todo addition', () => {
     );
 
     await store.dispatch<any>(getAllTodos())
-    expect(store.getActions()).toStrictEqual(expectedActions);
+    const actions = store.getActions();
+    expect(actions.length).toBe(3);
+    expect(actions[expectedActions.length - 1]).toStrictEqual(
+      expect.objectContaining({
+        type: expect.stringMatching(ENQUEUE_SNACKBAR),
+        payload: expect.anything()
+      })
+    )
     done()
   })
 })

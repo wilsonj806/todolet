@@ -9,6 +9,8 @@ import {
   POST_LOGOUT_FAIL,
   POST_LOGOUT_SUCCESS,
 } from '../userLogout.action';
+import { ENQUEUE_SNACKBAR } from '../notifications.action';
+
 import axios from '../../axios';
 
 const middlewares = [thunk];
@@ -60,7 +62,8 @@ describe('An action creator that handles async user logout', () => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_LOGOUT_INIT },
-      { type: POST_LOGOUT_FAIL, payload: 'hi' }
+      { type: POST_LOGOUT_FAIL },
+      { type: ENQUEUE_SNACKBAR, payload: { }}
     ]
 
     mock.onPost(endpoint).reply(
@@ -69,7 +72,14 @@ describe('An action creator that handles async user logout', () => {
     );
 
     await store.dispatch<any>(postLogout())
-    expect(store.getActions()).toStrictEqual(expectedActions);
+    const actions = store.getActions();
+    expect(actions.length).toBe(3);
+    expect(actions[expectedActions.length - 1]).toStrictEqual(
+      expect.objectContaining({
+        type: expect.stringMatching(ENQUEUE_SNACKBAR),
+        payload: expect.anything()
+      })
+    )
     done()
   })
 })

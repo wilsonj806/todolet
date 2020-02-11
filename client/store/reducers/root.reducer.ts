@@ -4,17 +4,22 @@ import { POST_LOGOUT_FAIL, POST_LOGOUT_SUCCESS, POST_LOGOUT_INIT } from '../../a
 import { POST_REGISTER_FAIL, POST_REGISTER_INIT, POST_REGISTER_SUCCESS } from '../../actions/userRegistration.action';
 import { PUT_USER_INIT, PUT_USER_FAIL, PUT_USER_SUCCESS } from '../../actions/userUpdate.action';
 import { DELETE_USER_SUCCESS, DELETE_USER_INIT, DELETE_USER_FAIL } from '../../actions/userDelete.action';
+import { GET_TODOS_SUCCESS, GET_TODOS_INIT, GET_TODOS_FAIL } from '../../actions/todoGetAll.action';
+import { POST_TODO_SUCCESS, POST_TODO_INIT, POST_TODO_FAIL } from '../../actions/todoAdd.action';
+import { PUT_TODO_SUCCESS, PUT_TODO_INIT, PUT_TODO_FAIL } from '../../actions/todoUpdate.action';
+import { DELETE_TODO_SUCCESS, DELETE_TODO_INIT, DELETE_TODO_FAIL } from '../../actions/todoDelete.action';
+import { ENQUEUE_SNACKBAR, CLOSE_SNACKBAR, REMOVE_SNACKBAR } from '../../actions/notifications.action';
 import {
   StoreShape,
   UserStoreShape,
   ReduxAction,
   ClientServerConnectShape,
-  TodoShape
+  TodoShape,
+  Notifications,
+  NotificationAction
 } from '../../types';
-import { GET_TODOS_SUCCESS, GET_TODOS_INIT, GET_TODOS_FAIL } from '../../actions/todoGetAll.action';
-import { POST_TODO_SUCCESS, POST_TODO_INIT, POST_TODO_FAIL } from '../../actions/todoAdd.action';
-import { PUT_TODO_SUCCESS, PUT_TODO_INIT, PUT_TODO_FAIL } from '../../actions/todoUpdate.action';
-import { DELETE_TODO_SUCCESS, DELETE_TODO_INIT, DELETE_TODO_FAIL } from '../../actions/todoDelete.action';
+
+
 
 // FIXME something's really weird with some of the key names and how it aligns with other stuff
 const INIT_USER_STATE : UserStoreShape = {
@@ -23,7 +28,7 @@ const INIT_USER_STATE : UserStoreShape = {
   username: undefined,
   projectFilters: [],
   tagFilters: [],
-  todos: []
+  todos: [],
 }
 
 // NOTE this is new and won't be found in docs/CLIENTSTATE.md
@@ -34,7 +39,8 @@ const INIT_CLIENTSERVER_STATE : ClientServerConnectShape = {
 const INIT_APP_STATE : StoreShape = {
   authorizedUser: INIT_USER_STATE,
   clientServerConnect: INIT_CLIENTSERVER_STATE,
-  todosList: []
+  todosList: [],
+  notifications: []
 }
 
 const todosList = (state: TodoShape[] = [], action: ReduxAction) : TodoShape[] => {
@@ -111,11 +117,35 @@ const clientServerConnect = (state: ClientServerConnectShape = INIT_CLIENTSERVER
   }
 }
 
+const notifications = (state: Notifications[] = [], action: NotificationAction) : Notifications[] => {
+  const { type, payload } = action;
+  switch(type) {
+    case ENQUEUE_SNACKBAR:
+      return [
+        ...state,
+        {
+          key: payload.key,
+          ...payload.notification
+        }
+      ];
+    case CLOSE_SNACKBAR:
+      return state.map(notification =>
+        (payload.dismissAll || notification.key === payload.key)
+          ? { ...notification, dismissed: true }
+          : { ...notification })
+    case REMOVE_SNACKBAR:
+      return state.filter(notification => notification.key !== payload.key)
+    default:
+      return state
+  }
+}
+
 
 const rootReducer : Reducer<StoreShape> = combineReducers({
   authorizedUser,
   clientServerConnect,
   todosList,
+  notifications
 })
 
 export default rootReducer

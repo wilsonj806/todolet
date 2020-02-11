@@ -1,13 +1,14 @@
 import { SetStateAction } from 'react'
 import { Dispatch } from 'redux';
 import TodoService from '../services/TodoService';
+import { enqueueSnackActionCreator } from './notifications.action'
 
 import { receiveUserUpdateSuccess } from './userUpdate.action';
 
 import {
   ReduxAction,
   TodoShape,
-  StoreShape
+  StoreShape,
 } from '../types';
 import { errorResponse } from '../../server/types';
 
@@ -25,9 +26,8 @@ const receiveDeleteTodoSuccess = (json : TodoShape) : ReduxAction => ({
   payload: json
 })
 
-const receiveDeleteTodoFail = (err : any) : any => ({
+const receiveDeleteTodoFail = () : any => ({
   type: DELETE_TODO_FAIL,
-  payload: err
 })
 
 export const deleteTodo = (todoId: string) =>
@@ -40,6 +40,12 @@ export const deleteTodo = (todoId: string) =>
       dispatch(receiveDeleteTodoSuccess(todos));
       dispatch(receiveUserUpdateSuccess(authorizedUser));
     } catch(e) {
-      dispatch(receiveDeleteTodoFail(e))
+      dispatch(receiveDeleteTodoFail())
+      dispatch(enqueueSnackActionCreator({
+        message: e.message,
+        options: {
+          variant: 'error'
+        }
+      }));
     }
   }

@@ -49,6 +49,18 @@ declare namespace AnotherTodoClient {
 
   type FiltersArray = Array<FiltersEntry>
 
+  // ----- NOTE THIRD PARTY NOTIFICATION STATE
+  interface NotificationOptions {
+    variant ?: string
+    key ?: string | number | undefined
+    [key: string] : any
+  }
+  interface Notifications {
+    key ?: string | number | undefined
+    message ?: string
+    options ?: NotificationOptions
+  }
+
   // ----- NOTE Props
   interface BodyProps {
     children: ReactElement
@@ -101,6 +113,9 @@ declare namespace AnotherTodoClient {
   }
 
   // ----- NOTE Redux Action Types
+
+  type SyncNotificationActions = "ENQUEUE_SNACKBAR" | "CLOSE_SNACKBAR" | "REMOVE_SNACKBAR"
+
   type SyncUserActions = "POST_FILTER" | "DELETE_FILTER" | "LOGIN_GUEST"
 
   type AsyncUserRegister = "POST_REGISTER_INIT" | "POST_REGISTER_FAIL" |"POST_REGISTER_SUCCESS"
@@ -127,7 +142,7 @@ declare namespace AnotherTodoClient {
 
   type AsyncTodoPatch = "PUT_TODO_INIT" | "PUT_TODO_FAIL" | "PUT_TODO_SUCCESS"
 
-  type AsyncTodoDelete = "DELTE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
+  type AsyncTodoDelete = "DELETE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUCCESS"
 
 
   type UserActionTypes = AsyncUserRegister | AsyncUserLogin | AsyncUserLogout | AsyncUserUpdate | AsyncUserDelete |
@@ -138,7 +153,7 @@ declare namespace AnotherTodoClient {
 
   // ----- NOTE Redux Actions
   interface ReduxAction extends AnyAction{
-    type          : UserActionTypes | TodoActionTypes
+    type          : UserActionTypes | TodoActionTypes | SyncNotificationActions
     [key: string] : any
   }
 
@@ -165,6 +180,16 @@ declare namespace AnotherTodoClient {
   interface AsyncLogOutAction implements ReduxAction {
     type    : AsyncUserLogout
     payload ?: responseObj
+  }
+
+  interface NotificationActionPayload {
+    key ?: string | number | undefined
+    notification ?: Notifications
+    dismissAll ?: any
+  }
+  interface NotificationAction implements ReduxAction {
+    type: SyncNotificationActions
+    payload : NotificationActionPayload
   }
 
   interface UserDataOptional {
@@ -200,6 +225,7 @@ declare namespace AnotherTodoClient {
     clientServerConnect : ClientServerConnectShape
     authorizedUser : UserStoreShape
     todosList : Array<TodoShape>
+    notifications : Array<Notifications>
   }
 
   // ----- NOTE Test Helpers

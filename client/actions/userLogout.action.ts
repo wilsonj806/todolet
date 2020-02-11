@@ -7,6 +7,7 @@ import {
   ReduxAction,
 } from '../types';
 import { errorResponse } from '../../server/types';
+import { enqueueSnackActionCreator } from './notifications.action';
 
 
 export const POST_LOGOUT_INIT = 'POST_LOGOUT_INIT'
@@ -22,9 +23,8 @@ const receiveLogoutSuccess = () : ReduxAction => ({
   type: POST_LOGOUT_SUCCESS,
 })
 
-const receiveLogoutFailure = (json : errorResponse) : ReduxAction => ({
+const receiveLogoutFailure = () : ReduxAction => ({
   type: POST_LOGOUT_FAIL,
-  payload: json
 })
 
 // ----- NOTE Exported Redux Thunk action
@@ -38,6 +38,12 @@ export const postLogout = () =>
       if (status === 'FAILURE') throw new Error(msg);
       dispatch(receiveLogoutSuccess())
     } catch (error) {
-      dispatch(receiveLogoutFailure(error.message));
+      dispatch(receiveLogoutFailure());
+      dispatch(enqueueSnackActionCreator({
+        message: error.message,
+        options: {
+          variant: 'error'
+        }
+      }))
     }
   }

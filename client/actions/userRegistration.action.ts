@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
 import UserService from '../services/UserService';
+import { enqueueSnackActionCreator } from './notifications.action'
 
 // ----- NOTE TypeScript types(client and server)
 import {
@@ -26,9 +27,8 @@ const receiveRegisterSuccess = (json : userDataResponse) : AsyncRegisterAction =
   payload: json
 })
 
-const receiveRegisterFailure = (json : errorResponse) : AsyncRegisterAction => ({
+const receiveRegisterFailure = () : AsyncRegisterAction => ({
   type: POST_REGISTER_FAIL,
-  payload: json
 })
 
 // ----- NOTE Exported Redux Thunk action
@@ -42,6 +42,12 @@ export const postNewUser = (request : postUserReq) =>
       if (status === 'FAILURE') throw new Error(msg);
       dispatch(receiveRegisterSuccess(result.payload))
     } catch (error) {
-      dispatch(receiveRegisterFailure(error.message));
+      dispatch(receiveRegisterFailure());
+      dispatch(enqueueSnackActionCreator({
+        message: error.message,
+        options: {
+          variant: 'error'
+        }
+      }));
     }
   }

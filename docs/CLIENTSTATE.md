@@ -115,3 +115,54 @@ type AsyncTodoDelete = "DELTE_TODO_INIT" | "DELETE_TODO_FAIL" | "DELETE_TODO_SUC
 
 type TodoActions = SyncTodoActions | AsyncTodoRead | AsyncTodoPost | AsyncTodoPatch | AsyncTodoDelete
 ```
+
+## Notifications
+Notifications should be app-wide so Redux is appropriate. We'll also be using [Notistack](https://github.com/iamhosseindhv/notistack) as the library to handle rendering notifications to speed stuff up.
+
+This gets a little funky since we're using Redux to handle the notifications app-wide along with using Notistack to handle rendering the actual popovers. Reference this [Codesandbox](https://codesandbox.io/s/notistack-redux-hook-example-06xul) for an example of how to do so.
+
+So to be clear, Redux handles the notification state application-wide and Notistack handles rendering notifications through it's API. The actions probably will share names with what we use to tell Notistack to render notifications, but Notistack in our application **depends** on our Redux store!
+
+Our app would then render like so:
+```tsx
+// index.tsx
+
+const Jsx = (
+  <ReduxProvider store={store}>
+    <SnackbarProvider>
+      <App>
+        <Notifier/>
+      </App>
+    </SnackBarProvider>
+  </ReduxProvider>
+)
+```
+
+Where the Notifier component doesn't do anything but tell the `SnackbarProvider` to render our notifications.
+
+And then the reducer for our state should look like:
+```ts
+const notifications = (state: Notifications[] = [], action: NotificationAction) : Notifications[] => {
+  const { type, payload } = action;
+  const { key, notification, dismissAll } = payload
+  switch(type) {
+    case ENQUEUE_SNACKBAR:
+      return [
+        ...state,
+        {
+          key,
+          ...notification
+        }
+      ];
+    case CLOSE_SNACKBAR:
+      return state.map(notification =>
+        (dismissAll || notification.key === key)
+          ? { ... notification, dismissed: true }
+          : { ...notification })
+    case REMOVE_SNACKBAR:
+      return state.filter(notification => notification.key !== key)
+    default:
+      return state
+  }
+}
+```

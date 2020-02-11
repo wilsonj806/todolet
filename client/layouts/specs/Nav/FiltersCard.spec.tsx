@@ -8,7 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import configureStore from '../../../store/configureStore';
 
 import FiltersCard from '../../Nav/FiltersCard';
-import ReduxWrap from '../../test-helpers/ReduxWrap.helper.spec';
+import ReduxWrap from '../../../test-helpers/ReduxWrap.helper.spec';
 
 import { StoreShape } from '../../../types';
 

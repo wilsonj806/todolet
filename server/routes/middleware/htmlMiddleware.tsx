@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 
 import { renderToString } from 'react-dom/server'
+import { SnackbarProvider } from 'notistack'
 import { ServerStyleSheets, StylesProvider, createGenerateClassName } from '@material-ui/styles'
 
 import {
@@ -46,7 +47,8 @@ const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = IN
       <script id="redux-data">
         window.__REDUX_DATA__ = ${ JSON.stringify( reduxState) }
       </script>
-      <script src="/dist/app.bundle.js"></script>
+      <script src="/dist/vendor.bundle.js" defer></script>
+      <script src="/dist/app.bundle.js" defer></script>
     </body>
     </html>
 `)
@@ -101,11 +103,13 @@ const returnHtml: RequestHandler = (req: any, res: any, next: any) => {
       '/404';
 
   const jsx = (
-    <Provider store={ store }>
-      <StaticRouter context={ context } location={ finalUrl }>
-        <App/>
-      </StaticRouter>
-    </Provider>
+    <StaticRouter context={ context } location={ finalUrl }>
+      <Provider store={ store }>
+        <SnackbarProvider maxSnack={ 4 }>
+          <App/>
+        </SnackbarProvider>
+      </Provider>
+    </StaticRouter>
   );
   const reactDom = renderToString(sheets.collect(jsx));
   // console.log(reactDom);

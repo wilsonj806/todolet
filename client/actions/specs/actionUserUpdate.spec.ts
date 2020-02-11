@@ -9,6 +9,8 @@ import {
   PUT_USER_FAIL,
   PUT_USER_SUCCESS,
 } from '../userUpdate.action';
+import { ENQUEUE_SNACKBAR } from '../notifications.action';
+
 import axios from '../../axios';
 
 import { StoreShape } from '../../types/index'
@@ -69,7 +71,7 @@ describe('An action creator that handles async user login', () => {
     const store = mockStore(initState);
     const expectedActions = [
       { type: PUT_USER_INIT },
-      { type: PUT_USER_SUCCESS, payload: updatedUser }
+      { type: PUT_USER_SUCCESS, payload: updatedUser },
     ]
 
     mock.onPut(endpoint).reply(
@@ -87,7 +89,8 @@ describe('An action creator that handles async user login', () => {
     const store = mockStore(initState);
     const expectedActions = [
       { type: PUT_USER_INIT },
-      { type: PUT_USER_FAIL, payload: 'hi' }
+      { type: PUT_USER_FAIL },
+      { type: ENQUEUE_SNACKBAR, payload: { }}
     ]
 
     mock.onPut(endpoint).reply(
@@ -96,7 +99,14 @@ describe('An action creator that handles async user login', () => {
     );
 
     await store.dispatch<any>(putUser(updateData, user.userId.toString()))
-    expect(store.getActions()).toStrictEqual(expectedActions);
+    const actions = store.getActions();
+    expect(actions.length).toBe(3);
+    expect(actions[expectedActions.length - 1]).toStrictEqual(
+      expect.objectContaining({
+        type: expect.stringMatching(ENQUEUE_SNACKBAR),
+        payload: expect.anything()
+      })
+    )
     done()
   })
 })

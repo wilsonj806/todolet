@@ -1,6 +1,8 @@
 import { Dispatch } from 'redux';
 
 import UserService from '../services/UserService';
+import { enqueueSnackActionCreator } from './notifications.action'
+
 
 // ----- NOTE TypeScript types(client and server)
 import {
@@ -24,9 +26,8 @@ const receiveLoginSuccess = (json : userDataResponse) : AsyncLoginAction => ({
   payload: json
 })
 
-const receiveLoginFailure = (json : errorResponse) : AsyncLoginAction => ({
+const receiveLoginFailure = () : AsyncLoginAction => ({
   type: POST_LOGIN_FAIL,
-  payload: json
 })
 
 // ----- NOTE Exported Redux Thunk action
@@ -40,6 +41,12 @@ export const postLogin = (request : postLoginReq) =>
       if (status === 'FAILURE') throw new Error(msg);
       dispatch(receiveLoginSuccess(result.payload))
     } catch (error) {
-      dispatch(receiveLoginFailure(error.message));
+      dispatch(receiveLoginFailure());
+      dispatch(enqueueSnackActionCreator({
+        message: error.message,
+        options: {
+          variant: 'error'
+        }
+      }));
     }
   }

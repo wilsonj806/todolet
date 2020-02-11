@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
 
 import ReactDOM from 'react-dom';
 // @ts-ignore
@@ -21,7 +22,9 @@ const store = configureStore(
 const jsx = (
   <Router>
     <Provider store={ store }>
-      <App/>
+      <SnackbarProvider maxSnack={ 4 }>
+        <App/>
+      </SnackbarProvider>
     </Provider>
   </Router>
 );

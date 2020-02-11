@@ -9,6 +9,8 @@ import {
   POST_LOGIN_FAIL,
   POST_LOGIN_SUCCESS,
 } from '../userLogin.action';
+import { ENQUEUE_SNACKBAR } from '../notifications.action';
+
 import axios from '../../axios';
 
 const middlewares = [thunk];
@@ -70,7 +72,8 @@ describe('An action creator that handles async user login', () => {
     const store = mockStore({ selectedUser: {}});
     const expectedActions = [
       { type: POST_LOGIN_INIT },
-      { type: POST_LOGIN_FAIL, payload: 'hi' }
+      { type: POST_LOGIN_FAIL },
+      { type: ENQUEUE_SNACKBAR, payload: { }}
     ]
 
     mock.onPost(endpoint).reply(
@@ -79,7 +82,14 @@ describe('An action creator that handles async user login', () => {
     );
 
     await store.dispatch<any>(postLogin(user))
-    expect(store.getActions()).toStrictEqual(expectedActions);
+    const actions = store.getActions();
+    expect(actions.length).toBe(3);
+    expect(actions[expectedActions.length - 1]).toStrictEqual(
+      expect.objectContaining({
+        type: expect.stringMatching(ENQUEUE_SNACKBAR),
+        payload: expect.anything()
+      })
+    )
     done()
   })
 })

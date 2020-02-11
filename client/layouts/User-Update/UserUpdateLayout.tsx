@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, useState, useEffect } from 'react';
+import React, { FC, SetStateAction, SyntheticEvent, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 
@@ -25,7 +25,6 @@ const UserUpdateLayout: FC<any> = (props) => {
   const dispatch = useDispatch()
 
   // ----- Local State
-  const [error, setError] = useState('')
   const [username, setUsername] = useState('')
   const [confirmUsername, setConfirmUsername] = useState('')
   const [renderDeleteConfirm, setRenderDeleteConfirm] = useState(false)
@@ -34,26 +33,18 @@ const UserUpdateLayout: FC<any> = (props) => {
     setUsername('')
   }, [user])
 
-  const handleSaveUpdates = async (event: SyntheticEvent<HTMLButtonElement>) => {
-    try {
-      event.preventDefault()
-      await dispatch(putUser({ username }, user.userId))
-    } catch (err) {
-      console.log(err)
-      setError(err.message)
-    }
+  const wrapHookFn = (hookFn: SetStateAction<any> = undefined) => (str = '') => hookFn(str);
+
+  const handleSaveUpdates = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    dispatch(putUser({ username }, user.userId))
   }
 
-  const handleDeleteConfirmSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
-    try {
-      event.preventDefault()
+  const handleDeleteConfirmSubmit = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault()
 
-      if (user.username !== confirmUsername) throw new Error('Usernames do not match')
-      return await dispatch(deleteUser())
-    } catch (err) {
-      console.log(err)
-      setError(err.message)
-    }
+    if (user.username !== confirmUsername) throw new Error('Usernames do not match')
+    dispatch(deleteUser())
   }
 
   const RenderConfirmDeleteUser = renderDeleteConfirm ? (
@@ -63,7 +54,7 @@ const UserUpdateLayout: FC<any> = (props) => {
         name="confirm-username"
         label="Confirm Username"
         value={ confirmUsername }
-        reactHookFn={ setConfirmUsername }
+        reactHookFn={ wrapHookFn(setConfirmUsername) }
         classes={{ root: classes.textInput }}
       />
       <Button
@@ -79,11 +70,11 @@ const UserUpdateLayout: FC<any> = (props) => {
     </form>
   ) : (
     <Button
-    id="btn--user-delete"
-    name="user-delete"
-    color="primary"
-    classes={{ root: classes.dangerButton }}
-    onClick={ () => setRenderDeleteConfirm(true) }
+      id="btn--user-delete"
+      name="user-delete"
+      color="primary"
+      classes={{ root: classes.dangerButton }}
+      onClick={ () => setRenderDeleteConfirm(true) }
     >
       Delete Account
     </Button>
@@ -101,18 +92,18 @@ const UserUpdateLayout: FC<any> = (props) => {
             name="username"
             label="Username"
             value={ username }
-            reactHookFn={ setUsername }
+            reactHookFn={ wrapHookFn(setUsername) }
             classes={{ root: classes.textInput }}
           />
           <Button
-          id="btn--save-updates"
-          name="save-updates"
-          type="submit"
-          color="primary"
-          onClick={ handleSaveUpdates }
-        >
-          Update User
-        </Button>
+            id="btn--save-updates"
+            name="save-updates"
+            type="submit"
+            color="primary"
+            onClick={ handleSaveUpdates }
+          >
+            Update User
+          </Button>
         </form>
       </div>
       <div className={ classes.formCtr }>

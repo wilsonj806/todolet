@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, useState, useEffect } from 'react';
+import React, { FC, SyntheticEvent, useState, useEffect, SetStateAction } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ import useStyles from './register.styles';
 import { postNewUser } from '../../actions/userRegistration.action';
 import { StoreShape } from '../../types';
 
-const Register: FC<any> = (props) => {
+const Register: FC = () => {
   const userState = useSelector<StoreShape, any>(state=>state.authorizedUser);
 
   const dispatch = useDispatch();
@@ -27,8 +27,6 @@ const Register: FC<any> = (props) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ password2, setPassword2 ] = useState('');
-  // FIXME replace the below with a proper toast
-  const [ error, setError] = useState('');
 
   useEffect(() => {
     const { userId, username } = userState
@@ -36,16 +34,13 @@ const Register: FC<any> = (props) => {
     if (userId || username) setShouldRedirect(true)
   }, [userState])
 
-  const handleFormSubmit = async (event: SyntheticEvent<HTMLButtonElement>) => {
+  const wrapHookFn = (hookFn: SetStateAction<any> = undefined) => (str = '') => hookFn(str);
+
+  const handleFormSubmit = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const obj = { username, password, password2, email };
 
-    try {
-      await dispatch(postNewUser(obj))
-    } catch (err) {
-      console.log('hi');
-      setError(err);
-    }
+    dispatch(postNewUser(obj))
   }
   // const RedirectWrap = undefined;
   const RedirectWrap = shouldRedirect ? <Redirect push={true} from='/register' to='/'/> : undefined;
@@ -65,7 +60,7 @@ const Register: FC<any> = (props) => {
             margin="normal"
             label="Username"
             value={ username }
-            reactHookFn={ setUsername }
+            reactHookFn={ wrapHookFn(setUsername) }
             inputProps={ { width: '100%' } }
             classes={{ root: classes.formField }}
           />
@@ -76,7 +71,7 @@ const Register: FC<any> = (props) => {
             margin="normal"
             label="Email"
             value={ email }
-            reactHookFn={ setEmail }
+            reactHookFn={ wrapHookFn(setEmail) }
             inputProps={ { width: '100%' } }
             classes={{ root: classes.formField }}
           />
@@ -88,7 +83,7 @@ const Register: FC<any> = (props) => {
             type="password"
             label="Password"
             value={ password }
-            reactHookFn={ setPassword }
+            reactHookFn={ wrapHookFn(setPassword) }
             classes={{ root: classes.formField }}
           />
           <TextField
@@ -99,7 +94,7 @@ const Register: FC<any> = (props) => {
             type="password"
             label="Confirm Password"
             value={ password2 }
-            reactHookFn={ setPassword2 }
+            reactHookFn={ wrapHookFn(setPassword2) }
             classes={{ root: classes.formField }}
           />
           <Button

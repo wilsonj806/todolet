@@ -5,11 +5,13 @@ import session from 'express-session';
 import passport from 'passport';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs'
 
 import 'dotenv/config';
 import {
   uri, dbName, sessConfig, corsOptions, NodeENV
 } from './config';
+import Users from './models/user';
 import Todos from './models/todo';
 
 
@@ -27,8 +29,18 @@ import routerTodo from './routes/todo';
  *
  * NOTE The app runs off of `app/dist` because that's where TypeScript builds the app to
  */
-mongoose.connection.on('connected', () => {
-  console.log('Connection Successful');
+mongoose.connection.on('connected', async () => {
+  try {
+    const guestpass = process.env.GUEST_CRED || 'kj#a:]J3ie8'
+    const genSalt = await bcrypt.genSalt(10);
+    const newPass = await bcrypt.hash(guestpass, genSalt);
+    // check for guest user, then if no guest user, make it
+    const user = await Users.findOneAndUpdate({ username: 'MyAppGuest' }, {password: newPass, email: ''},{ upsert: true, new: true })
+    console.log(user)
+    console.log('Connection Successful');
+  } catch (e) {
+    console.log('Error, something happened, see below for error', '\n', e.message)
+  }
 })
 
 mongoose.connection.on('error', function(err) {
@@ -87,7 +99,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // NOTE Heroku doesn't like it when you use __dirname
-  // it spits out undefined in Heroku, use process.cwd() instead
+// it spits out undefined in Heroku, use process.cwd() instead
 const staticLocation = express.static(path.join(process.cwd(), '/assets'));
 
 app.use('/static', express.static(path.join(process.cwd(), '/assets')));

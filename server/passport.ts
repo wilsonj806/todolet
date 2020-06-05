@@ -34,6 +34,7 @@ const passportConfig = (passport: PassportStatic): any => {
   passport.use('guest',new LocalStrategy(
     async (username: string, password: string, done: any): Promise<any> => {
     // Match username
+      console.log('passport logging in')
       try {
         const user: IUserObj | null = await User.findOne({ username: 'MyAppGuest'});
         // if (user == null) {
@@ -43,6 +44,7 @@ const passportConfig = (passport: PassportStatic): any => {
         // // Match password
         // const isMatch = await bcrypt.compare(password, user.password);
         // if (isMatch === true) {
+        // console.log(user)
         return done(null, user);
         // }
         // return done(null, false, { message: 'Wrong password' });

@@ -40,6 +40,16 @@ const postLogin = async (reqObj: postLoginReq): Promise<AsyncServiceReturn> => {
   }
 }
 
+const postGuest = async (): Promise<AsyncServiceReturn> => {
+  try {
+    // NOTE this method checks which keys are missing and throws an error that lists said missing keys
+    const response : AxiosResponse<any> = await axios.post(endpointPrefix + '/guest', { username: 'wasd', password: 'wasd'});
+    return parseResponse(response)
+  } catch (error) {
+    return parseError(error);
+  }
+}
+
 const postLogout =  async (): Promise<AsyncServiceReturn> => {
   try {
     const response = await axios.post(endpointPrefix + '/logout');
@@ -81,6 +91,7 @@ const deleteUser = async (): Promise<AsyncServiceReturn> => {
 
 const UserService = {
   postLogin,
+  postGuest,
   postLogout,
   postNewUser,
   deleteUser,

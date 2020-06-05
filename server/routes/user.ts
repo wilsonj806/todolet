@@ -65,6 +65,12 @@ router.post(
   postLogin,
   postLoginFail,
 );
+router.post(
+  '/guest',
+  passport.authenticate('guest', { failWithError: true }),
+  postLogin,
+  postLoginFail,
+);
 
 /**
  * ANCHOR: POST logout user
@@ -85,7 +91,7 @@ router.delete('/delete', deleteUser);
  */
 
 router.get('/:id', (req,res,next) => {
-  console.log(req.session)
+  // console.log(req.session)
   res.status(200).send()
 })
 

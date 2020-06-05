@@ -13,7 +13,7 @@ import TextField from '../../containers/TextInputWrapper';
 
 // import Logo from '../../assets/Logo(512x512).png';
 import useStyles from './login.styles';
-import { postLogin } from '../../actions/userLogin.action';
+import { postLogin, postGuestLogin } from '../../actions/userLogin.action';
 import { StoreShape } from '../../types';
 
 
@@ -43,6 +43,10 @@ const Login: FC = () => {
     dispatch(postLogin(obj))
   }
   const RenderRedirect = shouldRedirect ? <Redirect to='/'/> : null;
+
+  const handleGuestClick = () => {
+    dispatch(postGuestLogin())
+  }
 
   return (
     <Container maxWidth="xs" classes={{ root: classes.rootStyle }}>
@@ -84,12 +88,21 @@ const Login: FC = () => {
           >
             Login
           </Button>
+          <Button
+            size="large"
+            type="button"
+            color="primary"
+            variant="contained"
+            classes={{ root: classes.submitButton }}
+            onClick={ handleGuestClick }
+          >
+            Login As Guest!
+          </Button>
         </form>
         <Typography paragraph classes={{ paragraph: classes.paragraph }}>
           New here? <Link component={ RouterLink } to='/register'>Create an account!</Link>
         </Typography>
         <Typography paragraph classes={{ paragraph: classes.paragraph }}>
-          <Link component={ RouterLink } to='/auth-reset'>Forgot your password?</Link>
         </Typography>
       </div>
     </Container>

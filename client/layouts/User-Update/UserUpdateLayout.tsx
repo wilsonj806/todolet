@@ -68,6 +68,15 @@ const UserUpdateLayout: FC<any> = (props) => {
         Confirm Account Deletion
       </Button>
     </form>
+  ) : user.username === 'MyAppGuest' ? (
+    <Button
+      id="btn--user-delete"
+      name="user-delete"
+      color="primary"
+      disabled={true}
+    >
+      Action Not Permitted
+    </Button>
   ) : (
     <Button
       id="btn--user-delete"

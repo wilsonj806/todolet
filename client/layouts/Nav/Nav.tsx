@@ -27,9 +27,9 @@ const Nav : FunctionComponent<NavProps> = props => {
           variant="permanent"
           classes={{ paper: classes.drawerPaper }}
           anchor={ theme.direction === 'rtl' ? 'right' : 'left' }
-          >
+        >
           <UserCard/>
-          <FiltersCard/>
+          {/* <FiltersCard/> */}
         </Drawer>
       </nav>
     </>

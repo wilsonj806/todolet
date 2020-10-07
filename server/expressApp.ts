@@ -4,13 +4,13 @@ import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs'
 
 import 'dotenv/config';
 import {
   uri, dbName, sessConfig, corsOptions, NodeENV
 } from './config';
+import sequelize from './dbConfig';
 import Users from './models/user';
 import Todos from './models/todo';
 
@@ -29,33 +29,11 @@ import routerTodo from './routes/todo';
  *
  * NOTE The app runs off of `app/dist` because that's where TypeScript builds the app to
  */
-mongoose.connection.on('connected', async () => {
-  try {
-    const guestpass = process.env.GUEST_CRED || 'kj#a:]J3ie8'
-    const genSalt = await bcrypt.genSalt(10);
-    const newPass = await bcrypt.hash(guestpass, genSalt);
-    // check for guest user, then if no guest user, make it
-    const user = await Users.findOneAndUpdate({ username: 'MyAppGuest' }, {password: newPass, email: ''},{ upsert: true, new: true })
-    console.log(user)
-    console.log('Connection Successful');
-  } catch (e) {
-    console.log('Error, something happened, see below for error', '\n', e.message)
-  }
-})
-
-mongoose.connection.on('error', function(err) {
-  console.log('error');
-  setTimeout(connectToDb, 5000)
-})
-
-
 const connectToDb = async (): Promise<any> => {
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      dbName,
-    });
+    await sequelize.authenticate();
+
+    console.log('Connection successful!')
   } catch (error) {
     console.log('Error alert, see below for additional logging \n', error);
   }
@@ -122,4 +100,4 @@ app.use('/', routerHtml)
 // ))
 /* eslint-enable no-console */
 
-export { app, mongoose, staticLocation };
+export { app, staticLocation };

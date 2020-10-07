@@ -1,31 +1,22 @@
 import session, { SessionOptions } from 'express-session';
-import connect from 'connect-mongodb-session';
-import { ENV } from './types';
+import connect from 'connect-pg-simple';
 import { CorsOptions } from 'cors';
 
 const {
-  NODE_ENV: NodeENV, DBNAME, DBNAME_LOCAL, SESSION_SECRET,
+  NODE_ENV: NodeENV, SESSION_SECRET,
 } = process.env;
 
-const uri: any = (NodeENV === 'production')
-  ? process.env.MONGODB_URI
-  : process.env.MONGODB_URI_LOCAL;
+const uri: any = process.env.DB_URI
 
-const dbName: any = (NodeENV === 'production')
-  ? DBNAME
-  : DBNAME_LOCAL;
+const dbName: any = process.env.DB_NAME
 
 const PORT = process.env.PORT || 5000 || 8000;
 
-const MongoDbStore = connect(session);
-const store = new MongoDbStore(
+const pgStore = connect(session);
+const store = new pgStore(
   {
-    uri,
-    databaseName: dbName,
-    collection: 'mySession',
-  },
-  (error): any => {
-    if (error) console.error(error);
+    conString: uri,
+    tableName: 'mySession',
   },
 );
 
@@ -58,7 +49,7 @@ const corsOptions: CorsOptions = {
 };
 
 const ApiUri = process.env.NODE_ENV === 'production' ? 'https://wj-todoloet.herokuapp.com/'
-: `http://localhost:${ PORT }`;
+  : `http://localhost:${ PORT }`;
 
 export {
   ApiUri,

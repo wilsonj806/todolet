@@ -109,6 +109,7 @@
     "lcov-result-merger": "^3.1.0",
     "lint-staged": "^10.2.9",
     "nodemon": "^1.19.4",
+    "prettier": "^2.1.2",
     "source-map-explorer": "^2.2.2",
     "supertest": "^4.0.2",
     "terser-webpack-plugin": "^2.3.2",

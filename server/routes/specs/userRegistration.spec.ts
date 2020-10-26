@@ -24,7 +24,7 @@ import {
  */
 
 
-describe('A middleware function to query the database to see if there\'s a matching username', () => {
+describe.only('A middleware function to query the database to see if there\'s a matching username', () => {
   let res;
   const next = jest.fn();
   const regex = /^(Error\:)/;
@@ -40,7 +40,7 @@ describe('A middleware function to query the database to see if there\'s a match
         username: 'guest',
       });
 
-      jest.spyOn(User, 'find').mockImplementation(() => ([] as any));
+      jest.spyOn(User, 'findOne').mockImplementation(() => ([] as any));
 
       await findUserWithUsername(req, res, next);
 
@@ -56,7 +56,7 @@ describe('A middleware function to query the database to see if there\'s a match
         username: 'guest',
       });
 
-      jest.spyOn(User, 'find').mockImplementation(() => ([{username: 'guest'}] as any));
+      jest.spyOn(User, 'findOne').mockImplementation(() => ([{username: 'guest'}] as any));
 
       await findUserWithUsername(req, res, next);
 
@@ -78,7 +78,7 @@ describe('A middleware function to query the database to see if there\'s a match
       });
 
       jest.spyOn(console, 'error').mockImplementation(() => null);
-      jest.spyOn(User, 'find').mockImplementation(() => {
+      jest.spyOn(User, 'findOne').mockImplementation(() => {
         throw new Error('Database Error')
       });
 
@@ -102,7 +102,7 @@ describe('A middleware function to query the database to see if there\'s a match
     });
 
     jest.spyOn(console, 'error').mockImplementation(() => null);
-    jest.spyOn(User, 'find').mockImplementation(() => {
+    jest.spyOn(User, 'findOne').mockImplementation(() => {
       throw new Error('Database Error')
     });
 

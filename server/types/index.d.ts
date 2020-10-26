@@ -84,28 +84,18 @@ declare namespace AnotherTodoServer {
    */
   type priority = 'HIGH' | 'MEDIUM' | 'LOW'
   interface mongodbObj { _id: any }
-  interface IUserObj extends Document {
-    _id      : any
+  interface IUserObj  {
+    id      : any
     username : string
-    email    : string
     password : string
-    sessionId : string
-    todos: Array<any>
-    sortTodoBy ?: string
-    projectFilters ?: Array<string>
-    tagFilters ?: Array<string>
-  }
-  interface IUserModel extends IUserObj, Document {
-    [key: string]: any
   }
 
-  interface todoObj extends mongodbObj {
-    _id        ?: any
-    username   : string
+  interface ITodoObj {
+    id         : any
+    user_index : string
     todo       : string
     priority   : priority
     date_added : Date
-    tags       : Array<string>
   }
 
   /**

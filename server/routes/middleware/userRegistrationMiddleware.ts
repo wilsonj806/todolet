@@ -13,8 +13,8 @@ const { responsifyData, responsifyNoData, responsifyError } = CommonService;
 const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any> => {
   try {
     const { username }: postUserReq = req.body;
-    const results = await User.find({ username });
-    if (results.length !== 0) {
+    const user = await User.findOne({ where: {username} });
+    if (!user) {
       res.status(400).json(responsifyError(`Error: User with username: ${username} exists already`));
     } else {
       next();

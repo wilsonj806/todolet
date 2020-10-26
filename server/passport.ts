@@ -4,7 +4,9 @@ import { PassportStatic } from 'passport';
 import User from './models/user';
 
 import { IUserObj } from './types';
+import {v1 as uuid} from 'uuid';
 
+/* eslint-disable no-console */
 const LocalStrategy = psLocal.Strategy;
 
 const passportConfig = (passport: PassportStatic): any => {
@@ -14,7 +16,7 @@ const passportConfig = (passport: PassportStatic): any => {
     // Match username
       const query = { username };
       try {
-        const user: IUserObj | null = await User.findOne(query);
+        const user = await User.findOne({where : { username: query},rejectOnEmpty: true});
         if (user == null) {
           return done(null, false, { message: 'No user found' });
         }
@@ -35,10 +37,17 @@ const passportConfig = (passport: PassportStatic): any => {
     async (username: string, password: string, done: any): Promise<any> => {
     // Match username
       try {
-        const user: IUserObj | null = await User.findOne({ username: 'MyAppGuest'});
-        // if (user == null) {
-        //   return done(null, false, { message: 'No user found' });
-        // }
+        const user = await User.findOne({where : { username: 'MyAppGuest'}});
+        if (user == null) {
+          const genSalt = await bcrypt.genSalt(10);
+          const newPass = await bcrypt.hash(process.env.GUEST_PASS!, genSalt);
+          const newGuest = await User.create({
+            username: 'MyAppGuest',
+            password: newPass,
+            id: uuid()
+          })
+          return done(null, newGuest)
+        }
 
         // // Match password
         // const isMatch = await bcrypt.compare(password, user.password);
@@ -61,7 +70,7 @@ const passportConfig = (passport: PassportStatic): any => {
         // console.log('making new password')
         const genSalt = await bcrypt.genSalt(10);
         const newPass = await bcrypt.hash(password, genSalt);
-        const newUser = await User.create({ username, password: newPass, email: req.body.email });
+        const newUser = await User.create({ username, password: newPass });
 
         // ----- once done is called with the new user, Passport calls req.user = newUser
         return done(null, newUser);
@@ -69,17 +78,17 @@ const passportConfig = (passport: PassportStatic): any => {
         console.log(error);
         return done(error, false);
       }
-    }
-  ));
+    }));
 
   passport.serializeUser((user: any, done: any): any => {
     done(null, user.id);
   });
 
   passport.deserializeUser((id: any, done: any): any => {
-    User.findById(id, (err, user): any => {
-      done(err, user);
-    });
+    return User.findOne({where: { id }, rejectOnEmpty: true}).then(user => {
+      console.log(user);
+      done(null, user[0])
+    }).catch(err => done(err, null))
   });
 };
 

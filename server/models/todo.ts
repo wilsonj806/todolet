@@ -1,37 +1,44 @@
-import mongoose from 'mongoose';
+import { DataTypes, ModelCtor } from 'sequelize'
+import sequelize from '../dbConfig';
+import User from './user';
 
 
+// TODO Add foreign key for User
 // ANCHOR Todo Schema
 /* eslint-disable @typescript-eslint/camelcase */
-const todoSchema = new mongoose.Schema({
+const Todo: ModelCtor<any> = sequelize.define('Todo',{
+  id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true
+  },
   todo: {
-    type: String,
-    required: true,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   priority: {
-    type: String,
-    required: true,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   date_added: {
-    type: Date,
-    required: true,
-    default: new Date()
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: new Date()
   },
-  tags: {
-    type: [String],
-    default: undefined,
+  is_completed: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
-  isCompleted: {
-    type: Boolean,
-    default: false
-  },
-  userIndex: {
-    type: Number,
-    default: 0,
+  user_index: {
+    type: DataTypes.UUID,
+    references: {
+      model: User,
+      key: 'id'
+    },
+    allowNull: false
   }
 });
 /* eslint-enable @typescript-eslint/camelcase */
 
-const Todo = mongoose.model('Todo', todoSchema);
 
 export default Todo;

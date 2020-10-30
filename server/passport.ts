@@ -85,11 +85,7 @@ const passportConfig = (passport: PassportStatic): any => {
   });
 
   passport.deserializeUser((id: any, done: any): any => {
-    return User.findOne({where: { id }, rejectOnEmpty: true}).then(user => {
-      console.log(user);
-      done(null, user[0])
-    }).catch(err => done(err, null))
-  });
+    done(null, id)})
 };
 
 export default passportConfig;

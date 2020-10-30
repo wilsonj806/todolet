@@ -1,6 +1,6 @@
 import { DataTypes, ModelCtor } from 'sequelize'
 import sequelize from '../dbConfig';
-
+import Todo from './todo'
 
 // ANCHOR User Schema
 /* eslint-disable @typescript-eslint/camelcase */
@@ -18,7 +18,9 @@ const User: ModelCtor<any> = sequelize.define('User',{
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
 });
+
+User.hasMany(Todo, { foreignKey: 'user_index'})
 
 export default User;

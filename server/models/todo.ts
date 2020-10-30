@@ -29,14 +29,6 @@ const Todo: ModelCtor<any> = sequelize.define('Todo',{
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
-  user_index: {
-    type: DataTypes.UUID,
-    references: {
-      model: User,
-      key: 'id'
-    },
-    allowNull: false
-  }
 });
 /* eslint-enable @typescript-eslint/camelcase */
 

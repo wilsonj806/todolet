@@ -20,6 +20,7 @@ import { StoreShape } from '../../../client/types';
 import { INIT_APP_STATE } from '../../../client/store/reducers/root.reducer';
 import { PREFETCHED_TODOS_KEY } from './todoMiddleware';
 import { storeInResLocals } from './commonMiddleware';
+import User from '../../models/user';
 // import User from '../../models/user';
 
 // TODO do proper server side routing for requests
@@ -54,31 +55,35 @@ const htmlTemplate = (reactDom: string, css: string, reduxState: StoreShape = IN
 `)
 const STATE_KEY = '__STATE__';
 
-const gatherState : RequestHandler = (req, res, next) => {
-  // console.log(req.user);
+const gatherState : RequestHandler = async (req, res, next) => {
   if (!req.user) {
     // NOTE If there's no prefetched_todos then keep going
     next();
   } else {
     // @ts-ignore
+    // FIXME This needs updating for session ALSO req.user only gives an ID value
     const todosList = req.user[PREFETCHED_TODOS_KEY] ? [ ...res.locals[PREFETCHED_TODOS_KEY] ] : [];
-    const { username, _id: userId, todos, projectFilters, tagFilters, email } = req.user as any;
-    const authorizedUser = Object.assign({}, {
-      username,
-      userId,
-      todos,
-      tagFilters,
-      projectFilters,
-      email
-    });
+    try {
+      const fetchedUser = await User.findOne({where: {id: req.user}})
+      const fetchedTodos = await fetchedUser.getTodos()
+      const authorizedUser = Object.assign({}, {
+        username: fetchedUser.username,
+        userId: fetchedUser.id,
+        todos: [],
+      });
 
-    const state = {
-      ...INIT_APP_STATE,
-      authorizedUser,
-      todosList,
+      const state = {
+        ...INIT_APP_STATE,
+        authorizedUser,
+        todosList,
+      }
+      storeInResLocals(res, STATE_KEY, state);
+      next();
+    } catch(e) {
+      console.log(e)
+      res.status(500).json({msg:'ded'})
+      next(e)
     }
-    storeInResLocals(res, STATE_KEY, state);
-    next();
   }
 }
 

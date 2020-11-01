@@ -35,9 +35,8 @@ export const getAllTodos = () =>
   async (dispatch: Dispatch) => {
     dispatch(requestTodos());
     try {
-      const [ todos, authorizedUser ] = await TodoService.getTodos();
+      const [ todos ] = await TodoService.getTodos();
       dispatch(receiveTodosSuccess(todos))
-      dispatch(receiveUserUpdateSuccess(authorizedUser))
     } catch (err) {
       dispatch(receiveTodosFail())
       dispatch(enqueueSnackActionCreator({

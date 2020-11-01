@@ -20,7 +20,12 @@ const Todo: ModelCtor<any> = sequelize.define('Todo',{
     type: DataTypes.STRING,
     allowNull: false,
   },
-  date_added: {
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: new Date()
+  },
+  updatedAt: {
     type: DataTypes.DATE,
     allowNull: true,
     defaultValue: new Date()

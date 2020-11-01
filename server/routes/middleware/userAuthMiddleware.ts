@@ -9,8 +9,8 @@ const postLogin: RequestHandler = (req: any, res, next): any => {
   // const { user } : any = {...req!.user!._doc };
   const {user: { dataValues}} = req;
   delete dataValues.password
-  console.log(dataValues)
-  res.status(200).json(responsifyData('Login Successful', { ...dataValues }));
+  const {id: userId} = dataValues
+  res.status(200).json(responsifyData('Login Successful', { ...dataValues, userId }));
   next();
 };
 

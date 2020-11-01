@@ -44,16 +44,15 @@ const getUsersTodos: RequestHandler = async (req, res, next) => {
   try {
     // console.log('this is user\n', user);
     // const dbUser = await User.findById(user._id);
-    const { todos }: any = user;
     // console.log('this is todo ids ',todos);
-    const fetchedTodos = await Todo.find({
-      _id: {
-        $in: todos
+    const fetchedTodos = await Todo.findAll({
+      where: {
+        user_index: user
       }
     })
-    const { password, __v, ...authorizedUser } = user._doc;
+    delete user.password;
     // console.log(fetchedTodos);
-    res.status(200).json({ todos: fetchedTodos, authorizedUser });
+    res.status(200).json({ todos: fetchedTodos, user });
   } catch (e) {
     res.status(500).json({ msg: 'Server error sorry :('})
   }
@@ -61,7 +60,7 @@ const getUsersTodos: RequestHandler = async (req, res, next) => {
 
 const PREFETCHED_TODOS_KEY = '__PREFETCHED_TODOS__';
 const prefetchUserTodos: RequestHandler = async (req, res, next) => {
-  const { user }: any = req;
+  const { user } : any = req;
   if (!user) {
     // NOTE If there's no valid session, then just keep going
     next();
@@ -69,15 +68,12 @@ const prefetchUserTodos: RequestHandler = async (req, res, next) => {
     try {
       // console.log('this is user\n', user);
       // FIXME figure out if you even need this DB call
-      const dbUser = await User.findById(user._id);
-      const { todos }: any = dbUser;
       // console.log('this is todo ids ',todos);
-      const fetchedTodos = await Todo.find({
-        _id: {
-          $in: todos
+      const fetchedTodos = await Todo.findAll({
+        where: {
+          user_index: user
         }
       })
-
       // Store the todos into res.locals
       storeInResLocals(res,PREFETCHED_TODOS_KEY, fetchedTodos);
       next();

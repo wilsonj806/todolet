@@ -24,7 +24,6 @@ const Register: FC = () => {
 
   const [shouldRedirect, setShouldRedirect] = useState(false)
   const [ username, setUsername ] = useState('');
-  const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ password2, setPassword2 ] = useState('');
 
@@ -38,7 +37,7 @@ const Register: FC = () => {
 
   const handleFormSubmit = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const obj = { username, password, password2, email };
+    const obj = { username, password, password2, };
 
     dispatch(postNewUser(obj))
   }
@@ -64,17 +63,7 @@ const Register: FC = () => {
             inputProps={ { width: '100%' } }
             classes={{ root: classes.formField }}
           />
-          <TextField
-            fullWidth
-            id="email"
-            name="email"
-            margin="normal"
-            label="Email"
-            value={ email }
-            reactHookFn={ wrapHookFn(setEmail) }
-            inputProps={ { width: '100%' } }
-            classes={{ root: classes.formField }}
-          />
+
           <TextField
             fullWidth
             id="password"

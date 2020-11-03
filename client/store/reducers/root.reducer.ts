@@ -24,7 +24,6 @@ import {
 // FIXME something's really weird with some of the key names and how it aligns with other stuff
 const INIT_USER_STATE : UserStoreShape = {
   userId: undefined,
-  email: undefined,
   username: undefined,
   projectFilters: [],
   tagFilters: [],

@@ -14,7 +14,7 @@ const findUserWithUsername: RequestHandler = async (req, res, next): Promise<any
   try {
     const { username }: postUserReq = req.body;
     const user = await User.findOne({ where: {username} });
-    if (!user) {
+    if (user) {
       res.status(400).json(responsifyError(`Error: User with username: ${username} exists already`));
     } else {
       next();

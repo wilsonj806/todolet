@@ -6,7 +6,7 @@ import { NEW_TODO } from './todoMiddleware';
 
 const { responsifyData, responsifyNoData, responsifyError } = CommonService;
 
-const VALID_KEYS = ["username", "email", "password", "projectFilters","tagFilters"];
+const VALID_KEYS = ["username", "password", "projectFilters","tagFilters"];
 const VALID_KEYS_LENGTH = VALID_KEYS.length;
 
 // FIXME TODO implement key validation
@@ -16,11 +16,11 @@ const putUser: RequestHandler = async (req, res, next) => {
     if (user == undefined) {
       return res.status(500).json({ msg: 'you not loggedin' })
     };
-    const updatedUser = await User.findByIdAndUpdate(user._id, body, { new: true })
+    const [qtyRow, updatedUser] = await User.update(body, { where: { id: user } })
+    console.log(updatedUser)
     if (updatedUser === null) throw new Error('Internal Server Error')
 
     delete updatedUser.password;
-    delete updatedUser.__v;
 
     res.status(200).json(responsifyData('Update to user successful', updatedUser))
     next();

@@ -4,7 +4,6 @@ import { PassportStatic } from 'passport';
 import User from './models/user';
 
 import { IUserObj } from './types';
-import {v1 as uuid} from 'uuid';
 
 /* eslint-disable no-console */
 const LocalStrategy = psLocal.Strategy;
@@ -44,7 +43,6 @@ const passportConfig = (passport: PassportStatic): any => {
           const newGuest = await User.create({
             username: 'MyAppGuest',
             password: newPass,
-            id: uuid()
           })
           return done(null, newGuest)
         }

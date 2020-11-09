@@ -21,7 +21,7 @@ async function clean(cb) {
     '!dist/**',
     '!gulpfile.js',
     '!assets/**',
-    '!config/config.js'
+    '!config/**/config.js'
   ];
   const deletedPaths = await del(arr, { dryRun: false });
 

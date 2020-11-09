@@ -33,7 +33,7 @@ describe("A method for posting a new todo", () => {
     const mockData = {
       todos: [{ todo: "mock data" }],
     };
-    const assert = [mockData.todos];
+    const assert = mockData.todos;
 
     mock.onPost(endpoint).reply(200, mockData);
 

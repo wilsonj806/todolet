@@ -108,7 +108,7 @@ declare namespace AnotherTodoClient {
   }
 
   interface TodoCheckboxProps {
-    isCompleted : boolean
+    is_completed : boolean
     reduxUpdateTodo : <T extends { [key in keyof TodoShape] ?: any }>(updatedValue: T) => (dispatch: any) => Promise<void>
   }
 
@@ -211,11 +211,11 @@ declare namespace AnotherTodoClient {
   }
 
   interface TodoShape {
-    _id           ?: string
-    isCompleted   : boolean
+    id           ?: string
+    is_completed   : boolean
     priority      : PriorityTypes
     todo          : string
-    userIndex     : number
+    user_index     : string
     projectFilter ?: string | undefined
     tagFilter     ?: string | undefined
   }

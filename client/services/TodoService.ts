@@ -27,7 +27,7 @@ const postTodo = async (reqObj: postTodoReq) => {
       throw new Error(response.data.errors)
     }
     const { todos, authorizedUser } = response.data;
-    return [ todos, authorizedUser ];
+    return todos;
   } catch (error) {
     throw error
   }
@@ -41,7 +41,7 @@ const getTodos = async () => {
       throw new Error(response.data.errors)
     }
     const { todos, authorizedUser } = response.data;
-    return [ todos, authorizedUser ];
+    return todos;
   } catch (error) {
     throw error
   }
@@ -62,7 +62,7 @@ const getTodos = async () => {
 // NOTE this function doesn't need to be curried as it's not intended to be composed
 const updateTodo = async <T extends { [key in keyof TodoShape] ?: any },>(todo : TodoShape, updatedValue: T) => {
   try {
-    const uri = endpointPrefix + '/' + todo._id;
+    const uri = endpointPrefix + '/' + todo.id;
     const reqObj = {
       originalTodo: todo,
       updatedValue: updatedValue
@@ -89,7 +89,7 @@ const deleteTodo = async (todoId: string) => {
     }
 
     const { todos, authorizedUser } = response.data;
-    return [ todos, authorizedUser ];
+    return todos;
   } catch (error) {
     throw error;
   }

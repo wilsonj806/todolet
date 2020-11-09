@@ -126,7 +126,7 @@ describe('A service function for updating a Todo', () => {
     mock.resetHistory()
   })
   const mockTodo = {
-    _id : 'aaaaa',
+    id : 'aaaaa',
     userIndex : 0,
     priority: 'High' as PriorityTypes,
     todo: 'test'
@@ -135,7 +135,7 @@ describe('A service function for updating a Todo', () => {
     todo: 'test but test',
     priority: 'Medium' as PriorityTypes
   }
-  const endpoint = '/api/todo/' + mockTodo._id;
+  const endpoint = '/api/todo/' + mockTodo.id;
 
   it('should call axios', async (done) => {
     mock.onPut(endpoint).reply(

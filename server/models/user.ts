@@ -1,47 +1,32 @@
-import mongoose from 'mongoose';
-import { IUserModel } from '../types';
+import Sequelize, { DataTypes, ModelCtor } from "sequelize";
+import sequelize from "../dbConfig";
+import Todo from "./todo";
+import { v4 as uuid } from "uuid";
 
 // ANCHOR User Schema
 /* eslint-disable @typescript-eslint/camelcase */
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
+const User: ModelCtor<any> = sequelize.define("User", {
+  id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: Sequelize.UUIDV4,
+    unique: true,
   },
-  email : {
-    type: String,
-    required: true,
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
   },
   password: {
-    type: String,
-    required: true,
-  },
-  sessionId: {
-    type: String,
-    required: false,
-  },
-  sortTodoBy: {
-    type: String,
-    required: false,
-  },
-  projectFilters: {
-    type: [String],
-    required: false,
-    default: []
-  },
-  tagFilters: {
-    type: [String],
-    required: false,
-    default: []
-  },
-  todos: {
-    type: [{}],
-    required: false,
-    default: []
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 });
-/* eslint-enable @typescript-eslint/camelcase */
 
-const User = mongoose.model<IUserModel>('User', userSchema);
+// User.hasMany(Todo, {
+//   foreignKey: 'user_index', hooks:true,
+// onDelete: 'CASCADE'
+// })
 
 export default User;

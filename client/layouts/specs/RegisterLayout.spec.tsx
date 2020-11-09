@@ -41,7 +41,6 @@ const successNewUserForm = {
   username: 'guest',
   password: 'wasd',
   password2: 'wasd',
-  email: 'guest@guest.com'
 }
 
 const store = configureStore(init)
@@ -114,13 +113,11 @@ describe('A layout that renders the registration page', () => {
     // ----- DOM selection
     const submitBtn = container.querySelector('[type=submit]');
     const usernameInput = container.querySelector('input[name=username]') as HTMLInputElement;
-    const emailInput = container.querySelector('input[name=email]') as HTMLInputElement;
     const pwdInput = container.querySelector('input[name=password]') as HTMLInputElement;
     const pwdInput2 = container.querySelector('input[name=password2]') as HTMLInputElement;
 
     // ----- Inputting values into input elements
     fireEvent.change(usernameInput!, { target : { value : successNewUserForm.username }});
-    fireEvent.change(emailInput!, { target : { value : successNewUserForm.email }});
     fireEvent.change(pwdInput!, { target : { value : successNewUserForm.password }});
     fireEvent.change(pwdInput2!, { target : { value : successNewUserForm.password2 }});
     fireEvent.click(submitBtn!)
@@ -153,13 +150,11 @@ describe('A layout that renders the registration page', () => {
     // ----- DOM selection
     const submitBtn = container.querySelector('[type=submit]');
     const usernameInput = container.querySelector('input[name=username]') as HTMLInputElement;
-    const emailInput = container.querySelector('input[name=email]') as HTMLInputElement;
     const pwdInput = container.querySelector('input[name=password]') as HTMLInputElement;
     const pwdInput2 = container.querySelector('input[name=password2]') as HTMLInputElement;
 
     // ----- Inputting values into input elements
     fireEvent.change(usernameInput!, { target : { value : successNewUserForm.username }});
-    fireEvent.change(emailInput!, { target : { value : successNewUserForm.email }});
     fireEvent.change(pwdInput!, { target : { value : successNewUserForm.password }});
     fireEvent.change(pwdInput2!, { target : { value : successNewUserForm.password2 }});
     fireEvent.click(submitBtn!)

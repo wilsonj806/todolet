@@ -6,12 +6,7 @@ import {
   getUsersTodos,
   updateTodo,
   deleteTodo,
-  bulkUpdateTodoIndices
 } from './middleware/todoMiddleware'
-import {
-  updateUserTodos,
-  deleteSingleUserTodo
-} from './middleware/userUpdateMiddleware'
 
 // TODO check if we need the :userid param
 
@@ -20,7 +15,6 @@ const router = express.Router();
 router.post(
   '/',
   postNewTodo,
-  updateUserTodos,
   getUsersTodos
 )
 
@@ -38,8 +32,6 @@ router.put(
 router.delete(
   '/:todoId',
   deleteTodo,
-  bulkUpdateTodoIndices,
-  deleteSingleUserTodo,
   getUsersTodos
 )
 

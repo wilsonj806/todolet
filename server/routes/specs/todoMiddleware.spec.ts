@@ -235,7 +235,7 @@ describe('A middleware function for updating todos', () => {
     req.user = user;
     req.params._id = '11111'
 
-    const spy = jest.spyOn(Todo, 'findByIdAndUpdate')
+    const spy = jest.spyOn(Todo, 'update')
 
     updateTodo(req, res, next);
     expect(spy).toHaveBeenCalled();
@@ -247,7 +247,7 @@ describe('A middleware function for updating todos', () => {
     req.params._id = '11111'
 
 
-    jest.spyOn(Todo, 'findByIdAndUpdate')
+    jest.spyOn(Todo, 'update')
       .mockImplementation(() => {
         throw new Error('mock err')
       });
@@ -262,7 +262,7 @@ describe('A middleware function for updating todos', () => {
     req.params._id
 
 
-    jest.spyOn(Todo, 'findByIdAndUpdate')
+    jest.spyOn(Todo, 'update')
       .mockReturnValue(mockBody.originalTodo as any);
     await updateTodo(req, res, next);
     expect(res.json).toHaveBeenCalledWith({
@@ -304,7 +304,7 @@ describe('A middleware function for deleting a todo', () => {
     req.user = user;
     req.params.todoId = mockParam
 
-    const spy = jest.spyOn(Todo, 'findByIdAndDelete')
+    const spy = jest.spyOn(Todo, 'destroy')
 
     deleteTodo(req, res, next);
     expect(spy).toHaveBeenCalled();
@@ -316,7 +316,7 @@ describe('A middleware function for deleting a todo', () => {
     req.params.todoId = mockParam
 
 
-    jest.spyOn(Todo, 'findByIdAndDelete')
+    jest.spyOn(Todo, 'destroy')
       .mockImplementation(() => {
         throw new Error('mock err')
       });
@@ -331,7 +331,7 @@ describe('A middleware function for deleting a todo', () => {
     req.params.todoId = mockParam
     const assertDeletedUserIndex = { [DECREMENT_FROM_USER_INDEX]: 0 };
 
-    jest.spyOn(Todo, 'findByIdAndDelete').mockReturnValue({ userIndex: 0 } as any)
+    jest.spyOn(Todo, 'destroy').mockReturnValue({ userIndex: 0 } as any)
 
     await deleteTodo(req, res, next);
     expect(res.locals).toStrictEqual(assertDeletedUserIndex);
@@ -344,7 +344,7 @@ describe('A middleware function for deleting a todo', () => {
     req.params.todoId = mockParam
 
 
-    jest.spyOn(Todo, 'findByIdAndDelete').mockReturnValue({ userIndex: 0 } as any)
+    jest.spyOn(Todo, 'destroy').mockReturnValue({ userIndex: 0 } as any)
 
     await deleteTodo(req, res, next);
     expect(next).toHaveBeenCalled();

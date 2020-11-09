@@ -3,8 +3,6 @@ import { RequestHandler, ErrorRequestHandler } from 'express';
 import { storeInResLocals } from './commonMiddleware';
 
 import Todo from '../../models/todo';
-import User from '../../models/user';
-
 
 const NEW_TODO = '__NEW_TODO__';
 const postNewTodo: RequestHandler = async (req, res, next) => {
@@ -84,7 +82,6 @@ const updateTodo: RequestHandler = async (req, res, next) => {
     const { originalTodo, updatedValue } = req.body;
     const { _id } = req.params;
     const todoToUpdate = { ...originalTodo, ...updatedValue };
-    console.log(todoToUpdate, updatedValue)
     const [noUpdated,updatedTodo] = await Todo.update(todoToUpdate, {where: { id: _id }, returning: true});
     res.status(200).json({
       updatedTodo: updatedTodo[0]

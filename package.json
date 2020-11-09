@@ -123,6 +123,6 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx}": "prettier --wraite"
+    "*.{ts,tsx}": "prettier --write"
   }
 }

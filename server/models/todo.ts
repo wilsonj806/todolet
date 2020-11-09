@@ -1,6 +1,7 @@
 import { DataTypes, ModelCtor } from 'sequelize'
 import sequelize from '../dbConfig';
 import User from './user';
+import {v1 as uuid} from 'uuid'
 
 
 // TODO Add foreign key for User
@@ -10,7 +11,8 @@ const Todo: ModelCtor<any> = sequelize.define('Todo',{
   id: {
     type: DataTypes.UUID,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
+    defaultValue: uuid(),
   },
   todo: {
     type: DataTypes.STRING,

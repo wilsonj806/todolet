@@ -9,8 +9,7 @@ import User from '../../models/user';
 const NEW_TODO = '__NEW_TODO__';
 const postNewTodo: RequestHandler = async (req, res, next) => {
   const { body, user } = req;
-  const { _id } = user as any;
-  if (!_id) {
+  if (!user) {
     return res.status(500).json({ msg: 'you not loggedin' })
   };
   try {
@@ -85,9 +84,10 @@ const updateTodo: RequestHandler = async (req, res, next) => {
     const { originalTodo, updatedValue } = req.body;
     const { _id } = req.params;
     const todoToUpdate = { ...originalTodo, ...updatedValue };
-    const updatedTodo = await Todo.update(todoToUpdate, {where: { id: _id }});
+    console.log(todoToUpdate, updatedValue)
+    const [noUpdated,updatedTodo] = await Todo.update(todoToUpdate, {where: { id: _id }, returning: true});
     res.status(200).json({
-      updatedTodo
+      updatedTodo: updatedTodo[0]
     })
   } catch (e) {
     res.status(500).json({ msg: 'server error' });

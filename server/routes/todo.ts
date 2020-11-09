@@ -7,10 +7,6 @@ import {
   updateTodo,
   deleteTodo,
 } from './middleware/todoMiddleware'
-import {
-  updateUserTodos,
-  deleteSingleUserTodo
-} from './middleware/userUpdateMiddleware'
 
 // TODO check if we need the :userid param
 

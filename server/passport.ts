@@ -13,13 +13,12 @@ const passportConfig = (passport: PassportStatic): any => {
   passport.use('login',new LocalStrategy(
     async (username: string, password: string, done: any): Promise<any> => {
     // Match username
-      const query = { username };
       try {
-        const user = await User.findOne({where : { username: query},rejectOnEmpty: true});
+        console.log(username)
+        const user = await User.findOne({where : { username},rejectOnEmpty: true});
         if (user == null) {
           return done(null, false, { message: 'No user found' });
         }
-
         // Match password
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch === true) {

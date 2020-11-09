@@ -14,19 +14,10 @@ const postNewTodo: RequestHandler = async (req, res, next) => {
     return res.status(500).json({ msg: 'you not loggedin' })
   };
   try {
-    const { todos: userTodos } = user;
     const newTodo = {
       ...body,
-      userIndex: userTodos.length !== 0 ? userTodos.length : 0
     }
-    const result = await Todo.create(newTodo);
-    // console.log(result._id.toString());
-    // Fetch the id from the new todo
-    const newTodoId = result._id.toString();
-    // put the id into res.locals
-    // console.log('this is new todo id', newTodoId);
-    storeInResLocals(res,NEW_TODO, newTodoId);
-    // console.log(res.locals[NEW_TODO]);
+    const result = await Todo.create({user_index: user, ...newTodo});
     next()
   } catch (err) {
     // console.log(err);
@@ -94,7 +85,7 @@ const updateTodo: RequestHandler = async (req, res, next) => {
     const { originalTodo, updatedValue } = req.body;
     const { _id } = req.params;
     const todoToUpdate = { ...originalTodo, ...updatedValue };
-    const updatedTodo = await Todo.findByIdAndUpdate(_id, todoToUpdate, { new: true });
+    const updatedTodo = await Todo.update(todoToUpdate, {where: { id: _id }});
     res.status(200).json({
       updatedTodo
     })
@@ -103,7 +94,6 @@ const updateTodo: RequestHandler = async (req, res, next) => {
   }
 }
 
-const DECREMENT_FROM_USER_INDEX ='DECREMENT_FROM_USER_INDEX';
 const deleteTodo: RequestHandler = async (req, res, next) => {
   const { user } = req;
   if (!user) {
@@ -114,22 +104,9 @@ const deleteTodo: RequestHandler = async (req, res, next) => {
   try {
     const { todoId } = req.params;
 
-    const result = await Todo.findByIdAndDelete(todoId)
+    const result = await Todo.destroy({where:{id:todoId}})
     if (!result) return res.status(404).json({ msg: 'Resource not found'})
-    const { userIndex } = result;
-    storeInResLocals(res, DECREMENT_FROM_USER_INDEX, userIndex);
 
-    next()
-  } catch (e) {
-    res.status(500).json({ msg: 'server error'})
-  }
-}
-
-const bulkUpdateTodoIndices: RequestHandler = async (req, res, next) => {
-  try {
-    const userIndex = res.locals[DECREMENT_FROM_USER_INDEX];
-    // Update all todos with a userIndex greater than the userIndex of the deleted todo(decrement by 1)
-    const update = await Todo.updateMany({ userIndex: { $gt: userIndex }}, { $inc: { userIndex: -1 } });
     next()
   } catch (e) {
     res.status(500).json({ msg: 'server error'})
@@ -144,6 +121,4 @@ export {
   PREFETCHED_TODOS_KEY,
   NEW_TODO,
   deleteTodo,
-  DECREMENT_FROM_USER_INDEX,
-  bulkUpdateTodoIndices
 }

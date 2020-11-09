@@ -6,7 +6,6 @@ import {
   getUsersTodos,
   updateTodo,
   deleteTodo,
-  bulkUpdateTodoIndices
 } from './middleware/todoMiddleware'
 import {
   updateUserTodos,
@@ -20,7 +19,6 @@ const router = express.Router();
 router.post(
   '/',
   postNewTodo,
-  updateUserTodos,
   getUsersTodos
 )
 
@@ -38,8 +36,6 @@ router.put(
 router.delete(
   '/:todoId',
   deleteTodo,
-  bulkUpdateTodoIndices,
-  deleteSingleUserTodo,
   getUsersTodos
 )
 

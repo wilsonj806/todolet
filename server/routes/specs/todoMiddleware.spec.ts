@@ -266,7 +266,9 @@ describe("A middleware function for updating todos", () => {
     req.user = user;
     req.params._id;
 
-    jest.spyOn(Todo, "update").mockReturnValue(mockBody.originalTodo as any);
+    jest
+      .spyOn(Todo, "update")
+      .mockReturnValue([2, mockBody.originalTodo] as any);
     await updateTodo(req, res, next);
     expect(res.json).toHaveBeenCalledWith({
       updatedTodo: mockBody.originalTodo,

@@ -3,7 +3,7 @@ const del = require('del');
 
 async function clean(cb) {
   const arr = [
-    '{config,routes,specs,types,docs,__mocks__,models}/**',
+    '{routes,specs,types,docs,__mocks__,models}/**',
     '*.md',
     'LICENSE',
     '*.{js,ts,tsx}',

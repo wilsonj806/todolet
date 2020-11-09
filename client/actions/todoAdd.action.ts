@@ -35,11 +35,10 @@ export const postNewTodo = (request : any, stateFns: SetStateAction<any>[]) =>
   async (dispatch: Dispatch) => {
     dispatch(requestPostNewTodo());
     try {
-      const [ todos, authorizedUser ] = await TodoService.postTodo(request);
+      const todos = await TodoService.postTodo(request);
       stateFns.forEach( (fn: SetStateAction<any>) => fn() );
 
       dispatch(receivePostNewTodoSuccess(todos))
-      dispatch(receiveUserUpdateSuccess(authorizedUser))
     } catch (err) {
       dispatch(receivePostNewTodoFail())
       dispatch(enqueueSnackActionCreator({

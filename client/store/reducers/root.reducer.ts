@@ -49,9 +49,10 @@ const todosList = (state: TodoShape[] = [], action: ReduxAction) : TodoShape[] =
     case DELETE_TODO_SUCCESS:
       return [...action.payload]
     case PUT_TODO_SUCCESS:
-      const { userIndex } = action.payload;
+      const { id } = action.payload;
+      const index = state.findIndex(ele => ele.id === id)
       const copyOfState = [...state];
-      copyOfState[userIndex] = action.payload
+      copyOfState[index] = action.payload
       return copyOfState
     default:
       return state

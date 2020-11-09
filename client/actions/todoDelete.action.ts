@@ -35,10 +35,9 @@ export const deleteTodo = (todoId: string) =>
     try {
       dispatch(requestDeleteTodo());
       // TodoService also fetches the updated user so we need to update our state with both
-      const [todos, authorizedUser] = await TodoService.deleteTodo(todoId);
+      const todos = await TodoService.deleteTodo(todoId);
 
       dispatch(receiveDeleteTodoSuccess(todos));
-      dispatch(receiveUserUpdateSuccess(authorizedUser));
     } catch(e) {
       dispatch(receiveDeleteTodoFail())
       dispatch(enqueueSnackActionCreator({

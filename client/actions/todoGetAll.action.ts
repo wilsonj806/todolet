@@ -35,7 +35,7 @@ export const getAllTodos = () =>
   async (dispatch: Dispatch) => {
     dispatch(requestTodos());
     try {
-      const [ todos ] = await TodoService.getTodos();
+      const todos = await TodoService.getTodos();
       dispatch(receiveTodosSuccess(todos))
     } catch (err) {
       dispatch(receiveTodosFail())
